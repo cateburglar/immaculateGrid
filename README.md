@@ -8,40 +8,46 @@ This virtual environment contains essential Python libraries and frameworks requ
 
 ## Instructions
 
-
 1. **Clone the Repository**:
 
-```bash
-git clone https://github.com/sanjelarun/csi3335-project-venv.git
-cd csi3335-project-venv
-```
+    ```bash
+    git clone https://github.com/sanjelarun/csi3335-project-venv.git
+    cd csi3335-project-venv
+    ```
 
 2. **Create a Virtual Environment**
 
-**For Windows**
-```bash
-python -m venv project_env
-```
-**For Linux/MacOs**
-```bash
-python3 -m venv project_env
+    **For Windows**
 
-```
+    ```bash
+    python -m venv project_env
+    ```
+
+    **For Linux/MacOs**
+
+    ```bash
+    python3 -m venv project_env
+    ```
+
 3. **Activate the Virtual Environment**
 
-**For Windows**
-```bash
-.\project_env\Scripts\activate
-```
-**For Linux/MacOs**
-```bash
-source project_env/bin/activate
-```
+    **For Windows**
+
+    ```bash
+    .\project_env\Scripts\activate
+    ```
+
+    **For Linux/MacOs**
+
+    ```bash
+    source project_env/bin/activate
+    ```
 
 4. **Install the dependencies**
-```bash
-pip install -r requirements.txt
-```
+
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 ## Usage
 
