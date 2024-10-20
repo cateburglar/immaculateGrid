@@ -56,3 +56,13 @@ Once the virtual environment is activated and dependencies are installed, you ca
 ```bash
 deactivate
 ```
+
+## Starting the Flask dev server
+
+After activating the virtual environment and installing the required dependencies, you're ready to get started. To start the development server, just run
+
+```bash
+flask run --debug
+```
+
+The debug flag is not required, but will let flask know to restart the server anytime changes are made so you don't have to keep shutting it down and booting it back up.
