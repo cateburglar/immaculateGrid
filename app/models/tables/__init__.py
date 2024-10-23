@@ -1,0 +1,1 @@
+from .allstarfull import AllstarFull

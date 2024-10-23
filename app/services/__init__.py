@@ -1,1 +1,1 @@
-from .hall_of_fame import hall_of_fame_service
+from .csv_service import update_allstarfull_from_csv

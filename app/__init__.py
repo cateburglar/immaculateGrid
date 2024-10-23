@@ -1,18 +1,15 @@
 from flask import Flask
 
-from app.config import Config
+from app.csi3335f2024 import mysql
 
-from .extensions import db
-from .routes.index_routes import index_routes
+from .routes import allstarfull_routes, index_routes
 
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
-
-    db.init_app(app)
 
     # Register blueprints/routes
     app.register_blueprint(index_routes)
+    app.register_blueprint(allstarfull_routes, url_prefix="/allstarfull")
 
     return app
