@@ -1,0 +1,1 @@
+from .hall_of_fame_service import hall_of_fame_service
