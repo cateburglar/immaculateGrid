@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import app.csi3335f2024 as cfg
-from app.models import AllstarFull
+from app.models import AllstarFull, Leagues, People
 
 
 def update_allstarfull_from_csv(file_path):

@@ -7,7 +7,7 @@ class Base(DeclarativeBase):
 
 
 class AllstarFull(Base):
-    __tablename__ = "AllstarFull"
+    __tablename__ = "allstarfull"
     allstarfull_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
     lgID = Column(String(2), ForeignKey("leagues.lgID"), nullable=False)

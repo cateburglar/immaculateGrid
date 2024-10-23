@@ -1,7 +1,5 @@
 from flask import Flask
 
-from app.csi3335f2024 import mysql
-
 from .routes import allstarfull_routes, index_routes
 
 
