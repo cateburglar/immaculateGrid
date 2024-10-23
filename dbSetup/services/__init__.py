@@ -1,0 +1,3 @@
+from .allstarfull_csv_service import upload_allstarfull_csv
+
+upload_allstarfull_csv()

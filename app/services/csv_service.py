@@ -21,49 +21,70 @@ def update_allstarfull_from_csv(file_path):
             + cfg.mysql["password"]
             + "@"
             + cfg.mysql["host"]
-            + ":3306/"
+            + "/"
             + cfg.mysql["db"]
         )
         engine = create_engine(enginestr)
-
-        # Create session
         Session = sessionmaker(bind=engine)
         session = Session()
 
         for row in reader:
+            # Convert empty strings to None
+            playerID = row["playerID"] or None
+            yearID = row["yearID"] or None
+            teamID = row["teamID"] or None
+            gameID = row["gameID"] or None
+            lgID = row["lgID"] or None
+            GP = row.get("GP", None)
+            startingPos = row.get("startingPos", None)
+
+            # Check if playerID exists in the people table
+            player_exists = session.query(People).filter_by(playerID=playerID).first()
+            if not player_exists:
+                print(
+                    f"playerID {playerID} does not exist in the people table. Skipping row."
+                )
+                continue
+
+            lg_exists = session.query(Leagues).filter_by(lgID=lgID).first()
+            if not lg_exists:
+                print(f"lgID {lgID} does not exist in the leagues table. Skipping row.")
+                continue
+
             # Check if a row with the same playerID, yearID, teamID, and gameID exists
             existing_entry = (
                 session.query(AllstarFull)
                 .filter_by(
-                    playerID=row["playerID"],
-                    yearID=row["yearID"],
-                    teamID=row["teamID"],
-                    gameID=row["gameID"],
+                    playerID=playerID,
+                    yearID=yearID,
+                    teamID=teamID,
+                    gameID=gameID,
+                    startingPos=startingPos,
                 )
                 .first()
             )
 
             if existing_entry:
                 # Update the existing record
-                existing_entry.lgID = row["lgID"]
-                existing_entry.GP = row.get("GP", None)  # Use None for missing data
-                existing_entry.startingPos = row.get("startingPos", None)
+                existing_entry.lgID = lgID
+                existing_entry.GP = GP
+                existing_entry.startingPos = startingPos
                 updated_rows += 1
             else:
-                # Insert a new record if no match found
+                # Insert a new record
                 new_entry = AllstarFull(
-                    playerID=row["playerID"],
-                    yearID=row["yearID"],
-                    teamID=row["teamID"],
-                    lgID=row["lgID"],
-                    gameID=row.get("gameID"),  # Nullable field
-                    GP=row.get("GP", None),
-                    startingPos=row.get("startingPos", None),
+                    playerID=playerID,
+                    yearID=yearID,
+                    teamID=teamID,
+                    gameID=gameID,
+                    lgID=lgID,
+                    GP=GP,
+                    startingPos=startingPos,
                 )
                 session.add(new_entry)
                 new_rows += 1
 
-        # Commit the session to apply updates and inserts
-        session.commit()
+            session.commit()
 
-        print(f"{updated_rows} rows updated, {new_rows} new rows added.")
+        session.close()
+        return {"new_rows": new_rows, "updated_rows": updated_rows}
