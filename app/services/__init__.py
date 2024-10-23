@@ -1,2 +1,1 @@
 from .allstarfull_service import get_all_entries_allstarfull
-from .csv_service import update_allstarfull_from_csv

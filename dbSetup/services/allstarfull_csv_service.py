@@ -1,12 +1,10 @@
 import csv
 import os
 
-from flask import jsonify
+import csi3335f2024 as cfg
+from models import AllstarFull, Leagues, People
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-import dbSetup.csi3335f2024 as cfg
-from dbSetup.models import AllstarFull, Leagues, People
 
 
 def upload_allstarfull_csv():
@@ -16,14 +14,15 @@ def upload_allstarfull_csv():
 
     # Check if the file exists
     if not os.path.exists(csv_file_path):
-        return jsonify({"error": "Allstarfull.csv not found"}), 404
+        print("Error: AllstarFull.csv not found")
+        return
 
     # Process the CSV file
     try:
         update_allstarfull_from_csv(csv_file_path)
-        return jsonify({"message": "File processed successfully"}), 200
+        print("File processed successfully")
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error: {str(e)}")
 
 
 def update_allstarfull_from_csv(file_path):

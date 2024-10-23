@@ -1,1 +1,3 @@
-import services.allstarfull_csv_service as allstarfull_init
+from services.allstarfull_csv_service import upload_allstarfull_csv
+
+upload_allstarfull_csv()
