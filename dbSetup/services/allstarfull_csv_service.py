@@ -2,7 +2,7 @@ import csv
 
 import csi3335f2024 as cfg
 from models import AllstarFull, Leagues, People
-from utils import create_session_from_str, get_csv_path
+from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
 def upload_allstarfull_csv():
@@ -24,19 +24,9 @@ def update_allstarfull_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        updated_rows = 0
 
         # Create engine
-        enginestr = (
-            "mysql+pymysql://"
-            + cfg.mysql["user"]
-            + ":"
-            + cfg.mysql["password"]
-            + "@"
-            + cfg.mysql["host"]
-            + "/"
-            + cfg.mysql["db"]
-        )
+        enginestr = create_enginestr_from_values(mysql=cfg.mysql)
         session = create_session_from_str(enginestr=enginestr)
 
         for row in reader:

@@ -25,6 +25,20 @@ def get_csv_path(filename):
     return csv_file_path
 
 
+def create_enginestr_from_values(mysql):
+    # Create engine from dictionary values
+    return (
+        "mysql+pymysql://"
+        + mysql["user"]
+        + ":"
+        + mysql["password"]
+        + "@"
+        + mysql["host"]
+        + "/"
+        + mysql["db"]
+    )
+
+
 def create_session_from_str(enginestr):
     try:
         # Creates a Session from an engine string

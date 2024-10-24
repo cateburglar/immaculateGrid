@@ -1,40 +1,16 @@
 import csi3335f2024 as cfg
-from models import AllstarFull, Leagues, People
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from models import AllstarFull
+from utils import create_enginestr_from_values, create_session_from_str
 
 
 def compare_existing_allstarfull_entries():
 
-    # Create engine
-    sqenginestr = (
-        "mysql+pymysql://"
-        + cfg.mysql["user"]
-        + ":"
-        + cfg.mysql["password"]
-        + "@"
-        + cfg.mysql["host"]
-        + "/"
-        + cfg.mysql["db"]
-    )
-    sq_engine = create_engine(sqenginestr)
-    sq_Session = sessionmaker(bind=sq_engine)
-    sq_session = sq_Session()
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
 
-    bbenginestr = (
-        "mysql+pymysql://"
-        + cfg.baseballmysql["user"]
-        + ":"
-        + cfg.baseballmysql["password"]
-        + "@"
-        + cfg.baseballmysql["host"]
-        + "/"
-        + cfg.baseballmysql["db"]
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
     )
-
-    bb_engine = create_engine(bbenginestr)
-    bb_Session = sessionmaker(bind=bb_engine)
-    bb_session = bb_Session()
 
     bb_result = bb_session.query(AllstarFull).all()
 
