@@ -56,7 +56,7 @@ def update_people_from_csv(file_path):
             finalGameDate = row["finalGame"] or None
 
             # Debug prints
-            print(f"Processing row: playerID={playerID}")
+            # print(f"Processing row: playerID={playerID}")
 
             # Check if playerID exists in the people table
             player_exists = session.query(People).filter_by(playerID=playerID).first()
