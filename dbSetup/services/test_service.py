@@ -42,10 +42,14 @@ def compare_existing_allstarfull_entries():
     rows_match = True
     for row in bb_result:
         row_exists = sq_session.query(AllstarFull).filter_by(
+            allstarfull_ID=row.allstarfull_ID,
             playerID=row.playerID,
             yearID=row.yearID,
             lgID=row.lgID,
             teamID=row.teamID,
+            gameID=row.gameID,
+            GP=row.GP,
+            startingPos=row.startingPos,
         )
 
         # Alert that test failed, and for what row

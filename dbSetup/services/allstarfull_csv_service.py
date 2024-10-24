@@ -1,28 +1,14 @@
 import csv
-import os
 
 import csi3335f2024 as cfg
 from models import AllstarFull, Leagues, People
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-
-def model_to_dict(model):
-    """
-    Convert a SQLAlchemy model instance to a dictionary.
-    """
-    return {
-        column.name: getattr(model, column.name) for column in model.__table__.columns
-    }
+from utils import create_session_from_str, get_csv_path
 
 
 def upload_allstarfull_csv():
-    # Define the path to the CSV file
-    base_dir = os.path.abspath(os.path.dirname(__file__))
-    csv_file_path = os.path.join(base_dir, "..", "static", "csv", "AllstarFull.csv")
+    csv_file_path = get_csv_path("AllstarFull.csv")
 
-    # Check if the file exists
-    if not os.path.exists(csv_file_path):
+    if len(csv_file_path) == 0:
         print("Error: AllstarFull.csv not found")
         return
 
@@ -51,9 +37,7 @@ def update_allstarfull_from_csv(file_path):
             + "/"
             + cfg.mysql["db"]
         )
-        engine = create_engine(enginestr)
-        Session = sessionmaker(bind=engine)
-        session = Session()
+        session = create_session_from_str(enginestr=enginestr)
 
         for row in reader:
             # Convert empty strings to None
@@ -66,9 +50,11 @@ def update_allstarfull_from_csv(file_path):
             startingPos = int(row["startingPos"]) if row["startingPos"] else None
 
             # Debug prints
+            """
             print(
                 f"Processing row: playerID={playerID}, yearID={yearID}, teamID={teamID}, gameID={gameID}, lgID={lgID}, GP={GP}, startingPos={startingPos}"
             )
+            """
 
             # Check if playerID exists in the people table
             player_exists = session.query(People).filter_by(playerID=playerID).first()
@@ -93,17 +79,14 @@ def update_allstarfull_from_csv(file_path):
                     yearID=yearID,
                     lgID=lgID,
                     teamID=teamID,
+                    gameID=gameID,
+                    GP=GP,
+                    startingPos=startingPos,
                 )
                 .first()
             )
 
-            if existing_entry:
-                # Update the existing record
-                existing_entry.lgID = lgID
-                existing_entry.GP = GP
-                existing_entry.startingPos = startingPos
-                updated_rows += 1
-            else:
+            if not existing_entry:
                 # Insert a new record
                 new_entry = AllstarFull(
                     playerID=playerID,
@@ -120,4 +103,4 @@ def update_allstarfull_from_csv(file_path):
             session.commit()
 
         session.close()
-        return {"new_rows": new_rows, "updated_rows": updated_rows}
+        return {"new_rows": new_rows}
