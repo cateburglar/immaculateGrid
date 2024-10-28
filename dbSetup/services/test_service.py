@@ -7,14 +7,14 @@ def compare_existing_allstarfull_entries():
 
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
-
     bb_session = create_session_from_str(
         create_enginestr_from_values(cfg.baseballmysql)
     )
 
+    # Get the original AllstarFull rows
     bb_result = bb_session.query(AllstarFull).all()
 
-    # Go through each row in the original baseball database to make sure they match
+    # Go through each row in the original baseball database to make sure ours matches
     rows_match = True
     for row in bb_result:
         row_exists = sq_session.query(AllstarFull).filter_by(
@@ -52,14 +52,14 @@ def compare_existing_people_entries():
 
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
-
     bb_session = create_session_from_str(
         create_enginestr_from_values(cfg.baseballmysql)
     )
 
+    # Get all rows from the original People table
     bb_result = bb_session.query(People).all()
 
-    # Go through each row in the original baseball database to make sure they match
+    # Go through each row in the original baseball database to make sure ours matches
     rows_match = True
     for row in bb_result:
         row_exists = sq_session.query(People).filter_by(

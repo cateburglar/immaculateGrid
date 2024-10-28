@@ -2,7 +2,7 @@ import os
 
 
 def find_problematic_line(file_path, encoding="utf-8"):
-    chunk_size = 1024  # Read in chunks of 1024 bytes
+    chunk_size = 1024
     position = 0
 
     with open(file_path, "rb") as f:
@@ -12,7 +12,7 @@ def find_problematic_line(file_path, encoding="utf-8"):
                 break
 
             try:
-                chunk.decode(encoding)
+                chunk.decode(encoding)  # If this throws an exception, decoding failed
             except UnicodeDecodeError as e:
                 print(f"Decoding error at byte position {position + e.start}: {e}")
                 # Read the file line by line to find the problematic line
