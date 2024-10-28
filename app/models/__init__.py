@@ -1,8 +1,10 @@
-from .user import User
+from .tables import AllstarFull, Leagues, People
 
 # Import other models as needed
 
 # For easy access to all models
 all_models = [
-    User,
+    AllstarFull,
+    People,
+    Leagues,
 ]
