@@ -54,7 +54,7 @@ class Leagues(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="league")
-    teams_entries = relationship("Teams", back_populates="team")
+    teams_entries = relationship("Teams", back_populates="league")
 
 
 class Teams(Base):
