@@ -25,9 +25,8 @@ def update_allstarfull_from_csv(file_path):
         reader = csv.DictReader(csvfile)
         new_rows = 0
 
-        # Create engine
-        enginestr = create_enginestr_from_values(mysql=cfg.mysql)
-        session = create_session_from_str(enginestr=enginestr)
+        # Create session
+        session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
 
         for row in reader:
             # Convert empty strings to None
