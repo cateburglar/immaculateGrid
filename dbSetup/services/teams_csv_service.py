@@ -24,6 +24,7 @@ def update_teams_from_csv(file_path):
     with open(file=file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
@@ -84,8 +85,84 @@ def update_teams_from_csv(file_path):
 
             # Check if team already exists
             existing_entry = (
-                session.query(Teams).filter_by(teamID=teamID, yearID=yearID).first()
+                session.query(Teams)
+                .filter_by(
+                    teamID=teamID,
+                    yearID=yearID,
+                    lgID=lgID,
+                )
+                .first()
             )
+
+            if park_name and len(park_name) > 50:
+                park_name = park_name[:50]
+
+            if existing_entry:
+                # Calculate projected wins
+                if (
+                    team_R is not None
+                    and team_RA is not None
+                    and team_R > 0
+                    and team_RA > 0
+                ):
+                    team_projW = round(
+                        (pow(team_R, 2) / (pow(team_R, 2) + pow(team_RA, 2))) * team_G,
+                        0,
+                    )
+                else:
+                    team_projW = None
+
+                # Calculate projected losses
+                if team_projW is not None and team_G is not None and team_G > 0:
+                    team_projL = team_G - team_projW
+                else:
+                    team_projL = None
+
+                existing_entry.lgID = lgID
+                existing_entry.divID = divID
+                existing_entry.team_name = team_name
+                existing_entry.team_rank = team_rank
+                existing_entry.team_G = team_G
+                existing_entry.team_G_home = team_G_home
+                existing_entry.team_W = team_W
+                existing_entry.team_L = team_L
+                existing_entry.DivWin = DivWin
+                existing_entry.WCWin = WCWin
+                existing_entry.LgWin = LgWin
+                existing_entry.WSWin = WSWin
+                existing_entry.team_R = team_R
+                existing_entry.team_AB = team_AB
+                existing_entry.team_H = team_H
+                existing_entry.team_2B = team_2B
+                existing_entry.team_3B = team_3B
+                existing_entry.team_HR = team_HR
+                existing_entry.team_BB = team_BB
+                existing_entry.team_SO = team_SO
+                existing_entry.team_SB = team_SB
+                existing_entry.team_CS = team_CS
+                existing_entry.team_HBP = team_HBP
+                existing_entry.team_SF = team_SF
+                existing_entry.team_RA = team_RA
+                existing_entry.team_ER = team_ER
+                existing_entry.team_ERA = team_ERA
+                existing_entry.team_CG = team_CG
+                existing_entry.team_SHO = team_SHO
+                existing_entry.team_SV = team_SV
+                existing_entry.team_IPouts = team_IPouts
+                existing_entry.team_HA = team_HA
+                existing_entry.team_HRA = team_HRA
+                existing_entry.team_BBA = team_BBA
+                existing_entry.team_SOA = team_SOA
+                existing_entry.team_E = team_E
+                existing_entry.team_DP = team_DP
+                existing_entry.team_FP = team_FP
+                existing_entry.park_name = park_name
+                existing_entry.team_attendance = team_attendance
+                existing_entry.team_BPF = team_BPF
+                existing_entry.team_PPF = team_PPF
+                existing_entry.team_projW = team_projW
+                existing_entry.team_projL = team_projL
+                updated_rows += 1
 
             if not existing_entry:
 
@@ -115,6 +192,7 @@ def update_teams_from_csv(file_path):
                     teamID=teamID,
                     franchID=franchID,
                     divID=divID,
+                    team_name=team_name,
                     team_rank=team_rank,
                     team_G=team_G,
                     team_G_home=team_G_home,
@@ -163,4 +241,4 @@ def update_teams_from_csv(file_path):
             session.commit()
 
         session.close()
-        return {"new_rows": new_rows}
+        return {"new_rows": new_rows, "updated rows": updated_rows}
