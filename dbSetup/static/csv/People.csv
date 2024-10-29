@@ -1,4 +1,4 @@
-ID,playerID,birthYear,birthMonth,birthDay,birthCity,birthCountry,birthState,deathYear,deathMonth,deathDay,deathCity,deathCountry,deathState,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,bbrefID,finalGame,retroID
+ID,playerID,birthYear,birthMonth,birthDay,birthCity,birthCountry,birthState,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,bbrefID,finalGame,retroID
 1,aardsda01,1981,12,27,Denver,USA,CO,,,,,,,David,Aardsma,David Allan,215,75,R,R,2004-04-06,aardsda01,2015-08-23,aardd001
 2,aaronha01,1934,2,5,Mobile,USA,AL,2021,1,22,USA,GA,Atlanta,Hank,Aaron,Henry Louis,180,72,R,R,1954-04-13,aaronha01,1976-10-03,aaroh101
 3,aaronto01,1939,8,5,Mobile,USA,AL,1984,8,16,USA,GA,Atlanta,Tommie,Aaron,Tommie Lee,190,75,R,R,1962-04-10,aaronto01,1971-09-26,aarot101
@@ -20938,74 +20938,74 @@ ID,playerID,birthYear,birthMonth,birthDay,birthCity,birthCountry,birthState,deat
 20937,seaglch01,1996,5,23,New Bern,USA,NC,,,,,,,Chandler,Seagle,Chandler Mackenzie,190,70,R,R,2023-09-30,seaglch01,2023-09-30,seagc002
 20938,grifope99,1969,11,28,Miami,USA,FL,,,,,,,Pedro,Grifol,Pedro Orlando,,,,,,grifope99,,grifp801
 20939,quatrma99,1973,11,14,East Selkirk,USA,NY,,,,,,,Matt,Quatraro,Matthew John,,,,,,quatrma99,,quatm801
-20940,tayloca99,1884,2,1,Anderson,USA,SC,1948,4,3,Chicago,USA,IL,Candy Jim,Taylor,James Allen,165,65,R,R,,tayloca02,,taylj105
-20941,omsal01,1896,3,13,Santa Clara,Cuba,Las Villas,1946,11,5,Havana,Cuba,La Habana,Alejandro,Oms,Alejandro,155,66,L,L,,omsal01,,oms-a101
-20942,jenkifa01,1898,1,10,New York,USA,NY,1968,12,4,Philadelphia,USA,PA,Fats,Jenkins,Clarence Reginald,165,67,L,L,,jenkifa01,,jenkf102
-20943,polessp01,1887,12,27,Winchester,USA,VA,1962,9,12,Harrisburg,USA,PA,Spottswood,Poles,Spottswood,165,67,B,R,,polessp01,,poles101
-20944,bellwi01,1897,8,31,Hallettsville,USA,TX,1969,3,16,El Campo,USA,TX,William,Bell,William,170,67,R,R,,bellwi01,,bellw101
-20945,allenne02,1901,5,19,Austin,USA,TX,1988,6,9,Cincinnati,USA,OH,Newt,Allen,Newton Henry,160,68,R,R,,allenne02,,allen102
-20946,tayloci99,1875,1,20,Anderson,USA,SC,1922,2,23,Indianapolis,USA,IN,C. I.,Taylor,Charles Isham,170,70,R,R,,tayloci01,,taylc104
-20947,mooredo02,1896,2,8,Atlanta,USA,GA,1947,8,20,Detroit,USA,MI,Dobie,Moore,Walter Lewis,180,70,R,R,,mooredo02,,moord102
-20948,johnsgr02,1872,9,23,Findlay,USA,OH,1953,9,5,Buffalo,USA,NY,Grant,Johnson,Grant Ulysses,170,70,R,R,,,,johng103
-20949,marceol01,1895,6,21,Thibodaux,USA,LO,1949,6,12,Denver,USA,CO,Oliver,Marcell,Oliver,160,70,R,R,,marceol01,,marco101
-20950,lundydi01,1898,7,10,Jacksonville,USA,FL,1962,1,5,Jacksonville,USA,FL,Dick,Lundy,Richard Benjamin,180,71,B,R,,lundydi01,,lundd103
-20951,scalege01,1900,8,16,Talladega,USA,AL,1976,4,15,Compton,USA,CA,George,Scales,George Louis,195,71,R,R,,scalege01,,scalg101
-20952,beckwjo02,1900,1,10,Louisville,USA,KY,1956,1,4,New York,USA,NY,John,Beckwith,John Christopher,200,71,R,R,,beckwjo02,,beckj104
-20953,dixonra01,1902,9,15,Kingston,USA,GA,1944,7,20,Detroit,USA,MI,Rap,Dixon,Herbert Alphonso,185,71,R,R,,dixonra01,,dixor101
-20954,parnero01,1903,11,23,Port Allen,USA,LO,1954,2,22,Philadelphia,USA,PA,Roy,Parnell,Roy Alexander,170,71,R,R,,parnero01,,parnr102
-20955,byrdbi01,1907,7,15,Canton,USA,GA,1991,1,4,Philadelphia,USA,PA,Bill,Byrd,William,210,73,B,R,,byrdbi01,,byrdb101
-20956,riglecy99,1882,5,16,Massillon,USA,OH,1935,12,21,Philadelphia,USA,PA,Cy,Rigler,Charles,270,73,,,,,,riglc901
-20957,reddidi01,1890,4,15,Atlanta,USA,GA,1948,10,31,Islip,USA,NY,Dick,Redding,Richard,210,73,R,R,,reddidi01,,reddd101
+20940,tayloca99,1884,2,1,Anderson,USA,SC,1948,4,3,USA,IL,Chicago,Candy Jim,Taylor,James Allen,165,65,R,R,,tayloca02,,taylj105
+20941,omsal01,1896,3,13,Santa Clara,Cuba,Las Villas,1946,11,5,Cuba,La Habana,Havana,Alejandro,Oms,Alejandro,155,66,L,L,,omsal01,,oms-a101
+20942,jenkifa01,1898,1,10,New York,USA,NY,1968,12,4,USA,PA,Philadelphia,Fats,Jenkins,Clarence Reginald,165,67,L,L,,jenkifa01,,jenkf102
+20943,polessp01,1887,12,27,Winchester,USA,VA,1962,9,12,USA,PA,Harrisburg,Spottswood,Poles,Spottswood,165,67,B,R,,polessp01,,poles101
+20944,bellwi01,1897,8,31,Hallettsville,USA,TX,1969,3,16,USA,TX,El Campo,William,Bell,William,170,67,R,R,,bellwi01,,bellw101
+20945,allenne02,1901,5,19,Austin,USA,TX,1988,6,9,USA,OH,Cincinnati,Newt,Allen,Newton Henry,160,68,R,R,,allenne02,,allen102
+20946,tayloci99,1875,1,20,Anderson,USA,SC,1922,2,23,USA,IN,Indianapolis,C. I.,Taylor,Charles Isham,170,70,R,R,,tayloci01,,taylc104
+20947,mooredo02,1896,2,8,Atlanta,USA,GA,1947,8,20,USA,MI,Detroit,Dobie,Moore,Walter Lewis,180,70,R,R,,mooredo02,,moord102
+20948,johnsgr02,1872,9,23,Findlay,USA,OH,1953,9,5,USA,NY,Buffalo,Grant,Johnson,Grant Ulysses,170,70,R,R,,,,johng103
+20949,marceol01,1895,6,21,Thibodaux,USA,LO,1949,6,12,USA,CO,Denver,Oliver,Marcell,Oliver,160,70,R,R,,marceol01,,marco101
+20950,lundydi01,1898,7,10,Jacksonville,USA,FL,1962,1,5,USA,FL,Jacksonville,Dick,Lundy,Richard Benjamin,180,71,B,R,,lundydi01,,lundd103
+20951,scalege01,1900,8,16,Talladega,USA,AL,1976,4,15,USA,CA,Compton,George,Scales,George Louis,195,71,R,R,,scalege01,,scalg101
+20952,beckwjo02,1900,1,10,Louisville,USA,KY,1956,1,4,USA,NY,New York,John,Beckwith,John Christopher,200,71,R,R,,beckwjo02,,beckj104
+20953,dixonra01,1902,9,15,Kingston,USA,GA,1944,7,20,USA,MI,Detroit,Rap,Dixon,Herbert Alphonso,185,71,R,R,,dixonra01,,dixor101
+20954,parnero01,1903,11,23,Port Allen,USA,LO,1954,2,22,USA,PA,Philadelphia,Roy,Parnell,Roy Alexander,170,71,R,R,,parnero01,,parnr102
+20955,byrdbi01,1907,7,15,Canton,USA,GA,1991,1,4,USA,PA,Philadelphia,Bill,Byrd,William,210,73,B,R,,byrdbi01,,byrdb101
+20956,riglecy99,1882,5,16,Massillon,USA,OH,1935,12,21,USA,PA,Philadelphia,Cy,Rigler,Charles,270,73,,,,,,riglc901
+20957,reddidi01,1890,4,15,Atlanta,USA,GA,1948,10,31,USA,NY,Islip,Dick,Redding,Richard,210,73,R,R,,reddidi01,,reddd101
 20958,westjo99,1952,10,31,Asheville,USA,NC,,,,,,,Joe,West,Joseph Henry,275,73,,,,,,westj901
-20959,hughesa01,1910,10,20,Louisville,USA,KY,1981,8,9,Los Angeles,USA,CA,Sammy,Hughes,Samuel Thomas,192,75,R,R,,hughesa01,,hughs101
-20960,brewech02,1907,1,14,Leavenworth,USA,KS,1990,3,26,Whittier,USA,CA,Chet,Brewer,Chester Arthur,176,76,B,R,,brewech02,,brewc102
-20961,buschgu99,1899,3,28,St Louis,USA,MO,1989,9,29,St Louis,USA,MO,Gussie,Busch,August Anheuser,,,,,,,,
-20962,herrmau99,1859,5,3,Cincinnati,USA,OH,1931,4,25,Cincinnati,USA,OH,August,Herrmann,August,,,,,,,,
-20963,howsabo99,1918,2,28,Denver,USA,CO,2008,2,19,Sun City,USA,AZ,Bob,Howsam,Robert Lee,,,,,,,,
-20964,bavasbu99,1914,12,12,Manhattan,USA,NY,2008,5,1,San Diego,USA,CA,Buzzie,Bavasi,Emil Joseph,,,,,,,,
-20965,finlech99,1918,2,22,Ensley,USA,AL,1966,2,19,Chicago,USA,IL,Charlie,Finley,Charles Oscar,,,,,,,,
-20966,adamsdo99,1814,11,1,Mont Vernon,USA,NH,1899,1,3,New Haven,USA,CT,Doc,Adams,Daniel Lucius,,,,,,,,
-20967,kauffew99,1916,9,21,Garden City,USA,MO,1993,8,1,Mission Hills,USA,KS,Ewing,Kauffman,Ewing Marion,,,,,,,,
-20968,paulga99,1910,1,4,Rochester,USA,NY,1998,4,26,Tampa,USA,FL,Gabe,Paul,Gabriel Howard,,,,,,,,
-20969,autryge99,1907,9,29,Tioga,USA,TX,1998,10,2,Studio City,USA,CA,Gene,Autry,Orvon Grover,,,,,,,,
-20970,steinge99,1930,7,4,Rocky River,USA,OH,2010,7,13,Tampa,USA,FL,George,Steinbrenner,George Michael,,,,,,,,
-20971,peterha99,1924,9,16,St Louis,USA,MO,2015,1,4,Boca Raton,USA,FL,Hank,Peters,Henry John,,,,,,,,
-20972,daltoha99,1928,8,23,West Springfield,USA,MA,2005,10,23,Scottsdale,USA,AZ,Harry,Dalton,Harry Inglis,,,,,,,,
-20973,fetzejo99,1901,3,25,Decatur,USA,IN,1991,2,20,Honolulu,USA,HI,John,Fetzer,John Earl,,,,,,,,
-20974,millema99,1917,4,14,Brooklyn,USA,NY,2012,11,27,Manhattan,USA,NY,Marvin,Miller,Marvin Julian,,,,,,millema99,,
-20975,wriglph99,1894,12,5,Chicago,USA,IL,1977,4,12,Elkhorn,USA,WI,Philip,Wrigley,Philip Knight,,,,,,,,
-20976,breadsa99,1876,7,26,New York,USA,NY,1949,5,8,St Louis,USA,MO,Sam,Breadon,Samuel Wilson,,,,,,,,
+20959,hughesa01,1910,10,20,Louisville,USA,KY,1981,8,9,USA,CA,Los Angeles,Sammy,Hughes,Samuel Thomas,192,75,R,R,,hughesa01,,hughs101
+20960,brewech02,1907,1,14,Leavenworth,USA,KS,1990,3,26,USA,CA,Whittier,Chet,Brewer,Chester Arthur,176,76,B,R,,brewech02,,brewc102
+20961,buschgu99,1899,3,28,St Louis,USA,MO,1989,9,29,USA,MO,St Louis,Gussie,Busch,August Anheuser,,,,,,,,
+20962,herrmau99,1859,5,3,Cincinnati,USA,OH,1931,4,25,USA,OH,Cincinnati,August,Herrmann,August,,,,,,,,
+20963,howsabo99,1918,2,28,Denver,USA,CO,2008,2,19,USA,AZ,Sun City,Bob,Howsam,Robert Lee,,,,,,,,
+20964,bavasbu99,1914,12,12,Manhattan,USA,NY,2008,5,1,USA,CA,San Diego,Buzzie,Bavasi,Emil Joseph,,,,,,,,
+20965,finlech99,1918,2,22,Ensley,USA,AL,1966,2,19,USA,IL,Chicago,Charlie,Finley,Charles Oscar,,,,,,,,
+20966,adamsdo99,1814,11,1,Mont Vernon,USA,NH,1899,1,3,USA,CT,New Haven,Doc,Adams,Daniel Lucius,,,,,,,,
+20967,kauffew99,1916,9,21,Garden City,USA,MO,1993,8,1,USA,KS,Mission Hills,Ewing,Kauffman,Ewing Marion,,,,,,,,
+20968,paulga99,1910,1,4,Rochester,USA,NY,1998,4,26,USA,FL,Tampa,Gabe,Paul,Gabriel Howard,,,,,,,,
+20969,autryge99,1907,9,29,Tioga,USA,TX,1998,10,2,USA,CA,Studio City,Gene,Autry,Orvon Grover,,,,,,,,
+20970,steinge99,1930,7,4,Rocky River,USA,OH,2010,7,13,USA,FL,Tampa,George,Steinbrenner,George Michael,,,,,,,,
+20971,peterha99,1924,9,16,St Louis,USA,MO,2015,1,4,USA,FL,Boca Raton,Hank,Peters,Henry John,,,,,,,,
+20972,daltoha99,1928,8,23,West Springfield,USA,MA,2005,10,23,USA,AZ,Scottsdale,Harry,Dalton,Harry Inglis,,,,,,,,
+20973,fetzejo99,1901,3,25,Decatur,USA,IN,1991,2,20,USA,HI,Honolulu,John,Fetzer,John Earl,,,,,,,,
+20974,millema99,1917,4,14,Brooklyn,USA,NY,2012,11,27,USA,NY,Manhattan,Marvin,Miller,Marvin Julian,,,,,,millema99,,
+20975,wriglph99,1894,12,5,Chicago,USA,IL,1977,4,12,USA,WI,Elkhorn,Philip,Wrigley,Philip Knight,,,,,,,,
+20976,breadsa99,1876,7,26,New York,USA,NY,1949,5,8,USA,MO,St Louis,Sam,Breadon,Samuel Wilson,,,,,,,,
 20977,correka99,1989,7,14,Hilo,USA,HI,,,,,,,Kai,Correa,Kainoa Thomas,165,69,R,R,,correka99,,corrk801
-20978,reardbe99,1897,11,23,Taunton,USA,MA,1984,7,31,Long Beach,USA,CA,Beans,Reardon,John Edward,190,69,,,,,,rearb901
-20979,demosbi01,1889,9,5,Topeka,USA,KS,1965,1,25,Chicago,USA,IL,Bingo,DeMoss,Elwood,180,71,R,R,,demosbi01,,demob102
-20980,smithch11,1901,9,24,Hamlet,USA,NC,1932,1,15,New York,USA,NY,Chino,Smith,Charles E,180,71,L,R,,smithch11,,smitc109
-20981,thomacl03,1896,11,25,Greenup,USA,KY,1990,12,3,Charleston,USA,WV,Clinton,Thomas,Clinton Cyrus,186,69,R,R,,thomacl03,,thomc103
-20982,malarda01,1894,10,18,White Hall,USA,LA,1982,5,11,Chicago,USA,IL,Dave,Malarcher,David Julius,150,67,B,R,,malarda01,,malad101
-20983,gardnje02,1895,9,27,Russellville,USA,AK,1977,3,28,Chicago,USA,IL,Jelly,Gardner,Floyd,160,67,L,R,,gardnje02,,gardj102
-20984,lanefr99,1895,2,1,Cincinnati,USA,OH,1981,3,19,Dallas,USA,TX,Frank,Lane,Franklin Charles Meyers,,,,,,,,
-20985,kellyho99,1859,3,3,Paterson,USA,NJ,1908,4,13,Paterson,USA,NJ,Honest John,Kelly,John Francis,185,72,R,R,,kellyjo01,,kellj103
-20986,stoneho99,1903,4,27,Newark,USA,NJ,1990,1,7,Scottsdale,USA,AZ,Horace,Stoneham,Horace Charles,,,,,,,,
-20987,quinnja99,1870,2,14,Columbus,USA,OH,1954,3,12,Providence,USA,RI,J.A. Robert,Quinn,James Aloysius Robert,,,,,,,,
-20988,sherija99,1862,4,30,Decatur,USA,IL,1914,11,2,San Jose,USA,CA,Jack,Sheridan,John F.,,,,,,,,sherj901
-20989,heydljo99,1869,7,10,La Fargeville,USA,NY,1956,4,18,San Diego,USA,CA,John,Heydler,John Arnold,,,,,,,,heydj901
-20990,brushjo99,1845,6,15,Clintonville,USA,NY,1912,11,26,Louisiana,USA,MO,John T.,Brush,John Tomlinson,,,,,,,,
-20991,goetzla99,1895,2,15,Cincinnati,USA,OH,1962,10,31,Cincinnati,USA,OH,Larry,Goetz,Lawrence John,175,71,,,,,,goetl901
-20992,ballale99,1895,12,27,Waco,USA,TX,1987,7,15,Dallas,USA,TX,Lee,Ballanfant,Edward Lee,163,68,,,,,,balll901
-20993,perinlo99,1903,11,29,Ashland,USA,MA,1972,4,16,West Palm Beach,USA,FL,Lou,Perini,Louis Robert,,,,,,,,
-20994,olougsi99,1872,8,15,Rochester,USA,NY,1918,12,20,Boston,USA,MA,Silk,O'Loughlin,Francis H.,,,,,,,,olous901
-20995,pagete01,1903,4,22,Glasgow,USA,KY,1984,12,1,Pittsburgh,USA,PA,Ted,Page,Theodore Roosevelt,175,71,L,R,,pagete01,,paget101
-20996,mcdonwe01,1900,1,1,Glasgow,USA,DE,1982,6,12,Philadelphia,USA,PA,Webster,McDonald,Webster,190,71,L,R,,mcdonwe01,,mcdow101
-20997,shibebe99,1838,1,23,Philadelphia,USA,PA,1922,1,14,Philadelphia,USA,PA,Ben,Shibe,Benjamin Franklin,,,,,,,,
-20998,summebi99,1895,11,10,Harrison,USA,NJ,1966,9,12,Upton,USA,MA,Bill,Summers,William Reed,208,68,,,,,,summb901
-20999,devinbi99,1916,3,1,St Louis,USA,MO,2007,1,27,St Louis,USA,MO,Bing,Devine,Vaughan Pallmore,,,,,,,,
-21000,griffca99,1911,12,1,Montreal,CAN,QU,1999,10,20,Melbourne,USA,FL,Calvin,Griffith,Calvin Robertson,,,,,,,,
-21001,tallice99,1914,7,29,New York,USA,NY,1991,5,8,Tampa,USA,FL,Cedric,Tallis,Cedric Nelson,,,,,,,,
+20978,reardbe99,1897,11,23,Taunton,USA,MA,1984,7,31,USA,CA,Long Beach,Beans,Reardon,John Edward,190,69,,,,,,rearb901
+20979,demosbi01,1889,9,5,Topeka,USA,KS,1965,1,25,USA,IL,Chicago,Bingo,DeMoss,Elwood,180,71,R,R,,demosbi01,,demob102
+20980,smithch11,1901,9,24,Hamlet,USA,NC,1932,1,15,USA,NY,New York,Chino,Smith,Charles E,180,71,L,R,,smithch11,,smitc109
+20981,thomacl03,1896,11,25,Greenup,USA,KY,1990,12,3,USA,WV,Charleston,Clinton,Thomas,Clinton Cyrus,186,69,R,R,,thomacl03,,thomc103
+20982,malarda01,1894,10,18,White Hall,USA,LA,1982,5,11,USA,IL,Chicago,Dave,Malarcher,David Julius,150,67,B,R,,malarda01,,malad101
+20983,gardnje02,1895,9,27,Russellville,USA,AK,1977,3,28,USA,IL,Chicago,Jelly,Gardner,Floyd,160,67,L,R,,gardnje02,,gardj102
+20984,lanefr99,1895,2,1,Cincinnati,USA,OH,1981,3,19,USA,TX,Dallas,Frank,Lane,Franklin Charles Meyers,,,,,,,,
+20985,kellyho99,1859,3,3,Paterson,USA,NJ,1908,4,13,USA,NJ,Paterson,Honest John,Kelly,John Francis,185,72,R,R,,kellyjo01,,kellj103
+20986,stoneho99,1903,4,27,Newark,USA,NJ,1990,1,7,USA,AZ,Scottsdale,Horace,Stoneham,Horace Charles,,,,,,,,
+20987,quinnja99,1870,2,14,Columbus,USA,OH,1954,3,12,USA,RI,Providence,J.A. Robert,Quinn,James Aloysius Robert,,,,,,,,
+20988,sherija99,1862,4,30,Decatur,USA,IL,1914,11,2,USA,CA,San Jose,Jack,Sheridan,John F.,,,,,,,,sherj901
+20989,heydljo99,1869,7,10,La Fargeville,USA,NY,1956,4,18,USA,CA,San Diego,John,Heydler,John Arnold,,,,,,,,heydj901
+20990,brushjo99,1845,6,15,Clintonville,USA,NY,1912,11,26,USA,MO,Louisiana,John T.,Brush,John Tomlinson,,,,,,,,
+20991,goetzla99,1895,2,15,Cincinnati,USA,OH,1962,10,31,USA,OH,Cincinnati,Larry,Goetz,Lawrence John,175,71,,,,,,goetl901
+20992,ballale99,1895,12,27,Waco,USA,TX,1987,7,15,USA,TX,Dallas,Lee,Ballanfant,Edward Lee,163,68,,,,,,balll901
+20993,perinlo99,1903,11,29,Ashland,USA,MA,1972,4,16,USA,FL,West Palm Beach,Lou,Perini,Louis Robert,,,,,,,,
+20994,olougsi99,1872,8,15,Rochester,USA,NY,1918,12,20,USA,MA,Boston,Silk,O'Loughlin,Francis H.,,,,,,,,olous901
+20995,pagete01,1903,4,22,Glasgow,USA,KY,1984,12,1,USA,PA,Pittsburgh,Ted,Page,Theodore Roosevelt,175,71,L,R,,pagete01,,paget101
+20996,mcdonwe01,1900,1,1,Glasgow,USA,DE,1982,6,12,USA,PA,Philadelphia,Webster,McDonald,Webster,190,71,L,R,,mcdonwe01,,mcdow101
+20997,shibebe99,1838,1,23,Philadelphia,USA,PA,1922,1,14,USA,PA,Philadelphia,Ben,Shibe,Benjamin Franklin,,,,,,,,
+20998,summebi99,1895,11,10,Harrison,USA,NJ,1966,9,12,USA,MA,Upton,Bill,Summers,William Reed,208,68,,,,,,summb901
+20999,devinbi99,1916,3,1,St Louis,USA,MO,2007,1,27,USA,MO,St Louis,Bing,Devine,Vaughan Pallmore,,,,,,,,
+21000,griffca99,1911,12,1,Montreal,CAN,QU,1999,10,20,USA,FL,Melbourne,Calvin,Griffith,Calvin Robertson,,,,,,,,
+21001,tallice99,1914,7,29,New York,USA,NY,1991,5,8,USA,FL,Tampa,Cedric,Tallis,Cedric Nelson,,,,,,,,
 21002,bronfch99,1931,6,27,Montreal,CAN,QU,,,,,,,Charles,Bronfman,Charles,,,,,,,,
-21003,somerch99,1868,10,13,Newark,USA,OH,1934,6,29,Put-in-Bay,USA,OH,Charles,Somers,Charles W.,,,,,,,,
-21004,feenech99,1921,8,31,Orange,USA,NJ,1994,1,10,San Francisco,USA,CA,Chub,Feeney,Charles Stoneham,,,,,,,,
+21003,somerch99,1868,10,13,Newark,USA,OH,1934,6,29,USA,OH,Put-in-Bay,Charles,Somers,Charles W.,,,,,,,,
+21004,feenech99,1921,8,31,Orange,USA,NJ,1994,1,10,USA,CA,San Francisco,Chub,Feeney,Charles Stoneham,,,,,,,,
 21005,bushge99,1946,7,6,New Haven,USA,CT,,,,,,,George W.,Bush,George Walker,,,,,,,,
-21006,paysojo99,1903,2,5,New York,USA,NY,1975,10,4,New York,USA,NY,Joan,Payson,Joan Whitney,,,,,,,,
-21007,galbrjo99,1897,8,10,Derby,USA,OH,1988,7,20,Galloway,USA,OH,John,Galbreath,John Wilmer,,,,,,,,
-21008,mcshejo99,1944,9,11,Bronx,USA,NY,1996,4,1,Cincinnati,USA,OH,John,McSherry,John Patrick,351,75,,,,,,mcshj901
-21009,weyerle99,1936,9,3,Imlay City,USA,MI,1988,7,4,San Mateo,USA,CA,Lee,Weyer,Lee Howard,258,78,,,,,,weyel901
-21010,palerst99,1949,10,9,Worcester,USA,MA,2017,5,14,Leawood,USA,KS,Steve,Palermo,Stephen Michael,175,74,,,,,,pales901
+21006,paysojo99,1903,2,5,New York,USA,NY,1975,10,4,USA,NY,New York,Joan,Payson,Joan Whitney,,,,,,,,
+21007,galbrjo99,1897,8,10,Derby,USA,OH,1988,7,20,USA,OH,Galloway,John,Galbreath,John Wilmer,,,,,,,,
+21008,mcshejo99,1944,9,11,Bronx,USA,NY,1996,4,1,USA,OH,Cincinnati,John,McSherry,John Patrick,351,75,,,,,,mcshj901
+21009,weyerle99,1936,9,3,Imlay City,USA,MI,1988,7,4,USA,CA,San Mateo,Lee,Weyer,Lee Howard,258,78,,,,,,weyel901
+21010,palerst99,1949,10,9,Worcester,USA,MA,2017,5,14,USA,KS,Leawood,Steve,Palermo,Stephen Michael,175,74,,,,,,pales901
