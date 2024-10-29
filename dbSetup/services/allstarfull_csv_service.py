@@ -24,6 +24,7 @@ def update_allstarfull_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -37,13 +38,6 @@ def update_allstarfull_from_csv(file_path):
             lgID = row["lgID"] or None
             GP = int(row["GP"]) if row["GP"] else None
             startingPos = int(row["startingPos"]) if row["startingPos"] else None
-
-            # Debug prints
-            """
-            print(
-                f"Processing row: playerID={playerID}, yearID={yearID}, teamID={teamID}, gameID={gameID}, lgID={lgID}, GP={GP}, startingPos={startingPos}"
-            )
-            """
 
             # Check if playerID exists in the people table
             player_exists = session.query(People).filter_by(playerID=playerID).first()
@@ -68,14 +62,16 @@ def update_allstarfull_from_csv(file_path):
                     yearID=yearID,
                     lgID=lgID,
                     teamID=teamID,
-                    gameID=gameID,
-                    GP=GP,
-                    startingPos=startingPos,
                 )
                 .first()
             )
 
-            if not existing_entry:
+            if existing_entry:
+                existing_entry.gameID = gameID
+                existing_entry.GP = GP
+                existing_entry.startingPos = startingPos
+                updated_rows += 1
+            else:
                 # Insert a new record
                 new_entry = AllstarFull(
                     playerID=playerID,
@@ -91,5 +87,5 @@ def update_allstarfull_from_csv(file_path):
 
             session.commit()
 
-        session.close()
-        return {"new_rows": new_rows}
+    session.close()
+    return {"new_rows": new_rows, "updated_rows": updated_rows}

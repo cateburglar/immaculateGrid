@@ -133,3 +133,12 @@ class AllstarFull(Base):
     # Define relationships
     league = relationship("Leagues", back_populates="allstarfull_entries")
     player = relationship("People", back_populates="allstarfull_entries")
+
+
+class Schools(Base):
+    __tablename__ = "schools"
+    schoolId = Column(String(15), primary_key=True, nullable=False)
+    school_name = Column(String(255), nullable=True)
+    school_city = Column(String(55), nullable=True)
+    school_state = Column(String(55), nullable=True)
+    school_country = Column(String(55), nullable=True)

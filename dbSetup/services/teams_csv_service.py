@@ -106,7 +106,8 @@ def update_teams_from_csv(file_path):
                     and team_RA > 0
                 ):
                     team_projW = round(
-                        (pow(team_R, 2) / (pow(team_R, 2) + pow(team_RA, 2))) * team_G,
+                        (pow(team_R, 1.83) / (pow(team_R, 1.83) + pow(team_RA, 1.83)))
+                        * team_G,
                         0,
                     )
                 else:
@@ -174,7 +175,8 @@ def update_teams_from_csv(file_path):
                     and team_RA > 0
                 ):
                     team_projW = round(
-                        (pow(team_R, 2) / (pow(team_R, 2) + pow(team_RA, 2))) * team_G,
+                        (pow(team_R, 1.83) / (pow(team_R, 1.83) + pow(team_RA, 1.83)))
+                        * team_G,
                         0,
                     )
                 else:
@@ -240,5 +242,5 @@ def update_teams_from_csv(file_path):
 
             session.commit()
 
-        session.close()
-        return {"new_rows": new_rows, "updated rows": updated_rows}
+    session.close()
+    return {"new_rows": new_rows, "updated rows": updated_rows}
