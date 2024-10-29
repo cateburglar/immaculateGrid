@@ -53,8 +53,12 @@ class Leagues(Base):
     league_active = Column(String(1), nullable=False)
 
     # Define relationship
-    allstarfull_entries = relationship("AllstarFull", back_populates="league")
-    teams_entries = relationship("Teams", back_populates="league")
+    allstarfull_entries = relationship(
+        "AllstarFull", foreign_keys="[AllstarFull.lgID]", back_populates="league"
+    )
+    teams_entries = relationship(
+        "Teams", foreign_keys="[Teams.lgID]", back_populates="league"
+    )
 
 
 class Teams(Base):
@@ -116,7 +120,19 @@ class Teams(Base):
     )
 
     # Define relationships
-    league = relationship("Leagues", back_populates="teams_entries")
+    league = relationship(
+        "Leagues", foreign_keys=[lgID], back_populates="teams_entries"
+    )
+    seriespost_winner = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.teamIDwinner]",
+        back_populates="winner",
+    )
+    seriespost_loser = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.teamIDloser]",
+        back_populates="loser",
+    )
 
 
 class AllstarFull(Base):
@@ -142,3 +158,22 @@ class Schools(Base):
     school_city = Column(String(55), nullable=True)
     school_state = Column(String(55), nullable=True)
     school_country = Column(String(55), nullable=True)
+
+
+class SeriesPost(Base):
+    __tablename__ = "seriespost"
+    seriespost_ID = Column(Integer, primary_key=True, nullable=False)
+    teamIDwinner = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    teamIDloser = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    round = Column(String(5), nullable=False)
+    wins = Column(SmallInteger, nullable=True)
+    losses = Column(SmallInteger, nullable=True)
+    ties = Column(SmallInteger, nullable=True)
+
+    winner = relationship(
+        "Teams", foreign_keys=[teamIDwinner], back_populates="seriespost_winner"
+    )
+    loser = relationship(
+        "Teams", foreign_keys=[teamIDloser], back_populates="seriespost_loser"
+    )
