@@ -1,17 +1,21 @@
 from flask import render_template, flash, redirect, url_for, Blueprint
 from app.forms.loginForm import LoginForm
 
-home_bp = Blueprint("home_routes", __name__)
+#the name "home_bp" is what we use to refer to the blueprint
+#in url_for() statements-- to access the def login()
+#url, you would do home_bp.login
+home_bp = Blueprint("home_bp", __name__, template_folder='templates')
 
-@home_bp.route("/", methods=['GET', 'POST'])
-def home():
-    return render_template('home.html',title="SEA QUAIL BABY",message="SQL more like sea quail amiright?")
-
+#so the url will be /home/login bc of the blueprint
 @home_bp.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        #this is because we dont actually have a system for logging in yet
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect(url_for('home_routes.home'))
+
+        # after they login, send them home but display messages
+        return redirect(url_for('home'))
+
     return render_template('login.html', title='Sign In', form=form)
