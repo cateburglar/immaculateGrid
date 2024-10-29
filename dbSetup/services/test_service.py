@@ -17,15 +17,19 @@ def compare_existing_allstarfull_entries():
     # Go through each row in the original baseball database to make sure ours matches
     rows_match = True
     for row in bb_result:
-        row_exists = sq_session.query(AllstarFull).filter_by(
-            allstarfull_ID=row.allstarfull_ID,
-            playerID=row.playerID,
-            yearID=row.yearID,
-            lgID=row.lgID,
-            teamID=row.teamID,
-            gameID=row.gameID,
-            GP=row.GP,
-            startingPos=row.startingPos,
+        row_exists = (
+            sq_session.query(AllstarFull)
+            .filter_by(
+                allstarfull_ID=row.allstarfull_ID,
+                playerID=row.playerID,
+                yearID=row.yearID,
+                lgID=row.lgID,
+                teamID=row.teamID,
+                gameID=row.gameID,
+                GP=row.GP,
+                startingPos=row.startingPos,
+            )
+            .first()
         )
 
         # Alert that test failed, and for what row
@@ -62,34 +66,59 @@ def compare_existing_people_entries():
     # Go through each row in the original baseball database to make sure ours matches
     rows_match = True
     for row in bb_result:
-        row_exists = (
-            sq_session.query(People)
-            .filter_by(
-                playerID=row.playerID,
-                birthYear=row.birthYear,
-                birthMonth=row.birthMonth,
-                birthDay=row.birthDay,
-                birthCity=row.birthCity,
-                birthCountry=row.birthCountry,
-                birthState=row.birthState,
-                deathYear=row.deathYear,
-                deathMonth=row.deathMonth,
-                deathDay=row.deathDay,
-                deathCountry=row.deathCountry,
-                deathState=row.deathState,
-                deathCity=row.deathCity,
-                nameFirst=row.nameFirst,
-                nameLast=row.nameLast,
-                nameGiven=row.nameGiven,
-                weight=row.weight,
-                height=row.height,
-                bats=row.bats,
-                throws=row.throws,
-                debutDate=row.debutDate,
-                finalGameDate=row.finalGameDate,
+        # Test without death dates, as those can change
+        if row.deathYear is None:
+            row_exists = (
+                sq_session.query(People)
+                .filter_by(
+                    playerID=row.playerID,
+                    birthYear=row.birthYear,
+                    birthMonth=row.birthMonth,
+                    birthDay=row.birthDay,
+                    birthCity=row.birthCity,
+                    birthCountry=row.birthCountry,
+                    birthState=row.birthState,
+                    nameFirst=row.nameFirst,
+                    nameLast=row.nameLast,
+                    nameGiven=row.nameGiven,
+                    weight=row.weight,
+                    height=row.height,
+                    bats=row.bats,
+                    throws=row.throws,
+                    debutDate=row.debutDate,
+                    finalGameDate=row.finalGameDate,
+                )
+                .first()
             )
-            .first()
-        )
+        else:
+            row_exists = (
+                sq_session.query(People)
+                .filter_by(
+                    playerID=row.playerID,
+                    birthYear=row.birthYear,
+                    birthMonth=row.birthMonth,
+                    birthDay=row.birthDay,
+                    birthCity=row.birthCity,
+                    birthCountry=row.birthCountry,
+                    birthState=row.birthState,
+                    deathYear=row.deathYear,
+                    deathMonth=row.deathMonth,
+                    deathDay=row.deathDay,
+                    deathCountry=row.deathCountry,
+                    deathState=row.deathState,
+                    deathCity=row.deathCity,
+                    nameFirst=row.nameFirst,
+                    nameLast=row.nameLast,
+                    nameGiven=row.nameGiven,
+                    weight=row.weight,
+                    height=row.height,
+                    bats=row.bats,
+                    throws=row.throws,
+                    debutDate=row.debutDate,
+                    finalGameDate=row.finalGameDate,
+                )
+                .first()
+            )
 
         # Alert that test failed, and for what row
         if not row_exists:
@@ -170,8 +199,8 @@ def compare_existing_teams_entries():
                 team_attendance=row.team_attendance,
                 team_BPF=row.team_BPF,
                 team_PPF=row.team_PPF,
-                team_projW=row.team_projW,
-                team_projL=row.team_projL,
+                # team_projW=row.team_projW, # Excluded as these are calculated
+                # team_projL=row.team_projL,
             )
             .first()
         )
@@ -179,7 +208,7 @@ def compare_existing_teams_entries():
         # Alert that test failed, and for what row
         if not row_exists:
             print(
-                f"Row could not be found for: teamID={row.teamID}, yearID={row.yearID}, lgID={row.lgID}"
+                f"Row does not match for: teamID={row.teamID}, yearID={row.yearID}, lgID={row.lgID}"
             )
             rows_match = False
 
@@ -217,7 +246,7 @@ def compare_existing_schools_entries():
                 school_name=row.school_name,
                 school_city=row.school_city,
                 school_state=row.school_state,
-                school_country=row.school_country,
+                # school_country=row.school_country, # Countries aren't stored correctly in the original baseball db
             )
             .first()
         )
@@ -225,7 +254,7 @@ def compare_existing_schools_entries():
         # Alert that test failed, and for what row
         if not row_exists:
             print(
-                f"Row could not be found for: schoolId={row.schoolId}, school_name={row.school_name}"
+                f"Row does not match for: schoolId={row.schoolId}, school_name={row.school_name}"
             )
             rows_match = False
 
