@@ -240,5 +240,5 @@ def update_teams_from_csv(file_path):
 
             session.commit()
 
-        session.close()
-        return {"new_rows": new_rows, "updated rows": updated_rows}
+    session.close()
+    return {"new_rows": new_rows, "updated rows": updated_rows}

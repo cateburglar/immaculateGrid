@@ -1,5 +1,5 @@
 import csi3335f2024 as cfg
-from models import AllstarFull, People, Teams
+from models import AllstarFull, People, Schools, Teams
 from utils import create_enginestr_from_values, create_session_from_str
 
 
@@ -186,5 +186,47 @@ def compare_existing_teams_entries():
     # Output test result
     if not rows_match:
         return "FAILURE: teams"
+    else:
+        return ""
+
+
+def compare_existing_schools_entries():
+
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
+    )
+
+    # Get the original Schools rows
+    bb_result = bb_session.query(Schools).all()
+
+    # Go through each row in the original baseball database to make sure ours matches
+    rows_match = True
+    for row in bb_result:
+        row_exists = sq_session.query(Schools).filter_by(
+            schoolId=row.schoolId,
+            school_name=row.school_name,
+            school_city=row.school_city,
+            school_state=row.school_state,
+            school_country=row.school_country,
+        )
+
+        # Alert that test failed, and for what row
+        if not row_exists:
+            print(
+                f"Row could not be found for: schoolId={row.schoolId}, school_name={row.school_name}"
+            )
+            rows_match = False
+
+    # Commit and close sessions
+    sq_session.commit()
+    sq_session.close()
+    bb_session.commit()
+    bb_session.close()
+
+    # Output test result
+    if not rows_match:
+        return "FAILURE: schools"
     else:
         return ""

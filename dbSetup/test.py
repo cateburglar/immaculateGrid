@@ -1,6 +1,7 @@
 from services.test_service import (
     compare_existing_allstarfull_entries,
     compare_existing_people_entries,
+    compare_existing_schools_entries,
     compare_existing_teams_entries,
 )
 
@@ -12,3 +13,6 @@ compare_existing_teams_entries()
 
 print("Testing allstarfull entries against original database")
 compare_existing_allstarfull_entries()
+
+print("Testing schools entries against original database")
+compare_existing_schools_entries()
