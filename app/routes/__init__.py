@@ -1,2 +1,2 @@
 from .allstarfull_routes import allstarfull_routes
-from .home_routes import home_bp
+from .home_routes import home_routes
