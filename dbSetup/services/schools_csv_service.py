@@ -22,7 +22,7 @@ def upload_schools_csv():
 
 def update_teams_from_csv(file_path):
     with open(file=file_path, newline="") as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.reader(csvfile)
         new_rows = 0
         updated_rows = 0
 
@@ -31,11 +31,16 @@ def update_teams_from_csv(file_path):
 
         # Parse each row
         for row in reader:
-            schoolId = row["schoolID"] or None
-            school_name = row["name_full"] or None
-            school_city = row["city"] or None
-            school_state = row["state"] or None
-            school_country = row["country"] or None
+            schoolId = row[0] or None
+            school_name = row[1] or None
+            if len(row) > 5:
+                school_city = row[3] or None
+                school_state = row[4] or None
+                school_country = row[5] or None
+            else:
+                school_city = row[2] or None
+                school_state = row[3] or None
+                school_country = row[4] or None
 
             # Check if team already exists
             existing_entry = (
