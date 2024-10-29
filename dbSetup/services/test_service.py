@@ -3,7 +3,22 @@ from models import AllstarFull, People, Schools, Teams
 from utils import create_enginestr_from_values, create_session_from_str
 
 
+def execute_tests(tests):
+    for test in tests:
+        if test == "allstarfull":
+            compare_existing_allstarfull_entries()
+        elif test == "people":
+            compare_existing_people_entries()
+        elif test == "schools":
+            compare_existing_schools_entries()
+        elif test == "teams":
+            compare_existing_teams_entries()
+        else:
+            print(f"Unknown test: {test}")
+
+
 def compare_existing_allstarfull_entries():
+    print("Executing allstarfull test")
 
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
@@ -53,6 +68,7 @@ def compare_existing_allstarfull_entries():
 
 
 def compare_existing_people_entries():
+    print("Executing people entries")
 
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
@@ -139,6 +155,7 @@ def compare_existing_people_entries():
 
 
 def compare_existing_teams_entries():
+    print("Executing teams entries")
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
     bb_session = create_session_from_str(
@@ -226,6 +243,7 @@ def compare_existing_teams_entries():
 
 
 def compare_existing_schools_entries():
+    print("Executing schools test")
 
     # Create sessions
     sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
