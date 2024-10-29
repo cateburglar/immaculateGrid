@@ -5,22 +5,23 @@ from models import Leagues, SeriesPost
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
-def upload_allstarfull_csv():
-    csv_file_path = get_csv_path("AllstarFull.csv")
+def upload_seriespost_csv():
+    print("Updating seriespost table")
+    csv_file_path = get_csv_path("SeriesPost.csv")
 
     if len(csv_file_path) == 0:
-        print("Error: AllstarFull.csv not found")
+        print("Error: SeriesPost.csv not found")
         return
 
     # Process the CSV file
     try:
-        print(update_allstarfull_from_csv(csv_file_path))
+        print(update_seriespost_from_csv(csv_file_path))
         print("File processed successfully")
     except Exception as e:
         print(f"Error: {str(e)}")
 
 
-def update_allstarfull_from_csv(file_path):
+def update_seriespost_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
@@ -30,57 +31,63 @@ def update_allstarfull_from_csv(file_path):
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
 
         for row in reader:
-            # Convert empty strings to None
-            playerID = row["playerID"] or None
-            yearID = row["yearID"] or None
-            teamID = row["teamID"] or None
-            gameID = row["gameID"] or None
-            lgID = row["lgID"] or None
-            GP = int(row["GP"]) if row["GP"] else None
-            startingPos = int(row["startingPos"]) if row["startingPos"] else None
+            teamIDwinner = row["teamIDwinner"] or None
+            lgIDwinner = row["lgIDwinner"] or None
+            teamIDloser = row["teamIDloser"] or None
+            lgIDloser = row["lgIDloser"] or None
+            yearID = int(row["yearID"]) if row["yearID"] else None
+            round = int(row["round"]) if row["round"] else None
+            wins = int(row["wins"]) if row["wins"] else None
+            losses = int(row["losses"]) if row["losees"] else None
+            ties = int(row["ties"]) if row["ties"] else None
 
-            # Check if playerID exists in the people table
-            player_exists = session.query(People).filter_by(playerID=playerID).first()
+            lg_winner_exists = session.query(Leagues).filter_by(lgID=lgIDwinner).first()
 
-            if not player_exists:
+            if not lg_winner_exists:
                 print(
-                    f"playerID {playerID} does not exist in the people table. Skipping row."
+                    f"lgIDwinner {lgIDwinner} does not exist in the leagues table. Skipping row."
                 )
                 continue
 
-            lg_exists = session.query(Leagues).filter_by(lgID=lgID).first()
+            lg_loser_exists = session.query(Leagues).filter_by(lgID=lgIDloser).first()
 
-            if not lg_exists:
-                print(f"lgID {lgID} does not exist in the leagues table. Skipping row.")
+            if not lg_loser_exists:
+                print(
+                    f"lgIDloser {lgIDloser} does not exist in the leagues table. Skipping row."
+                )
                 continue
 
             # Check if a row with the same playerID, yearID, teamID, and gameID exists
             existing_entry = (
-                session.query(AllstarFull)
+                session.query(SeriesPost)
                 .filter_by(
-                    playerID=playerID,
+                    teamIDwinner=teamIDwinner,
+                    teamIDloser=teamIDloser,
                     yearID=yearID,
-                    lgID=lgID,
-                    teamID=teamID,
+                    round=round,
                 )
                 .first()
             )
 
             if existing_entry:
-                existing_entry.gameID = gameID
-                existing_entry.GP = GP
-                existing_entry.startingPos = startingPos
+                existing_entry.lgIDwinner = lgIDwinner
+                existing_entry.lgIDloser = lgIDloser
+                existing_entry.wins = wins
+                existing_entry.losses = losses
+                existing_entry.ties = ties
                 updated_rows += 1
             else:
                 # Insert a new record
-                new_entry = AllstarFull(
-                    playerID=playerID,
+                new_entry = SeriesPost(
+                    teamIDwinner=teamIDwinner,
+                    lgIDwinner=lgIDwinner,
+                    teamIDloser=teamIDwinner,
+                    lgIDloser=lgIDloser,
                     yearID=yearID,
-                    teamID=teamID,
-                    gameID=gameID,
-                    lgID=lgID,
-                    GP=GP,
-                    startingPos=startingPos,
+                    round=round,
+                    wins=wins,
+                    losses=losses,
+                    ties=ties,
                 )
                 session.add(new_entry)
                 new_rows += 1

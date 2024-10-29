@@ -6,6 +6,7 @@ from utils import create_enginestr_from_values, create_session_from_str, get_csv
 
 
 def upload_allstarfull_csv():
+    print("Updating allstarfull table")
     csv_file_path = get_csv_path("AllstarFull.csv")
 
     if len(csv_file_path) == 0:

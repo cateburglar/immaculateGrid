@@ -1,18 +1,47 @@
+import argparse
+
 from services import (
     upload_allstarfull_csv,
     upload_people_csv,
     upload_schools_csv,
+    upload_seriespost_csv,
     upload_teams_csv,
 )
 
-print("Updating people table from People.csv")
-upload_people_csv()
 
-print("Updating teams table from Teams.csv")
-upload_teams_csv()
+def main():
+    parser = argparse.ArgumentParser(description="Update database.")
+    parser.add_argument(
+        "tables",
+        metavar="T",
+        type=str,
+        nargs="+",
+        help="Names of the tables to update (e.g., people teams allstarfull schools)",
+    )
+    args = parser.parse_args()
 
-print("Updating allstarfull table from AllstarFull.csv")
-upload_allstarfull_csv()
+    # Convert the list of table names to a tuple
+    tables_to_update = tuple(args.tables)
 
-print("Updating teams table from Schools.csv")
-upload_schools_csv()
+    # Execute updates
+    update_tables(tables_to_update)
+
+
+def update_tables(tables):
+    for table in tables:
+        if table == "people":
+            upload_people_csv()
+        elif table == "teams":
+            upload_teams_csv()
+        elif table == "allstarfull":
+            upload_allstarfull_csv()
+        elif table == "schools":
+            upload_schools_csv()
+        elif table == "seriespost":
+            upload_seriespost_csv()
+        else:
+            print(f"Unknown table: {table}")
+
+
+if __name__ == "__main__":
+    main()
