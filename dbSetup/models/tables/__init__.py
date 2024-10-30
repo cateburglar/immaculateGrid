@@ -53,8 +53,22 @@ class Leagues(Base):
     league_active = Column(String(1), nullable=False)
 
     # Define relationship
-    allstarfull_entries = relationship("AllstarFull", back_populates="league")
-    teams_entries = relationship("Teams", back_populates="league")
+    allstarfull_entries = relationship(
+        "AllstarFull", foreign_keys="[AllstarFull.lgID]", back_populates="league"
+    )
+    teams_entries = relationship(
+        "Teams", foreign_keys="[Teams.lgID]", back_populates="league"
+    )
+    league_seriespost_winner = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.lgIDwinner]",
+        back_populates="winner_league",
+    )
+    league_seriespost_loser = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.lgIDloser]",
+        back_populates="loser_league",
+    )
 
 
 class Teams(Base):
@@ -116,7 +130,19 @@ class Teams(Base):
     )
 
     # Define relationships
-    league = relationship("Leagues", back_populates="teams_entries")
+    league = relationship(
+        "Leagues", foreign_keys=[lgID], back_populates="teams_entries"
+    )
+    seriespost_winner = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.teamIDwinner]",
+        back_populates="winner",
+    )
+    seriespost_loser = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.teamIDloser]",
+        back_populates="loser",
+    )
 
 
 class AllstarFull(Base):
@@ -142,3 +168,30 @@ class Schools(Base):
     school_city = Column(String(55), nullable=True)
     school_state = Column(String(55), nullable=True)
     school_country = Column(String(55), nullable=True)
+
+
+class SeriesPost(Base):
+    __tablename__ = "seriespost"
+    seriespost_ID = Column(Integer, primary_key=True, nullable=False)
+    teamIDwinner = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    lgIDwinner = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
+    teamIDloser = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    lgIDloser = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    round = Column(String(5), nullable=False)
+    wins = Column(SmallInteger, nullable=True)
+    losses = Column(SmallInteger, nullable=True)
+    ties = Column(SmallInteger, nullable=True)
+
+    winner = relationship(
+        "Teams", foreign_keys=[teamIDwinner], back_populates="seriespost_winner"
+    )
+    loser = relationship(
+        "Teams", foreign_keys=[teamIDloser], back_populates="seriespost_loser"
+    )
+    winner_league = relationship(
+        "Leagues", foreign_keys=[lgIDwinner], back_populates="league_seriespost_winner"
+    )
+    loser_league = relationship(
+        "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
+    )

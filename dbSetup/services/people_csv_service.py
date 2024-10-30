@@ -6,6 +6,7 @@ from utils import create_enginestr_from_values, create_session_from_str, get_csv
 
 
 def upload_people_csv():
+    print("Updating people table")
     csv_file_path = get_csv_path("People.csv")
 
     if len(csv_file_path) == 0:
