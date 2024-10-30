@@ -36,9 +36,9 @@ def update_seriespost_from_csv(file_path):
             teamIDloser = row["teamIDloser"] or None
             lgIDloser = row["lgIDloser"] or None
             yearID = int(row["yearID"]) if row["yearID"] else None
-            round = int(row["round"]) if row["round"] else None
+            round = row["round"] or None
             wins = int(row["wins"]) if row["wins"] else None
-            losses = int(row["losses"]) if row["losees"] else None
+            losses = int(row["losses"]) if row["losses"] else None
             ties = int(row["ties"]) if row["ties"] else None
 
             lg_winner_exists = session.query(Leagues).filter_by(lgID=lgIDwinner).first()
@@ -81,7 +81,7 @@ def update_seriespost_from_csv(file_path):
                 new_entry = SeriesPost(
                     teamIDwinner=teamIDwinner,
                     lgIDwinner=lgIDwinner,
-                    teamIDloser=teamIDwinner,
+                    teamIDloser=teamIDloser,
                     lgIDloser=lgIDloser,
                     yearID=yearID,
                     round=round,
