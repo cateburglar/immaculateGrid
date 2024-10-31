@@ -45,6 +45,35 @@ class People(Base):
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
 
+class Batting(Base):
+    __tablename__ = "batting"
+    batting_ID = Column(Integer(12), primary_key=True, nullable=False)
+    playerID = Column(String(9), nullable=False)
+    yearId = Column(SmallInteger(6), nullable=False)
+    teamID = Column(String(3), nullable=False)
+    stint = Column(SmallInteger(4), nullable=False)
+    b_G = Column(SmallInteger(6), nullable=False)
+    b_AB = Column(SmallInteger(6), nullable=False)
+    b_R = Column(SmallInteger(6), nullable=False)
+    b_H = Column(SmallInteger(6), nullable=False)
+    b_2B = Column(SmallInteger(6), nullable=False)
+    b_3B = Column(SmallInteger(6), nullable=False)
+    b_HR = Column(SmallInteger(6), nullable=False)
+    b_RBI = Column(SmallInteger(6), nullable=False)
+    b_SB = Column(SmallInteger(6), nullable=False)
+    b_CS = Column(SmallInteger(6), nullable=False)
+    b_BB = Column(SmallInteger(6), nullable=False)
+    b_SO = Column(SmallInteger(6), nullable=False)
+    b_IBB = Column(SmallInteger(6), nullable=False)
+    b_HBP = Column(SmallInteger(6), nullable=False)
+    b_SH = Column(SmallInteger(6), nullable=False)
+    b_SF = Column(SmallInteger(6), nullable=False)
+    b_GIDP = Column(SmallInteger(6), nullable=False)
+
+    __table_args__ = (Index("playerID", "teamID"),)
+
+    # Define relationships
+
 
 class Leagues(Base):
     __tablename__ = "leagues"
