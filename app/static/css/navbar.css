@@ -1,0 +1,42 @@
+/* Navbar Styling */
+.navbar {
+    background-image: var(--gradient-bottom-right); /* Diagonal gradient for a stylish look */
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white-smoke); /* White text color for contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--white-smoke); /* Keeps the logo visible */
+    text-decoration: none;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .navbar-link {
+    color: var(--white-smoke); /* Default link color */
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .navbar-link:hover {
+    background-color: var(--french-gray); /* Slight background change on hover */
+    color: var(--jet); /* Text color changes for contrast */
+  }
+  
+  .navbar-link-active {
+    color: var(--azul); /* Highlighted color for active link */
+    font-weight: bold;
+  }
+  
