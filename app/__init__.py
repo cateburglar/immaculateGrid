@@ -20,7 +20,7 @@ def create_app():
     def home():
         return render_template(
             "home.html",
-            title="SEA QUAIL BABY",
+            title="Home",
             message="SQL more like sea quail amiright?",
         )
 
