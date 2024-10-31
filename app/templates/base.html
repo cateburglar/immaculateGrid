@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     {% if title %}
     <title>{{ title }}</title>
     {% else %}
@@ -8,11 +10,12 @@
     {% endif %}
 </head>
 <body>
-<div>
-    Sea Quail:
-    <a href="{{ url_for('home') }}">Home</a>
-    <a href="{{ url_for('home_routes.login') }}">Login</a>
-</div>
+<nav class="navbar">
+    <div class="navbar-links">
+    <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home') }}">Home</a>
+    <a class="navbar-link {% if request.path == '/login' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.login') }}">Login</a>
+    </div>
+</nav>
 <hr>
 {% with messages = get_flashed_messages() %}
 {% if messages  %}
