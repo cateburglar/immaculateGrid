@@ -12,8 +12,8 @@
 <body>
 <nav class="navbar">
     <div class="navbar-links">
-    <a class="navbar-link navbar-link-active" href="{{ url_for('home') }}">Home</a>
-    <a class="navbar-link" href="{{ url_for('home_routes.login') }}">Login</a>
+    <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home') }}">Home</a>
+    <a class="navbar-link {% if request.path == '/login' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.login') }}">Login</a>
     </div>
 </nav>
 <hr>
