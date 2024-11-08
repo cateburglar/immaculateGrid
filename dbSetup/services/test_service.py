@@ -1,6 +1,6 @@
-import dbSetup.csi3335f2024 as cfg
-from dbSetup.models import AllstarFull, People, Schools, Teams, Pitching
-from dbSetup.utils import create_enginestr_from_values, create_session_from_str
+import csi3335f2024 as cfg
+from models import AllstarFull, People, Schools, Teams, Pitching
+from utils import create_enginestr_from_values, create_session_from_str
 
 def execute_tests(tests):
     for test in tests:
@@ -299,7 +299,7 @@ def compare_existing_pitching_entries():
         create_enginestr_from_values(cfg.baseballmysql)
     )
 
-    # Get the original AllstarFull rows
+    # Get the original pitching csv rows
     bb_result = bb_session.query(Pitching).all()
 
     # Go through each row in the original baseball database to make sure ours matches
@@ -311,7 +311,6 @@ def compare_existing_pitching_entries():
                 playerID=pitching_record.playerID,
                 yearID=pitching_record.yearID,
                 teamID=pitching_record.teamID,
-                pitchingID=pitching_record.pitchingID,
                 stint=pitching_record.stint,
                 p_W=pitching_record.p_W,
                 p_L=pitching_record.p_L,

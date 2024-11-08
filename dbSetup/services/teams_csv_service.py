@@ -1,8 +1,8 @@
 import csv
 
-import dbSetup.csi3335f2024 as cfg
-from dbSetup.models import Leagues, Teams
-from dbSetup.utils import create_enginestr_from_values, create_session_from_str, get_csv_path
+import csi3335f2024 as cfg
+from models import Leagues, Teams
+from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
 def upload_teams_csv():
