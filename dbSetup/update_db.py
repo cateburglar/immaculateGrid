@@ -1,12 +1,12 @@
 import argparse
 
-from dbSetup.services.pitching_csv_service import upload_pitching_csv
 from services import (
     upload_allstarfull_csv,
     upload_people_csv,
     upload_schools_csv,
     upload_seriespost_csv,
     upload_teams_csv,
+    upload_pitching_csv,
 )
 
 

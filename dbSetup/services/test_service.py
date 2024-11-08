@@ -1,6 +1,6 @@
-import csi3335f2024 as cfg
-from models import AllstarFull, People, Schools, Teams
-from utils import create_enginestr_from_values, create_session_from_str
+import dbSetup.csi3335f2024 as cfg
+from dbSetup.models import AllstarFull, People, Schools, Teams, Pitching
+from dbSetup.utils import create_enginestr_from_values, create_session_from_str
 
 
 def execute_tests(tests):
@@ -13,6 +13,8 @@ def execute_tests(tests):
             compare_existing_schools_entries()
         elif test == "teams":
             compare_existing_teams_entries()
+        elif test == "pitching":
+            compare_existing_pitching_entries()
         else:
             print(f"Unknown test: {test}")
 
@@ -285,5 +287,78 @@ def compare_existing_schools_entries():
     # Output test result
     if not rows_match:
         return "FAILURE: schools"
+    else:
+        return ""
+
+
+def compare_existing_pitching_entries():
+    print("Executing pitching test")
+
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
+    )
+
+    # Get the original AllstarFull rows
+    bb_result = bb_session.query(Pitching).all()
+
+    # Go through each row in the original baseball database to make sure ours matches
+    rows_match = True
+    for pitching_record in bb_result:
+        row_exists = (
+            sq_session.query(Pitching)
+            .filter_by(
+                playerID=pitching_record.playerID,
+                yearID=pitching_record.yearID,
+                teamID=pitching_record.teamID,
+                pitchingID=pitching_record.pitchingID,
+                stint=pitching_record.stint,
+                p_W=pitching_record.p_W,
+                p_L=pitching_record.p_L,
+                p_G=pitching_record.p_G,
+                p_GS=pitching_record.p_GS,
+                p_CG=pitching_record.p_CG,
+                p_SHO=pitching_record.p_SHO,
+                p_SV=pitching_record.p_SV,
+                p_IPOuts=pitching_record.p_IPOuts,
+                p_H=pitching_record.p_H,
+                p_ER=pitching_record.p_ER,
+                p_BB=pitching_record.p_BB,
+                p_SO=pitching_record.p_SO,
+                p_BAOpp=pitching_record.p_BAOpp,
+                p_ERA=pitching_record.p_ERA,
+                p_IBB=pitching_record.p_IBB,
+                p_WP=pitching_record.p_WP,
+                p_HBP=pitching_record.p_HBP,
+                p_BK=pitching_record.p_BK,
+                p_BFP=pitching_record.p_BFP,
+                p_GF=pitching_record.p_GF,
+                p_R=pitching_record.p_R,
+                p_SH=pitching_record.p_SH,
+                p_SF=pitching_record.p_SF,
+                p_GIDP=pitching_record.p_GIDP,
+            )
+            .first()
+        )
+
+        # Alert that test failed, and for what row
+        if not row_exists:
+            print(
+                f"Row could not be found for: playerid={pitching_record.playerID}, "
+                f"yearid={pitching_record.yearID}, lgID={pitching_record.lgID}, "
+                f"teamID={pitching_record.teamID}"
+            )
+            rows_match = False
+
+    # Commit and close sessions
+    sq_session.commit()
+    sq_session.close()
+    bb_session.commit()
+    bb_session.close()
+
+    # Output test result
+    if not rows_match:
+        return "FAILURE: pitching"
     else:
         return ""
