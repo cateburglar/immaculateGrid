@@ -1,5 +1,6 @@
 import argparse
 
+from dbSetup.services.pitching_csv_service import upload_pitching_csv
 from services import (
     upload_allstarfull_csv,
     upload_people_csv,
@@ -39,6 +40,8 @@ def update_tables(tables):
             upload_schools_csv()
         elif table == "seriespost":
             upload_seriespost_csv()
+        elif table == "pitching":
+            upload_pitching_csv()
         else:
             print(f"Unknown table: {table}")
 
