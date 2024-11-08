@@ -2,7 +2,6 @@ import dbSetup.csi3335f2024 as cfg
 from dbSetup.models import AllstarFull, People, Schools, Teams, Pitching
 from dbSetup.utils import create_enginestr_from_values, create_session_from_str
 
-
 def execute_tests(tests):
     for test in tests:
         if test == "allstarfull":
