@@ -1,5 +1,5 @@
 import csi3335f2024 as cfg
-from models import AllstarFull, People, Schools, Teams, Pitching
+from models import AllstarFull, People, Schools, Teams, Pitching, Appearances
 from utils import create_enginestr_from_values, create_session_from_str
 
 def execute_tests(tests):
@@ -14,6 +14,8 @@ def execute_tests(tests):
             compare_existing_teams_entries()
         elif test == "pitching":
             compare_existing_pitching_entries()
+        elif test == "appearances":
+            compare_existing_appearances_entries()
         else:
             print(f"Unknown test: {test}")
 
@@ -358,5 +360,67 @@ def compare_existing_pitching_entries():
     # Output test result
     if not rows_match:
         return "FAILURE: pitching"
+    else:
+        return ""
+
+
+def compare_existing_appearances_entries():
+    print("Executing appearances entries")
+
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
+    )
+
+    # Get all rows from the original People table
+    bb_result = bb_session.query(Appearances).all()
+
+    # Go through each row in the original baseball database to make sure ours matches
+    rows_match = True
+    for row in bb_result:
+        row_exists = (
+            sq_session.query(Appearances)
+            .filter_by(
+                playerID=row.playerID,
+                yearID = row.yearID,
+                teamID = row.teamID,
+                G_all = row.G_all,
+                GS = row.GS,
+                G_batting = row.G_batting,
+                G_defense = row.G_defense,
+                G_p = row.G_p,
+                G_c = row.G_c,
+                G_1b = row.G_1b,
+                G_2b = row.G_2b,
+                G_3b = row.G_3b,
+                G_ss = row.G_ss,
+                G_lf = row.G_lf,
+                G_cf = row.G_cf,
+                G_rf = row.G_rf,
+                G_of = row.G_of,
+                G_dh = row.G_dh,
+                G_ph = row.G_ph,
+                G_pr = row.G_pr,
+            )
+            .first()
+        )
+
+        # Alert that test failed, and for what row
+        if not row_exists:
+            print(f"Row does match for: playerid={row.playerID}")
+            rows_match = False
+        else:
+            print(f"one row down")
+
+    # Commit and close sessions
+    sq_session.commit()
+    sq_session.close()
+    bb_session.commit()
+    bb_session.close()
+
+    # Output test result
+    if not rows_match:
+        return "FAILURE: appearances"
     else:
         return ""
