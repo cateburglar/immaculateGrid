@@ -28,11 +28,13 @@ def signup():
         if not existing_user:
             # Hash the password
             hashed_password = generate_password_hash(
-                form.password.data, method="sha256"
+                form.password.data, method="scrypt"
             )
 
             # Create a new User instance
-            new_user = User(username=form.username.data, password=hashed_password)
+            new_user = User(
+                username=form.username.data, password=hashed_password, privilege="USER"
+            )
 
             # Add the new user
             db.session.add(new_user)
@@ -40,6 +42,10 @@ def signup():
 
             # Show a successs message and redirect to login
             flash("Account created successfully!")
+            login_user(new_user, remember=False)
+            flash(f"Welcome, {new_user.username}!", "success")
+            return redirect(url_for("home_routes.home"))
+
         else:
             flash("Username is already taken, please try again", "danger")
     return render_template("signup.html", title="Sign Up", form=form)
