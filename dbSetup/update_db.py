@@ -8,6 +8,7 @@ from services import (
     upload_teams_csv,
     upload_pitching_csv,
     upload_appearances_csv,
+    upload_fielding_csv
 )
 
 
@@ -45,6 +46,8 @@ def update_tables(tables):
             upload_pitching_csv()
         elif table == "appearances":
             upload_appearances_csv()
+        elif table == "fielding.csv":
+            upload_fielding_csv()
         else:
             print(f"Unknown table: {table}")
 

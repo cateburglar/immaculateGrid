@@ -1,5 +1,5 @@
 import csi3335f2024 as cfg
-from models import AllstarFull, People, Schools, Teams, Pitching, Appearances
+from models import AllstarFull, People, Fielding, Schools, Teams, Pitching, Appearances
 from utils import create_enginestr_from_values, create_session_from_str
 
 def execute_tests(tests):
@@ -16,6 +16,8 @@ def execute_tests(tests):
             compare_existing_pitching_entries()
         elif test == "appearances":
             compare_existing_appearances_entries()
+        elif test == "fielding":
+            compare_existing_fielding_entries()
         else:
             print(f"Unknown test: {test}")
 
@@ -410,8 +412,6 @@ def compare_existing_appearances_entries():
         if not row_exists:
             print(f"Row does match for: playerid={row.playerID}")
             rows_match = False
-        else:
-            print(f"one row down")
 
     # Commit and close sessions
     sq_session.commit()
@@ -422,5 +422,61 @@ def compare_existing_appearances_entries():
     # Output test result
     if not rows_match:
         return "FAILURE: appearances"
+    else:
+        return ""
+
+def compare_existing_fielding_entries():
+    print("Executing fielding entries")
+
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
+    )
+
+    # Get all rows from the original People table
+    bb_result = bb_session.query(Fielding).all()
+
+    # Go through each row in the original baseball database to make sure ours matches
+    rows_match = True
+    for row in bb_result:
+        row_exists = (
+            sq_session.query(Fielding)
+            .filter_by(
+                playerID=row.playerID,
+                yearID = row.yearID,
+                teamID = row.teamID,
+                stint = row.stint,
+                position = row.position,
+                f_G = row.f_G,
+                f_GS = row.f_GS,
+                f_InnOuts = row.f_InnOuts,
+                f_PO = row.f_PO,
+                f_A = row.f_A,
+                f_E = row.f_E,
+                f_DP = row.f_DP,
+                f_PB = row.f_PB,
+                f_WP = row.f_WP,
+                f_SB = row.f_SB,
+                f_CS = row.f_CS,
+                f_ZR = row.f_ZR
+            )
+            .first()
+        )
+
+        # Alert that test failed, and for what row
+        if not row_exists:
+            print(f"Row does match for: playerid={row.playerID}")
+            rows_match = False
+
+    # Commit and close sessions
+    sq_session.commit()
+    sq_session.close()
+    bb_session.commit()
+    bb_session.close()
+
+    # Output test result
+    if not rows_match:
+        return "FAILURE: fielding"
     else:
         return ""
