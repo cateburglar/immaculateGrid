@@ -16,12 +16,16 @@ def login_required_middleware():
     # Define routes that are accessible without login
     allowed_routes = ["/login", "/signup"]
 
-    # Allow access to static files and specific allowed routes
-    if request.path.startswith("/static") or request.path in allowed_routes:
-        return  # No redirection for static files and allowed routes
+    # Allow access to static files
+    if request.path.startswith("/static"):
+        return  # No redirection for static files
 
-    # Redirect to login if user is not authenticated for restricted routes
-    if not current_user.is_authenticated:
+    # Redirect logged-in users trying to access login or signup pages to the home page
+    if current_user.is_authenticated and request.path in allowed_routes:
+        return redirect(url_for("home_routes.home"))
+
+    # Redirect non-authenticated users trying to access restricted routes to login
+    if not current_user.is_authenticated and request.path not in allowed_routes:
         return redirect(url_for("home_routes.login"))
 
 
