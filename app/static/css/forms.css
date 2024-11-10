@@ -3,7 +3,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #0056b3 !important;
+    background-color: var(--azul);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -17,7 +17,7 @@
 }
 
 /* Form layout */
-.login-form {
+.app-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -47,7 +47,7 @@
 
 /* Error message styling */
 .error {
-    color: deeppink;
+    color: red;
     font-size: 0.875rem;
     margin-top: 5px;
 }
@@ -67,16 +67,15 @@
     background-color: #0056b3;
 }
 
-/* Link to sign up page */
-.signup-link {
+.form-link {
     text-align: center;
 }
 
-.signup-link a {
-    color: #007BFF;
+.form-link a {
+    color: var(--french-gray);
 }
 
-.signup-link a:hover {
-    text-decoration: underline;
+.form-link a:hover {
+    color: var(--jet-black);
 }
 
