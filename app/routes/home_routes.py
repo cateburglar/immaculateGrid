@@ -1,26 +1,39 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import login_user
+from werkzeug.security import check_password_hash
 
 from app.forms.loginForm import LoginForm
 
-# the name "home_bp" is what we use to refer to the blueprint
-# in url_for() statements-- to access the def login()
-# url, you would do home_bp.login
+from ..models import User
+
 home_routes = Blueprint("home_routes", __name__, template_folder="templates")
 
 
-# so the url will be /home/login bc of the blueprint
+# /
+@home_routes.route("/")
+def home():
+    return render_template(
+        "home.html",
+        title="Home",
+        message="SQL more like sea quail amiright?",
+    )
+
+
+# /login
 @home_routes.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # this is because we dont actually have a system for logging in yet
-        flash(
-            "Login requested for user {}, remember_me={}".format(
-                form.username.data, form.remember_me.data
-            )
-        )
+        # Retrieve the user from the database
+        user = User.query.filter_by(username=form.username.data).first()
 
-        # after they login, send them home but display messages
-        return redirect(url_for("home"))
+        # Verify if the user exists and the password is correct
+        if user and check_password_hash(user.password, form.password.data):
+            # Log in the user and manage 'remember me' option
+            login_user(user, remember=form.remember_me.data)
+            flash(f"Welcome, {user.username}!", "success")
+            return redirect(url_for("home"))  # Redirect to protected home route
+
+        flash("Invalid username or password", "danger")
 
     return render_template("login.html", title="Sign In", form=form)
