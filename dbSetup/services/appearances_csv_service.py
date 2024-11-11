@@ -1,7 +1,7 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import Appearances, People
+from models import Appearances, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
@@ -25,12 +25,14 @@ def update_appearances_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        updated_rows = 0
+        peopleNotExist=0
+        teamNotExists=0
+        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-        skipCount=0
-        peopleNotExist=0
+
+        #read in all csv data lol
         for row in reader:
             appearances_record = Appearances(
                 playerID = row["playerID"],
@@ -54,17 +56,21 @@ def update_appearances_from_csv(file_path):
                 G_ph = row["G_ph"] or None,
                 G_pr = row["G_pr"] or None,
             )
-
             # Check if playerID exists in the people table
             player_exists = session.query(People).filter_by(playerID=appearances_record.playerID).first()
 
             if not player_exists:
                 peopleNotExist+=1
-                print(
-                    f"playerID {appearances_record.playerID} does not exist in the people table. Skipping row."
-                )
+                #if we make an error log, message can go here
                 continue
-
+            
+            #check if teamid exists in teams table
+            team_exists = session.query(Teams).filter_by(teamID=appearances_record.teamID).first()
+            
+            if not team_exists:
+                teamNotExists+=1
+                #if we make an error log, a message could go here.
+                continue
 
             # Check if a row with the same playerID, yearID, teamID, and stint exists
             existing_entry = (
@@ -76,9 +82,11 @@ def update_appearances_from_csv(file_path):
                 )
                 .first()
             )
+
+            #dont update any currently existing rows, just skip it
             if existing_entry:
                 skipCount+=1
-                #print( f"error- row with matching playerID, yearId, teamid, and stint exists for playerID {appearances_record.playerID}. Skipping row.")
+                #if we make an error log, a message could go here.
                 continue
             else:
                 # Insert a new record
@@ -91,8 +99,8 @@ def update_appearances_from_csv(file_path):
                 new_rows += 1
 
             session.commit()
-        print(f"{skipCount} rows with matching teamids, yearids, and playerids existed. skipped those rows.")
-        print(f"{peopleNotExist} people were skipped because they didn't exist in people table")
 
     session.close()
-    return {"new_rows": new_rows, "updated_rows": updated_rows}
+    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
+            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
