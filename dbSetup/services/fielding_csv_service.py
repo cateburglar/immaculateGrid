@@ -29,14 +29,15 @@ def update_fielding_from_csv(file_path):
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-
+        skipCount=0
+        peopleNotExist=0
         for row in reader:
             fielding_record = Fielding(
                 playerID=row['playerID'],
                 yearID=int(row['yearID']),
                 teamID=row['teamID'],
                 stint=int(row['stint']),
-                position=row['position'],
+                position=row['POS'],
                 f_G=row['G'],
                 f_GS=row['GS'],
                 f_InnOuts=row['InnOuts'],
@@ -44,17 +45,18 @@ def update_fielding_from_csv(file_path):
                 f_A=row['A'],
                 f_E=row['E'],
                 f_DP=row['DP'],
-                f_PB=row['PB'],
-                f_WP=row['WP'],
-                f_SB=row['SB'],
-                f_CS=row['CS'],
-                f_ZR=row['ZR'],
+                f_PB=row['PB'] if row['PB'] else None,
+                f_WP=row['WP'] if row['WP'] else None,
+                f_SB=row['SB'] if row['SB'] else None,
+                f_CS=row['CS'] if row['CS'] else None,
+                f_ZR=row['ZR'] if row['ZR'] else None,
             )
 
             # Check if playerID exists in the people table
-            player_exists = session.query(Fielding).filter_by(playerID=fielding_record.playerID).first()
+            player_exists = session.query(People).filter_by(playerID=fielding_record.playerID).first()
 
             if not player_exists:
+                peopleNotExist+=1
                 print(
                     f"playerID {fielding_record.playerID} does not exist in the people table. Skipping row."
                 )
@@ -72,11 +74,9 @@ def update_fielding_from_csv(file_path):
                 )
                 .first()
             )
-
             if existing_entry:
-                print(
-                    f"error- playerID {fielding_record.playerID} already exists. Skipping row."
-                )
+                skipCount+=1
+                print(f"error- row with matching playerID, yearId, teamid, and stint exists for playerID {fielding_record.playerID}. Skipping row.")
                 continue
             else:
                 # Insert a new record
@@ -90,6 +90,8 @@ def update_fielding_from_csv(file_path):
                 new_rows += 1
 
             session.commit()
+        print(f"{skipCount} rows with matching teamids, yearids, stints, and playerids existed. skipped those rows.")
+        print(f"{peopleNotExist} people were skipped because they didn't exist in people table")
 
     session.close()
     return {"new_rows": new_rows, "updated_rows": updated_rows}

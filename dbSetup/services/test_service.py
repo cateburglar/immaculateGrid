@@ -323,7 +323,7 @@ def compare_existing_pitching_entries():
                 p_CG=pitching_record.p_CG,
                 p_SHO=pitching_record.p_SHO,
                 p_SV=pitching_record.p_SV,
-                p_IPOuts=pitching_record.p_IPOuts,
+                p_IPouts=pitching_record.p_IPouts,
                 p_H=pitching_record.p_H,
                 p_ER=pitching_record.p_ER,
                 p_BB=pitching_record.p_BB,
@@ -348,8 +348,8 @@ def compare_existing_pitching_entries():
         if not row_exists:
             print(
                 f"Row could not be found for: playerid={pitching_record.playerID}, "
-                f"yearid={pitching_record.yearID}, lgID={pitching_record.lgID}, "
-                f"teamID={pitching_record.teamID}"
+                f"yearid={pitching_record.yearID}, teamId={pitching_record.teamID}, "
+                f"stint={pitching_record.stint}"
             )
             rows_match = False
 
