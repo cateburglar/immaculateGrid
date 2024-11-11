@@ -1,0 +1,39 @@
+name: Update Database
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # or any version your project requires
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt  # Ensure this file lists all dependencies, including `services`
+
+      - name: Run update_db.py
+        run: python3 dbSetup/update_db.py
+
+      - name: Verify success
+        if: ${{ success() }}
+        run: echo "Database update completed successfully!"
+
+      - name: Handle failure
+        if: ${{ failure() }}
+        run: echo "Database update failed."
