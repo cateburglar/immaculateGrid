@@ -25,7 +25,9 @@ def update_pitching_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        updated_rows = 0
+        peopleNotExist=0
+        teamNotExists=0
+        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -68,11 +70,22 @@ def update_pitching_from_csv(file_path):
 
             if not player_exists:
                 peopleNotExist+=1
+<<<<<<< Updated upstream
                 print(
                     f"playerID {pitching_record.playerID} does not exist in the people table. Skipping row."
                 )
+=======
+                #if we make an error log, message can go here
+>>>>>>> Stashed changes
                 continue
 
+            #check if teamid exists in teams table
+            team_exists = session.query(Teams).filter_by(teamID=appearances_record.teamID).first()
+            
+            if not team_exists:
+                teamNotExists+=1
+                #if we make an error log, a message could go here.
+                continue
 
             # Check if a row with the same playerID, yearID, teamID, and stint exists
             existing_entry = (
@@ -88,9 +101,13 @@ def update_pitching_from_csv(file_path):
 
             if existing_entry:
                 skipCount+=1
+<<<<<<< Updated upstream
                 #print(
                 #    f"error- row with matching playerid, yearid, teamid, and stint for playerID {pitching_record.playerID} already exists. Skipping row."
                 #)
+=======
+                #if we make error log, message can go here
+>>>>>>> Stashed changes
                 continue
             else:
                 # Insert a new record
@@ -131,4 +148,6 @@ def update_pitching_from_csv(file_path):
         print(f"{skipCount} rows with matching teamids, yearids, stints, and playerids existed. skipped those rows.")
         print(f"{peopleNotExist} people were skipped because they didn't exist in people table")
     session.close()
-    return {"new_rows": new_rows, "updated_rows": updated_rows}
+    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
+            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
