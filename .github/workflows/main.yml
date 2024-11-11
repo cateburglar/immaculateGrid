@@ -29,12 +29,22 @@ jobs:
           sudo systemctl start mysql
           sudo systemctl enable mysql
 
-      - name: Set up MySQL root password
+      - name: Reset MySQL root password
         run: |
-          # Running mysql_secure_installation to set the root password
+          # Start MySQL with --skip-grant-tables so we can reset the root password
+          sudo systemctl stop mysql
+          sudo mysqld_safe --skip-grant-tables &
+
+          # Wait for MySQL to start with no authentication
+          sleep 10
+
+          # Update root password without authentication
           sudo mysql -e "UPDATE mysql.user SET authentication_string = PASSWORD('root') WHERE User = 'root' AND Host = 'localhost';"
           sudo mysql -e "FLUSH PRIVILEGES;"
-          sudo mysql -e "CREATE DATABASE IF NOT EXISTS seaquail;"
+
+          # Stop the MySQL instance and restart it normally
+          sudo systemctl stop mysql
+          sudo systemctl start mysql
 
       - name: Install dependencies
         run: |
