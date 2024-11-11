@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: Install MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-server
+
+      - name: Create MySQL socket directory
+        run: |
+          sudo mkdir -p /var/run/mysqld
+          sudo chown mysql:mysql /var/run/mysqld
+
+      - name: Start MySQL server
+        run: |
+          sudo systemctl start mysql
+          sudo systemctl enable mysql
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Wait for MySQL to be ready
+        run: |
+          MAX_RETRIES=20
+          RETRY_INTERVAL=5
+          TRIES=0
+          until mysqladmin -uroot -proot ping --silent; do
+            if [ "$TRIES" -ge "$MAX_RETRIES" ]; then
+              echo "MySQL did not become ready in time."
+              exit 1
+            fi
+            echo "Waiting for MySQL..."
+            sleep $RETRY_INTERVAL
+            TRIES=$((TRIES+1))
+          done
+
+      - name: Import MySQL dump file
+        run: |
+          mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS seaquail;"
+          mysql -uroot -proot seaquail < ./dbSetup/static/seaquail.sql
+
+      - name: Run update_db.py
+        env:
+          MYSQL_HOST: localhost
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_DATABASE: seaquail
+        run: python3 dbSetup/update_db.py
+
+      - name: Print MySQL logs on failure
+        if: failure()
+        run: sudo journalctl -u mysql || echo "No MySQL logs found."

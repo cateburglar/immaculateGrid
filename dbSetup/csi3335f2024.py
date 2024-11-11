@@ -1,8 +1,10 @@
+import os
+
 mysql = {
-    "host": "localhost",
-    "user": "root",
-    "password": "password",
-    "db": "seaquail",
+    "host": os.getenv("MYSQL_HOST", "localhost"),
+    "user": os.getenv("MYSQL_USER", "root"),
+    "password": os.getenv("MYSQL_PASSWORD", "password"),
+    "db": os.getenv("MYSQL_DATABASE", "seaquail"),
 }
 
 baseballmysql = {

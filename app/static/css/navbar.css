@@ -19,6 +19,8 @@
   .navbar-links {
     display: flex;
     gap: 15px;
+    justify-content: flex-start;
+    flex-grow: 1;
   }
   
   .navbar-link {
@@ -31,12 +33,12 @@
   }
   
   .navbar-link:hover {
-    background-color: var(--french-gray); /* Slight background change on hover */
-    color: var(--jet); /* Text color changes for contrast */
+    background-color: var(--french-gray);
+    color: var(--jet);
   }
   
   .navbar-link-active {
-    color: var(--azul); /* Highlighted color for active link */
+    color: var(--azul);
     font-weight: bold;
   }
   
