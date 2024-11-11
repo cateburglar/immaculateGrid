@@ -95,13 +95,7 @@ def update_pitching_from_csv(file_path):
 
             if existing_entry:
                 skipCount+=1
-<<<<<<< Updated upstream
-                #print(
-                #    f"error- row with matching playerid, yearid, teamid, and stint for playerID {pitching_record.playerID} already exists. Skipping row."
-                #)
-=======
                 #if we make error log, message can go here
->>>>>>> Stashed changes
                 continue
             else:
                 # Insert a new record
