@@ -133,9 +133,7 @@ def update_pitching_from_csv(file_path):
                 new_rows += 1
 
             session.commit()
-        print(f"{skipCount} rows with matching teamids, yearids, stints, and playerids existed. skipped those rows.")
-        print(f"{peopleNotExist} people were skipped because they didn't exist in people table")
     session.close()
-    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
+    return {"new_rows": new_rows, "rows skipped bc already existed: ": skipCount,
             "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}

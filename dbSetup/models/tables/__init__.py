@@ -198,7 +198,7 @@ class SeriesPost(Base):
 
 class Pitching(Base):
     __tablename__ = "pitching"
-    pitchingID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    pitching_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
