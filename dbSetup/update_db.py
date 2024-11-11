@@ -1,14 +1,7 @@
 import argparse
+import inspect
 
-from services import (
-    upload_allstarfull_csv,
-    upload_people_csv,
-    upload_schools_csv,
-    upload_seriespost_csv,
-    upload_teams_csv,
-    upload_pitching_csv,
-    upload_appearances_csv,
-)
+import services  # Assuming services.py is in the same directory
 
 
 def main():
@@ -17,34 +10,33 @@ def main():
         "tables",
         metavar="T",
         type=str,
-        nargs="+",
-        help="Names of the tables to update (e.g., people teams allstarfull schools)",
+        nargs="*",
+        help="Names of the tables to update (e.g., people teams allstarfull schools). If no tables are provided, all will be updated.",
     )
     args = parser.parse_args()
 
-    # Convert the list of table names to a tuple
-    tables_to_update = tuple(args.tables)
+    # If no tables are specified, call all functions in services
+    tables_to_update = args.tables if args.tables else get_all_service_functions()
 
     # Execute updates
     update_tables(tables_to_update)
 
 
+def get_all_service_functions():
+    """Retrieve all update functions from the services module."""
+    return [
+        name.replace("upload_", "").replace("_csv", "")
+        for name, func in inspect.getmembers(services, inspect.isfunction)
+        if name.startswith("upload_") and name.endswith("_csv")
+    ]
+
+
 def update_tables(tables):
     for table in tables:
-        if table == "people":
-            upload_people_csv()
-        elif table == "teams":
-            upload_teams_csv()
-        elif table == "allstarfull":
-            upload_allstarfull_csv()
-        elif table == "schools":
-            upload_schools_csv()
-        elif table == "seriespost":
-            upload_seriespost_csv()
-        elif table == "pitching":
-            upload_pitching_csv()
-        elif table == "appearances":
-            upload_appearances_csv()
+        func_name = f"upload_{table}_csv"
+        if hasattr(services, func_name):
+            func = getattr(services, func_name)
+            func()  # Call the function
         else:
             print(f"Unknown table: {table}")
 
