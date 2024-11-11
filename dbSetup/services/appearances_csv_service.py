@@ -35,7 +35,7 @@ def update_appearances_from_csv(file_path):
             appearances_record = Appearances(
                 playerID = row["playerID"],
                 yearID = int(row["yearID"]),
-                teamID = int(row["teamID"]),
+                teamID = row["teamID"],
                 G_all = row["G_all"] or None,
                 GS = row["GS"] or None,
                 G_batting = row["G_batting"] or None,
