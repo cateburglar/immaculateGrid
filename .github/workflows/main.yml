@@ -57,6 +57,11 @@ jobs:
             TRIES=$((TRIES+1))
           done
 
+      - name: Import MySQL dump file
+        run: |
+          mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS seaquail;"
+          mysql -uroot -proot seaquail < ./dbSetup/static/seaquail.sql
+
       - name: Run update_db.py
         env:
           MYSQL_HOST: localhost
