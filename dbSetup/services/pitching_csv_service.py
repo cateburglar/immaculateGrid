@@ -1,7 +1,7 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import Pitching, People
+from models import Pitching, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
@@ -74,7 +74,7 @@ def update_pitching_from_csv(file_path):
                 continue
 
             #check if teamid exists in teams table
-            team_exists = session.query(Teams).filter_by(teamID=appearances_record.teamID).first()
+            team_exists = session.query(Teams).filter_by(teamID=pitching_record.teamID).first()
             
             if not team_exists:
                 teamNotExists+=1

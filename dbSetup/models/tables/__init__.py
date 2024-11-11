@@ -210,7 +210,7 @@ class Pitching(Base):
     p_CG = Column(SmallInteger, nullable=True)
     p_SHO =Column(SmallInteger, nullable=True)
     p_SV = Column(SmallInteger, nullable=True)
-    p_IPOuts = Column(Integer, nullable=True)
+    p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
     p_ER = Column(SmallInteger, nullable=True)
     p_ER = Column(SmallInteger, nullable=True)
