@@ -70,13 +70,7 @@ def update_pitching_from_csv(file_path):
 
             if not player_exists:
                 peopleNotExist+=1
-<<<<<<< Updated upstream
-                print(
-                    f"playerID {pitching_record.playerID} does not exist in the people table. Skipping row."
-                )
-=======
                 #if we make an error log, message can go here
->>>>>>> Stashed changes
                 continue
 
             #check if teamid exists in teams table
