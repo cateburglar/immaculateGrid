@@ -29,7 +29,8 @@ def update_pitching_from_csv(file_path):
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-
+        skipCount=0
+        peopleNotExist=0
         for row in reader:
             pitching_record = Pitching(
                 playerID=row['playerID'],
@@ -43,7 +44,7 @@ def update_pitching_from_csv(file_path):
                 p_CG=int(row['CG']) if row['CG'] else None,
                 p_SHO=int(row['SHO']) if row['SHO'] else None,
                 p_SV=int(row['SV']) if row['SV'] else None,
-                p_IPOuts=int(row['IPOuts']) if row['IPOuts'] else None,
+                p_IPouts=int(row['IPouts']) if row['IPouts'] else None,
                 p_H=int(row['H']) if row['H'] else None,
                 p_ER=int(row['ER']) if row['ER'] else None,
                 p_BB=int(row['BB']) if row['BB'] else None,
@@ -66,6 +67,7 @@ def update_pitching_from_csv(file_path):
             player_exists = session.query(People).filter_by(playerID=pitching_record.playerID).first()
 
             if not player_exists:
+                peopleNotExist+=1
                 print(
                     f"playerID {pitching_record.playerID} does not exist in the people table. Skipping row."
                 )
@@ -85,9 +87,10 @@ def update_pitching_from_csv(file_path):
             )
 
             if existing_entry:
-                print(
-                    f"error- playerID {pitching_record.playerID} already exists. Skipping row."
-                )
+                skipCount+=1
+                #print(
+                #    f"error- row with matching playerid, yearid, teamid, and stint for playerID {pitching_record.playerID} already exists. Skipping row."
+                #)
                 continue
             else:
                 # Insert a new record
@@ -95,7 +98,6 @@ def update_pitching_from_csv(file_path):
                     playerID=pitching_record.playerID,
                     yearID=pitching_record.yearID,
                     teamID=pitching_record.teamID,
-                    pitchingID= pitching_record.pitchingID,
                     stint = pitching_record.stint,
                     p_W = pitching_record.p_W,
                     p_L = pitching_record.p_L,
@@ -104,7 +106,7 @@ def update_pitching_from_csv(file_path):
                     p_CG = pitching_record.p_CG,
                     p_SHO = pitching_record.p_SHO,
                     p_SV = pitching_record.p_SV,
-                    p_IPOuts = pitching_record.p_IPOuts,
+                    p_IPouts = pitching_record.p_IPouts,
                     p_H = pitching_record.p_H,
                     p_ER = pitching_record.p_ER,
                     p_BB = pitching_record.p_BB,
@@ -126,6 +128,7 @@ def update_pitching_from_csv(file_path):
                 new_rows += 1
 
             session.commit()
-
+        print(f"{skipCount} rows with matching teamids, yearids, stints, and playerids existed. skipped those rows.")
+        print(f"{peopleNotExist} people were skipped because they didn't exist in people table")
     session.close()
     return {"new_rows": new_rows, "updated_rows": updated_rows}
