@@ -25,7 +25,7 @@ jobs:
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=10  # Increased retries for startup
 
     steps:
       - name: Check out repository
@@ -43,15 +43,27 @@ jobs:
 
       - name: Wait for MySQL to be ready
         run: |
-          until mysqladmin ping -h"localhost" --silent; do
+          MAX_RETRIES=20  # Increase retries for startup
+          RETRY_INTERVAL=5
+          TRIES=0
+          until mysqladmin ping -hmysql --silent; do
+            if [ "$TRIES" -ge "$MAX_RETRIES" ]; then
+              echo "MySQL did not become ready in time."
+              exit 1
+            fi
             echo "Waiting for MySQL..."
-            sleep 5
+            sleep $RETRY_INTERVAL
+            TRIES=$((TRIES+1))
           done
 
       - name: Run update_db.py
         env:
-          MYSQL_HOST: localhost
+          MYSQL_HOST: mysql # Use service alias for MySQL
           MYSQL_USER: root
           MYSQL_PASSWORD: password
           MYSQL_DATABASE: seaquail
         run: python3 dbSetup/update_db.py
+
+      - name: Print MySQL logs on failure
+        if: failure()
+        run: docker logs $(docker ps -q -f ancestor=mysql:8) || echo "No MySQL container logs found."
