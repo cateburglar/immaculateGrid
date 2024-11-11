@@ -1,4 +1,4 @@
-name: Update Database
+name: CI
 
 on:
   push:
@@ -10,37 +10,41 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-database:
+  build:
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:8
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: seaquail
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysql -uroot -ppassword -e 'SELECT 1'"
-          --health-interval=5s
-          --health-timeout=3s
-          --health-retries=10
-          --cpus="1.5"
-          --memory="512m"
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
-      - name: Check out repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Start mysql server
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE seaquail; -uroot -proot'
+          mysql -e 'SHOW DATABASES;' -uroot -proot
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3
         with:
           python-version: "3.12"
 
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Wait for MySQL to be ready
@@ -48,7 +52,7 @@ jobs:
           MAX_RETRIES=20
           RETRY_INTERVAL=5
           TRIES=0
-          until mysql -uroot -ppassword -hmysql -e 'SELECT 1' &> /dev/null; do
+          until mysqladmin ping -hmysql --silent; do
             if [ "$TRIES" -ge "$MAX_RETRIES" ]; then
               echo "MySQL did not become ready in time."
               exit 1
@@ -62,7 +66,7 @@ jobs:
         env:
           MYSQL_HOST: mysql
           MYSQL_USER: root
-          MYSQL_PASSWORD: password
+          MYSQL_PASSWORD: root
           MYSQL_DATABASE: seaquail
         run: python3 dbSetup/update_db.py
 
