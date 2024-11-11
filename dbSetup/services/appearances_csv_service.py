@@ -78,7 +78,7 @@ def update_appearances_from_csv(file_path):
             )
             if existing_entry:
                 skipCount+=1
-                print( f"error- row with matching playerID, yearId, teamid, and stint exists for playerID {appearances_record.playerID}. Skipping row.")
+                #print( f"error- row with matching playerID, yearId, teamid, and stint exists for playerID {appearances_record.playerID}. Skipping row.")
                 continue
             else:
                 # Insert a new record
