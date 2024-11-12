@@ -25,7 +25,7 @@ def update_homegames_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        peopleNotExist=0
+        parksNotExist=0
         teamNotExist=0
         skipCount=0
 
@@ -48,9 +48,9 @@ def update_homegames_from_csv(file_path):
            # park_exists = session.query(Parks).filter_by(playerID=homegames_record.parkID).first()
 
             #if not park_exists:
-             #   peopleNotExist+=1
+             #   parksNotExist+=1
               #  print(
-               #     f"playerID {park_exists.playerID} does not exist in the people table. Skipping row."
+               #     f"playerID {park_exists.parkID} does not exist in the people table. Skipping row."
                 #)
                 #continue
 
@@ -86,5 +86,5 @@ def update_homegames_from_csv(file_path):
 
     session.close()
     return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
-            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+            "rows skipped bc their parkid didn't exist in parks table: ": parksNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
