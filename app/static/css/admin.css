@@ -1,4 +1,12 @@
 /* User list styles */
+.users-title {
+    text-align: center;
+}
+
+.users-subtitle {
+    text-align: center;
+}
+
 .user-list {
     list-style-type: none;
     padding: 0;
@@ -7,16 +15,20 @@
 
 .user-list-item {
     margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--white-smoke-hsl);
+    border: 1px solid var(--french-gray);
 }
 
 .user-link {
     text-decoration: none;
-    color: var(--azul);
+    color: var(--jet);
     font-weight: bold;
 }
 
 .user-link:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* User detail styles */

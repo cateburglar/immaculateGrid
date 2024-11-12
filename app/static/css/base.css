@@ -23,6 +23,11 @@
   --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
 }
 
+/* Set default text color */
+body {
+  color: var(--jet);
+}
+
 
 /* Container for consistent page layout */
 .container {
