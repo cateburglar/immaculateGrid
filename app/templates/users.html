@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1>All Users</h1>
-<ul>
+<ul class="user-list">
     {% for user in users %}
-        <li>
-            <a href="{{ url_for('admin_routes.user_detail', user_id=user.id) }}">{{ user.username }}</a>
+        <li class="user-list-item">
+            <a class="user-link" href="{{ url_for('admin_routes.user_detail', user_id=user.id) }}">{{ user.username }}</a>
         </li>
     {% endfor %}
 </ul>

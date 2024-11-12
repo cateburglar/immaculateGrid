@@ -1,0 +1,43 @@
+/* User list styles */
+.user-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.user-list-item {
+    margin: 10px 0;
+}
+
+.user-link {
+    text-decoration: none;
+    color: var(--azul);
+    font-weight: bold;
+}
+
+.user-link:hover {
+    text-decoration: underline;
+}
+
+/* User detail styles */
+.user-detail {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid var(--french-gray);
+    border-radius: 8px;
+    background-color: var(--white-smoke-hsl);
+}
+
+.user-detail h1 {
+    margin-bottom: 20px;
+}
+
+.user-detail p {
+    margin: 10px 0;
+}
+
+.ban-form, .unban-form {
+    display: inline-block;
+    margin-right: 10px;
+}
