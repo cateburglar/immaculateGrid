@@ -196,6 +196,7 @@ class SeriesPost(Base):
         "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
     )
 
+
 class Pitching(Base):
     __tablename__ = "pitching"
     pitching_ID = Column(Integer, primary_key=True, nullable=False)
@@ -229,6 +230,47 @@ class Pitching(Base):
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
 
+class Appearances(Base):
+    __tablename__ = "appearances"
+    appearances_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    G_all = Column(SmallInteger, nullable=True)
+    GS = Column(SmallInteger, nullable=True)
+    G_batting = Column(SmallInteger, nullable=True)
+    G_defense = Column(SmallInteger, nullable=True)
+    G_p = Column(SmallInteger, nullable=True)
+    G_c = Column(SmallInteger, nullable=True)
+    G_1b = Column(SmallInteger, nullable=True)
+    G_2b = Column(SmallInteger, nullable=True)
+    G_3b = Column(SmallInteger, nullable=True)
+    G_ss = Column(SmallInteger, nullable=True)
+    G_lf = Column(SmallInteger, nullable=True)
+    G_cf = Column(SmallInteger, nullable=True)
+    G_rf = Column(SmallInteger, nullable=True)
+    G_of = Column(SmallInteger, nullable=True)
+    G_dh = Column(SmallInteger, nullable=True)
+    G_ph = Column(SmallInteger, nullable=True)
+    G_pr = Column(SmallInteger, nullable=True)
 
-
-
+class Fielding(Base):
+    __tablename__ = "fielding"
+    fielding_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    stint = Column(SmallInteger, nullable=False)
+    position = Column(String(2), nullable=True)
+    f_G = Column(SmallInteger, nullable=True)
+    f_GS = Column(SmallInteger, nullable=True)
+    f_InnOuts = Column(SmallInteger, nullable=True)
+    f_PO = Column(SmallInteger, nullable=True)
+    f_A = Column(SmallInteger, nullable=True)
+    f_E = Column(SmallInteger, nullable=True)
+    f_DP = Column(SmallInteger, nullable=True)
+    f_PB = Column(SmallInteger, nullable=True)
+    f_WP = Column(SmallInteger, nullable=True)
+    f_SB = Column(SmallInteger, nullable=True)
+    f_CS = Column(SmallInteger, nullable=True)
+    f_ZR = Column(SmallInteger, nullable=True)

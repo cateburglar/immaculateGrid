@@ -10,7 +10,7 @@ def main():
         metavar="T",
         type=str,
         nargs="+",
-        help="Names of the tables to test (e.g., People Teams AllstarFull Schools)",
+        help="Names of the tables to test (e.g., People, Teams, AllstarFull, etc)",
     )
     args = parser.parse_args()
 
