@@ -37,7 +37,6 @@ def signup():
                 nameLast=form.nameLast.data,
                 username=form.username.data,
                 password=hashed_password,
-                privilege="USER",
             )
 
             # Add the new user
@@ -45,7 +44,7 @@ def signup():
             db.session.commit()
 
             # Show a successs message and redirect to login
-            flash("Account created successfully!")
+            flash("Account created successfully!", "success")
             login_user(new_user, remember=False)
             flash(f"Welcome, {new_user.username}!", "success")
             return redirect(url_for("home_routes.home"))
