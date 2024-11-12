@@ -34,14 +34,14 @@ def update_homegames_from_csv(file_path):
 
         for row in reader:
             homegames_record = HomeGames(
-                teamID = row['teamkey']
-                parkID = row['parkkey']
-                yearID = row['yearkey']
-                firstGame = row['spanfirst'] or None
-                lastGame = row['spanlast'] or None
-                games = row['games'] or None
-                openings = row['openings'] or None
-                attendance = row['attendance'] or None         
+                teamID = row['teamkey'],
+                parkID = row['parkkey'],
+                yearID = row['yearkey'],
+                firstGame = row['spanfirst'] or None,
+                lastGame = row['spanlast'] or None,
+                games = row['games'] or None,
+                openings = row['openings'] or None,
+                attendance = row['attendance'] or None,     
             )
 
             # Check if park exists in the parks table
