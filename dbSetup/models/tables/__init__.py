@@ -279,7 +279,7 @@ class HomeGames(Base):
     __tablename__ = "homegames"
     homegames_ID = Column(Integer, primary_key=True, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
-    parkID = Column(String, ForeignKey("parks.parkID"), nullable=False)
+    parkID = Column(String, nullable=False) #,ForeignKey("parks.parkID"))
     yearID = Column(SmallInteger, nullable=False)
     firstGame = Column(Date, nullable=True)
     lastGame = Column(Date, nullable=True)

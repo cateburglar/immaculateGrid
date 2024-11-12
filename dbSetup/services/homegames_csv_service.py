@@ -1,7 +1,7 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import HomeGames, People, Teams #, Parks
+from models import HomeGames, Teams #, Parks
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 

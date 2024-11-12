@@ -18,6 +18,8 @@ def execute_tests(tests):
             compare_existing_appearances_entries()
         elif test == "fielding":
             compare_existing_fielding_entries()
+        elif test == "homegames":
+            compare_existing_homegames_entries()
         else:
             print(f"Unknown test: {test}")
 
