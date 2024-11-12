@@ -50,7 +50,7 @@ def update_homegames_from_csv(file_path):
             if not park_exists:
                 parksNotExist+=1
                 print(
-                    f"parkID {park_exists.parkID} does not exist in the parks table. Skipping row."
+                    f"parkID {homegames_record.parkID} does not exist in the parks table. Skipping row."
                 )
                 continue
 
