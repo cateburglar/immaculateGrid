@@ -199,7 +199,7 @@ class SeriesPost(Base):
 
 class Pitching(Base):
     __tablename__ = "pitching"
-    pitching_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    pitching_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
@@ -232,7 +232,7 @@ class Pitching(Base):
 
 class Appearances(Base):
     __tablename__ = "appearances"
-    appearances_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    appearances_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
@@ -256,7 +256,7 @@ class Appearances(Base):
 
 class Fielding(Base):
     __tablename__ = "fielding"
-    fielding_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    fielding_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
