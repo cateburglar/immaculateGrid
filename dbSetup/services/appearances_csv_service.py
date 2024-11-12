@@ -90,12 +90,7 @@ def update_appearances_from_csv(file_path):
                 continue
             else:
                 # Insert a new record
-                new_entry = Appearances(
-                    playerID=appearances_record.playerID,
-                    yearID=appearances_record.yearID,
-                    teamID=appearances_record.teamID,
-                )
-                session.add(new_entry)
+                session.add(appearances_record)
                 new_rows += 1
 
             session.commit()
