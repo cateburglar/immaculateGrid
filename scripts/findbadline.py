@@ -29,5 +29,5 @@ def find_problematic_line(file_path, encoding="utf-8"):
 
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
-csv_file_path = os.path.join(base_dir, "static", "csv", "People.csv")
+csv_file_path = os.path.join(base_dir, "dbSetup", "static", "csv", "People.csv")
 find_problematic_line(csv_file_path)

@@ -30,6 +30,6 @@ def switch_death_columns(file_path, start_row):
 
 # Example usage
 base_dir = os.path.abspath(os.path.dirname(__file__))
-csv_file_path = os.path.join(base_dir, "static", "csv", "People.csv")
+csv_file_path = os.path.join(base_dir, "dbSetup", "static", "csv", "People.csv")
 start_row = 20927
 switch_death_columns(csv_file_path, start_row)
