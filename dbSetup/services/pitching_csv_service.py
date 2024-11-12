@@ -99,37 +99,7 @@ def update_pitching_from_csv(file_path):
                 continue
             else:
                 # Insert a new record
-                new_entry = Pitching(
-                    playerID=pitching_record.playerID,
-                    yearID=pitching_record.yearID,
-                    teamID=pitching_record.teamID,
-                    stint = pitching_record.stint,
-                    p_W = pitching_record.p_W,
-                    p_L = pitching_record.p_L,
-                    p_G = pitching_record.p_G,
-                    p_GS = pitching_record.p_GS,
-                    p_CG = pitching_record.p_CG,
-                    p_SHO = pitching_record.p_SHO,
-                    p_SV = pitching_record.p_SV,
-                    p_IPouts = pitching_record.p_IPouts,
-                    p_H = pitching_record.p_H,
-                    p_ER = pitching_record.p_ER,
-                    p_BB = pitching_record.p_BB,
-                    p_SO = pitching_record.p_SO,
-                    p_BAOpp = pitching_record.p_BAOpp,
-                    p_ERA = pitching_record.p_ERA,
-                    p_IBB = pitching_record.p_IBB,
-                    p_WP = pitching_record.p_WP,
-                    p_HBP = pitching_record.p_HBP,
-                    p_BK = pitching_record.p_BK,
-                    p_BFP = pitching_record.p_BFP,
-                    p_GF =pitching_record.p_GF,
-                    p_R = pitching_record.p_R,
-                    p_SH = pitching_record.p_SH,
-                    p_SF =pitching_record.p_SF,
-                    p_GIDP =pitching_record.p_GIDP,
-                )
-                session.add(new_entry)
+                session.add(pitching_record)
                 new_rows += 1
 
             session.commit()
