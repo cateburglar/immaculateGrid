@@ -9,6 +9,10 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     privilege = db.Column(db.String(5), nullable=False)
 
+    @property
+    def role(self):
+        return "ADMIN" if self.privilege == "ADMIN" else "USER"
+
 
 from app import login_manager
 

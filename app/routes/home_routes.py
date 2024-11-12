@@ -33,7 +33,7 @@ def signup():
 
             # Create a new User instance
             new_user = User(
-                username=form.username.data, password=hashed_password, privilege="USER"
+                username=form.username.data, password=hashed_password, privilege="ADMIN"
             )
 
             # Add the new user
