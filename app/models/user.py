@@ -24,9 +24,4 @@ from app import login_manager
 # Load user by ID for session management
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.query.get(int(user_id))
-    if user and user.banned:
-        logout_user()
-        flash("Your account has been banned.", "danger")
-        return redirect(url_for("home_routes.login"))
-    return user
+    return User.query.get(int(user_id))

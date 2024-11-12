@@ -16,7 +16,7 @@
         <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.home') }}">Home</a>
         {% if current_user.is_authenticated %}
             {% if current_user.role == 'ADMIN' %}
-                <a class="navbar-link {% if request.path == '/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
+                <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
             <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
@@ -26,6 +26,17 @@
     </div>
 </nav>
 <hr></hr>
+<div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
 <div>
     {% block content %}
     {% endblock %}

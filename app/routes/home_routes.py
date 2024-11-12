@@ -67,7 +67,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             # Log in the user and manage 'remember me' option
             login_user(user, remember=form.remember_me.data)
-            flash(f"Welcome, {user.username}!", "success")
+            flash(f"Welcome, {user.nameFirst} {user.nameLast}!", "success")
             return redirect(url_for("home_routes.home"))
 
         flash("Invalid username or password", "danger")
