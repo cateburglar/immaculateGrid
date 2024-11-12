@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from app import db
 
@@ -11,7 +11,11 @@ admin_routes = Blueprint("admin_routes", __name__, template_folder="templates")
 @admin_routes.route("/users")
 @admin_required
 def users():
-    all_users = User.query.filter_by(privilege="USER").all()
+    search_query = request.args.get("search", "")
+    if search_query:
+        all_users = User.query.filter(User.username.contains(search_query)).all()
+    else:
+        all_users = User.query.filter_by(privilege="USER").all()
     return render_template("users.html", users=all_users)
 
 
