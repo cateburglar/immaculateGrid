@@ -4,6 +4,7 @@
 <h1>User Details for {{ user.username }}</h1>
     <p><strong>ID:</strong> {{ user.id }}</p>
     <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><Stong>Name: </Stong> {{ user.nameFirst }} {{ user.nameLast }}</p>
     <!-- Add more user details as needed -->
     <a href="{{ url_for('admin_routes.users') }}">Back to All Users</a>
 {% endblock %}
