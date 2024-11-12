@@ -279,10 +279,20 @@ class HomeGames(Base):
     __tablename__ = "homegames"
     homegames_ID = Column(Integer, primary_key=True, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
-    parkID = Column(String, nullable=False) #,ForeignKey("parks.parkID"))
+    parkID = Column(String, ForeignKey("parks.parkID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     firstGame = Column(Date, nullable=True)
     lastGame = Column(Date, nullable=True)
     games = Column(Integer, nullable=True)
     openings = Column(Integer, nullable=True)
     attendance = Column(Integer, nullable=True)
+
+
+class Parks(Base):
+    __tablename__ = "parks"
+    parkID = Column(String, primary_key=True, nullable=False)
+    park_alias = Column(String, nullable=False)
+    park_name = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    country = Column(String, nullable=False)

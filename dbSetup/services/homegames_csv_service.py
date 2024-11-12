@@ -1,7 +1,7 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import HomeGames, Teams #, Parks
+from models import HomeGames, Teams, Parks
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 
@@ -45,14 +45,14 @@ def update_homegames_from_csv(file_path):
             )
 
             # Check if park exists in the parks table
-           # park_exists = session.query(Parks).filter_by(playerID=homegames_record.parkID).first()
+            park_exists = session.query(Parks).filter_by(parkID=homegames_record.parkID).first()
 
-            #if not park_exists:
-             #   parksNotExist+=1
-              #  print(
-               #     f"playerID {park_exists.parkID} does not exist in the people table. Skipping row."
-                #)
-                #continue
+            if not park_exists:
+                parksNotExist+=1
+                print(
+                    f"parkID {park_exists.parkID} does not exist in the parks table. Skipping row."
+                )
+                continue
 
             #check if teamid exists in teams table
             team_exists = session.query(Teams).filter_by(teamID=homegames_record.teamID).first()
