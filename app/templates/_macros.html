@@ -100,13 +100,67 @@
     <h3>{{ title }}</h3>
     <select class="searchable-dropdown">
         <option value="" disabled selected>Select an option</option>
-        <option value="300_avg_season">.300 AVG Season</option>
-        <option value="3_era_season">≤ 3.00 ERA Season</option>
-        <option value="10_hr_season">10+ HR Season</option>
-        <option value="10_win_season">10+ Win Season</option>
-        <option value="100_rbi_season">100+ RBI Season</option>
-        <option value="100_run_season">100+ Run Season</option>
-        <!-- Add more options as needed -->
+        <optgroup label="Career Options">
+            <option value="300_avg_career">.300+ AVG Career</option>
+            <option value="3.00_era_career">≤ 3.00 ERA Career</option>
+            <option value="200_wins_career">200+ Wins Career</option>
+            <option value="2000_k_career">2000+ K Career</option>
+            <option value="2000_hits_career">2000+ Hits Career</option>
+            <option value="300_hr_career">300+ HR Career</option>
+            <option value="300_save_career">300+ Save Career</option>
+            <option value="300_wins_career">300+ Wins Career</option>
+            <option value="3000_k_career">3000+ K Career</option>
+            <option value="3000_hits_career">3000+ Hits Career</option>
+            <option value="40_WAR_career">40+ WAR Career</option>
+            <option value="500_hr_career">500+ HR Career</option>
+        </optgroup>
+        <optgroup label="Season Options">
+            <option value="300_avg_season">.300 AVG Season</option>
+            <option value="3_era_season">≤ 3.00 ERA Season</option>
+            <option value="10_hr_season">10+ HR Season</option>
+            <option value="10_win_season">10+ Win Season</option>
+            <option value="100_rbi_season">100+ RBI Season</option>
+            <option value="100_run_season">100+ Run Season</option>
+            <option value="20_win_season">20+ Win Season</option>
+            <option value="200_hits_season">200+ Hits Season</option>
+            <option value="200_k_season">200+ K Season</option>
+            <option value="30_hr_30_sb_season">30+ HR / 30+ SB Season</option>
+            <option value="30_hr_season">30+ HR Season</option>
+            <option value="30_sb_season">30+ SB Season</option>
+            <option value="30_save_season">30+ Save Season</option>
+            <option value="40_2b_season">40+ 2B Season</option>
+            <option value="40_hr_season">40+ HR Season</option>
+            <option value="40_save_season">40+ Save Season</option>
+            <option value="6_war_season">6+ WAR Season</option>
+        </optgroup>
+        <optgroup label="Position options">
+            <option value="designated_hitter">Designated Hitter</option>
+            <option value="pitched">Pitched</option>
+            <option value="played_catcher">Played Catcher</option>
+            <option value="played_center_field">Played Center Field</option>
+            <option value="played_first_base">Played First Base</option>
+            <option value="played_left_field">Played Left Field</option>
+            <option value="played_outfield">Played Outfield</option>
+            <option value="played_right_field">Played Right Field</option>
+            <option value="played_second_base">Played Second Base</option>
+            <option value="played_shortstop">Played Shortstop</option>
+            <option value="played_third_base">Played Third Base</option>
+        </optgroup>
+        <optgroup label="Miscellaneous">
+            <option value="all_star">All Star</option>
+            <option value="born_outside_us">Born Outside US 50 States and DC</option>
+            <option value="cy_young">Cy Young</option>
+            <option value="first_round_draft_pick">First Round Draft Pick</option>
+            <option value="gold_glove">Gold Glove</option>
+            <option value="hall_of_fame">Hall of Fame</option>
+            <option value="mvp">MVP</option>
+            <option value="only_one_team">Only One Team</option>
+            <option value="played_in_major_negro_lgs">Played In Major Negro Lgs</option>
+            <option value="rookie_of_the_year">Rookie of the Year</option>
+            <option value="silver_slugger">Silver Slugger</option>
+            <option value="threw_a_no_hitter">Threw a No‑Hitter</option>
+            <option value="world_series_champ">World Series Champ</option>
+        </optgroup>
     </select>
 </div>
 {% endmacro %}
