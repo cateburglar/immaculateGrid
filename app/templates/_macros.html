@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% macro prompt(title, name, team_mappings, option_groups, value=None) %}
 <div class="prompt-container">
     <h3>{{ title }}</h3>
@@ -93,3 +94,20 @@
 </script>
 
 {% endmacro %}
+=======
+{% macro prompt(title) %}
+<div class="prompt-container">
+    <h3>{{ title }}</h3>
+    <select class="searchable-dropdown">
+        <option value="" disabled selected>Select an option</option>
+        <option value="300_avg_season">.300 AVG Season</option>
+        <option value="3_era_season">≤ 3.00 ERA Season</option>
+        <option value="10_hr_season">10+ HR Season</option>
+        <option value="10_win_season">10+ Win Season</option>
+        <option value="100_rbi_season">100+ RBI Season</option>
+        <option value="100_run_season">100+ Run Season</option>
+        <!-- Add more options as needed -->
+    </select>
+</div>
+{% endmacro %}
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Container for the whole page */
 .solver-container {
     display: flex;
@@ -11,10 +12,19 @@
     margin: 0 auto;
     padding: 20px;
     background-color: var(--mimi-pink);
+=======
+/* Center the grid page and style it */
+.grid-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--french-gray);
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+<<<<<<< HEAD
 /* Container for the player results */
 .results-grid {
     display: grid;
@@ -51,6 +61,13 @@
     font-size: 2rem;
     text-align: center;
     margin-bottom: 25px;
+=======
+/* Grid page title styling */
+.grid-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)
     color: var(--jet);
 }
 
@@ -65,13 +82,18 @@
     width: 45%;
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     background-color: var(--amaranth-pink);
+=======
+    background-color: var(--white-smoke-hsl);
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)
     margin: auto;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+<<<<<<< HEAD
 /* Main dropdowns in each prompt */
 .searchable-dropdown {
     width: 100%;
@@ -154,4 +176,8 @@
 
 .clear-button:hover {
     background-color: var(--dark-red)
+=======
+.searchable-dropdown {
+    width: 100%;
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)
 }
