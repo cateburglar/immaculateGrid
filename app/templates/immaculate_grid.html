@@ -3,6 +3,7 @@
 {% from "_macros.html" import prompt %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="solver-container">
     <div class="grid-container">
         <h1 class="grid-title">Immaculate Grid Solver</h1>
@@ -25,6 +26,14 @@
             <h4>{{player.player_years}}</h4>
         </a>
         {% endfor %}
+=======
+<div class="grid-container">
+    <h1 class="grid-title">Immaculate Grid Solver</h1>
+    <div class="prompts-container">
+        {{ prompt('Prompt 1') }}
+        {{ prompt('Prompt 2') }}
+        <!-- Add more prompts as needed -->
+>>>>>>> 0f9d042 (adding prompts with dropdown menus)
     </div>
 </div>
 {% endblock %}
