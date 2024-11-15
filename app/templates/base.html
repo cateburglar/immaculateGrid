@@ -5,12 +5,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grid.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
     {% if title %}
     <title>{{ title }}</title>
     {% else %}
     <title>Sea Quail</title>
     {% endif %}
 </head>
+
+{% block scripts %}
+<!-- Initialize Select2 -->
+<script>
+    $(document).ready(function() {
+        $('.searchable-dropdown').select2({
+            placeholder: "Select an option",
+            allowClear: true
+        });
+    });
+</script>
+{% endblock %}
+
 <body>
 <nav class="navbar">
     <div class="navbar-links">
@@ -19,6 +36,7 @@
             {% if current_user.role == 'ADMIN' %}
                 <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
+            <a class="navbar-link" href="{{ url_for('grid_routes.prompts') }}">Immaculate Grid Solver</a>
             <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>

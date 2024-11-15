@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>Immaculate Grid Solver</h1>
+{% from "_macros.html" import prompt %}
 
+{% block content %}
+<div class="grid-container">
+    <h1 class="grid-title">Immaculate Grid Solver</h1>
+    <div class="prompts-container">
+        {{ prompt('Prompt 1') }}
+        {{ prompt('Prompt 2') }}
+        <!-- Add more prompts as needed -->
+    </div>
+</div>
 {% endblock %}
