@@ -65,14 +65,6 @@
             <h4>Select Team</h4>
             {{ team_dropdown() }}
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-position" style="display: none;">
-            <h4>Select Position</h4>
-            <select class="searchable-dropdown">
-                <option value="" disabled selected>Select a position</option>
-                <option value="position1">Position 1</option>
-                <option value="position2">Position 2</option>
-            </select>
-        </div>
         <div class="additional-dropdown" id="additional-dropdown-operator" style="display: none;">
             <h4>Select Operator</h4>
             <select class="searchable-dropdown">
@@ -96,11 +88,6 @@
                 $('#additional-dropdown-team').show();
             } else {
                 $('#additional-dropdown-team').hide();
-            }
-            if (selectedValues.includes('designated_hitter') || selectedValues.includes('pitched') || selectedValues.includes('played_catcher') || selectedValues.includes('played_center_field') || selectedValues.includes('played_first_base') || selectedValues.includes('played_left_field') || selectedValues.includes('played_outfield') || selectedValues.includes('played_right_field') || selectedValues.includes('played_second_base') || selectedValues.includes('played_shortstop') || selectedValues.includes('played_third_base')) {
-                $('#additional-dropdown-position').show();
-            } else {
-                $('#additional-dropdown-position').hide();
             }
             if (selectedValues.includes('avg_career') || selectedValues.includes('era_career') || selectedValues.includes('wins_career') || selectedValues.includes('k_career') || selectedValues.includes('hits_career') || selectedValues.includes('hr_career') || selectedValues.includes('save_career') || selectedValues.includes('war_career') || selectedValues.includes('avg_season') || selectedValues.includes('era_season') || selectedValues.includes('hr_season') || selectedValues.includes('win_season') || selectedValues.includes('rbi_season') || selectedValues.includes('run_season') || selectedValues.includes('hits_season') || selectedValues.includes('k_season') || selectedValues.includes('hr_sb_season') || selectedValues.includes('save_season') || selectedValues.includes('war_season')) {
                 $('#additional-dropdown-operator').show();
