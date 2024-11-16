@@ -99,12 +99,18 @@
     width: 100%;
 }
 
+<<<<<<< HEAD
 /* Subsequent dropdowns */
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdowns {
     width: 100%;
 }
 
+<<<<<<< HEAD
 /* Each additional dropdown (Styling was made before multidropdowns were removed */
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown {
     width: 100%;
     display: flex;
@@ -112,12 +118,18 @@
     align-items: center;
 }
 
+<<<<<<< HEAD
 /* Title for dropdown */
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown h4 {
     color: var(--jet);
 }
 
+<<<<<<< HEAD
 /* Search box styling */
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown .searchable-dropdown,
 .additional-dropdown select {
     width: 100%;
@@ -128,7 +140,10 @@
     width: 100% !important;
 }
 
+<<<<<<< HEAD
 /* Styling for the numbers */
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown .number-input {
     width: 90%;
     padding: 10px;
@@ -136,6 +151,7 @@
     border: 1px solid var(--french-gray);
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
 }
 
 /* Get player button styling */
@@ -180,4 +196,6 @@
 .searchable-dropdown {
     width: 100%;
 >>>>>>> 0f9d042 (adding prompts with dropdown menus)
+=======
+>>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 }
