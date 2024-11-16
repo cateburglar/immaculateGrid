@@ -21,6 +21,7 @@
   --gradient-top-left: linear-gradient(225deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
   --gradient-bottom-left: linear-gradient(315deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
   --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  font-family: 'Arial', sans-serif;
 }
 
 /* Set default text color */

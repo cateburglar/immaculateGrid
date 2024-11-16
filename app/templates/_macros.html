@@ -1,40 +1,30 @@
 {% macro prompt(title) %}
 <div class="prompt-container">
     <h3>{{ title }}</h3>
-    <select class="searchable-dropdown">
+    <select class="searchable-dropdown main-dropdown">
         <option value="" disabled selected>Select an option</option>
         <optgroup label="Career Options">
-            <option value="300_avg_career">.300+ AVG Career</option>
-            <option value="3.00_era_career">≤ 3.00 ERA Career</option>
-            <option value="200_wins_career">200+ Wins Career</option>
-            <option value="2000_k_career">2000+ K Career</option>
-            <option value="2000_hits_career">2000+ Hits Career</option>
-            <option value="300_hr_career">300+ HR Career</option>
-            <option value="300_save_career">300+ Save Career</option>
-            <option value="300_wins_career">300+ Wins Career</option>
-            <option value="3000_k_career">3000+ K Career</option>
-            <option value="3000_hits_career">3000+ Hits Career</option>
-            <option value="40_WAR_career">40+ WAR Career</option>
-            <option value="500_hr_career">500+ HR Career</option>
+            <option value="avg_career">AVG Career</option>
+            <option value="era_career">ERA Career</option>
+            <option value="wins_career">Wins Career</option>
+            <option value="k_career">K Career</option>
+            <option value="hits_career">Hits Career</option>
+            <option value="hr_career">HR Career</option>
+            <option value="save_career">Save Career</option>
+            <option value="war_career">WAR Career</option>
         </optgroup>
         <optgroup label="Season Options">
-            <option value="300_avg_season">.300 AVG Season</option>
-            <option value="3_era_season">≤ 3.00 ERA Season</option>
-            <option value="10_hr_season">10+ HR Season</option>
-            <option value="10_win_season">10+ Win Season</option>
-            <option value="100_rbi_season">100+ RBI Season</option>
-            <option value="100_run_season">100+ Run Season</option>
-            <option value="20_win_season">20+ Win Season</option>
-            <option value="200_hits_season">200+ Hits Season</option>
-            <option value="200_k_season">200+ K Season</option>
-            <option value="30_hr_30_sb_season">30+ HR / 30+ SB Season</option>
-            <option value="30_hr_season">30+ HR Season</option>
-            <option value="30_sb_season">30+ SB Season</option>
-            <option value="30_save_season">30+ Save Season</option>
-            <option value="40_2b_season">40+ 2B Season</option>
-            <option value="40_hr_season">40+ HR Season</option>
-            <option value="40_save_season">40+ Save Season</option>
-            <option value="6_war_season">6+ WAR Season</option>
+            <option value="avg_season">AVG Season</option>
+            <option value="era_season">ERA Season</option>
+            <option value="hr_season">HR Season</option>
+            <option value="win_season">Win Season</option>
+            <option value="rbi_season">RBI Season</option>
+            <option value="run_season">Run Season</option>
+            <option value="hits_season">Hits Season</option>
+            <option value="k_season">K Season</option>
+            <option value="hr_sb_season">HR / SB Season</option>
+            <option value="save_season">Save Season</option>
+            <option value="war_season">WAR Season</option>
         </optgroup>
         <optgroup label="Team Options">
             <option value="played_for_team">Played For Team</option>
@@ -61,12 +51,225 @@
             <option value="hall_of_fame">Hall of Fame</option>
             <option value="mvp">MVP</option>
             <option value="only_one_team">Only One Team</option>
-            <option value="played_in_major_negro_lgs">Played In Major Negro Lgs</option>
+            <option value="player_in_nl">Played In Major Negro Lgs</option>
             <option value="rookie_of_the_year">Rookie of the Year</option>
             <option value="silver_slugger">Silver Slugger</option>
             <option value="threw_a_no_hitter">Threw a No‑Hitter</option>
             <option value="world_series_champ">World Series Champ</option>
         </optgroup>
     </select>
+
+    <!-- Additional dropdowns -->
+    <div class="additional-dropdowns">
+        <div class="additional-dropdown" id="additional-dropdown-team" style="display: none;">
+            <h4>Select Team</h4>
+            {{ team_dropdown() }}
+        </div>
+        <div class="additional-dropdown" id="additional-dropdown-position" style="display: none;">
+            <h4>Select Position</h4>
+            <select class="searchable-dropdown">
+                <option value="" disabled selected>Select a position</option>
+                <option value="position1">Position 1</option>
+                <option value="position2">Position 2</option>
+            </select>
+        </div>
+        <div class="additional-dropdown" id="additional-dropdown-operator" style="display: none;">
+            <h4>Select Operator</h4>
+            <select class="searchable-dropdown">
+                <option value="" disabled selected>Select an operator</option>
+                <option value="greater_than">Greater Than</option>
+                <option value="less_than">Less Than</option>
+            </select>
+        </div>
+        <div class="additional-dropdown" id="additional-dropdown-number" style="display: none;">
+            <h4>Enter Number</h4>
+            <input type="number" class="number-input" placeholder="Enter a number">
+        </div>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        function updateDropdowns() {
+            var selectedValues = $('.main-dropdown').val() || [];
+            if (selectedValues.includes('played_for_team')) {
+                $('#additional-dropdown-team').show();
+            } else {
+                $('#additional-dropdown-team').hide();
+            }
+            if (selectedValues.includes('designated_hitter') || selectedValues.includes('pitched') || selectedValues.includes('played_catcher') || selectedValues.includes('played_center_field') || selectedValues.includes('played_first_base') || selectedValues.includes('played_left_field') || selectedValues.includes('played_outfield') || selectedValues.includes('played_right_field') || selectedValues.includes('played_second_base') || selectedValues.includes('played_shortstop') || selectedValues.includes('played_third_base')) {
+                $('#additional-dropdown-position').show();
+            } else {
+                $('#additional-dropdown-position').hide();
+            }
+            if (selectedValues.includes('avg_career') || selectedValues.includes('era_career') || selectedValues.includes('wins_career') || selectedValues.includes('k_career') || selectedValues.includes('hits_career') || selectedValues.includes('hr_career') || selectedValues.includes('save_career') || selectedValues.includes('war_career') || selectedValues.includes('avg_season') || selectedValues.includes('era_season') || selectedValues.includes('hr_season') || selectedValues.includes('win_season') || selectedValues.includes('rbi_season') || selectedValues.includes('run_season') || selectedValues.includes('hits_season') || selectedValues.includes('k_season') || selectedValues.includes('hr_sb_season') || selectedValues.includes('save_season') || selectedValues.includes('war_season')) {
+                $('#additional-dropdown-operator').show();
+                $('#additional-dropdown-number').show();
+            } else {
+                $('#additional-dropdown-operator').hide();
+                $('#additional-dropdown-number').hide();
+            }
+        }
+
+        $('.main-dropdown').on('change select2:unselect select2:clear', function() {
+            updateDropdowns();
+        });
+
+        // Initialize Select2
+        $('.searchable-dropdown').select2({
+            placeholder: "Select an option",
+            allowClear: true
+        });
+
+        // Initial check
+        updateDropdowns();
+    });
+</script>
+
+{% endmacro %}
+
+{% macro team_dropdown() %}
+<select class="searchable-dropdown">
+    <option value="" disabled selected>Select a team</option>
+    <option value="altoona_mountain_city">Altoona Mountain City</option>
+    <option value="anaheim_angels">Anaheim Angels</option>
+    <option value="arizona_diamondbacks">Arizona Diamondbacks</option>
+    <option value="atlanta_braves">Atlanta Braves</option>
+    <option value="baltimore_canaries">Baltimore Canaries</option>
+    <option value="baltimore_marylands">Baltimore Marylands</option>
+    <option value="baltimore_monumentals">Baltimore Monumentals</option>
+    <option value="baltimore_orioles">Baltimore Orioles</option>
+    <option value="baltimore_terrapins">Baltimore Terrapins</option>
+    <option value="boston_americans">Boston Americans</option>
+    <option value="boston_beaneaters">Boston Beaneaters</option>
+    <option value="boston_bees">Boston Bees</option>
+    <option value="boston_braves">Boston Braves</option>
+    <option value="boston_doves">Boston Doves</option>
+    <option value="boston_red_caps">Boston Red Caps</option>
+    <option value="boston_red_sox">Boston Red Sox</option>
+    <option value="boston_red_stockings">Boston Red Stockings</option>
+    <option value="boston_reds">Boston Reds</option>
+    <option value="boston_rustlers">Boston Rustlers</option>
+    <option value="brooklyn_atlantics">Brooklyn Atlantics</option>
+    <option value="brooklyn_bridegrooms">Brooklyn Bridegrooms</option>
+    <option value="brooklyn_dodgers">Brooklyn Dodgers</option>
+    <option value="brooklyn_eckfords">Brooklyn Eckfords</option>
+    <option value="brooklyn_gladiators">Brooklyn Gladiators</option>
+    <option value="brooklyn_grays">Brooklyn Grays</option>
+    <option value="brooklyn_grooms">Brooklyn Grooms</option>
+    <option value="brooklyn_robins">Brooklyn Robins</option>
+    <option value="brooklyn_superbas">Brooklyn Superbas</option>
+    <option value="brooklyn_tip_tops">Brooklyn Tip-Tops</option>
+    <option value="brooklyn_wards_wonders">Brooklyn Ward's Wonders</option>
+    <option value="buffalo_bisons">Buffalo Bisons</option>
+    <option value="buffalo_blues">Buffalo Blues</option>
+    <option value="buffalo_buffeds">Buffalo Buffeds</option>
+    <option value="california_angels">California Angels</option>
+    <option value="chicago_chi_feds">Chicago Chi-Feds</option>
+    <option value="chicago_colts">Chicago Colts</option>
+    <option value="chicago_cubs">Chicago Cubs</option>
+    <option value="chicago_orphans">Chicago Orphans</option>
+    <option value="chicago_pirates">Chicago Pirates</option>
+    <option value="chicago_whales">Chicago Whales</option>
+    <option value="chicago_white_sox">Chicago White Sox</option>
+    <option value="chicago_white_stockings">Chicago White Stockings</option>
+    <option value="chicago_pittsburgh_union_league">Chicago/Pittsburgh (Union League)</option>
+    <option value="cincinnati_kellys_killers">Cincinnati Kelly's Killers</option>
+    <option value="cincinnati_outlaw_reds">Cincinnati Outlaw Reds</option>
+    <option value="cincinnati_red_stockings">Cincinnati Red Stockings</option>
+    <option value="cincinnati_redlegs">Cincinnati Redlegs</option>
+    <option value="cincinnati_reds">Cincinnati Reds</option>
+    <option value="cleveland_blues">Cleveland Blues</option>
+    <option value="cleveland_bronchos">Cleveland Bronchos</option>
+    <option value="cleveland_forest_citys">Cleveland Forest Citys</option>
+    <option value="cleveland_guardians">Cleveland Guardians</option>
+    <option value="cleveland_indians">Cleveland Indians</option>
+    <option value="cleveland_infants">Cleveland Infants</option>
+    <option value="cleveland_naps">Cleveland Naps</option>
+    <option value="cleveland_spiders">Cleveland Spiders</option>
+    <option value="colorado_rockies">Colorado Rockies</option>
+    <option value="columbus_buckeyes">Columbus Buckeyes</option>
+    <option value="columbus_solons">Columbus Solons</option>
+    <option value="detroit_tigers">Detroit Tigers</option>
+    <option value="detroit_wolverines">Detroit Wolverines</option>
+    <option value="elizabeth_resolutes">Elizabeth Resolutes</option>
+    <option value="florida_marlins">Florida Marlins</option>
+    <option value="fort_wayne_kekiongas">Fort Wayne Kekiongas</option>
+    <option value="hartford_dark_blues">Hartford Dark Blues</option>
+    <option value="houston_astros">Houston Astros</option>
+    <option value="houston_colt_45s">Houston Colt .45's</option>
+    <option value="indianapolis_blues">Indianapolis Blues</option>
+    <option value="indianapolis_hoosiers">Indianapolis Hoosiers</option>
+    <option value="kansas_city_athletics">Kansas City Athletics</option>
+    <option value="kansas_city_cowboys">Kansas City Cowboys</option>
+    <option value="kansas_city_packers">Kansas City Packers</option>
+    <option value="kansas_city_royals">Kansas City Royals</option>
+    <option value="keokuk_westerns">Keokuk Westerns</option>
+    <option value="los_angeles_angels">Los Angeles Angels</option>
+    <option value="los_angeles_angels_of_anaheim">Los Angeles Angels of Anaheim</option>
+    <option value="los_angeles_dodgers">Los Angeles Dodgers</option>
+    <option value="louisville_colonels">Louisville Colonels</option>
+    <option value="louisville_eclipse">Louisville Eclipse</option>
+    <option value="louisville_grays">Louisville Grays</option>
+    <option value="miami_marlins">Miami Marlins</option>
+    <option value="middletown_mansfields">Middletown Mansfields</option>
+    <option value="milwaukee_braves">Milwaukee Braves</option>
+    <option value="milwaukee_brewers">Milwaukee Brewers</option>
+    <option value="milwaukee_grays">Milwaukee Grays</option>
+    <option value="minnesota_twins">Minnesota Twins</option>
+    <option value="montreal_expos">Montreal Expos</option>
+    <option value="new_haven_elm_citys">New Haven Elm Citys</option>
+    <option value="new_york_giants">New York Giants</option>
+    <option value="new_york_gothams">New York Gothams</option>
+    <option value="new_york_highlanders">New York Highlanders</option>
+    <option value="new_york_metropolitans">New York Metropolitans</option>
+    <option value="new_york_mets">New York Mets</option>
+    <option value="new_york_mutuals">New York Mutuals</option>
+    <option value="new_york_yankees">New York Yankees</option>
+    <option value="newark_pepper">Newark Pepper</option>
+    <option value="oakland_athletics">Oakland Athletics</option>
+    <option value="philadelphia_athletics">Philadelphia Athletics</option>
+    <option value="philadelphia_blue_jays">Philadelphia Blue Jays</option>
+    <option value="philadelphia_centennials">Philadelphia Centennials</option>
+    <option value="philadelphia_keystones">Philadelphia Keystones</option>
+    <option value="philadelphia_phillies">Philadelphia Phillies</option>
+    <option value="philadelphia_quakers">Philadelphia Quakers</option>
+    <option value="philadelphia_whites">Philadelphia Whites</option>
+    <option value="pittsburg_alleghenys">Pittsburg Alleghenys</option>
+    <option value="pittsburgh_burghers">Pittsburgh Burghers</option>
+    <option value="pittsburgh_pirates">Pittsburgh Pirates</option>
+    <option value="pittsburgh_rebels">Pittsburgh Rebels</option>
+    <option value="providence_grays">Providence Grays</option>
+    <option value="richmond_virginians">Richmond Virginians</option>
+    <option value="rochester_broncos">Rochester Broncos</option>
+    <option value="rockford_forest_citys">Rockford Forest Citys</option>
+    <option value="san_diego_padres">San Diego Padres</option>
+    <option value="san_francisco_giants">San Francisco Giants</option>
+    <option value="seattle_mariners">Seattle Mariners</option>
+    <option value="seattle_pilots">Seattle Pilots</option>
+    <option value="st_louis_brown_stockings">St. Louis Brown Stockings</option>
+    <option value="st_louis_browns">St. Louis Browns</option>
+    <option value="st_louis_cardinals">St. Louis Cardinals</option>
+    <option value="st_louis_maroons">St. Louis Maroons</option>
+    <option value="st_louis_perfectos">St. Louis Perfectos</option>
+    <option value="st_louis_red_stockings">St. Louis Red Stockings</option>
+    <option value="st_louis_terriers">St. Louis Terriers</option>
+    <option value="st_paul_white_caps">St. Paul White Caps</option>
+    <option value="syracuse_stars">Syracuse Stars</option>
+    <option value="tampa_bay_devil_rays">Tampa Bay Devil Rays</option>
+    <option value="tampa_bay_rays">Tampa Bay Rays</option>
+    <option value="texas_rangers">Texas Rangers</option>
+    <option value="toledo_blue_stockings">Toledo Blue Stockings</option>
+    <option value="toledo_maumees">Toledo Maumees</option>
+    <option value="toronto_blue_jays">Toronto Blue Jays</option>
+    <option value="troy_haymakers">Troy Haymakers</option>
+    <option value="troy_trojans">Troy Trojans</option>
+    <option value="washington_blue_legs">Washington Blue Legs</option>
+    <option value="washington_nationals">Washington Nationals</option>
+    <option value="washington_olympics">Washington Olympics</option>
+    <option value="washington_senators">Washington Senators</option>
+    <option value="washington_statesmen">Washington Statesmen</option>
+    <option value="wilmington_quicksteps">Wilmington Quicksteps</option>
+    <option value="worcester_ruby_legs">Worcester Ruby Legs</option>
+</select>
 {% endmacro %}
