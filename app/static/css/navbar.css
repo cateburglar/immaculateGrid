@@ -1,6 +1,6 @@
 /* Navbar Styling */
 .navbar {
-    background-image: var(--gradient-top-left); /* Diagonal gradient for a stylish look */
+    background-image: var(--gradient-top-right); /* Diagonal gradient for a stylish look */
     padding: 15px 20px;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@
   }
   
   .navbar-link:hover {
-    background-color: var(--french-gray);
+    background-color: var(--mimi-pink);
     color: var(--jet);
   }
   

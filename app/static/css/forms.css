@@ -3,7 +3,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: var(--azul);
+    background-color: var(--mimi-pink);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -55,7 +55,7 @@
 /* Submit button styling */
 .btn-submit {
     padding: 10px 15px;
-    background-color: #007BFF;
+    background-color: var(--amaranth-pink);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -64,7 +64,7 @@
 }
 
 .btn-submit:hover {
-    background-color: #0056b3;
+    background-color: var(--rose-pompadour);
 }
 
 .form-link {
@@ -72,10 +72,10 @@
 }
 
 .form-link a {
-    color: var(--french-gray);
+    color: var(--amaranth-pink);
 }
 
 .form-link a:hover {
-    color: var(--jet-black);
+    color: var(--rose-pompadour);
 }
 
