@@ -1,7 +1,7 @@
 {% macro prompt(title, name) %}
 <div class="prompt-container">
     <h3>{{ title }}</h3>
-    <select class="searchable-dropdown main-dropdown" id="main-dropdown-{{ name }}">
+    <select class="searchable-dropdown main-dropdown" id="main-dropdown-{{ name }}" name="main-dropdown-{{ name }}">
         <option value="" disabled selected>Select an option</option>
         <optgroup label="Career Options">
             <option value="avg_career">AVG Career</option>
@@ -60,12 +60,12 @@
     </select>
 
     <!-- Additional dropdowns -->
-    <div class="additional-dropdowns" id="addition-dropdowns-{{ name }}">
-        <div class="additional-dropdown" id="additional-dropdown-team-{{ name }}" style="display: none;">
+    <div class="additional-dropdowns" id="addition-dropdowns-{{ name }}" name="addition-dropdowns-{{ name }}">
+        <div class="additional-dropdown" id="additional-dropdown-team-{{ name }}" name="additional-dropdown-team-{{ name }}" style="display: none;">
             <h4>Select Team</h4>
             {{ team_dropdown() }}
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" style="display: none;">
+        <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" name="additional-dropdown-operator-{{ name }}" style="display: none;">
             <h4>Select Operator</h4>
             <select class="searchable-dropdown">
                 <option value="" disabled selected>Select an operator</option>
@@ -73,7 +73,7 @@
                 <option value="less_than">Less Than</option>
             </select>
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-number-{{ name }}" style="display: none;">
+        <div class="additional-dropdown" id="additional-dropdown-number-{{ name }}" name="additional-dropdown-number-{{ name }}" style="display: none;">
             <h4>Enter Number</h4>
             <input type="number" class="number-input" placeholder="Enter a number">
         </div>
