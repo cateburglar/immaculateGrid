@@ -1,7 +1,7 @@
-{% macro prompt(title) %}
+{% macro prompt(title, name) %}
 <div class="prompt-container">
     <h3>{{ title }}</h3>
-    <select class="searchable-dropdown main-dropdown">
+    <select class="searchable-dropdown main-dropdown" id="main-dropdown-{{ name }}">
         <option value="" disabled selected>Select an option</option>
         <optgroup label="Career Options">
             <option value="avg_career">AVG Career</option>
@@ -60,12 +60,12 @@
     </select>
 
     <!-- Additional dropdowns -->
-    <div class="additional-dropdowns">
-        <div class="additional-dropdown" id="additional-dropdown-team" style="display: none;">
+    <div class="additional-dropdowns" id="addition-dropdowns-{{ name }}">
+        <div class="additional-dropdown" id="additional-dropdown-team-{{ name }}" style="display: none;">
             <h4>Select Team</h4>
             {{ team_dropdown() }}
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-operator" style="display: none;">
+        <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" style="display: none;">
             <h4>Select Operator</h4>
             <select class="searchable-dropdown">
                 <option value="" disabled selected>Select an operator</option>
@@ -73,7 +73,7 @@
                 <option value="less_than">Less Than</option>
             </select>
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-number" style="display: none;">
+        <div class="additional-dropdown" id="additional-dropdown-number-{{ name }}" style="display: none;">
             <h4>Enter Number</h4>
             <input type="number" class="number-input" placeholder="Enter a number">
         </div>
@@ -83,18 +83,18 @@
 <script>
     $(document).ready(function() {
         function updateDropdowns() {
-            var selectedValues = $('.main-dropdown').val() || [];
+            var selectedValues = $('#main-dropdown-{{ name }}').val() || [];
             if (selectedValues.includes('played_for_team')) {
-                $('#additional-dropdown-team').show();
+                $('#additional-dropdown-team-{{ name }}').show();
             } else {
-                $('#additional-dropdown-team').hide();
+                $('#additional-dropdown-team-{{ name }}').hide();
             }
             if (selectedValues.includes('avg_career') || selectedValues.includes('era_career') || selectedValues.includes('wins_career') || selectedValues.includes('k_career') || selectedValues.includes('hits_career') || selectedValues.includes('hr_career') || selectedValues.includes('save_career') || selectedValues.includes('war_career') || selectedValues.includes('avg_season') || selectedValues.includes('era_season') || selectedValues.includes('hr_season') || selectedValues.includes('win_season') || selectedValues.includes('rbi_season') || selectedValues.includes('run_season') || selectedValues.includes('hits_season') || selectedValues.includes('k_season') || selectedValues.includes('hr_sb_season') || selectedValues.includes('save_season') || selectedValues.includes('war_season')) {
-                $('#additional-dropdown-operator').show();
-                $('#additional-dropdown-number').show();
+                $('#additional-dropdown-operator-{{ name }}').show();
+                $('#additional-dropdown-number-{{ name }}').show();
             } else {
-                $('#additional-dropdown-operator').hide();
-                $('#additional-dropdown-number').hide();
+                $('#additional-dropdown-operator-{{ name }}').hide();
+                $('#additional-dropdown-number-{{ name }}').hide();
             }
         }
 

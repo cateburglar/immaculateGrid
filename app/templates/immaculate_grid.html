@@ -5,10 +5,12 @@
 {% block content %}
 <div class="grid-container">
     <h1 class="grid-title">Immaculate Grid Solver</h1>
-    <div class="prompts-container">
-        {{ prompt('Prompt 1') }}
-        {{ prompt('Prompt 2') }}
-        <!-- Add more prompts as needed -->
-    </div>
+    <form action="{{ url_for('grid_routes.get_player') }}" method="POST" class="prompts-form">
+        <div class="prompts-container">
+            {{ prompt('Prompt 1', 'prompt1') }}
+            {{ prompt('Prompt 2', 'prompt2') }}
+        </div>
+        <button type="submit" class="submit-button">Get Player</button>
+    </form>
 </div>
 {% endblock %}
