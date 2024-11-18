@@ -1,27 +1,37 @@
 /* Define CSS HEX colors as variables */
 :root {
-  --white-smoke: #f5f5f5ff;
+  /* CSS HEX */
+  --rose-pompadour: #e27396ff;
+  --amaranth-pink: #ea9ab2ff;
+  --mimi-pink: #efcfe3ff;
+  --beige: #eaf2d7ff;
+  --light-blue: #b3dee2ff;
   --jet: #333333ff;
-  --french-gray: #b0b7bcff;
-  --azul: #046eb4ff;
-  
-  /* Define HSL colors as variables */
-  --white-smoke-hsl: hsla(0, 0%, 96%, 1);
-  --jet-hsl: hsla(0, 0%, 20%, 1);
-  --french-gray-hsl: hsla(205, 8%, 71%, 1);
-  --azul-hsl: hsla(204, 96%, 36%, 1);
-  
-  /* Define gradients */
-  --gradient-top: linear-gradient(0deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-right: linear-gradient(90deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom: linear-gradient(180deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-left: linear-gradient(270deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-top-right: linear-gradient(45deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom-right: linear-gradient(135deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-top-left: linear-gradient(225deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom-left: linear-gradient(315deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  font-family: 'Arial', sans-serif;
+  --white-smoke: #f5f5f5ff;
+  --light-green: #c7ebcd;
+  --dark-green: #b1e5b1;
+  --red: #d9534f;
+  --dark-red: #c9302c;
+
+  /* SCSS Gradient */
+
+  --gradient-top: linear-gradient(0deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-right: linear-gradient(90deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom: linear-gradient(180deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-left: linear-gradient(270deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-top-right: linear-gradient(45deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom-right: linear-gradient(135deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-top-left: linear-gradient(225deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom-left: linear-gradient(315deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-radial: radial-gradient(#e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
 }
 
 /* Set default text color */
@@ -51,15 +61,15 @@ body {
 }
 
 .alert-success {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+  color: var(--jet);
+  background-color: var(--light-green);
+  border-color: var(--light-green);
 }
 
 .alert-danger {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+  color: var(--dark-red);
+  background-color: var(--amaranth-pink);
+  border-color: var(--rose-pompadour);
 }
 
 .alert-warning {
@@ -69,9 +79,9 @@ body {
 }
 
 .alert-info {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: var(--jet);
+  background-color: var(--light-blue);
+  border-color: var(--light-blue);
 }
 
 /* Buttons */
@@ -87,32 +97,32 @@ body {
 }
 
 .btn-danger {
-  background-color: #d9534f;
+  background-color: var(--red);
   color: white;
   border: none;
 }
 
 .btn-danger:hover {
-  background-color: #c9302c;
+  background-color: var(--dark-red);
 }
 
 .btn-success {
-  background-color: #5cb85c;
+  background-color: var(--light-green);
   color: white;
   border: none;
 }
 
 .btn-success:hover {
-  background-color: #4cae4c;
+  background-color: var(--dark-green);
 }
 
 .btn-primary {
-  background-color: #337ab7;
+  background-color: var(--amaranth-pink);
   color: white;
   border: none;
 }
 
 .btn-primary:hover {
-  background-color: #286090;
+  background-color: var(--rose-pompadour);
 }
   

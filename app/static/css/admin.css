@@ -17,7 +17,7 @@
 .search-input {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid var(--french-gray);
+    border: 1px solid var(--jet);
     border-radius: 4px;
     margin-right: 10px;
     flex: 1;
@@ -28,14 +28,14 @@
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: var(--azul);
+    background-color: var(--mimi-pink);
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .search-button:hover {
-    background-color: darken(var(--azul), 10%);
+    background-color: var(--amaranth-pink)
 }
 
 .user-list {
@@ -48,8 +48,8 @@
     margin: 10px 0;
     padding: 10px;
     border-radius: 8px;
-    background-color: var(--white-smoke-hsl);
-    border: 1px solid var(--french-gray);
+    background-color: var(--white-smoke);
+    border: 1px solid var(--jet);
 }
 
 .user-link {
@@ -67,7 +67,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid var(--french-gray);
+    border: 1px solid var(--jet);
     border-radius: 8px;
     background-color: var(--white-smoke-hsl);
 }
