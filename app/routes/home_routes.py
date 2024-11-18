@@ -33,7 +33,10 @@ def signup():
 
             # Create a new User instance
             new_user = User(
-                username=form.username.data, password=hashed_password, privilege="USER"
+                nameFirst=form.nameFirst.data,
+                nameLast=form.nameLast.data,
+                username=form.username.data,
+                password=hashed_password,
             )
 
             # Add the new user
@@ -41,7 +44,7 @@ def signup():
             db.session.commit()
 
             # Show a successs message and redirect to login
-            flash("Account created successfully!")
+            flash("Account created successfully!", "success")
             login_user(new_user, remember=False)
             flash(f"Welcome, {new_user.username}!", "success")
             return redirect(url_for("home_routes.home"))
@@ -63,7 +66,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             # Log in the user and manage 'remember me' option
             login_user(user, remember=form.remember_me.data)
-            flash(f"Welcome, {user.username}!", "success")
+            flash(f"Welcome, {user.nameFirst} {user.nameLast}!", "success")
             return redirect(url_for("home_routes.home"))
 
         flash("Invalid username or password", "danger")

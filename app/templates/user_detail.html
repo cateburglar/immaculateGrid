@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="user-detail">
+<h1>User Details for {{ user.username }}</h1>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Name: </strong> {{ user.nameFirst }} {{ user.nameLast }}</p>
+    <p><strong>Banned :</strong> {{ user.banned }}</p>
+    {% if user.banned %}
+    <form class="unban-form" action="{{ url_for('admin_routes.unban_user', user_id=user.id) }}" method="post">
+        <button type="submit" class="btn btn-danger">Unban User</button>
+    </form>
+    {% else %}
+    <form class="ban-form" action="{{ url_for('admin_routes.ban_user', user_id=user.id) }}" method="post">
+        <button type="submit" class="btn btn-danger">Ban User</button>
+    </form>
+    {% endif %}
+    <a class="btn btn-primary" href="{{ url_for('admin_routes.users') }}">Back to All Users</a>
+</div>
+{% endblock %}

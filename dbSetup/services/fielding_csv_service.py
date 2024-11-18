@@ -58,13 +58,11 @@ def update_fielding_from_csv(file_path):
 
             if not player_exists:
                 peopleNotExist+=1
-                print(
-                    f"playerID {fielding_record.playerID} does not exist in the people table. Skipping row."
-                )
+                #if we make an error log, message could go here.
                 continue
 
             #check if teamid exists in teams table
-            team_exists = session.query(Teams).filter_by(teamID=appearances_record.teamID).first()
+            team_exists = session.query(Teams).filter_by(teamID=fielding_record.teamID).first()
             
             if not team_exists:
                 teamNotExist+=1
@@ -89,13 +87,7 @@ def update_fielding_from_csv(file_path):
             
             else:
                 # Insert a new record
-                new_entry = Fielding(
-                    playerID=fielding_record.playerID,
-                    yearID=fielding_record.yearID,
-                    teamID=fielding_record.teamID,
-                    stint = fielding_record.stint,
-                )
-                session.add(new_entry)
+                session.add(fielding_record)
                 new_rows += 1
 
             session.commit()

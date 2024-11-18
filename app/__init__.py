@@ -1,7 +1,7 @@
 import os
 
-from flask import Flask, redirect, request, url_for
-from flask_login import LoginManager, current_user
+from flask import Flask, flash, redirect, request, url_for
+from flask_login import LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 
 from . import csi3335f2024 as cfg
@@ -9,6 +9,13 @@ from . import csi3335f2024 as cfg
 # Init extensions
 db = SQLAlchemy()
 login_manager = LoginManager()
+
+
+def check_if_banned():
+    if current_user.is_authenticated and current_user.banned:
+        logout_user()
+        flash("Your account has been banned.", "danger")
+        return redirect(url_for("home_routes.login"))
 
 
 # Makes sure users can only visit login and signup when not logged in
@@ -43,15 +50,18 @@ def create_app():
 
     # Register middleware
     app.before_request(login_required_middleware)
+    app.before_request(check_if_banned)
 
     # After app has initialized, define blueprints and create tables
     with app.app_context():
         # Register blueprints/routes
         from .models import User
-        from .routes import allstarfull_routes, home_routes
+        from .routes import admin_routes, allstarfull_routes, home_routes
 
         app.register_blueprint(home_routes, url_prefix="/")
         app.register_blueprint(allstarfull_routes, url_prefix="/allstarfull")
+        app.register_blueprint(admin_routes, url_prefix="/admin")
+
         db.create_all()
 
     return app

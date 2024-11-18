@@ -1,25 +1,117 @@
 /* Define CSS HEX colors as variables */
 :root {
-    --white-smoke: #f5f5f5ff;
-    --jet: #333333ff;
-    --french-gray: #b0b7bcff;
-    --azul: #046eb4ff;
+  --white-smoke: #f5f5f5ff;
+  --jet: #333333ff;
+  --french-gray: #b0b7bcff;
+  --azul: #046eb4ff;
   
-    /* Define HSL colors as variables */
-    --white-smoke-hsl: hsla(0, 0%, 96%, 1);
-    --jet-hsl: hsla(0, 0%, 20%, 1);
-    --french-gray-hsl: hsla(205, 8%, 71%, 1);
-    --azul-hsl: hsla(204, 96%, 36%, 1);
+  /* Define HSL colors as variables */
+  --white-smoke-hsl: hsla(0, 0%, 96%, 1);
+  --jet-hsl: hsla(0, 0%, 20%, 1);
+  --french-gray-hsl: hsla(205, 8%, 71%, 1);
+  --azul-hsl: hsla(204, 96%, 36%, 1);
   
-    /* Define gradients */
-    --gradient-top: linear-gradient(0deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-right: linear-gradient(90deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-bottom: linear-gradient(180deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-left: linear-gradient(270deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-top-right: linear-gradient(45deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-bottom-right: linear-gradient(135deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-top-left: linear-gradient(225deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-bottom-left: linear-gradient(315deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-    --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  }
+  /* Define gradients */
+  --gradient-top: linear-gradient(0deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-right: linear-gradient(90deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-bottom: linear-gradient(180deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-left: linear-gradient(270deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-top-right: linear-gradient(45deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-bottom-right: linear-gradient(135deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-top-left: linear-gradient(225deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-bottom-left: linear-gradient(315deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+  --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
+}
+
+/* Set default text color */
+body {
+  color: var(--jet);
+}
+
+
+/* Container for consistent page layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+/* Flash messages */
+.flash-messages {
+  margin: 20px 0;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}
+
+.btn-success {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #4cae4c;
+}
+
+.btn-primary {
+  background-color: #337ab7;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #286090;
+}
   
