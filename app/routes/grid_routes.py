@@ -1,5 +1,8 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from models import People
+
+from app import db
+
+from ..models import People
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
@@ -80,8 +83,23 @@ def validate_form_data(form_data):
     return errors
 
 
-def perform_query(form_data):
+def parse_prompts(form_data, params):
     return
+
+
+def perform_query(form_data):
+    # Get base query
+    query = db.session.query(People)
+
+    # Extract parameters from the form data
+    params = []
+    parse_prompts(form_data, params)
+
+    result = query.first()
+
+    name = f"{result[13]} {result[14]}"
+
+    return name
 
 
 @grid_routes.route("/", methods=["GET", "POST"])
@@ -101,9 +119,10 @@ def get_player():
 
         # Perform necessary actions with the extracted data
         # For example, query a database or perform calculations
+        name = perform_query(form_data)
 
         # Flash a message or redirect to another page
-        flash("Form submitted successfully!", "success")
+        flash(name, "info")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template("immaculate_grid.html")
