@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from models import People
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
@@ -20,6 +21,29 @@ def extract_form_data():
     }
 
 
+career_and_season_options = [
+    "avg_career",
+    "era_career",
+    "wins_career",
+    "k_career",
+    "hits_career",
+    "hr_career",
+    "save_career",
+    "war_career",
+    "avg_season",
+    "era_season",
+    "hr_season",
+    "win_season",
+    "rbi_season",
+    "run_season",
+    "hits_season",
+    "k_season",
+    "hr_sb_season",
+    "save_season",
+    "war_season",
+]
+
+
 def validate_form_data(form_data):
     errors = []
 
@@ -30,27 +54,7 @@ def validate_form_data(form_data):
         errors.append("Prompt 2 is required.")
 
     # Check additional fields for prompt1
-    if form_data["prompt1"]["prompt1-option"] in [
-        "avg_career",
-        "era_career",
-        "wins_career",
-        "k_career",
-        "hits_career",
-        "hr_career",
-        "save_career",
-        "war_career",
-        "avg_season",
-        "era_season",
-        "hr_season",
-        "win_season",
-        "rbi_season",
-        "run_season",
-        "hits_season",
-        "k_season",
-        "hr_sb_season",
-        "save_season",
-        "war_season",
-    ]:
+    if form_data["prompt1"]["prompt1-option"] in career_and_season_options:
         if not form_data["prompt1"]["prompt1-operator"]:
             errors.append("Operator for Prompt 1 is required.")
         if not form_data["prompt1"]["prompt1-number"]:
@@ -62,27 +66,7 @@ def validate_form_data(form_data):
         errors.append("Team for Prompt 1 is required.")
 
     # Check additional fields for prompt2
-    if form_data["prompt2"]["prompt2-option"] in [
-        "avg_career",
-        "era_career",
-        "wins_career",
-        "k_career",
-        "hits_career",
-        "hr_career",
-        "save_career",
-        "war_career",
-        "avg_season",
-        "era_season",
-        "hr_season",
-        "win_season",
-        "rbi_season",
-        "run_season",
-        "hits_season",
-        "k_season",
-        "hr_sb_season",
-        "save_season",
-        "war_season",
-    ]:
+    if form_data["prompt2"]["prompt2-option"] in career_and_season_options:
         if not form_data["prompt2"]["prompt2-operator"]:
             errors.append("Operator for Prompt 2 is required.")
         if not form_data["prompt2"]["prompt2-number"]:
@@ -94,6 +78,10 @@ def validate_form_data(form_data):
         errors.append("Team for Prompt 2 is required.")
 
     return errors
+
+
+def perform_query(form_data):
+    return
 
 
 @grid_routes.route("/", methods=["GET", "POST"])
