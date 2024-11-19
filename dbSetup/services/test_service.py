@@ -1,6 +1,7 @@
 import csi3335f2024 as cfg
-from models import AllstarFull, People, Fielding, Schools, Teams, Pitching, Appearances
+from models import AllstarFull, Appearances, Fielding, People, Pitching, Schools, Teams
 from utils import create_enginestr_from_values, create_session_from_str
+
 
 def execute_tests(tests):
     for test in tests:
@@ -143,7 +144,7 @@ def compare_existing_people_entries():
 
         # Alert that test failed, and for what row
         if not row_exists:
-            print(f"Row does match for: playerid={row.playerID}")
+            print(f"Row does not match for: playerid={row.playerID}")
             rows_match = False
 
     # Commit and close sessions
@@ -385,25 +386,25 @@ def compare_existing_appearances_entries():
             sq_session.query(Appearances)
             .filter_by(
                 playerID=row.playerID,
-                yearID = row.yearID,
-                teamID = row.teamID,
-                G_all = row.G_all,
-                GS = row.GS,
-                G_batting = row.G_batting,
-                G_defense = row.G_defense,
-                G_p = row.G_p,
-                G_c = row.G_c,
-                G_1b = row.G_1b,
-                G_2b = row.G_2b,
-                G_3b = row.G_3b,
-                G_ss = row.G_ss,
-                G_lf = row.G_lf,
-                G_cf = row.G_cf,
-                G_rf = row.G_rf,
-                G_of = row.G_of,
-                G_dh = row.G_dh,
-                G_ph = row.G_ph,
-                G_pr = row.G_pr,
+                yearID=row.yearID,
+                teamID=row.teamID,
+                G_all=row.G_all,
+                GS=row.GS,
+                G_batting=row.G_batting,
+                G_defense=row.G_defense,
+                G_p=row.G_p,
+                G_c=row.G_c,
+                G_1b=row.G_1b,
+                G_2b=row.G_2b,
+                G_3b=row.G_3b,
+                G_ss=row.G_ss,
+                G_lf=row.G_lf,
+                G_cf=row.G_cf,
+                G_rf=row.G_rf,
+                G_of=row.G_of,
+                G_dh=row.G_dh,
+                G_ph=row.G_ph,
+                G_pr=row.G_pr,
             )
             .first()
         )
@@ -425,6 +426,7 @@ def compare_existing_appearances_entries():
     else:
         return ""
 
+
 def compare_existing_fielding_entries():
     print("Executing fielding entries")
 
@@ -444,22 +446,22 @@ def compare_existing_fielding_entries():
             sq_session.query(Fielding)
             .filter_by(
                 playerID=row.playerID,
-                yearID = row.yearID,
-                teamID = row.teamID,
-                stint = row.stint,
-                position = row.position,
-                f_G = row.f_G,
-                f_GS = row.f_GS,
-                f_InnOuts = row.f_InnOuts,
-                f_PO = row.f_PO,
-                f_A = row.f_A,
-                f_E = row.f_E,
-                f_DP = row.f_DP,
-                f_PB = row.f_PB,
-                f_WP = row.f_WP,
-                f_SB = row.f_SB,
-                f_CS = row.f_CS,
-                f_ZR = row.f_ZR
+                yearID=row.yearID,
+                teamID=row.teamID,
+                stint=row.stint,
+                position=row.position,
+                f_G=row.f_G,
+                f_GS=row.f_GS,
+                f_InnOuts=row.f_InnOuts,
+                f_PO=row.f_PO,
+                f_A=row.f_A,
+                f_E=row.f_E,
+                f_DP=row.f_DP,
+                f_PB=row.f_PB,
+                f_WP=row.f_WP,
+                f_SB=row.f_SB,
+                f_CS=row.f_CS,
+                f_ZR=row.f_ZR,
             )
             .first()
         )
