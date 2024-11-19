@@ -60,7 +60,7 @@ jobs:
       - name: Import MySQL dump file
         run: |
           mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS seaquail;"
-          mysql -uroot -proot seaquail < ./dbSetup/static/seaquail.sql
+          mysql -uroot -proot seaquail < ./dbSetup/static/seaquail_dump.sql
 
       - name: Run update_db.py
         env:
