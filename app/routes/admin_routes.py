@@ -12,10 +12,15 @@ admin_routes = Blueprint("admin_routes", __name__, template_folder="templates")
 @admin_required
 def users():
     search_query = request.args.get("search", "")
+    query = User.query
+
     if search_query:
-        all_users = User.query.filter(User.username.contains(search_query)).all()
-    else:
-        all_users = User.query.filter_by(privilege="USER").all()
+        # Escape the underscore and percent characters
+        search_query = search_query.replace("_", r"\_").replace("%", r"\%")
+        query = query.filter(User.username.ilike(f"%{search_query}%"))
+
+    query = query.filter_by(privilege="USER")
+    all_users = query.all()
     return render_template("users.html", users=all_users)
 
 
