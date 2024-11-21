@@ -55,7 +55,6 @@ def create_app():
     # After app has initialized, define blueprints and create tables
     with app.app_context():
         # Register blueprints/routes
-        from .models import User
         from .routes import admin_routes, allstarfull_routes, home_routes, depth_chart_routes
 
         app.register_blueprint(home_routes, url_prefix="/")

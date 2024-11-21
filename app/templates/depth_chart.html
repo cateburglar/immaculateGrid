@@ -22,6 +22,32 @@
         <button type="submit">Generate Depth Chart</button>
     </form>
 
+        <!-- Pitching Leaders Section -->
+        {% if pitching_leaders %}
+        <h2>Pitching Leaders - {{ teamID }} - {{ yearID }}</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Player ID</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Strikeouts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leader in pitching_leaders %}
+                    <tr>
+                        <td>{{ leader.playerID }}</td>
+                        <td>{{ leader.p_W }}</td>
+                        <td>{{ leader.p_L }}</td>
+                        <td>{{ leader.p_SO }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
         <h2>Depth Chart for {{ teamID }} - {{ yearID }}</h2>
@@ -49,6 +75,7 @@
             </div>
         {% endfor %}
     {% endif %}
+
 
     <br>
     <a href="{{ url_for('home_routes.home') }}">Go Back</a>
