@@ -1,35 +1,54 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Depth Chart for {{ teamID }} - {{ yearID }}
+    {% if teamID and yearID %}
+        Depth Chart for {{ teamID }} - {{ yearID }}
+    {% else %}
+        Depth Chart
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-    <h1>Depth Chart for {{ teamID }} - {{ yearID }}</h1>
+    <h1>MLB Team Depth Chart</h1>
 
-    {% for position, players in depth_chart_data.items() %}
-        <div class="position-box">
-            <h2>{{ position }}</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Player ID</th>
-                        <th>Position</th>
-                        <th>Plate Appearances</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for player in players %}
-                        <tr>
-                            <td>{{ player.playerID }}</td>
-                            <td>{{ player.position }}</td>
-                            <td>{{ player.plate_appearances }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.teamName.label }} {{ form.teamName() }}
         </div>
-    {% endfor %}
+        <div>
+            {{ form.yearID.label }} {{ form.yearID() }}
+        </div>
+        <button type="submit">Generate Depth Chart</button>
+    </form>
+
+    <!-- Display the depth chart only if data is available -->
+    {% if depth_chart_data %}
+        <h2>Depth Chart for {{ teamID }} - {{ yearID }}</h2>
+        {% for position, players in depth_chart_data.items() %}
+            <div class="position-box">
+                <h2>{{ position }}</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Player ID</th>
+                            <th>Position</th>
+                            <!-- <th>Plate Appearances</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player in players %}
+                            <tr>
+                                <td>{{ player.playerID }}</td>
+                                <td>{{ player.position }}</td>
+                                <!--<td>{{ player.plate_appearances }}</td> -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <br>
     <a href="{{ url_for('home_routes.home') }}">Go Back</a>
