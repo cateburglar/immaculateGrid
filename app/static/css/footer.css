@@ -7,10 +7,9 @@
     align-items: center;
     width: 100%;
     color: var(--jet);
-    margin-top: 50px;
+    margin-top: 150px;
     box-sizing: border-box;
-    position: absolute;
-    left: 0;
+    position: relative;
 }
 
 .images {

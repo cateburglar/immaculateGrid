@@ -36,7 +36,11 @@
 
 /* Set default text color */
 body {
+  height: 100%;
+  margin: 0;
   color: var(--jet);
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -45,6 +49,8 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  flex: 1;
+  width: 100%;
 }
 
 
