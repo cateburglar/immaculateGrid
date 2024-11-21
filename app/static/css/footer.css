@@ -1,0 +1,46 @@
+/* Footer styling */
+.footer {
+    background-image: var(--gradient-top-right); /* Diagonal gradient for a stylish look */
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: var(--jet);
+    margin-top: 50px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+}
+
+.images {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+  
+.footer-image {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.bu {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.github {
+    width: 70px !important;
+    height: 40px !important;
+}
+  
+.navbar-link:hover {
+    background-color: var(--mimi-pink);
+    color: var(--jet);
+}
+  
+.navbar-link-active {
+    color: var(--jet);
+    font-weight: bold;
+}
+  
