@@ -86,6 +86,7 @@
         // Configuration object for dropdown options
         const optionConfig = {
             played_for_team: ["team"],
+            only_one_team: ["one_team"],
             avg_career: ["operator", "number"],
             era_career: ["operator", "number"],
             wins_career: ["operator", "number"],
@@ -112,7 +113,7 @@
             const additionalInputs = optionConfig[selectedValue] || [];
 
             // Show or hide "team" input
-            $(`#additional-dropdown-team-${name}`).toggle(additionalInputs.includes("team"));
+            $(`#additional-dropdown-team-${name}`).toggle(additionalInputs.includes("team") || additionalInputs.includes("one_team"));
 
             // Show or hide "operator" input
             $(`#additional-dropdown-operator-${name}`).toggle(additionalInputs.includes("operator"));

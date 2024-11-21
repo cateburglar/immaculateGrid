@@ -2,9 +2,41 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from app import db
 
-from ..models import People
+from ..filters import (
+    CareerStatFilter,
+    MiscFilter,
+    PositionFilter,
+    SeasonStatFilter,
+    TeamFilter,
+)
+from ..models import Appearances, People, Teams
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
+
+career_options = [
+    "avg_career",
+    "era_career",
+    "wins_career",
+    "k_career",
+    "hits_career",
+    "hr_career",
+    "save_career",
+    "war_career",
+]
+
+season_options = [
+    "avg_season",
+    "era_season",
+    "hr_season",
+    "win_season",
+    "rbi_season",
+    "run_season",
+    "hits_season",
+    "k_season",
+    "hr_sb_season",
+    "save_season",
+    "war_season",
+]
 
 
 def extract_form_data():
@@ -24,29 +56,6 @@ def extract_form_data():
     }
 
 
-career_and_season_options = [
-    "avg_career",
-    "era_career",
-    "wins_career",
-    "k_career",
-    "hits_career",
-    "hr_career",
-    "save_career",
-    "war_career",
-    "avg_season",
-    "era_season",
-    "hr_season",
-    "win_season",
-    "rbi_season",
-    "run_season",
-    "hits_season",
-    "k_season",
-    "hr_sb_season",
-    "save_season",
-    "war_season",
-]
-
-
 def validate_form_data(form_data):
     errors = []
 
@@ -57,7 +66,10 @@ def validate_form_data(form_data):
         errors.append("Prompt 2 is required.")
 
     # Check additional fields for prompt1
-    if form_data["prompt1"]["prompt1-option"] in career_and_season_options:
+    if (
+        form_data["prompt1"]["prompt1-option"] in career_options
+        or form_data["prompt1"]["prompt1-option"] in season_options
+    ):
         if not form_data["prompt1"]["prompt1-operator"]:
             errors.append("Operator for Prompt 1 is required.")
         if not form_data["prompt1"]["prompt1-number"]:
@@ -69,7 +81,10 @@ def validate_form_data(form_data):
         errors.append("Team for Prompt 1 is required.")
 
     # Check additional fields for prompt2
-    if form_data["prompt2"]["prompt2-option"] in career_and_season_options:
+    if (
+        form_data["prompt2"]["prompt2-option"] in career_options
+        or form_data["prompt2"]["prompt2-option"] in season_options
+    ):
         if not form_data["prompt2"]["prompt2-operator"]:
             errors.append("Operator for Prompt 2 is required.")
         if not form_data["prompt2"]["prompt2-number"]:
@@ -83,8 +98,30 @@ def validate_form_data(form_data):
     return errors
 
 
-def parse_prompts(form_data, params):
-    return
+# Returns an array of two dictionaries, one for each prompt
+def parse_prompts(form_data):
+    params = []
+    if form_data["prompt1"]:
+        params.append(
+            {
+                "option": form_data["prompt1"]["prompt1-option"],
+                "operator": form_data["prompt1"]["prompt1-operator"],
+                "number": form_data["prompt1"]["prompt1-number"],
+                "team": form_data["prompt1"]["prompt1-team"],
+            }
+        )
+
+    if form_data["prompt2"]:
+        params.append(
+            {
+                "option": form_data["prompt2"]["prompt2-option"],
+                "operator": form_data["prompt2"]["prompt2-operator"],
+                "number": form_data["prompt2"]["prompt2-number"],
+                "team": form_data["prompt2"]["prompt2-team"],
+            }
+        )
+
+    return params
 
 
 def perform_query(form_data):
@@ -92,14 +129,39 @@ def perform_query(form_data):
     query = db.session.query(People)
 
     # Extract parameters from the form data
-    params = []
-    parse_prompts(form_data, params)
+    params = parse_prompts(form_data)
+
+    flash(params, "info")
+
+    # Apply filters based on the form data
+    for param in params:
+        option = param["option"]
+        operator = param["operator"]
+        number = param["number"]
+        team = param["team"]
+
+        if option in career_options:
+            query = CareerStatFilter(
+                query, option, operator, float(number), team
+            ).apply()
+        elif option in season_options:
+            query = SeasonStatFilter(
+                query, option, operator, float(number), team
+            ).apply()
+        elif option == "played_for_team":
+            query = TeamFilter(query, team).apply()
+        elif option.startswith("played_"):
+            query = PositionFilter(query, option, team).apply()
+        else:
+            query = MiscFilter(query, option, team).apply()
 
     result = query.first()
 
-    name = f"{result[13]} {result[14]}"
+    if result:
+        player_name = f"{result.nameFirst} {result.nameLast}"
+        return player_name
 
-    return name
+    return None
 
 
 @grid_routes.route("/", methods=["GET", "POST"])
@@ -117,12 +179,10 @@ def get_player():
             flash(form_data, "info")
             return render_template("immaculate_grid.html", form_data=form_data)
 
-        # Perform necessary actions with the extracted data
-        # For example, query a database or perform calculations
-        name = perform_query(form_data)
+        # Add this step when table definitions allow for proper querying
+        # name = perform_query(form_data)
 
-        # Flash a message or redirect to another page
-        flash(name, "info")
+        flash(form_data, "info")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template("immaculate_grid.html")
