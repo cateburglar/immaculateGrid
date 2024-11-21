@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
     {% if title %}
@@ -42,6 +43,20 @@
 <div class="container">
     {% block content %}
     {% endblock %}
+</div>
+
+<div class="footer">
+    <h1>Seaquail Database Project</h1>
+    <div class="images">
+        <a class="footer-image" href="https://cs.baylor.edu/~speegle/3335/index.php">
+            <img class="bu" src="{{ url_for('static', filename='images/baylor-logo.png') }}" alt="Logo" style="width:100px;height:auto;">
+        </a>
+        <a class="footer-image" href="https://github.com/Sea-Quail/finalProj">
+            <img class="github" src="{{ url_for('static', filename='images/github-logo.png') }}" alt="Logo" style="width:100px;height:auto;">
+        </a>
+    </div>
+    <h3>Fall 2024 | CSI 3335</h3>
+    <body>Brendon Newton | Catherine Arlinghaus | Icko Iben | Noah Caldwell</body>
 </div>
 </body>
 </html>
