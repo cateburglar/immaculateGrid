@@ -1,6 +1,5 @@
 from sqlalchemy import (
     Column,
-    Date,
     Double,
     ForeignKey,
     Index,
