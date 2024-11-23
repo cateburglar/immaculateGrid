@@ -1,26 +1,81 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import login_user, logout_user
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.forms.loginForm import LoginForm
+from app import db
+from app.forms import LoginForm, SignupForm
 
-# the name "home_bp" is what we use to refer to the blueprint
-# in url_for() statements-- to access the def login()
-# url, you would do home_bp.login
+from ..models import User
+
 home_routes = Blueprint("home_routes", __name__, template_folder="templates")
 
 
-# so the url will be /home/login bc of the blueprint
+# /
+@home_routes.route("/")
+def home():
+    return render_template(
+        "home.html",
+        title="Home",
+        message="SQL more like sea quail amiright?",
+    )
+
+
+@home_routes.route("/signup", methods=["GET", "POST"])
+def signup():
+    form = SignupForm()
+    if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if not existing_user:
+            # Hash the password
+            hashed_password = generate_password_hash(
+                form.password.data, method="scrypt"
+            )
+
+            # Create a new User instance
+            new_user = User(
+                nameFirst=form.nameFirst.data,
+                nameLast=form.nameLast.data,
+                username=form.username.data,
+                password=hashed_password,
+            )
+
+            # Add the new user
+            db.session.add(new_user)
+            db.session.commit()
+
+            # Show a successs message and redirect to login
+            flash("Account created successfully!", "success")
+            login_user(new_user, remember=False)
+            flash(f"Welcome, {new_user.username}!", "success")
+            return redirect(url_for("home_routes.home"))
+
+        else:
+            flash("Username is already taken, please try again", "danger")
+    return render_template("signup.html", title="Sign Up", form=form)
+
+
+# /login
 @home_routes.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # this is because we dont actually have a system for logging in yet
-        flash(
-            "Login requested for user {}, remember_me={}".format(
-                form.username.data, form.remember_me.data
-            )
-        )
+        # Retrieve the user from the database
+        user = User.query.filter_by(username=form.username.data).first()
 
-        # after they login, send them home but display messages
-        return redirect(url_for("home"))
+        # Verify if the user exists and the password is correct
+        if user and check_password_hash(user.password, form.password.data):
+            # Log in the user and manage 'remember me' option
+            login_user(user, remember=form.remember_me.data)
+            flash(f"Welcome, {user.nameFirst} {user.nameLast}!", "success")
+            return redirect(url_for("home_routes.home"))
+
+        flash("Invalid username or password", "danger")
 
     return render_template("login.html", title="Sign In", form=form)
+
+
+@home_routes.route("/logout")
+def logout():
+    logout_user()
+    flash("You have been logged out.", "info")
+    return redirect(url_for("home_routes.login"))

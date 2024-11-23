@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="form-container">
+        <h1 class="form-title">Create Account</h1>
+        <form action="" method="post" novalidate class="app-form">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="nameFirst">{{ form.nameFirst.label }}</label>
+                {{ form.nameFirst(class="form-control") }}
+                {% for error in form.nameFirst.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="nameLast">{{ form.nameLast.label }}</label>
+                {{ form.nameLast(class="form-control") }}
+                {% for error in form.nameLast.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="username">{{ form.username.label }}</label>
+                {{ form.username(class="form-control") }}
+                {% for error in form.username.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="password">{{ form.password.label }}</label>
+                {{ form.password(class="form-control") }}
+                {% for error in form.password.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.submit(class="btn-submit") }}
+            </div>
+            
+            <p class="form-link">Already have an account? <a href="{{ url_for('home_routes.login') }}">Login</a></p>
+        </form>
+    </div>
+{% endblock %}

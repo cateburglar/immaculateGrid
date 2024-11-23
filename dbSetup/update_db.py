@@ -1,18 +1,45 @@
-from services import (
-    upload_allstarfull_csv,
-    upload_people_csv,
-    upload_schools_csv,
-    upload_teams_csv,
-)
+import argparse
+import inspect
 
-print("Updating people table from People.csv")
-upload_people_csv()
+import services  # Assuming services.py is in the same directory
 
-print("Updating teams table from Teams.csv")
-upload_teams_csv()
 
-print("Updating allstarfull table from AllstarFull.csv")
-upload_allstarfull_csv()
+def main():
+    parser = argparse.ArgumentParser(description="Update database.")
+    parser.add_argument(
+        "tables",
+        metavar="T",
+        type=str,
+        nargs="*",
+        help="Names of the tables to update (e.g., people teams allstarfull schools). If no tables are provided, all will be updated.",
+    )
+    args = parser.parse_args()
 
-print("Updating teams table from Schools.csv")
-upload_schools_csv()
+    # If no tables are specified, call all functions in services
+    tables_to_update = args.tables if args.tables else get_all_service_functions()
+
+    # Execute updates
+    update_tables(tables_to_update)
+
+
+def get_all_service_functions():
+    """Retrieve all update functions from the services module."""
+    return [
+        name.replace("upload_", "").replace("_csv", "")
+        for name, func in inspect.getmembers(services, inspect.isfunction)
+        if name.startswith("upload_") and name.endswith("_csv")
+    ]
+
+
+def update_tables(tables):
+    for table in tables:
+        func_name = f"upload_{table}_csv"
+        if hasattr(services, func_name):
+            func = getattr(services, func_name)
+            func()  # Call the function
+        else:
+            print(f"Unknown table: {table}")
+
+
+if __name__ == "__main__":
+    main()

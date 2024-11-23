@@ -1,0 +1,135 @@
+/* Define CSS HEX colors as variables */
+:root {
+  /* CSS HEX */
+  --rose-pompadour: #e27396ff;
+  --amaranth-pink: #ea9ab2ff;
+  --mimi-pink: #efcfe3ff;
+  --beige: #eaf2d7ff;
+  --light-blue: #b3dee2ff;
+  --jet: #333333ff;
+  --white-smoke: #f5f5f5ff;
+  --light-green: #c7ebcd;
+  --dark-green: #b1e5b1;
+  --red: #d9534f;
+  --dark-red: #c9302c;
+
+  /* SCSS Gradient */
+
+  --gradient-top: linear-gradient(0deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-right: linear-gradient(90deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom: linear-gradient(180deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-left: linear-gradient(270deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-top-right: linear-gradient(45deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom-right: linear-gradient(135deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-top-left: linear-gradient(225deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-bottom-left: linear-gradient(315deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+
+  --gradient-radial: radial-gradient(#e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
+}
+
+/* Set default text color */
+html, body {
+  height: 100%;
+  margin: 0;
+  color: var(--jet);
+  display: flex;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  flex-direction: column;
+}
+
+
+/* Container for consistent page layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+
+/* Flash messages */
+.flash-messages {
+  margin: 20px 0;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: var(--jet);
+  background-color: var(--light-green);
+  border-color: var(--light-green);
+}
+
+.alert-danger {
+  color: var(--dark-red);
+  background-color: var(--amaranth-pink);
+  border-color: var(--rose-pompadour);
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-info {
+  color: var(--jet);
+  background-color: var(--light-blue);
+  border-color: var(--light-blue);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: var(--red);
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: var(--dark-red);
+}
+
+.btn-success {
+  background-color: var(--light-green);
+  color: white;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: var(--dark-green);
+}
+
+.btn-primary {
+  background-color: var(--amaranth-pink);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--rose-pompadour);
+}
+  
