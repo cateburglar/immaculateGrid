@@ -83,26 +83,26 @@ def update_baseball_from_csv(file_path):
             else:
                 # Insert a new record
                 new_entry = Baseball(
-                    playerID = playerID
-                    yearId = yearId
-                    teamID = teamID
-                    stint = stint
-                    b_G = b_G
-                    b_AB = b_AB
-                    b_R = b_R
-                    b_H = b_H
-                    b_2B = b_2B
-                    b_3B = b_3B
-                    b_HR = b_HR
-                    b_RBI = b_RBI
-                    b_SB = b_SB
-                    b_CS = b_CS
-                    b_BB = b_BB
-                    b_SO = b_SO
-                    b_IBB = b_IBB
-                    b_HBP = b_HBP
-                    b_SH = b_SH
-                    b_SF = b_SF
+                    playerID = playerID,
+                    yearId = yearId,
+                    teamID = teamID,
+                    stint = stint,
+                    b_G = b_G,
+                    b_AB = b_AB,
+                    b_R = b_R,
+                    b_H = b_H,
+                    b_2B = b_2B,
+                    b_3B = b_3B,
+                    b_HR = b_HR,
+                    b_RBI = b_RBI,
+                    b_SB = b_SB,
+                    b_CS = b_CS,
+                    b_BB = b_BB,
+                    b_SO = b_SO,
+                    b_IBB = b_IBB,
+                    b_HBP = b_HBP,
+                    b_SH = b_SH,
+                    b_SF = b_SF,
                     b_GIDP = b_GIDP
                 )
                 session.add(new_entry)
