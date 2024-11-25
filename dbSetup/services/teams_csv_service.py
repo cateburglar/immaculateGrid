@@ -154,7 +154,7 @@ def process_row(row, session, counts):
                 lgID=lgID,
                 teamID=teamID,
                 franchID=franchID,
-                name=team_name,
+                team_name=team_name,
                 divID=divID,
                 Rank=team_rank,
                 G=team_G,
