@@ -4,7 +4,7 @@ import csi3335f2024 as cfg
 from models import Batting, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
-def upload_baseball_csv():
+def upload_batting_csv():
     # TODO: Read from Batting.csv AND BattingPost.csv?
     print("updating batting table")
     csv_file_path = get_csv_path("Batting.csv")
@@ -15,102 +15,94 @@ def upload_baseball_csv():
 
     # Process CSV
     try:
-        print(update_baseball_from_csv(csv_file_path))
+        print(update_batting_from_csv(csv_file_path))
         print("File processed successfully")
     except Exception as e:
         print(f"Error: {str(e)}")
 
-def update_baseball_from_csv(file_path):
+def update_batting_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
         updated_rows = 0
+        peopleNotExist=0
+        teamNotExists=0
+        skipCount=0
 
         # Create session
+        session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
         for row in reader:
-            # Convert empty strings to None
-            batting_ID = row["batting_ID"]
-            playerID = row["playerID"]
-            yearId = row["yearId"]
-            teamID = row["teamID"]
-            stint = row["stint"]
-            b_G = row["b_G"]
-            b_AB = row["b_AB"]
-            b_R = row["b_R"]
-            b_H = row["b_H"]
-            b_2B = row["b_2B"]
-            b_3B = row["b_3B"]
-            b_HR = row["b_HR"]
-            b_RBI = row["b_RBI"]
-            b_SB = row["b_SB"]
-            b_CS = row["b_CS"]
-            b_BB = row["b_BB"]
-            b_SO = row["b_SO"]
-            b_IBB = row["b_IBB"]
-            b_HBP = row["b_HBP"]
-            b_SH = row["b_SH"]
-            b_SF = row["b_SF"]
-            b_GIDP = row["b_GIDP"]
+            # TODO: What is G_old in csv?
+            # lgID is present in the csv but not in our database
+            # lgID=row['lgID'],
+            # TODO: G vs B_batting in csv??
 
-            # Debug prints
-            # print(f"Processing row: playerID={playerID}")
+            # Add the following 2 lines for debugging
+            # print("Row being processed:", row)
+            # print("Row keys:", row.keys())
+            batting_record = Batting(
+                playerID=row['playerID'],
+                yearId=int(row['yearID']),
+                stint=int(row['stint']),
+                teamID=row['teamID'],
+                b_G=int(row['G']) if row['G'] else None,
+                b_AB=int(row['AB']) if row['AB'] else None,
+                b_R=int(row['R']) if row['R'] else None,
+                b_H=int(row['H']) if row['H'] else None,
+                b_2B=int(row['2B']) if row['2B'] else None,
+                b_3B=int(row['3B']) if row['3B'] else None,
+                b_HR=int(row['HR']) if row['HR'] else None,
+                b_RBI=int(row['RBI']) if row['RBI'] else None,
+                b_SB=int(row['SB']) if row['SB'] else None,
+                b_CS=int(row['CS']) if row['CS'] else None,
+                b_BB=int(row['BB']) if row['BB'] else None,
+                b_SO=int(row['SO']) if row['SO'] else None,
+                b_IBB=int(row['IBB']) if row['IBB'] else None,
+                b_HBP=int(row['HBP']) if row['HBP'] else None,
+                b_SH=int(row['SH']) if row['SH'] else None,
+                b_SF=int(row['SF']) if row['SF'] else None,
+                b_GIDP= int(row['GIDP']) if row['GIDP'] else None
+            )
 
             # Check if playerID exists in the people table
-            batting_exists = session.query(Baseball).filter_by(playerID=playerID).first()
+            player_exists = session.query(People).filter_by(playerID=batting_record.playerID).first()
 
-            if batting_exists:
-                # Update the existing record
-                batting_exists.playerID = playerID
-                batting_exists.yearId = yearId
-                batting_exists.teamID = teamID
-                batting_exists.stint = stint
-                batting_exists.b_G = b_G
-                batting_exists.b_AB = b_AB
-                batting_exists.b_R = b_R
-                batting_exists.b_H = b_H
-                batting_exists.b_2B = b_2B
-                batting_exists.b_3B = b_3B
-                batting_exists.b_HR = b_HR
-                batting_exists.b_RBI = b_RBI
-                batting_exists.b_SB = b_SB
-                batting_exists.b_CS = b_CS
-                batting_exists.b_BB = b_BB
-                batting_exists.b_SO = b_SO
-                batting_exists.b_IBB = b_IBB
-                batting_exists.b_HBP = b_HBP
-                batting_exists.b_SH = b_SH
-                batting_exists.b_SF = b_SF
-                batting_exists.b_GIDP = b_GIDP
-                updated_rows += 1
+            if not player_exists:
+                peopleNotExist+=1
+                #if we make an error log, message can go here
+                continue
+
+            #check if teamid exists in teams table
+            team_exists = session.query(Teams).filter_by(teamID=batting_record.teamID).first()
+            
+            if not team_exists:
+                teamNotExists+=1
+                #if we make an error log, a message could go here.
+                continue
+
+            # Check if a row with the same playerID, yearID, teamID, and stint exists
+            existing_entry = (
+                session.query(Batting)
+                .filter_by(
+                    playerID=batting_record.playerID,
+                    yearId=batting_record.yearId,
+                    teamID=batting_record.teamID,
+                    stint=batting_record.stint,
+                )
+                .first()
+            )
+
+            if existing_entry:
+                skipCount+=1
+                #if we make error log, message can go here
+                continue
             else:
                 # Insert a new record
-                new_entry = Baseball(
-                    playerID = playerID,
-                    yearId = yearId,
-                    teamID = teamID,
-                    stint = stint,
-                    b_G = b_G,
-                    b_AB = b_AB,
-                    b_R = b_R,
-                    b_H = b_H,
-                    b_2B = b_2B,
-                    b_3B = b_3B,
-                    b_HR = b_HR,
-                    b_RBI = b_RBI,
-                    b_SB = b_SB,
-                    b_CS = b_CS,
-                    b_BB = b_BB,
-                    b_SO = b_SO,
-                    b_IBB = b_IBB,
-                    b_HBP = b_HBP,
-                    b_SH = b_SH,
-                    b_SF = b_SF,
-                    b_GIDP = b_GIDP
-                )
-                session.add(new_entry)
+                session.add(batting_record)
                 new_rows += 1
 
-        session.commit()
-
-        session.close()
-        return {"new_rows": new_rows, "updated_rows": updated_rows}
+            session.commit()
+    session.close()
+    return {"new_rows": new_rows, "rows skipped bc already existed: ": skipCount,
+            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
