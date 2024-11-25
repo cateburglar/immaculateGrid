@@ -15,15 +15,14 @@ def wrapper(result_queue, func, args, kwargs):
     result_queue.put((result, f.getvalue()))
 
 
-def run_with_timeout(func, args=(), kwargs={}, timeout=10):
+def run_function(func, args=(), kwargs={}):
     """
-    Runs a function with a timeout.
+    Runs a function and captures its output.
 
     :param func: The function to execute.
     :param args: Positional arguments for the function.
     :param kwargs: Keyword arguments for the function.
-    :param timeout: Timeout in seconds.
-    :return: The result of the function or None if it times out.
+    :return: A tuple containing the result of the function and its output.
     """
     result_queue = multiprocessing.Queue()
 
@@ -31,15 +30,10 @@ def run_with_timeout(func, args=(), kwargs={}, timeout=10):
         target=wrapper, args=(result_queue, func, args, kwargs)
     )
     process.start()
-    process.join(timeout)
+    process.join()
 
-    if process.is_alive():
-        process.terminate()
-        process.join()
-        return (None,)  # Functions have no return value
-    else:
-        # If completed, retrieve the result
-        return result_queue.get()
+    # If completed, retrieve the result and output
+    return result_queue.get()
 
 
 def get_all_service_functions():
@@ -55,11 +49,8 @@ def update_table(table):
     func_name = f"upload_{table}_csv"
     if hasattr(services, func_name):
         func = getattr(services, func_name)
-
-        f = io.StringIO()
-        with redirect_stdout(f), redirect_stderr(f):
-            func()  # Call function
-        print(f.getvalue())
+        result, output = run_function(func)  # Call the function and capture output
+        print(output)
     else:
         print(f"Unknown table: {table}")
 
@@ -70,7 +61,7 @@ def update_tables(tables):
 
     processes = []
     for table in tables:
-        p = multiprocessing.Process(target=update_table, args=(table))
+        p = multiprocessing.Process(target=update_table, args=(table,))
         p.start()
         processes.append(p)
 
