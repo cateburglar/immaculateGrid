@@ -274,6 +274,7 @@ class Fielding(Base):
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(SmallInteger, nullable=True)
+<<<<<<< HEAD
 # added leaugue id as foreign key constraint
 class FieldingPost(Base):
     __tablename__ = "fieldingpost"
@@ -294,4 +295,16 @@ class FieldingPost(Base):
     f_TP = Column(SmallInteger, nullable=True)
     f_PB = Column(SmallInteger, nullable=True)
     lgID = Column(String(2), nullable=False)
+=======
+
+class Salaries(Base):
+    __tablename__ = "salaries"
+    salaries_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    lgID = Column(String(2), nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    salary = Column(Double, nullable=True)
+
+>>>>>>> noahcaldwell/halloffame
 
