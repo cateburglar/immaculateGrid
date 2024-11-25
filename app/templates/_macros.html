@@ -1,0 +1,106 @@
+{% macro prompt(title, name, team_mappings, option_groups, value=None) %}
+<div class="prompt-container">
+    <h3>{{ title }}</h3>
+    <select class="searchable-dropdown main-dropdown" id="main-dropdown-{{ name }}" name="{{ name }}-option">
+        <option value="" disabled {% if not value or not value.get(name + '-option') %}selected{% endif %}>
+            Select an option
+        </option>
+        {% for group_label, options in option_groups.items() %}
+            <optgroup label="{{ group_label }}">
+                {% for option_value, option_name in options.items() %}
+                    <option value="{{ option_value }}" {% if value and value.get(name + '-option') == option_value %}selected{% endif %}>
+                        {{ option_name }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+
+    <!-- Additional dropdowns -->
+    <div class="additional-dropdowns" id="addition-dropdowns-{{ name }}" name="addition-dropdowns-{{ name }}">
+        <div class="additional-dropdown" id="additional-dropdown-team-{{ name }}" style="display: none;">
+            <h4>Select Team</h4>
+            <select class="searchable-dropdown" name="{{ name }}-team">
+                <option value="" disabled {% if not value %}selected{% endif %}>Select a team</option>
+                {% for team_id, team_name in team_mappings.items() %}
+                    <option value="{{ team_id }}" {% if value == team_id %}selected{% endif %}>{{ team_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" style="display: none;">
+            <h4>Select Operator</h4>
+            <select class="searchable-dropdown" name="{{ name }}-operator">
+                <option value="" disabled {% if not value or not value.get(name + '-operator') %}selected{% endif %}>Select an operator</option>
+                <option value="greater_than" {% if value and value.get(name + '-operator') == 'greater_than' %}selected{% endif %}>Greater Than</option>
+                <option value="less_than" {% if value and value.get(name + '-operator') == 'less_than' %}selected{% endif %}>Less Than</option>
+            </select>
+        </div>
+        <div class="additional-dropdown" id="additional-dropdown-number-{{ name }}" style="display: none;">
+            <h4>Enter Number</h4>
+            <input type="number" class="number-input" step="any" min="0" placeholder="Enter a number" name="{{ name }}-number" value="{{ value.get(name + '-number') if value else '' }}">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Configuration object for dropdown options
+        const optionConfig = {
+            played_for_team: ["team"],
+            only_one_team: ["one_team"],
+            avg_career: ["operator", "number"],
+            era_career: ["operator", "number"],
+            wins_career: ["operator", "number"],
+            k_career: ["operator", "number"],
+            hits_career: ["operator", "number"],
+            hr_career: ["operator", "number"],
+            save_career: ["operator", "number"],
+            war_career: ["operator", "number"],
+            avg_season: ["operator", "number"],
+            era_season: ["operator", "number"],
+            hr_season: ["operator", "number"],
+            win_season: ["operator", "number"],
+            rbi_season: ["operator", "number"],
+            run_season: ["operator", "number"],
+            hits_season: ["operator", "number"],
+            k_season: ["operator", "number"],
+            hr_sb_season: ["operator", "number"],
+            save_season: ["operator", "number"],
+            war_season: ["operator", "number"]
+        };
+
+        function updateDropdowns(name) {
+            const selectedValue = $(`#main-dropdown-${name}`).val();
+            const additionalInputs = optionConfig[selectedValue] || [];
+
+            // Show or hide "team" input
+            $(`#additional-dropdown-team-${name}`).toggle(additionalInputs.includes("team") || additionalInputs.includes("one_team"));
+
+            // Show or hide "operator" input
+            $(`#additional-dropdown-operator-${name}`).toggle(additionalInputs.includes("operator"));
+
+            // Show or hide "number" input
+            $(`#additional-dropdown-number-${name}`).toggle(additionalInputs.includes("number"));
+        }
+
+        // Attach event listener to main dropdown
+        $('.main-dropdown').on('change select2:unselect select2:clear', function() {
+            const dropdownName = $(this).attr('id').replace('main-dropdown-', '');
+            updateDropdowns(dropdownName);
+        });
+
+        // Initialize Select2
+        $('.searchable-dropdown').select2({
+            placeholder: "Select an option",
+            allowClear: true
+        });
+
+        // Initial check for all dropdowns
+        $('.main-dropdown').each(function() {
+            const dropdownName = $(this).attr('id').replace('main-dropdown-', '');
+            updateDropdowns(dropdownName);
+        });
+    });
+</script>
+
+{% endmacro %}
