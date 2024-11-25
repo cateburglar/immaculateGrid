@@ -1,4 +1,14 @@
-from .tables import AllstarFull, Leagues, People
+from .tables import (
+    AllstarFull,
+    Appearances,
+    Fielding,
+    Leagues,
+    People,
+    Pitching,
+    Schools,
+    SeriesPost,
+    Teams,
+)
 from .user import User
 
 # Import other models as needed
@@ -9,4 +19,6 @@ all_models = [
     People,
     Leagues,
     User,
+    Appearances,
+    Teams,
 ]
