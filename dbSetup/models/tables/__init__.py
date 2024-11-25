@@ -274,3 +274,14 @@ class Fielding(Base):
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(SmallInteger, nullable=True)
+
+class Salaries(Base):
+    __tablename__ = "salaries"
+    salaries_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    lgID = Column(String(2), nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    salary = Column(Double, nullable=True)
+
+
