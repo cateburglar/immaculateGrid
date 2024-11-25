@@ -8,7 +8,8 @@ from .tables import (
     Pitching,
     Appearances,
     Fielding,
-    Batting
+    Batting,
+    BattingPost
 )
 
 # Import other models as needed
@@ -24,5 +25,6 @@ all_models = [
     Pitching,
     Appearances,
     Fielding,
-    Batting
+    Batting,
+    BattingPost
 ]

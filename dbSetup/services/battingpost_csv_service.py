@@ -1,25 +1,25 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import Batting, People, Teams
+from models import BattingPost, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
-def upload_batting_csv():
-    print("updating batting table")
-    csv_file_path = get_csv_path("Batting.csv")
+def upload_battingpost_csv():
+    print("updating batting post table")
+    csv_file_path = get_csv_path("BattingPost.csv")
 
     if len(csv_file_path) == 0:
-        print("Error: Batting.csv not found")
+        print("Error: BattingPost.csv not found")
         return
 
     # Process CSV
     try:
-        print(update_batting_from_csv(csv_file_path))
+        print(update_battingpost_from_csv(csv_file_path))
         print("File processed successfully")
     except Exception as e:
         print(f"Error: {str(e)}")
 
-def update_batting_from_csv(file_path):
+def update_battingpost_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
@@ -31,18 +31,16 @@ def update_batting_from_csv(file_path):
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
         for row in reader:
-            # TODO: What is G_old in csv?
             # lgID is present in the csv but not in our database
             # lgID=row['lgID'],
-            # TODO: G vs B_batting in csv??
 
             # Add the following 2 lines for debugging
             # print("Row being processed:", row)
             # print("Row keys:", row.keys())
-            batting_record = Batting(
+            battingpost_record = BattingPost(
                 playerID=row['playerID'],
                 yearId=int(row['yearID']),
-                stint=int(row['stint']),
+                round=row['round'],
                 teamID=row['teamID'],
                 b_G=int(row['G']) if row['G'] else None,
                 b_AB=int(row['AB']) if row['AB'] else None,
@@ -64,7 +62,7 @@ def update_batting_from_csv(file_path):
             )
 
             # Check if playerID exists in the people table
-            player_exists = session.query(People).filter_by(playerID=batting_record.playerID).first()
+            player_exists = session.query(People).filter_by(playerID=battingpost_record.playerID).first()
 
             if not player_exists:
                 peopleNotExist+=1
@@ -72,7 +70,7 @@ def update_batting_from_csv(file_path):
                 continue
 
             #check if teamid exists in teams table
-            team_exists = session.query(Teams).filter_by(teamID=batting_record.teamID).first()
+            team_exists = session.query(Teams).filter_by(teamID=battingpost_record.teamID).first()
             
             if not team_exists:
                 teamNotExists+=1
@@ -81,12 +79,12 @@ def update_batting_from_csv(file_path):
 
             # Check if a row with the same playerID, yearID, teamID, and stint exists
             existing_entry = (
-                session.query(Batting)
+                session.query(BattingPost)
                 .filter_by(
-                    playerID=batting_record.playerID,
-                    yearId=batting_record.yearId,
-                    teamID=batting_record.teamID,
-                    stint=batting_record.stint,
+                    playerID=battingpost_record.playerID,
+                    yearId=battingpost_record.yearId,
+                    teamID=battingpost_record.teamID,
+                    round=battingpost_record.round,
                 )
                 .first()
             )
@@ -97,7 +95,7 @@ def update_batting_from_csv(file_path):
                 continue
             else:
                 # Insert a new record
-                session.add(batting_record)
+                session.add(battingpost_record)
                 new_rows += 1
 
             session.commit()
