@@ -1,3 +1,5 @@
+from .awards_csv_service import upload_awards_csv
+from .awardsshare_csv_service import upload_awardsshare_csv
 from .allstarfull_csv_service import upload_allstarfull_csv
 from .people_csv_service import upload_people_csv
 from .schools_csv_service import upload_schools_csv

@@ -44,7 +44,47 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    awards = relationship("Awards", back_populates="player")
+    awardsshare = relationship("AwardsShare", back_populates="player")
 
+class Awards(Base):
+    __tablename__ = "awards"
+
+    awards_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    awardID = Column(String(255), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    lgID = Column(String(2), nullable=False)
+    tie = Column(String(1), nullable=True)
+    notes = Column(String(100), nullable=True)
+
+    # Define indexes
+    __table_args__ = (
+        Index("fk_awd_peo", "playerID"),
+    )
+
+    # Define relationships
+    player = relationship("People", back_populates="awards")
+
+class AwardsShare(Base):
+    __tablename__ = "awardsshare"
+
+    awardsshare_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    awardID = Column(String(255), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    lgID = Column(String(2), nullable=False)
+    pointsWon = Column(Double, nullable=True)
+    pointsMax = Column(SmallInteger, nullable=True)
+    votesFirst = Column(Double, nullable=True)
+
+    # Define indexes
+    __table_args__ = (
+        Index("fk_awdshr_peo", "playerID"),
+    )
+
+    # Define relationships
+    player = relationship("People", back_populates="awardsshare")
 
 class Leagues(Base):
     __tablename__ = "leagues"
