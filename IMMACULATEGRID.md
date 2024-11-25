@@ -212,11 +212,6 @@
     played with one team in the AL/NL, but additionally played in the AA and PL)
     would all qualify.
 
-1.  Played In Major Negro Lgs: Player must have played in one of the seven
-    major Negro Leagues (1920-1948). When paired with a team, the player must
-    have played a major league game for the team in question. If paired with a
-    stat/accomplishment, the stat/accomplishment does not need to have happened in
-    the Negro Leagues.
 
 1.  Rookie of the Year: Since 1947. When paired with a team, the player must
     have won the Rookie of the Year award in a season he appeared for that
