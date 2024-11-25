@@ -1,70 +1,31 @@
-{% macro prompt(title, name, value=None) %}
+{% macro prompt(title, name, team_mappings, option_groups, value=None) %}
 <div class="prompt-container">
     <h3>{{ title }}</h3>
     <select class="searchable-dropdown main-dropdown" id="main-dropdown-{{ name }}" name="{{ name }}-option">
         <option value="" disabled {% if not value or not value.get(name + '-option') %}selected{% endif %}>
             Select an option
         </option>
-        <optgroup label="Career Options">
-            <option value="avg_career" {% if value and value.get(name + '-option') == 'avg_career' %}selected{% endif %}>AVG Career</option>
-            <option value="era_career" {% if value and value.get(name + '-option') == 'era_career' %}selected{% endif %}>ERA Career</option>
-            <option value="wins_career" {% if value and value.get(name + '-option') == 'wins_career' %}selected{% endif %}>Wins Career</option>
-            <option value="k_career" {% if value and value.get(name + '-option') == 'k_career' %}selected{% endif %}>K Career</option>
-            <option value="hits_career" {% if value and value.get(name + '-option') == 'hits_career' %}selected{% endif %}>Hits Career</option>
-            <option value="hr_career" {% if value and value.get(name + '-option') == 'hr_career' %}selected{% endif %}>HR Career</option>
-            <option value="save_career" {% if value and value.get(name + '-option') == 'save_career' %}selected{% endif %}>Save Career</option>
-            <option value="war_career" {% if value and value.get(name + '-option') == 'war_career' %}selected{% endif %}>WAR Career</option>
-        </optgroup>
-        <optgroup label="Season Options">
-            <option value="avg_season" {% if value and value.get(name + '-option') == 'avg_season' %}selected{% endif %}>AVG Season</option>
-            <option value="era_season" {% if value and value.get(name + '-option') == 'era_season' %}selected{% endif %}>ERA Season</option>
-            <option value="hr_season" {% if value and value.get(name + '-option') == 'hr_season' %}selected{% endif %}>HR Season</option>
-            <option value="win_season" {% if value and value.get(name + '-option') == 'win_season' %}selected{% endif %}>Win Season</option>
-            <option value="rbi_season" {% if value and value.get(name + '-option') == 'rbi_season' %}selected{% endif %}>RBI Season</option>
-            <option value="run_season" {% if value and value.get(name + '-option') == 'run_season' %}selected{% endif %}>Run Season</option>
-            <option value="hits_season" {% if value and value.get(name + '-option') == 'hits_season' %}selected{% endif %}>Hits Season</option>
-            <option value="k_season" {% if value and value.get(name + '-option') == 'k_season' %}selected{% endif %}>K Season</option>
-            <option value="hr_sb_season" {% if value and value.get(name + '-option') == 'hr_sb_season' %}selected{% endif %}>HR / SB Season</option>
-            <option value="save_season" {% if value and value.get(name + '-option') == 'save_season' %}selected{% endif %}>Save Season</option>
-            <option value="war_season" {% if value and value.get(name + '-option') == 'war_season' %}selected{% endif %}>WAR Season</option>
-        </optgroup>
-        <optgroup label="Team Options">
-            <option value="played_for_team" {% if value and value.get(name + '-option') == 'played_for_team' %}selected{% endif %}>Played For Team</option>
-        </optgroup>
-        <optgroup label="Position options">
-            <option value="designated_hitter" {% if value and value.get(name + '-option') == 'designated_hitter' %}selected{% endif %}>Designated Hitter</option>
-            <option value="pitched" {% if value and value.get(name + '-option') == 'pitched' %}selected{% endif %}>Pitched</option>
-            <option value="played_catcher" {% if value and value.get(name + '-option') == 'played_catcher' %}selected{% endif %}>Played Catcher</option>
-            <option value="played_center_field" {% if value and value.get(name + '-option') == 'played_center_field' %}selected{% endif %}>Played Center Field</option>
-            <option value="played_first_base" {% if value and value.get(name + '-option') == 'played_first_base' %}selected{% endif %}>Played First Base</option>
-            <option value="played_left_field" {% if value and value.get(name + '-option') == 'played_left_field' %}selected{% endif %}>Played Left Field</option>
-            <option value="played_outfield" {% if value and value.get(name + '-option') == 'played_outfield' %}selected{% endif %}>Played Outfield</option>
-            <option value="played_right_field" {% if value and value.get(name + '-option') == 'played_right_field' %}selected{% endif %}>Played Right Field</option>
-            <option value="played_second_base" {% if value and value.get(name + '-option') == 'played_second_base' %}selected{% endif %}>Played Second Base</option>
-            <option value="played_shortstop" {% if value and value.get(name + '-option') == 'played_shortstop' %}selected{% endif %}>Played Shortstop</option>
-            <option value="played_third_base" {% if value and value.get(name + '-option') == 'played_third_base' %}selected{% endif %}>Played Third Base</option>
-        </optgroup>
-        <optgroup label="Miscellaneous">
-            <option value="all_star" {% if value and value.get(name + '-option') == 'all_star' %}selected{% endif %}>All Star</option>
-            <option value="born_outside_us" {% if value and value.get(name + '-option') == 'born_outside_us' %}selected{% endif %}>Born Outside US 50 States and DC</option>
-            <option value="cy_young" {% if value and value.get(name + '-option') == 'cy_young' %}selected{% endif %}>Cy Young</option>
-            <option value="first_round_draft_pick" {% if value and value.get(name + '-option') == 'first_round_draft_pick' %}selected{% endif %}>First Round Draft Pick</option>
-            <option value="gold_glove" {% if value and value.get(name + '-option') == 'gold_glove' %}selected{% endif %}>Gold Glove</option>
-            <option value="hall_of_fame" {% if value and value.get(name + '-option') == 'hall_of_fame' %}selected{% endif %}>Hall of Fame</option>
-            <option value="mvp" {% if value and value.get(name + '-option') == 'mvp' %}selected{% endif %}>MVP</option>
-            <option value="only_one_team" {% if value and value.get(name + '-option') == 'only_one_team' %}selected{% endif %}>Only One Team</option>
-            <option value="rookie_of_the_year" {% if value and value.get(name + '-option') == 'rookie_of_the_year' %}selected{% endif %}>Rookie of the Year</option>
-            <option value="silver_slugger" {% if value and value.get(name + '-option') == 'silver_slugger' %}selected{% endif %}>Silver Slugger</option>
-            <option value="threw_a_no_hitter" {% if value and value.get(name + '-option') == 'threw_a_no_hitter' %}selected{% endif %}>Threw a No‑Hitter</option>
-            <option value="world_series_champ" {% if value and value.get(name + '-option') == 'world_series_champ' %}selected{% endif %}>World Series Champ</option>
-        </optgroup>
+        {% for group_label, options in option_groups.items() %}
+            <optgroup label="{{ group_label }}">
+                {% for option_value, option_name in options.items() %}
+                    <option value="{{ option_value }}" {% if value and value.get(name + '-option') == option_value %}selected{% endif %}>
+                        {{ option_name }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
     </select>
 
     <!-- Additional dropdowns -->
     <div class="additional-dropdowns" id="addition-dropdowns-{{ name }}" name="addition-dropdowns-{{ name }}">
         <div class="additional-dropdown" id="additional-dropdown-team-{{ name }}" style="display: none;">
             <h4>Select Team</h4>
-            {{ team_dropdown(name, value.get(name + '-team') if value else None) }}
+            <select class="searchable-dropdown" name="{{ name }}-team">
+                <option value="" disabled {% if not value %}selected{% endif %}>Select a team</option>
+                {% for team_id, team_name in team_mappings.items() %}
+                    <option value="{{ team_id }}" {% if value == team_id %}selected{% endif %}>{{ team_name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" style="display: none;">
             <h4>Select Operator</h4>
@@ -148,189 +109,6 @@
 {% macro team_dropdown(name, value=None) %}
 <select class="searchable-dropdown" name="{{ name }}-team">
     <option value="" disabled {% if not value %}selected{% endif %}>Select a team</option>
-    <option value="ALT" {% if value == 'ALT' %}selected{% endif %}>Altoona Mountain City</option>
-    <option value="ANA" {% if value == 'ANA' %}selected{% endif %}>Anaheim Angels</option>
-    <option value="ARI" {% if value == 'ARI' %}selected{% endif %}>Arizona Diamondbacks</option>
-    <option value="ATL" {% if value == 'ATL' %}selected{% endif %}>Atlanta Braves</option>
-    <option value="BAL" {% if value == 'BAL' %}selected{% endif %}>Baltimore Orioles</option>
-    <option value="BFN" {% if value == 'BFN' %}selected{% endif %}>Buffalo Bisons</option>
-    <option value="BFP" {% if value == 'BFP' %}selected{% endif %}>Buffalo Bisons</option>
-    <option value="BL1" {% if value == 'BL1' %}selected{% endif %}>Baltimore Canaries</option>
-    <option value="BL2" {% if value == 'BL2' %}selected{% endif %}>Baltimore Orioles</option>
-    <option value="BL3" {% if value == 'BL3' %}selected{% endif %}>Baltimore Orioles</option>
-    <option value="BL4" {% if value == 'BL4' %}selected{% endif %}>Baltimore Marylands</option>
-    <option value="BLA" {% if value == 'BLA' %}selected{% endif %}>Baltimore Orioles</option>
-    <option value="BLF" {% if value == 'BLF' %}selected{% endif %}>Baltimore Terrapins</option>
-    <option value="BLN" {% if value == 'BLN' %}selected{% endif %}>Baltimore Orioles</option>
-    <option value="BLU" {% if value == 'BLU' %}selected{% endif %}>Baltimore Monumentals</option>
-    <option value="BOS" {% if value == 'BOS' %}selected{% endif %}>Boston Americans</option>
-    <option value="BOS" {% if value == 'BOS' %}selected{% endif %}>Boston Red Sox</option>
-    <option value="BR1" {% if value == 'BR1' %}selected{% endif %}>Brooklyn Eckfords</option>
-    <option value="BR2" {% if value == 'BR2' %}selected{% endif %}>Brooklyn Atlantics</option>
-    <option value="BR3" {% if value == 'BR3' %}selected{% endif %}>Brooklyn Atlantics</option>
-    <option value="BR3" {% if value == 'BR3' %}selected{% endif %}>Brooklyn Bridegrooms</option>
-    <option value="BR3" {% if value == 'BR3' %}selected{% endif %}>Brooklyn Grays</option>
-    <option value="BR4" {% if value == 'BR4' %}selected{% endif %}>Brooklyn Gladiators</option>
-    <option value="BRF" {% if value == 'BRF' %}selected{% endif %}>Brooklyn Tip-Tops</option>
-    <option value="BRO" {% if value == 'BRO' %}selected{% endif %}>Brooklyn Bridegrooms</option>
-    <option value="BRO" {% if value == 'BRO' %}selected{% endif %}>Brooklyn Dodgers</option>
-    <option value="BRO" {% if value == 'BRO' %}selected{% endif %}>Brooklyn Grooms</option>
-    <option value="BRO" {% if value == 'BRO' %}selected{% endif %}>Brooklyn Robins</option>
-    <option value="BRO" {% if value == 'BRO' %}selected{% endif %}>Brooklyn Superbas</option>
-    <option value="BRP" {% if value == 'BRP' %}selected{% endif %}>Brooklyn Ward's Wonders</option>
-    <option value="BS1" {% if value == 'BS1' %}selected{% endif %}>Boston Red Stockings</option>
-    <option value="BS2" {% if value == 'BS2' %}selected{% endif %}>Boston Reds</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Beaneaters</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Bees</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Braves</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Doves</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Red Caps</option>
-    <option value="BSN" {% if value == 'BSN' %}selected{% endif %}>Boston Rustlers</option>
-    <option value="BSP" {% if value == 'BSP' %}selected{% endif %}>Boston Reds</option>
-    <option value="BSU" {% if value == 'BSU' %}selected{% endif %}>Boston Reds</option>
-    <option value="BUF" {% if value == 'BUF' %}selected{% endif %}>Buffalo Blues</option>
-    <option value="BUF" {% if value == 'BUF' %}selected{% endif %}>Buffalo Buffeds</option>
-    <option value="CAL" {% if value == 'CAL' %}selected{% endif %}>California Angels</option>
-    <option value="CH1" {% if value == 'CH1' %}selected{% endif %}>Chicago White Stockings</option>
-    <option value="CH2" {% if value == 'CH2' %}selected{% endif %}>Chicago White Stockings</option>
-    <option value="CHA" {% if value == 'CHA' %}selected{% endif %}>Chicago White Sox</option>
-    <option value="CHF" {% if value == 'CHF' %}selected{% endif %}>Chicago Chi-Feds</option>
-    <option value="CHF" {% if value == 'CHF' %}selected{% endif %}>Chicago Whales</option>
-    <option value="CHN" {% if value == 'CHN' %}selected{% endif %}>Chicago Colts</option>
-    <option value="CHN" {% if value == 'CHN' %}selected{% endif %}>Chicago Cubs</option>
-    <option value="CHN" {% if value == 'CHN' %}selected{% endif %}>Chicago Orphans</option>
-    <option value="CHN" {% if value == 'CHN' %}selected{% endif %}>Chicago White Stockings</option>
-    <option value="CHP" {% if value == 'CHP' %}selected{% endif %}>Chicago Pirates</option>
-    <option value="CHU" {% if value == 'CHU' %}selected{% endif %}>Chicago/Pittsburgh (Union League)</option>
-    <option value="CIN" {% if value == 'CIN' %}selected{% endif %}>Cincinnati Redlegs</option>
-    <option value="CIN" {% if value == 'CIN' %}selected{% endif %}>Cincinnati Reds</option>
-    <option value="CL1" {% if value == 'CL1' %}selected{% endif %}>Cleveland Forest Citys</option>
-    <option value="CL2" {% if value == 'CL2' %}selected{% endif %}>Cleveland Blues</option>
-    <option value="CL3" {% if value == 'CL3' %}selected{% endif %}>Cleveland Blues</option>
-    <option value="CL4" {% if value == 'CL4' %}selected{% endif %}>Cleveland Spiders</option>
-    <option value="CL5" {% if value == 'CL5' %}selected{% endif %}>Columbus Buckeyes</option>
-    <option value="CL6" {% if value == 'CL6' %}selected{% endif %}>Columbus Solons</option>
-    <option value="CLE" {% if value == 'CLE' %}selected{% endif %}>Cleveland Blues</option>
-    <option value="CLE" {% if value == 'CLE' %}selected{% endif %}>Cleveland Bronchos</option>
-    <option value="CLE" {% if value == 'CLE' %}selected{% endif %}>Cleveland Guardians</option>
-    <option value="CLE" {% if value == 'CLE' %}selected{% endif %}>Cleveland Indians</option>
-    <option value="CLE" {% if value == 'CLE' %}selected{% endif %}>Cleveland Naps</option>
-    <option value="CLP" {% if value == 'CLP' %}selected{% endif %}>Cleveland Infants</option>
-    <option value="CN1" {% if value == 'CN1' %}selected{% endif %}>Cincinnati Reds</option>
-    <option value="CN2" {% if value == 'CN2' %}selected{% endif %}>Cincinnati Red Stockings</option>
-    <option value="CN3" {% if value == 'CN3' %}selected{% endif %}>Cincinnati Kelly's Killers</option>
-    <option value="CNU" {% if value == 'CNU' %}selected{% endif %}>Cincinnati Outlaw Reds</option>
-    <option value="COL" {% if value == 'COL' %}selected{% endif %}>Colorado Rockies</option>
-    <option value="DET" {% if value == 'DET' %}selected{% endif %}>Detroit Tigers</option>
-    <option value="DTN" {% if value == 'DTN' %}selected{% endif %}>Detroit Wolverines</option>
-    <option value="ELI" {% if value == 'ELI' %}selected{% endif %}>Elizabeth Resolutes</option>
-    <option value="FLO" {% if value == 'FLO' %}selected{% endif %}>Florida Marlins</option>
-    <option value="FW1" {% if value == 'FW1' %}selected{% endif %}>Fort Wayne Kekiongas</option>
-    <option value="HAR" {% if value == 'HAR' %}selected{% endif %}>Hartford Dark Blues</option>
-    <option value="HOU" {% if value == 'HOU' %}selected{% endif %}>Houston Astros</option>
-    <option value="HOU" {% if value == 'HOU' %}selected{% endif %}>Houston Colt .45's</option>
-    <option value="HR1" {% if value == 'HR1' %}selected{% endif %}>Hartford Dark Blues</option>
-    <option value="IN1" {% if value == 'IN1' %}selected{% endif %}>Indianapolis Blues</option>
-    <option value="IN2" {% if value == 'IN2' %}selected{% endif %}>Indianapolis Hoosiers</option>
-    <option value="IN3" {% if value == 'IN3' %}selected{% endif %}>Indianapolis Hoosiers</option>
-    <option value="IND" {% if value == 'IND' %}selected{% endif %}>Indianapolis Hoosiers</option>
-    <option value="KC1" {% if value == 'KC1' %}selected{% endif %}>Kansas City Athletics</option>
-    <option value="KC2" {% if value == 'KC2' %}selected{% endif %}>Kansas City Cowboys</option>
-    <option value="KCA" {% if value == 'KCA' %}selected{% endif %}>Kansas City Royals</option>
-    <option value="KCF" {% if value == 'KCF' %}selected{% endif %}>Kansas City Packers</option>
-    <option value="KCN" {% if value == 'KCN' %}selected{% endif %}>Kansas City Cowboys</option>
-    <option value="KCU" {% if value == 'KCU' %}selected{% endif %}>Kansas City Cowboys</option>
-    <option value="KEO" {% if value == 'KEO' %}selected{% endif %}>Keokuk Westerns</option>
-    <option value="LAA" {% if value == 'LAA' %}selected{% endif %}>Los Angeles Angels</option>
-    <option value="LAA" {% if value == 'LAA' %}selected{% endif %}>Los Angeles Angels of Anaheim</option>
-    <option value="LAN" {% if value == 'LAN' %}selected{% endif %}>Los Angeles Dodgers</option>
-    <option value="LS1" {% if value == 'LS1' %}selected{% endif %}>Louisville Grays</option>
-    <option value="LS2" {% if value == 'LS2' %}selected{% endif %}>Louisville Colonels</option>
-    <option value="LS2" {% if value == 'LS2' %}selected{% endif %}>Louisville Eclipse</option>
-    <option value="LS3" {% if value == 'LS3' %}selected{% endif %}>Louisville Colonels</option>
-    <option value="MIA" {% if value == 'MIA' %}selected{% endif %}>Miami Marlins</option>
-    <option value="MID" {% if value == 'MID' %}selected{% endif %}>Middletown Mansfields</option>
-    <option value="MIL" {% if value == 'MIL' %}selected{% endif %}>Milwaukee Brewers</option>
-    <option value="MIN" {% if value == 'MIN' %}selected{% endif %}>Minnesota Twins</option>
-    <option value="ML1" {% if value == 'ML1' %}selected{% endif %}>Milwaukee Braves</option>
-    <option value="ML2" {% if value == 'ML2' %}selected{% endif %}>Milwaukee Grays</option>
-    <option value="ML3" {% if value == 'ML3' %}selected{% endif %}>Milwaukee Brewers</option>
-    <option value="ML4" {% if value == 'ML4' %}selected{% endif %}>Milwaukee Brewers</option>
-    <option value="MLA" {% if value == 'MLA' %}selected{% endif %}>Milwaukee Brewers</option>
-    <option value="MLU" {% if value == 'MLU' %}selected{% endif %}>Milwaukee Brewers</option>
-    <option value="MON" {% if value == 'MON' %}selected{% endif %}>Montreal Expos</option>
-    <option value="NEW" {% if value == 'NEW' %}selected{% endif %}>Newark Pepper</option>
-    <option value="NH1" {% if value == 'NH1' %}selected{% endif %}>New Haven Elm Citys</option>
-    <option value="NY1" {% if value == 'NY1' %}selected{% endif %}>New York Giants</option>
-    <option value="NY1" {% if value == 'NY1' %}selected{% endif %}>New York Gothams</option>
-    <option value="NY2" {% if value == 'NY2' %}selected{% endif %}>New York Mutuals</option>
-    <option value="NY3" {% if value == 'NY3' %}selected{% endif %}>New York Mutuals</option>
-    <option value="NY4" {% if value == 'NY4' %}selected{% endif %}>New York Metropolitans</option>
-    <option value="NYA" {% if value == 'NYA' %}selected{% endif %}>New York Highlanders</option>
-    <option value="NYA" {% if value == 'NYA' %}selected{% endif %}>New York Yankees</option>
-    <option value="NYN" {% if value == 'NYN' %}selected{% endif %}>New York Mets</option>
-    <option value="NYP" {% if value == 'NYP' %}selected{% endif %}>New York Giants</option>
-    <option value="OAK" {% if value == 'OAK' %}selected{% endif %}>Oakland Athletics</option>
-    <option value="PH1" {% if value == 'PH1' %}selected{% endif %}>Philadelphia Athletics</option>
-    <option value="PH2" {% if value == 'PH2' %}selected{% endif %}>Philadelphia Whites</option>
-    <option value="PH3" {% if value == 'PH3' %}selected{% endif %}>Philadelphia Centennials</option>
-    <option value="PH4" {% if value == 'PH4' %}selected{% endif %}>Philadelphia Athletics</option>
-    <option value="PHA" {% if value == 'PHA' %}selected{% endif %}>Philadelphia Athletics</option>
-    <option value="PHI" {% if value == 'PHI' %}selected{% endif %}>Philadelphia Blue Jays</option>
-    <option value="PHI" {% if value == 'PHI' %}selected{% endif %}>Philadelphia Phillies</option>
-    <option value="PHI" {% if value == 'PHI' %}selected{% endif %}>Philadelphia Quakers</option>
-    <option value="PHN" {% if value == 'PHN' %}selected{% endif %}>Philadelphia Athletics</option>
-    <option value="PHP" {% if value == 'PHP' %}selected{% endif %}>Philadelphia Athletics</option>
-    <option value="PHU" {% if value == 'PHU' %}selected{% endif %}>Philadelphia Keystones</option>
-    <option value="PIT" {% if value == 'PIT' %}selected{% endif %}>Pittsburg Alleghenys</option>
-    <option value="PIT" {% if value == 'PIT' %}selected{% endif %}>Pittsburgh Pirates</option>
-    <option value="PRO" {% if value == 'PRO' %}selected{% endif %}>Providence Grays</option>
-    <option value="PT1" {% if value == 'PT1' %}selected{% endif %}>Pittsburg Alleghenys</option>
-    <option value="PTF" {% if value == 'PTF' %}selected{% endif %}>Pittsburgh Rebels</option>
-    <option value="PTP" {% if value == 'PTP' %}selected{% endif %}>Pittsburgh Burghers</option>
-    <option value="RC1" {% if value == 'RC1' %}selected{% endif %}>Rockford Forest Citys</option>
-    <option value="RC2" {% if value == 'RC2' %}selected{% endif %}>Rochester Broncos</option>
-    <option value="RIC" {% if value == 'RIC' %}selected{% endif %}>Richmond Virginians</option>
-    <option value="SDN" {% if value == 'SDN' %}selected{% endif %}>San Diego Padres</option>
-    <option value="SE1" {% if value == 'SE1' %}selected{% endif %}>Seattle Pilots</option>
-    <option value="SEA" {% if value == 'SEA' %}selected{% endif %}>Seattle Mariners</option>
-    <option value="SFN" {% if value == 'SFN' %}selected{% endif %}>San Francisco Giants</option>
-    <option value="SL1" {% if value == 'SL1' %}selected{% endif %}>St. Louis Red Stockings</option>
-    <option value="SL2" {% if value == 'SL2' %}selected{% endif %}>St. Louis Brown Stockings</option>
-    <option value="SL3" {% if value == 'SL3' %}selected{% endif %}>St. Louis Brown Stockings</option>
-    <option value="SL4" {% if value == 'SL4' %}selected{% endif %}>St. Louis Brown Stockings</option>
-    <option value="SL4" {% if value == 'SL4' %}selected{% endif %}>St. Louis Browns</option>
-    <option value="SL5" {% if value == 'SL5' %}selected{% endif %}>St. Louis Maroons</option>
-    <option value="SLA" {% if value == 'SLA' %}selected{% endif %}>St. Louis Browns</option>
-    <option value="SLF" {% if value == 'SLF' %}selected{% endif %}>St. Louis Terriers</option>
-    <option value="SLN" {% if value == 'SLN' %}selected{% endif %}>St. Louis Browns</option>
-    <option value="SLN" {% if value == 'SLN' %}selected{% endif %}>St. Louis Cardinals</option>
-    <option value="SLN" {% if value == 'SLN' %}selected{% endif %}>St. Louis Perfectos</option>
-    <option value="SLU" {% if value == 'SLU' %}selected{% endif %}>St. Louis Maroons</option>
-    <option value="SPU" {% if value == 'SPU' %}selected{% endif %}>St. Paul White Caps</option>
-    <option value="SR1" {% if value == 'SR1' %}selected{% endif %}>Syracuse Stars</option>
-    <option value="SR2" {% if value == 'SR2' %}selected{% endif %}>Syracuse Stars</option>
-    <option value="TBA" {% if value == 'TBA' %}selected{% endif %}>Tampa Bay Devil Rays</option>
-    <option value="TBA" {% if value == 'TBA' %}selected{% endif %}>Tampa Bay Rays</option>
-    <option value="TEX" {% if value == 'TEX' %}selected{% endif %}>Texas Rangers</option>
-    <option value="TL1" {% if value == 'TL1' %}selected{% endif %}>Toledo Blue Stockings</option>
-    <option value="TL2" {% if value == 'TL2' %}selected{% endif %}>Toledo Maumees</option>
-    <option value="TOR" {% if value == 'TOR' %}selected{% endif %}>Toronto Blue Jays</option>
-    <option value="TRN" {% if value == 'TRN' %}selected{% endif %}>Troy Trojans</option>
-    <option value="TRO" {% if value == 'TRO' %}selected{% endif %}>Troy Haymakers</option>
-    <option value="WAS" {% if value == 'WAS' %}selected{% endif %}>Washington Nationals</option>
-    <option value="WAS" {% if value == 'WAS' %}selected{% endif %}>Washington Senators</option>
-    <option value="WIL" {% if value == 'WIL' %}selected{% endif %}>Wilmington Quicksteps</option>
-    <option value="WOR" {% if value == 'WOR' %}selected{% endif %}>Worcester Ruby Legs</option>
-    <option value="WS1" {% if value == 'WS1' %}selected{% endif %}>Washington Senators</option>
-    <option value="WS2" {% if value == 'WS2' %}selected{% endif %}>Washington Senators</option>
-    <option value="WS3" {% if value == 'WS3' %}selected{% endif %}>Washington Olympics</option>
-    <option value="WS4" {% if value == 'WS4' %}selected{% endif %}>Washington Nationals</option>
-    <option value="WS5" {% if value == 'WS5' %}selected{% endif %}>Washington Blue Legs</option>
-    <option value="WS6" {% if value == 'WS6' %}selected{% endif %}>Washington Nationals</option>
-    <option value="WS7" {% if value == 'WS7' %}selected{% endif %}>Washington Nationals</option>
-    <option value="WS8" {% if value == 'WS8' %}selected{% endif %}>Washington Nationals</option>
-    <option value="WS9" {% if value == 'WS9' %}selected{% endif %}>Washington Statesmen</option>
-    <option value="WSU" {% if value == 'WSU' %}selected{% endif %}>Washington Nationals</option>
+   
 </select>
 {% endmacro %}

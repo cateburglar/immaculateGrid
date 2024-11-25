@@ -10,6 +10,7 @@ from ..filters import (
     TeamFilter,
 )
 from ..models import Appearances, People, Teams
+from ..static.constants import OPTION_GROUPS, TEAM_MAPPINGS
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
@@ -177,7 +178,12 @@ def get_player():
                 flash(error, "error")
 
             flash(form_data, "info")
-            return render_template("immaculate_grid.html", form_data=form_data)
+            return render_template(
+                "immaculate_grid.html",
+                team_mappings=TEAM_MAPPINGS,
+                option_groups=OPTION_GROUPS,
+                form_data=form_data,
+            )
 
         # Add this step when table definitions allow for proper querying
         # name = perform_query(form_data)
@@ -185,4 +191,6 @@ def get_player():
         flash(form_data, "info")
         return redirect(url_for("grid_routes.get_player"))
 
-    return render_template("immaculate_grid.html")
+    return render_template(
+        "immaculate_grid.html", team_mappings=TEAM_MAPPINGS, option_groups=OPTION_GROUPS
+    )
