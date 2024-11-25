@@ -7,6 +7,7 @@ from sqlalchemy import (
     Integer,
     SmallInteger,
     String,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -209,7 +210,7 @@ class Pitching(Base):
     p_G = Column(SmallInteger, nullable=True)
     p_GS = Column(SmallInteger, nullable=True)
     p_CG = Column(SmallInteger, nullable=True)
-    p_SHO =Column(SmallInteger, nullable=True)
+    p_SHO = Column(SmallInteger, nullable=True)
     p_SV = Column(SmallInteger, nullable=True)
     p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
@@ -229,6 +230,7 @@ class Pitching(Base):
     p_SH = Column(SmallInteger, nullable=True)
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
+
 
 class Appearances(Base):
     __tablename__ = "appearances"
@@ -253,6 +255,7 @@ class Appearances(Base):
     G_dh = Column(SmallInteger, nullable=True)
     G_ph = Column(SmallInteger, nullable=True)
     G_pr = Column(SmallInteger, nullable=True)
+
 
 class Fielding(Base):
     __tablename__ = "fielding"

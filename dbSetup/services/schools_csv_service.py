@@ -26,7 +26,7 @@ def update_schools_from_csv(file_path):
         with open(file_path, newline="") as csvfile:
             reader = csv.reader(csvfile)
             session = create_session_from_str(create_enginestr_from_values(mysql))
-            counts = {"updated_rows": 0, "new_rows": 0}
+            counts = {"updated_rows": 0}
             # Process rows
             for row in reader:
                 process_row(row, session, counts)
@@ -43,6 +43,7 @@ def update_schools_from_csv(file_path):
 
 def process_row(row, session, counts):
     try:
+        # Get the attributes
         schoolId = row[0] or None
         school_name = row[1] or None
         if len(row) > 5:
@@ -54,25 +55,16 @@ def process_row(row, session, counts):
             school_state = row[3] or None
             school_country = row[4] or None
 
-        # Check if a row with the same schoolId exists
-        existing_entry = session.query(Schools).filter_by(schoolId=schoolId).first()
+        entry = Schools(
+            schoolId=schoolId,
+            school_name=school_name,
+            school_city=school_city,
+            school_state=school_state,
+            school_country=school_country,
+        )
 
-        if existing_entry:
-            existing_entry.school_name = school_name
-            existing_entry.school_city = school_city
-            existing_entry.school_state = school_state
-            existing_entry.school_country = school_country
-            counts["updated_rows"] += 1
-        else:
-            # Insert a new record
-            new_entry = Schools(
-                schoolId=schoolId,
-                school_name=school_name,
-                school_city=school_city,
-                school_state=school_state,
-                school_country=school_country,
-            )
-            session.add(new_entry)
-            counts["new_rows"] += 1
+        session.merge(entry)  # Upsert row
+        counts["updated_rows"] += 1  # Update count
+
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")
