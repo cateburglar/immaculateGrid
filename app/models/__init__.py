@@ -9,6 +9,8 @@ all_models = [
     People,
     Leagues,
     User,
+    Appearances,
+    Teams,
     Fielding,
     Teams
 ]
