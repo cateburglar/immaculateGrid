@@ -105,10 +105,3 @@
 
 
 {% endmacro %}
-
-{% macro team_dropdown(name, value=None) %}
-<select class="searchable-dropdown" name="{{ name }}-team">
-    <option value="" disabled {% if not value %}selected{% endif %}>Select a team</option>
-   
-</select>
-{% endmacro %}
