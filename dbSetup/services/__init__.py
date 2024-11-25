@@ -1,6 +1,7 @@
 from .allstarfull_csv_service import upload_allstarfull_csv
 from .people_csv_service import upload_people_csv
 from .schools_csv_service import upload_schools_csv
+from .collegeplaying_csv_service import upload_collegeplaying_csv
 from .seriespost_csv_service import upload_seriespost_csv
 from .teams_csv_service import upload_teams_csv
 from .test_service import execute_tests
