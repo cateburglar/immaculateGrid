@@ -1,20 +1,22 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import Baseball
+from models import Batting, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 def upload_baseball_csv():
-    csv_file_path = get_csv_path("Baseball.csv")
+    # TODO: Read from Batting.csv AND BattingPost.csv?
+    print("updating batting table")
+    csv_file_path = get_csv_path("Batting.csv")
 
     if len(csv_file_path) == 0:
-        print("Error: Baseball.csv not found")
+        print("Error: Batting.csv not found")
         return
 
     # Process CSV
     try:
         print(update_baseball_from_csv(csv_file_path))
-        print("File processesed successfully")
+        print("File processed successfully")
     except Exception as e:
         print(f"Error: {str(e)}")
 
