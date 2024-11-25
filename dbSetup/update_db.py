@@ -1,7 +1,12 @@
 import argparse
 import inspect
+import signal
 
-import services  # Assuming services.py is in the same directory
+import services
+
+
+def timeout_handler(signum, frame):
+    raise TimeoutError("Function call timed out")
 
 
 def main():
@@ -16,10 +21,15 @@ def main():
     args = parser.parse_args()
 
     # If no tables are specified, call all functions in services
-    tables_to_update = args.tables if args.tables else get_all_service_functions()
+    tables_to_update = (
+        args.tables
+        if (args.tables and args.tables != ["ci"])
+        else get_all_service_functions()
+    )
+    isCI = True if args.tables == "test" else False
 
     # Execute updates
-    update_tables(tables_to_update)
+    update_tables(tables_to_update, isCI)
 
 
 def get_all_service_functions():
@@ -31,12 +41,22 @@ def get_all_service_functions():
     ]
 
 
-def update_tables(tables):
+def update_tables(tables, isCI):
     for table in tables:
         func_name = f"upload_{table}_csv"
         if hasattr(services, func_name):
             func = getattr(services, func_name)
-            func()  # Call the function
+            if isCI:
+                signal.signal(signal.SIGALRM, timeout_handler)
+                signal.alarm(10)
+                try:
+                    func()  # Call function in test mode
+                except TimeoutError:
+                    print(f"Update for table {table} timed out")
+                finally:
+                    signal.alarm(0)  # Disable the alarm
+            else:
+                func()  # Call function normally
         else:
             print(f"Unknown table: {table}")
 
