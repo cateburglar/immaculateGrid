@@ -52,28 +52,26 @@ class Batting(Base):
     yearId = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), nullable=False)
     stint = Column(SmallInteger, nullable=False)
-    b_G = Column(SmallInteger, nullable=False)
-    b_AB = Column(SmallInteger, nullable=False)
-    b_R = Column(SmallInteger, nullable=False)
-    b_H = Column(SmallInteger, nullable=False)
-    b_2B = Column(SmallInteger, nullable=False)
-    b_3B = Column(SmallInteger, nullable=False)
-    b_HR = Column(SmallInteger, nullable=False)
-    b_RBI = Column(SmallInteger, nullable=False)
-    b_SB = Column(SmallInteger, nullable=False)
-    b_CS = Column(SmallInteger, nullable=False)
-    b_BB = Column(SmallInteger, nullable=False)
-    b_SO = Column(SmallInteger, nullable=False)
-    b_IBB = Column(SmallInteger, nullable=False)
-    b_HBP = Column(SmallInteger, nullable=False)
-    b_SH = Column(SmallInteger, nullable=False)
-    b_SF = Column(SmallInteger, nullable=False)
-    b_GIDP = Column(SmallInteger, nullable=False)
+    b_G = Column(SmallInteger, nullable=True)
+    b_AB = Column(SmallInteger, nullable=True)
+    b_R = Column(SmallInteger, nullable=True)
+    b_H = Column(SmallInteger, nullable=True)
+    b_2B = Column(SmallInteger, nullable=True)
+    b_3B = Column(SmallInteger, nullable=True)
+    b_HR = Column(SmallInteger, nullable=True)
+    b_RBI = Column(SmallInteger, nullable=True)
+    b_SB = Column(SmallInteger, nullable=True)
+    b_CS = Column(SmallInteger, nullable=True)
+    b_BB = Column(SmallInteger, nullable=True)
+    b_SO = Column(SmallInteger, nullable=True)
+    b_IBB = Column(SmallInteger, nullable=True)
+    b_HBP = Column(SmallInteger, nullable=True)
+    b_SH = Column(SmallInteger, nullable=True)
+    b_SF = Column(SmallInteger, nullable=True)
+    b_GIDP = Column(SmallInteger, nullable=True)
 
-    __table_args__ = (Index("playerID", "teamID"),)
-
-    # Define relationships
-
+    # TODO: Not needed?
+    # __table_args__ = (Index("playerID", "teamID"),)
 
 class Leagues(Base):
     __tablename__ = "leagues"
