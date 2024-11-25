@@ -44,7 +44,29 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    managers = relationship("Manager", back_populates="people")
 
+class Manager(Base):
+    __tablename__ = "managers"
+
+    managers_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    inSeason = Column(SmallInteger, nullable=False)
+    manager_G = Column(SmallInteger, nullable=True)
+    manager_W = Column(SmallInteger, nullable=True)
+    manager_L = Column(SmallInteger, nullable=True)
+    teamRank = Column(SmallInteger, nullable=True)
+    plyrMgr = Column(String(1), nullable=True)
+    half = Column(SmallInteger, nullable=True)  # Use a constraint for values 1 or 2
+
+    __table_args__ = (
+        {"mysql_charset": "utf8mb3", "mysql_collate": "utf8mb3_general_ci"}
+    )
+
+    # Define relationship
+    people = relationship("People", back_populates="managers")
 
 class Leagues(Base):
     __tablename__ = "leagues"
