@@ -56,11 +56,12 @@ def create_app():
     with app.app_context():
         # Register blueprints/routes
         from .models import User
-        from .routes import admin_routes, allstarfull_routes, home_routes
+        from .routes import admin_routes, allstarfull_routes, grid_routes, home_routes
 
         app.register_blueprint(home_routes, url_prefix="/")
         app.register_blueprint(allstarfull_routes, url_prefix="/allstarfull")
         app.register_blueprint(admin_routes, url_prefix="/admin")
+        app.register_blueprint(grid_routes, url_prefix="/grid")
 
         db.create_all()
 
