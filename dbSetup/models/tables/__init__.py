@@ -7,6 +7,7 @@ from sqlalchemy import (
     Integer,
     SmallInteger,
     String,
+    Float,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -273,4 +274,26 @@ class Fielding(Base):
     f_WP = Column(SmallInteger, nullable=True)
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
-    f_ZR = Column(SmallInteger, nullable=True)
+    f_ZR = Column(Float, nullable=True)
+
+class FieldingPost(Base):
+    __tablename__ = "fieldingpost"
+    fieldingpost_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    round = Column(String(10), nullable=False)
+    position = Column(String(2), nullable=True)
+    f_G = Column(SmallInteger, nullable=True)
+    f_GS = Column(SmallInteger, nullable=True)
+    f_InnOuts = Column(SmallInteger, nullable=True)
+    f_PO = Column(SmallInteger, nullable=True)
+    f_A = Column(SmallInteger, nullable=True)
+    f_E = Column(SmallInteger, nullable=True)
+    f_DP = Column(SmallInteger, nullable=True)
+    f_TP = Column(SmallInteger, nullable=True)
+    f_PB = Column(SmallInteger, nullable=True)
+
+    # SB and CS are not present in our database, although being present in the CSV
+    # f_SB = Column(SmallInteger, nullable=True)
+    # f_CS = Column(SmallInteger, nullable=True)
