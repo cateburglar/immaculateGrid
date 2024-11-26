@@ -3,6 +3,8 @@ from .tables import *
 
 # For easy access to all models
 all_models = [
+    Awards,
+    AwardsShare,
     AllstarFull,
     People,
     Leagues,
