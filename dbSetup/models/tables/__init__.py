@@ -7,7 +7,7 @@ from sqlalchemy import (
     Integer,
     SmallInteger,
     String,
-    UniqueConstraint
+    UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -157,6 +157,17 @@ class AllstarFull(Base):
     GP = Column(SmallInteger)
     startingPos = Column(SmallInteger)
 
+    __table_args__ = (
+        UniqueConstraint(
+            "allstarfull_ID",
+            "playerID",
+            "lgID",
+            "teamID",
+            "yearID",
+            name="uq_allstarfull",
+        ),
+    )
+
     # Define relationships
     league = relationship("Leagues", back_populates="allstarfull_entries")
     player = relationship("People", back_populates="allstarfull_entries")
@@ -210,7 +221,7 @@ class Pitching(Base):
     p_G = Column(SmallInteger, nullable=True)
     p_GS = Column(SmallInteger, nullable=True)
     p_CG = Column(SmallInteger, nullable=True)
-    p_SHO =Column(SmallInteger, nullable=True)
+    p_SHO = Column(SmallInteger, nullable=True)
     p_SV = Column(SmallInteger, nullable=True)
     p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
@@ -231,12 +242,12 @@ class Pitching(Base):
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
 
-     # Define the MUL (Index) fields
-    #this speeds up data retrieval by these columns
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
     __table_args__ = (
         Index("idx_teamID", "teamID"),
         Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
-    )   
+    )
 
 
 class Appearances(Base):
@@ -264,11 +275,16 @@ class Appearances(Base):
     G_pr = Column(SmallInteger, nullable=True)
 
     # Define the MUL (Index) fields
-    #this speeds up data retrieval by these columns
+    # this speeds up data retrieval by these columns
     __table_args__ = (
         Index("idx_teamID", "teamID"),
-        Index("idx_playerID_yearID", "playerID", "yearID", ),
+        Index(
+            "idx_playerID_yearID",
+            "playerID",
+            "yearID",
+        ),
     )
+
 
 class Fielding(Base):
     __tablename__ = "fielding"
@@ -292,11 +308,12 @@ class Fielding(Base):
     f_ZR = Column(SmallInteger, nullable=True)
 
     # Define the MUL (Index) fields
-    #this speeds up data retrieval by these columns
+    # this speeds up data retrieval by these columns
     __table_args__ = (
         Index("idx_teamID", "teamID"),
         Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
     )
+
 
 class HomeGames(Base):
     __tablename__ = "homegames"
@@ -311,10 +328,9 @@ class HomeGames(Base):
     attendance = Column(Integer, nullable=True)
 
     # Define the MUL (Index) fields
-    #this speeds up data retrieval by these columns
-    __table_args__ = (
-        Index("idx_parkID", "parkID"),
-    )
+    # this speeds up data retrieval by these columns
+    __table_args__ = (Index("idx_parkID", "parkID"),)
+
 
 class Parks(Base):
     __tablename__ = "parks"
@@ -325,6 +341,7 @@ class Parks(Base):
     state = Column(String, nullable=False)
     country = Column(String, nullable=False)
 
+
 class Divisions(Base):
     __tablename__ = "divisions"
     divisions_ID = Column(Integer, primary_key=True, nullable=False)
@@ -333,14 +350,9 @@ class Divisions(Base):
     division_name = Column(String, nullable=False)
     division_active = Column(String(1), nullable=False)
 
-    #no rows can have the same combination of divID and lgID 
-    __table_args__ = (
-        UniqueConstraint('divID', 'lgID', name='uq_div_lg'),
-    )
+    # no rows can have the same combination of divID and lgID
+    __table_args__ = (UniqueConstraint("divID", "lgID", name="uq_div_lg"),)
 
-        # Define the MUL (Index) fields
-    #this speeds up data retrieval by these columns
-    __table_args__ = (
-        Index("idx_lgID", "lgID"),
-        Index("idx_divID", "divID")
-    )
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (Index("idx_lgID", "lgID"), Index("idx_divID", "divID"))
