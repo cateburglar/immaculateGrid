@@ -22,13 +22,12 @@ def upload_awards_csv():
     except Exception as e:
         print(f"Error: {str(e)}")
 
-
 def update_awards_from_csv(file_path, award_type):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
         peopleNotExist = 0
-        skipCount = 0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -62,18 +61,19 @@ def update_awards_from_csv(file_path, award_type):
             )
 
             if existing_entry:
-                skipCount += 1
-                continue
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(awards_record)
                 new_rows += 1
+
+            session.merge(awards_record)
+
+            # Handle upsert operation
 
         session.commit()
         session.close()
         return {
-            "new_rows": new_rows, 
-            "rows skipped bc already existed": skipCount,
+            "new rows": new_rows, 
+            "updated rows": updated_rows,
             "rows skipped bc their playerID didn't exist in people table": peopleNotExist
         }
 
