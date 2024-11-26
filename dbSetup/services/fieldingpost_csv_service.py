@@ -25,9 +25,11 @@ def update_fieldingpost_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
         peopleNotExist=0
         teamNotExist=0
-        skipCount=0
+        batch_size = 500
+        batch_counter = 0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -82,19 +84,27 @@ def update_fieldingpost_from_csv(file_path):
                 )
                 .first()
             )
+
+            # Determine if we are inserting or updating
             if existing_entry:
-                skipCount+=1
-                #if we make an error log, message can go here
-                continue
-            
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(fieldingpost_record)
                 new_rows += 1
 
-            session.commit()
+            # Handle upsert operation
+            session.merge(fieldingpost_record)
+            batch_counter += 1
 
-    session.close()
-    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
+            # Commit in batches
+            if batch_counter >= batch_size:
+                session.commit()
+                batch_counter = 0
+
+        # Final commit for remaining records
+        session.commit()
+        session.close()
+
+    return {"new rows": new_rows,
+            "updated rows: ": updated_rows,
             "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
