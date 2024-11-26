@@ -14,6 +14,7 @@ all_models = [
     Fielding,
     Batting,
     BattingPost,
+    FieldingPost,
     HomeGames,
     Parks,
     Divisions,
