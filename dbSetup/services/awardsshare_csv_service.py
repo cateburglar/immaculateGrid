@@ -1,7 +1,7 @@
 import csv
 
 import csi3335f2024 as cfg
-from models import AwardsShare, People, Teams
+from models import AwardsShare, People
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
 def upload_awardsshare_csv():
@@ -15,19 +15,23 @@ def upload_awardsshare_csv():
 
     # Process the AwardsShare CSV files
     try:
-        print(update_awardsshare_from_csv(awards_share_players_file_path, 'player'))
-        print(update_awardsshare_from_csv(awards_share_managers_file_path, 'manager'))
+        print("Reading from AwardsSharePlayers.csv")
+        print(update_awardsshare_from_csv(awards_share_players_file_path))
+        print("Awards share files processed successfully")
+
+        print("Reading from AwardsShareManagers.csv")
+        print(update_awardsshare_from_csv(awards_share_managers_file_path))
         print("Awards share files processed successfully")
     except Exception as e:
         print(f"Error: {str(e)}")
 
 
-def update_awardsshare_from_csv(file_path, award_type):
+def update_awardsshare_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
         peopleNotExist = 0
-        skipCount = 0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -62,17 +66,17 @@ def update_awardsshare_from_csv(file_path, award_type):
             )
 
             if existing_entry:
-                skipCount += 1
-                continue
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(awardsshare_record)
                 new_rows += 1
+
+            # Handle upsert operation
+            session.merge(awardsshare_record)
 
         session.commit()
         session.close()
         return {
-            "new_rows": new_rows, 
-            "rows skipped bc already existed": skipCount,
+            "new rows": new_rows, 
+            "updated rows": updated_rows,
             "rows skipped bc their playerID didn't exist in people table": peopleNotExist
         }

@@ -14,9 +14,13 @@ def upload_awards_csv():
         print("Error: One or both award CSV files not found")
         return
 
-    # Process the Awards CSV files
+    # Process both Awards CSV files
     try:
+        print("Reading from AwardsPlayers.csv")
         print(update_awards_from_csv(awards_players_file_path, 'player'))
+        print("Awards files processed successfully")
+
+        print("Reading from AwardsManagers.csv")
         print(update_awards_from_csv(awards_managers_file_path, 'manager'))
         print("Awards files processed successfully")
     except Exception as e:
