@@ -77,21 +77,22 @@ def process_row(row, session, counts, in_season):
         )
 
         # Check if a row with the same playerID and yearID exists
-        existing_entry = session.query(Manager).filter_by(playerID=playerID, yearID=yearID, teamID=teamID).first()
+        existing_entry = (
+            session.query(Manager)
+            .filter_by(
+                playerID=playerID,
+                yearID=yearID,
+                teamID=teamID
+            )
+            .first()
+        )
 
         if existing_entry:
-            # Update the existing record
-            existing_entry.manager_G = manager_entry.manager_G
-            existing_entry.manager_W = manager_entry.manager_W
-            existing_entry.manager_L = manager_entry.manager_L
-            existing_entry.teamRank = manager_entry.teamRank
-            existing_entry.plyrMgr = manager_entry.plyrMgr
-            existing_entry.half = manager_entry.half
             counts["updated_rows"] += 1
         else:
-            # Insert a new record
-            session.add(manager_entry)
             counts["new_rows"] += 1
+
+        session.merge(manager_entry)
 
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")
