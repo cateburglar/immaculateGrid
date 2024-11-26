@@ -7,6 +7,8 @@ from sqlalchemy import (
     Integer,
     SmallInteger,
     String,
+    Float,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -76,7 +78,7 @@ class Teams(Base):
     teamID = Column(String(3), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     lgID = Column(String(2), ForeignKey("leagues.lgID"), nullable=True)
-    divID = Column(String(1), nullable=True)
+    divID = Column(String(1), ForeignKey("divisions.divID"), nullable=True)
     franchID = Column(String(3), nullable=True)
     team_name = Column(String(50), nullable=True)
     team_rank = Column(SmallInteger, nullable=True)
@@ -126,6 +128,12 @@ class Teams(Base):
         Index("idx_teamID", "teamID"),
         Index("idx_lgID", "lgID"),
         Index("idx_franchID", "franchID"),
+        UniqueConstraint(
+            "teams_ID",
+            "teamID",
+            "yearID",
+            name="uq_teams",
+        ),
     )
 
     # Define relationships
@@ -155,6 +163,17 @@ class AllstarFull(Base):
     GP = Column(SmallInteger)
     startingPos = Column(SmallInteger)
 
+    __table_args__ = (
+        UniqueConstraint(
+            "allstarfull_ID",
+            "playerID",
+            "lgID",
+            "teamID",
+            "yearID",
+            name="uq_allstarfull",
+        ),
+    )
+
     # Define relationships
     league = relationship("Leagues", back_populates="allstarfull_entries")
     player = relationship("People", back_populates="allstarfull_entries")
@@ -182,6 +201,19 @@ class SeriesPost(Base):
     losses = Column(SmallInteger, nullable=True)
     ties = Column(SmallInteger, nullable=True)
 
+    __table_args__ = (
+        UniqueConstraint(
+            "seriespost_ID",
+            "teamIDwinner",
+            "lgIDwinner",
+            "teamIDloser",
+            "lgIDloser",
+            "yearID",
+            "round",
+            name="uq_seriespost",
+        ),
+    )
+
     winner = relationship(
         "Teams", foreign_keys=[teamIDwinner], back_populates="seriespost_winner"
     )
@@ -207,7 +239,7 @@ class Pitching(Base):
     p_G = Column(SmallInteger, nullable=True)
     p_GS = Column(SmallInteger, nullable=True)
     p_CG = Column(SmallInteger, nullable=True)
-    p_SHO =Column(SmallInteger, nullable=True)
+    p_SHO = Column(SmallInteger, nullable=True)
     p_SV = Column(SmallInteger, nullable=True)
     p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
@@ -261,6 +293,14 @@ class PitchingPost(Base):
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
 
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+    )
+
+
 class Appearances(Base):
     __tablename__ = "appearances"
     appearances_ID = Column(Integer, primary_key=True, nullable=False)
@@ -285,6 +325,18 @@ class Appearances(Base):
     G_ph = Column(SmallInteger, nullable=True)
     G_pr = Column(SmallInteger, nullable=True)
 
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index(
+            "idx_playerID_yearID",
+            "playerID",
+            "yearID",
+        ),
+    )
+
+
 class Fielding(Base):
     __tablename__ = "fielding"
     fielding_ID = Column(Integer, primary_key=True, nullable=False)
@@ -304,4 +356,74 @@ class Fielding(Base):
     f_WP = Column(SmallInteger, nullable=True)
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
-    f_ZR = Column(SmallInteger, nullable=True)
+    f_ZR = Column(Float, nullable=True)
+
+class FieldingPost(Base):
+    __tablename__ = "fieldingpost"
+    fieldingpost_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    round = Column(String(10), nullable=False)
+    position = Column(String(2), nullable=True)
+    f_G = Column(SmallInteger, nullable=True)
+    f_GS = Column(SmallInteger, nullable=True)
+    f_InnOuts = Column(SmallInteger, nullable=True)
+    f_PO = Column(SmallInteger, nullable=True)
+    f_A = Column(SmallInteger, nullable=True)
+    f_E = Column(SmallInteger, nullable=True)
+    f_DP = Column(SmallInteger, nullable=True)
+    f_TP = Column(SmallInteger, nullable=True)
+    f_PB = Column(SmallInteger, nullable=True)
+
+    # SB and CS are in the CSV but not in our database -Icko
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+    )
+
+
+class HomeGames(Base):
+    __tablename__ = "homegames"
+    homegames_ID = Column(Integer, primary_key=True, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    parkID = Column(String, ForeignKey("parks.parkID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    firstGame = Column(Date, nullable=True)
+    lastGame = Column(Date, nullable=True)
+    games = Column(Integer, nullable=True)
+    openings = Column(Integer, nullable=True)
+    attendance = Column(Integer, nullable=True)
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (Index("idx_parkID", "parkID"),)
+
+
+class Parks(Base):
+    __tablename__ = "parks"
+    parkID = Column(String, primary_key=True, nullable=False)
+    park_alias = Column(String, nullable=False)
+    park_name = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    country = Column(String, nullable=False)
+
+
+class Divisions(Base):
+    __tablename__ = "divisions"
+    divisions_ID = Column(Integer, primary_key=True, nullable=False)
+    divID = Column(String(2), nullable=False)
+    lgID = Column(String(2), ForeignKey(Leagues.lgID), nullable=False)
+    division_name = Column(String, nullable=False)
+    division_active = Column(String(1), nullable=False)
+
+    # no rows can have the same combination of divID and lgID
+    __table_args__ = (UniqueConstraint("divID", "lgID", name="uq_div_lg"),)
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (Index("idx_lgID", "lgID"), Index("idx_divID", "divID"))
