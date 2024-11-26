@@ -45,4 +45,4 @@ def update_parks_from_csv(file_path):
             session.commit()
 
     session.close()
-    return {"new_rows": new_rows}
+    return {"updated rows": new_rows}
