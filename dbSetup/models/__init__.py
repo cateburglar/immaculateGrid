@@ -1,17 +1,4 @@
-from .tables import (
-    AllstarFull,
-    Leagues,
-    People,
-    Schools,
-    SeriesPost,
-    Teams,
-    Pitching,
-    Appearances,
-    Fielding,
-    Batting,
-    BattingPost
-)
-
+from .tables import *
 # Import other models as needed
 
 # For easy access to all models
@@ -26,5 +13,8 @@ all_models = [
     Appearances,
     Fielding,
     Batting,
-    BattingPost
+    BattingPost,
+    HomeGames,
+    Parks,
+    Divisions,
 ]
