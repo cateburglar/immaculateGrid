@@ -14,6 +14,8 @@ def depth_chart():
     if form.validate_on_submit():
         teamName = form.teamName.data
         year = form.yearID.data
+        positionStat = form.positionStats.data
+        pitcherStat = form.pitcherStats.data
         flag=False
 
         #find teamID of given team name
