@@ -13,8 +13,10 @@ all_models = [
     PitchingPost,
     Appearances,
     Fielding,
+    Batting,
+    BattingPost,
     FieldingPost,
     HomeGames,
     Parks,
-    Divisions
+    Divisions,
 ]

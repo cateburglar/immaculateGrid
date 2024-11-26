@@ -46,7 +46,76 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    batting_entries = relationship("Batting", back_populates="player")
+    battingpost_entries = relationship("BattingPost", back_populates="player")
 
+class Batting(Base):
+    __tablename__ = "batting"
+    batting_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearId = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    stint = Column(SmallInteger, nullable=False)
+    b_G = Column(SmallInteger, nullable=True)
+    b_AB = Column(SmallInteger, nullable=True)
+    b_R = Column(SmallInteger, nullable=True)
+    b_H = Column(SmallInteger, nullable=True)
+    b_2B = Column(SmallInteger, nullable=True)
+    b_3B = Column(SmallInteger, nullable=True)
+    b_HR = Column(SmallInteger, nullable=True)
+    b_RBI = Column(SmallInteger, nullable=True)
+    b_SB = Column(SmallInteger, nullable=True)
+    b_CS = Column(SmallInteger, nullable=True)
+    b_BB = Column(SmallInteger, nullable=True)
+    b_SO = Column(SmallInteger, nullable=True)
+    b_IBB = Column(SmallInteger, nullable=True)
+    b_HBP = Column(SmallInteger, nullable=True)
+    b_SH = Column(SmallInteger, nullable=True)
+    b_SF = Column(SmallInteger, nullable=True)
+    b_GIDP = Column(SmallInteger, nullable=True)
+
+    # Indexes
+    __table_args__ = (
+        Index("k_bat_team", "teamID"),  # Index for teamID
+        Index("batting_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+    )
+
+    # Define relationships
+    player = relationship("People", back_populates="batting_entries")
+
+class BattingPost(Base):
+    __tablename__ = "battingpost"
+    battingpost_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearId = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    round = Column(String(10), nullable=False)
+    b_G = Column(SmallInteger, nullable=True)
+    b_AB = Column(SmallInteger, nullable=True)
+    b_R = Column(SmallInteger, nullable=True)
+    b_H = Column(SmallInteger, nullable=True)
+    b_2B = Column(SmallInteger, nullable=True)
+    b_3B = Column(SmallInteger, nullable=True)
+    b_HR = Column(SmallInteger, nullable=True)
+    b_RBI = Column(SmallInteger, nullable=True)
+    b_SB = Column(SmallInteger, nullable=True)
+    b_CS = Column(SmallInteger, nullable=True)
+    b_BB = Column(SmallInteger, nullable=True)
+    b_SO = Column(SmallInteger, nullable=True)
+    b_IBB = Column(SmallInteger, nullable=True)
+    b_HBP = Column(SmallInteger, nullable=True)
+    b_SH = Column(SmallInteger, nullable=True)
+    b_SF = Column(SmallInteger, nullable=True)
+    b_GIDP = Column(SmallInteger, nullable=True)
+
+    # Indexes
+    __table_args__ = (
+        Index("k_bp_team", "teamID"),  # Index for teamID
+        Index("battingpost_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+    )
+
+    # Relationships
+    player = relationship("People", back_populates="battingpost_entries")
 
 class Leagues(Base):
     __tablename__ = "leagues"
