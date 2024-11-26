@@ -25,14 +25,12 @@ def update_pitchingpost_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
         peopleNotExist=0
         teamNotExists=0
-        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-        skipCount=0
-        peopleNotExist=0
         for row in reader:
             pitchingpost_record = PitchingPost(
                 playerID=row['playerID'],
@@ -93,17 +91,19 @@ def update_pitchingpost_from_csv(file_path):
                 .first()
             )
 
+            # Determine if we are updating or inserting
             if existing_entry:
-                skipCount+=1
-                #if we make error log, message can go here
-                continue
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(pitchingpost_record)
                 new_rows += 1
 
-            session.commit()
-    session.close()
-    return {"new_rows": new_rows, "rows skipped bc already existed: ": skipCount,
+            # Handle upsert operation
+            session.merge(pitchingpost_record)
+
+        # Batch commit and close
+        session.commit()
+        session.close()
+    return {"new rows": new_rows,
+            "updated rows": updated_rows,
             "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
