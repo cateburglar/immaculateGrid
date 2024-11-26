@@ -73,10 +73,12 @@ def split_csv(file_path, chunksize=10000):
     with open(file_path, newline="") as csvfile:
         reader = list(csv.DictReader(csvfile))
         for i in range(0, len(reader), chunksize):
+            # Yield a slice of reader list from index i to i+chunksize
+            # <start>:<end>
             yield reader[i:i + chunksize]
 
 def upload_batting_csv():
-    print("Updating appearances table")
+    print("Updating batting table")
     csv_file_path = get_csv_path("Batting.csv")
     if not os.path.exists(csv_file_path):
         print("Error: Batting.csv not found")
