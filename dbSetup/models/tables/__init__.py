@@ -128,6 +128,12 @@ class Teams(Base):
         Index("idx_teamID", "teamID"),
         Index("idx_lgID", "lgID"),
         Index("idx_franchID", "franchID"),
+        UniqueConstraint(
+            "teams_ID",
+            "teamID",
+            "yearID",
+            name="uq_teams",
+        ),
     )
 
     # Define relationships
