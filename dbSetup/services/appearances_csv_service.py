@@ -10,7 +10,7 @@ import csi3335f2024 as cfg
 def process_chunk(chunk_data):
     engine_str = create_enginestr_from_values(mysql=cfg.mysql)
     session = create_session_from_str(engine_str)
-    new_rows, peopleNotExist, teamNotExists, skipCount = 0, 0, 0, 0
+    new_rows, updated_rows, peopleNotExist, teamNotExists, skipCount = 0, 0, 0, 0, 0
 
     for row in chunk_data:
         appearances_record = Appearances(
@@ -62,6 +62,7 @@ def process_chunk(chunk_data):
     session.close()
     return {
         "new_rows": new_rows,
+        "updated_rows": updated_rows,
         "peopleNotExist": peopleNotExist,
         "teamNotExists": teamNotExists,
         "skipCount": skipCount,
