@@ -7,6 +7,7 @@ from sqlalchemy import (
     Integer,
     SmallInteger,
     String,
+    Float,
     UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
@@ -70,7 +71,6 @@ class Leagues(Base):
         foreign_keys="[SeriesPost.lgIDloser]",
         back_populates="loser_league",
     )
-
 
 class Teams(Base):
     __tablename__ = "teams"
@@ -227,7 +227,6 @@ class SeriesPost(Base):
         "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
     )
 
-
 class Pitching(Base):
     __tablename__ = "pitching"
     pitching_ID = Column(Integer, primary_key=True, nullable=False)
@@ -245,7 +244,40 @@ class Pitching(Base):
     p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
     p_ER = Column(SmallInteger, nullable=True)
+    p_HR = Column(SmallInteger, nullable=True)
+    p_BB = Column(SmallInteger, nullable=True)
+    p_SO = Column(SmallInteger, nullable=True)
+    p_BAOpp = Column(Double, nullable=True)
+    p_ERA = Column(Double, nullable=True)
+    p_IBB = Column(SmallInteger, nullable=True)
+    p_WP = Column(SmallInteger, nullable=True)
+    p_HBP = Column(SmallInteger, nullable=True)
+    p_BK = Column(SmallInteger, nullable=True)
+    p_BFP = Column(SmallInteger, nullable=True)
+    p_GF = Column(SmallInteger, nullable=True)
+    p_R = Column(SmallInteger, nullable=True)
+    p_SH = Column(SmallInteger, nullable=True)
+    p_SF = Column(SmallInteger, nullable=True)
+    p_GIDP = Column(SmallInteger, nullable=True)
+
+class PitchingPost(Base):
+    __tablename__ = "pitchingpost"
+    pitchingpost_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    round = Column(String(10), nullable=False)
+    p_W = Column(SmallInteger, nullable=True)
+    p_L = Column(SmallInteger, nullable=True)
+    p_G = Column(SmallInteger, nullable=True)
+    p_GS = Column(SmallInteger, nullable=True)
+    p_CG = Column(SmallInteger, nullable=True)
+    p_SHO =Column(SmallInteger, nullable=True)
+    p_SV = Column(SmallInteger, nullable=True)
+    p_IPouts = Column(Integer, nullable=True)
+    p_H = Column(SmallInteger, nullable=True)
     p_ER = Column(SmallInteger, nullable=True)
+    p_HR = Column(SmallInteger, nullable=True)
     p_BB = Column(SmallInteger, nullable=True)
     p_SO = Column(SmallInteger, nullable=True)
     p_BAOpp = Column(Double, nullable=True)
@@ -324,7 +356,27 @@ class Fielding(Base):
     f_WP = Column(SmallInteger, nullable=True)
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
-    f_ZR = Column(SmallInteger, nullable=True)
+    f_ZR = Column(Float, nullable=True)
+
+class FieldingPost(Base):
+    __tablename__ = "fieldingpost"
+    fieldingpost_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    round = Column(String(10), nullable=False)
+    position = Column(String(2), nullable=True)
+    f_G = Column(SmallInteger, nullable=True)
+    f_GS = Column(SmallInteger, nullable=True)
+    f_InnOuts = Column(SmallInteger, nullable=True)
+    f_PO = Column(SmallInteger, nullable=True)
+    f_A = Column(SmallInteger, nullable=True)
+    f_E = Column(SmallInteger, nullable=True)
+    f_DP = Column(SmallInteger, nullable=True)
+    f_TP = Column(SmallInteger, nullable=True)
+    f_PB = Column(SmallInteger, nullable=True)
+
+    # SB and CS are in the CSV but not in our database -Icko
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
