@@ -3,6 +3,8 @@ change_log_icko.md
 pyrightconfig.json
 *.bak
 .editorconfig
+.DS_Store
+.Rhistory
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
