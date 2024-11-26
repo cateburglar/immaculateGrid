@@ -344,7 +344,8 @@ class FieldingPost(Base):
     f_DP = Column(SmallInteger, nullable=True)
     f_TP = Column(SmallInteger, nullable=True)
     f_PB = Column(SmallInteger, nullable=True)
-    f_ZR = Column(SmallInteger, nullable=True)
+
+    # SB and CS are in the CSV but not in our database -Icko
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
