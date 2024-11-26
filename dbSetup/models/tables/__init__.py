@@ -201,6 +201,19 @@ class SeriesPost(Base):
     losses = Column(SmallInteger, nullable=True)
     ties = Column(SmallInteger, nullable=True)
 
+    __table_args__ = (
+        UniqueConstraint(
+            "seriespost_ID",
+            "teamIDwinner",
+            "lgIDwinner",
+            "teamIDloser",
+            "lgIDloser",
+            "yearID",
+            "round",
+            name="uq_seriespost",
+        ),
+    )
+
     winner = relationship(
         "Teams", foreign_keys=[teamIDwinner], back_populates="seriespost_winner"
     )
