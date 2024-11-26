@@ -12,6 +12,7 @@ all_models = [
     Pitching,
     Appearances,
     Fielding,
+    FieldingPost,
     HomeGames,
     Parks,
     Divisions

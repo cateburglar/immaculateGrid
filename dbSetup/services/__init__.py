@@ -7,5 +7,6 @@ from .test_service import execute_tests
 from .pitching_csv_service import upload_pitching_csv
 from .appearances_csv_service import upload_appearances_csv
 from .fielding_csv_service import upload_fielding_csv
+from .fieldingpost_csv_service import upload_fieldingpost_csv
 from .homegames_csv_service import upload_homegames_csv
 from .parks_csv_service import upload_parks_csv
