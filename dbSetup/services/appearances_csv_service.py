@@ -1,7 +1,6 @@
 import csv
 import os
 from multiprocessing import Pool
-from sqlalchemy.orm import sessionmaker
 from models import Appearances, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 import csi3335f2024 as cfg
