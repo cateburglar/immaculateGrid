@@ -46,7 +46,7 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
-    college_playing_entries = relationship("CollegePlaying", backref="player", lazy="dynamic")
+    collegeplaying_player = relationship("CollegePlaying", back_populates="collegeplaying_player")
 
 class Leagues(Base):
     __tablename__ = "leagues"
@@ -80,9 +80,8 @@ class CollegePlaying(Base):
     yearID = Column(SmallInteger, nullable=True)
 
     # Define relationships
-    # Add explicit backrefs to avoid conflict
-    player = relationship("People", backref="college_playing_entries", lazy="joined")
-    school = relationship("Schools", backref="college_playing_entries", lazy="joined")
+    collegeplaying_player = relationship("People", back_populates="collegeplaying_player")
+    collegeplaying_school = relationship("Schools", back_populates="collegeplaying_school")
 
 class Teams(Base):
     __tablename__ = "teams"
@@ -200,7 +199,7 @@ class Schools(Base):
     school_country = Column(String(55), nullable=True)
 
     # Define relationships
-    college_playing_entries = relationship("CollegePlaying", back_populates="school")
+    collegeplaying_school = relationship("CollegePlaying", back_populates="collegeplaying_school")
 
 class SeriesPost(Base):
     __tablename__ = "seriespost"
