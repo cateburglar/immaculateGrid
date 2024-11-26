@@ -10,6 +10,7 @@ all_models = [
     Schools,
     SeriesPost,
     Pitching,
+    PitchingPost,
     Appearances,
     Fielding,
     FieldingPost,
