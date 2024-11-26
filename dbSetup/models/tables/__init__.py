@@ -48,6 +48,8 @@ class People(Base):
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
     awards = relationship("Awards", back_populates="player")
     awardsshare = relationship("AwardsShare", back_populates="player")
+    batting_entries = relationship("Batting", back_populates="player")
+    battingpost_entries = relationship("BattingPost", back_populates="player")
 
 class Awards(Base):
     __tablename__ = "awards"
@@ -87,8 +89,6 @@ class AwardsShare(Base):
 
     # Define relationships
     player = relationship("People", back_populates="awardsshare")
-    batting_entries = relationship("Batting", back_populates="player")
-    battingpost_entries = relationship("BattingPost", back_populates="player")
 
 class Batting(Base):
     __tablename__ = "batting"
