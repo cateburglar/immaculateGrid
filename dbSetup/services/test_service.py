@@ -19,6 +19,8 @@ def execute_tests(tests):
             compare_existing_appearances_entries()
         elif test == "fielding":
             compare_existing_fielding_entries()
+        elif test == "homegames":
+            compare_existing_homegames_entries()
         else:
             print(f"Unknown test: {test}")
 
@@ -480,5 +482,54 @@ def compare_existing_fielding_entries():
     # Output test result
     if not rows_match:
         return "FAILURE: fielding"
+    else:
+        return ""
+
+
+def compare_existing_homegames_entries():
+    print("Executing homegames entries")
+
+    # Create sessions
+    sq_session = create_session_from_str(create_enginestr_from_values(cfg.mysql))
+    bb_session = create_session_from_str(
+        create_enginestr_from_values(cfg.baseballmysql)
+    )
+
+    # Get all rows from the original HomeGames table
+    bb_result = bb_session.query(HomeGames).all()
+
+    # Go through each row in the original baseball database to make sure ours matches
+    rows_match = True
+    for row in bb_result:
+        row_exists = (
+            sq_session.query(HomeGames)
+            .filter_by(
+                homegames_ID = row.homegames_ID,
+                teamID = row.teamID ,
+                parkID = row.parkID,
+                yearID = row.yearID,
+                firstGame = row.firstGame, 
+                lastGame = row.lastGame,
+                games = row.games,
+                openings = row.openings,
+                attendance = row.attendance, 
+            )
+            .first()
+        )
+
+        # Alert that test failed, and for what row
+        if not row_exists:
+            print(f"Row does match for: homegames id={row.homegames_ID}")
+            rows_match = False
+
+    # Commit and close sessions
+    sq_session.commit()
+    sq_session.close()
+    bb_session.commit()
+    bb_session.close()
+
+    # Output test result
+    if not rows_match:
+        return "FAILURE: home games"
     else:
         return ""
