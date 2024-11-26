@@ -9,7 +9,7 @@ import csi3335f2024 as cfg
 def process_chunk(chunk_data):
     engine_str = create_enginestr_from_values(mysql=cfg.mysql)
     session = create_session_from_str(engine_str)
-    new_rows, updated_rows, peopleNotExist, teamNotExists, skipCount = 0, 0, 0, 0, 0
+    new_rows, updated_rows, peopleNotExist, teamNotExists, = 0, 0, 0, 0
 
     for row in chunk_data:
         appearances_record = Appearances(
@@ -64,7 +64,6 @@ def process_chunk(chunk_data):
         "updated_rows": updated_rows,
         "peopleNotExist": peopleNotExist,
         "teamNotExists": teamNotExists,
-        "skipCount": skipCount,
     }
 
 # Split CSV into chunks
@@ -93,7 +92,6 @@ def upload_appearances_csv():
         "updated rows": sum(r["updated_rows"] for r in results),
         "peopleNotExist": sum(r["peopleNotExist"] for r in results),
         "teamNotExists": sum(r["teamNotExists"] for r in results),
-        "skipCount": sum(r["skipCount"] for r in results),
     }
 
     print("Processing complete:", aggregated)
