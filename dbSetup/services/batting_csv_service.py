@@ -4,46 +4,44 @@ import csi3335f2024 as cfg
 from models import Batting, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
+# Update Batting table from CSV file
 def upload_batting_csv():
-    print("updating batting table")
+    print("Updating batting table...")
     csv_file_path = get_csv_path("Batting.csv")
 
-    if len(csv_file_path) == 0:
+    if not csv_file_path:
         print("Error: Batting.csv not found")
         return
 
-    # Process CSV
     try:
-        print(update_batting_from_csv(csv_file_path))
-        print("File processed successfully")
+        result = update_batting_from_csv(csv_file_path)
+        print(result)
+        print("File processed successfully.")
     except Exception as e:
         print(f"Error: {str(e)}")
 
+
+# Processes the Batting.csv file and updates the Batting table.
 def update_batting_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
-        reader = csv.DictReader(csvfile)
-        new_rows = 0
-        updated_rows = 0
-        peopleNotExist=0
-        teamNotExists=0
-        skipCount=0
-
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-        for row in reader:
-            # TODO: What is G_old in csv?
-            # lgID is present in the csv but not in our database
-            # lgID=row['lgID'],
-            # TODO: G vs B_batting in csv??
 
-            # Add the following 2 lines for debugging
-            # print("Row being processed:", row)
-            # print("Row keys:", row.keys())
+        reader = csv.DictReader(csvfile)
+        inserted_rows = 0
+        updated_rows = 0
+        peopleNotExist = 0
+        teamNotExists = 0
+        batch_size = 500  # Commit in batches
+        batch_counter = 0
+
+        for row in reader:
+            # Create or update the batting record
             batting_record = Batting(
                 playerID=row['playerID'],
                 yearId=int(row['yearID']),
                 stint=int(row['stint']),
-                teamID=row['teamID'],
+                teamID=row['teamID'].strip(),
                 b_G=int(row['G']) if row['G'] else None,
                 b_AB=int(row['AB']) if row['AB'] else None,
                 b_R=int(row['R']) if row['R'] else None,
@@ -60,26 +58,23 @@ def update_batting_from_csv(file_path):
                 b_HBP=int(row['HBP']) if row['HBP'] else None,
                 b_SH=int(row['SH']) if row['SH'] else None,
                 b_SF=int(row['SF']) if row['SF'] else None,
-                b_GIDP= int(row['GIDP']) if row['GIDP'] else None
+                b_GIDP=int(row['GIDP']) if row['GIDP'] else None,
             )
 
             # Check if playerID exists in the people table
             player_exists = session.query(People).filter_by(playerID=batting_record.playerID).first()
-
             if not player_exists:
                 peopleNotExist+=1
                 #if we make an error log, message can go here
                 continue
 
-            #check if teamid exists in teams table
+            # Check if teamid exists in teams table
             team_exists = session.query(Teams).filter_by(teamID=batting_record.teamID).first()
-            
             if not team_exists:
                 teamNotExists+=1
                 #if we make an error log, a message could go here.
                 continue
 
-            # Check if a row with the same playerID, yearID, teamID, and stint exists
             existing_entry = (
                 session.query(Batting)
                 .filter_by(
@@ -91,17 +86,29 @@ def update_batting_from_csv(file_path):
                 .first()
             )
 
+            # Determine if it's an insert or update
             if existing_entry:
-                skipCount+=1
-                #if we make error log, message can go here
-                continue
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(batting_record)
-                new_rows += 1
+                inserted_rows += 1
 
-            session.commit()
-    session.close()
-    return {"new_rows": new_rows, "rows skipped bc already existed: ": skipCount,
-            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
-            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
+            # Use merge to handle insert/update
+            session.merge(batting_record)
+            batch_counter += 1
+
+            # Commit in batches
+            if batch_counter >= batch_size:
+                session.commit()
+                batch_counter = 0
+
+        # Final commit for remaining records
+        session.commit()
+        session.close()
+
+    return {
+        "inserted_rows": inserted_rows,
+        "updated_rows": updated_rows,
+        "rows skipped bc their playerID didn't exist in People table": peopleNotExist,
+        "rows skipped bc their teamID didn't exist in Teams table": teamNotExists,
+    }
+
