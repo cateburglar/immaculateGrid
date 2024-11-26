@@ -25,7 +25,6 @@ def update_parks_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -40,25 +39,10 @@ def update_parks_from_csv(file_path):
                 country = row['country'] or None, 
             )
 
-            # Check if a row with the same playerID, yearID, teamID, and stint exists
-            existing_entry = (
-                session.query(Parks)
-                .filter_by(
-                    parkID=parks_record.parkID,
-                )
-                .first()
-            )
-            if existing_entry:
-                skipCount+=1
-                #if we make an error log, message can go here
-                continue
-            
-            else:
-                # Insert a new record
-                session.add(parks_record)
-                new_rows += 1
+            session.merge(parks_record)
+            new_rows += 1
 
             session.commit()
 
     session.close()
-    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount}
+    return {"new_rows": new_rows}

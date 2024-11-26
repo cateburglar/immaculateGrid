@@ -27,7 +27,6 @@ def update_homegames_from_csv(file_path):
         new_rows = 0
         parksNotExist=0
         teamNotExist=0
-        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -62,29 +61,12 @@ def update_homegames_from_csv(file_path):
                 #if we make an error log, a message could go here.
                 continue
 
-            # Check if a row with the same playerID, yearID, teamID, and stint exists
-            existing_entry = (
-                session.query(HomeGames)
-                .filter_by(
-                    yearID=homegames_record.yearID,
-                    teamID=homegames_record.teamID,
-                    parkID=homegames_record.parkID,
-                )
-                .first()
-            )
-            if existing_entry:
-                skipCount+=1
-                #if we make an error log, message can go here
-                continue
-            
-            else:
-                # Insert a new record
-                session.add(homegames_record)
-                new_rows += 1
+            session.merge(homegames_record)
+            new_rows += 1
 
             session.commit()
 
     session.close()
-    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
+    return {"updated rows": new_rows,
             "rows skipped bc their parkid didn't exist in parks table: ": parksNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
