@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy.orm import Query
+from sqlalchemy.orm import Query, aliased
 
 from ..models import Appearances, People, Pitching
 
@@ -11,13 +11,14 @@ class QueryFilter(ABC):
     for applying filters to SQLAlchemy queries.
     """
 
-    def __init__(self, query: Query):
+    def __init__(self, query: Query, alias_suffix: int = 0):
         """
         Initialize the filter with a given query.
 
         :param query: The SQLAlchemy query object to apply filters to.
         """
         self.query = query
+        self.alias_suffix = alias_suffix
 
     @abstractmethod
     def apply(self):
@@ -28,22 +29,36 @@ class QueryFilter(ABC):
 
 
 class TeamFilter(QueryFilter):
-    def __init__(self, query: Query, team: str):
-        super().__init__(query)
+    def __init__(
+        self,
+        query: Query,
+        team: str,
+        alias_suffix: int = 0,
+    ):
+        super().__init__(query, alias_suffix)
         self.team = team
 
     def apply(self):
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
         self.query = self.query.join(
-            Appearances, People.playerID == Appearances.playerID
-        ).filter(Appearances.teamID == self.team)
+            appearances_alias, People.playerID == appearances_alias.playerID
+        ).filter(appearances_alias.teamID == self.team)
         return self.query
 
 
 class CareerStatFilter(QueryFilter):
     def __init__(
-        self, query: Query, stat: str, operator: str, value: float, team: str = None
+        self,
+        query: Query,
+        stat: str,
+        operator: str,
+        value: float,
+        team: str = None,
+        alias_suffix: int = 0,
     ):
-        super().__init__(query)
+        super().__init__(query, alias_suffix)
         self.stat = stat
         self.operator = operator
         self.value = value
@@ -65,9 +80,15 @@ class CareerStatFilter(QueryFilter):
 
 class SeasonStatFilter(QueryFilter):
     def __init__(
-        self, query: Query, stat: str, operator: str, value: float, team: str = None
+        self,
+        query: Query,
+        stat: str,
+        operator: str,
+        value: float,
+        team: str = None,
+        alias_suffix: int = 0,
     ):
-        super().__init__(query)
+        super().__init__(query, alias_suffix)
         self.stat = stat
         self.operator = operator
         self.value = value
@@ -88,8 +109,14 @@ class SeasonStatFilter(QueryFilter):
 
 
 class PositionFilter(QueryFilter):
-    def __init__(self, query: Query, position: str, team: str = None):
-        super().__init__(query)
+    def __init__(
+        self,
+        query: Query,
+        position: str,
+        team: str = None,
+        alias_suffix: int = 0,
+    ):
+        super().__init__(query, alias_suffix)
         self.position = position
         self.team = team
 
@@ -107,8 +134,14 @@ class PositionFilter(QueryFilter):
 
 
 class MiscFilter(QueryFilter):
-    def __init__(self, query: Query, category: str, team: str = None):
-        super().__init__(query)
+    def __init__(
+        self,
+        query: Query,
+        category: str,
+        team: str = None,
+        alias_suffix: int = 0,
+    ):
+        super().__init__(query, alias_suffix)
         self.category = category
         self.team = team
 

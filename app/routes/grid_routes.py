@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from sqlalchemy.orm import aliased
 
 from app import db
 
@@ -26,7 +27,8 @@ def perform_query(form_data):
     flash(params, "info")
 
     # Apply filters based on the form data
-    for param in params:
+    team = None
+    for i, param in enumerate(params):
         option = param["option"]
         operator = param["operator"]
         number = param["number"]
@@ -41,7 +43,7 @@ def perform_query(form_data):
                 query, option, operator, float(number), team
             ).apply()
         elif option == "played_for_team":
-            query = TeamFilter(query, team).apply()
+            query = TeamFilter(query, team, i).apply()
         elif option.startswith("played_"):
             query = PositionFilter(query, option, team).apply()
         else:
@@ -76,10 +78,10 @@ def get_player():
                 form_data=form_data,
             )
 
-        # Add this step when table definitions allow for proper querying
-        # name = perform_query(form_data)
+        name = perform_query(form_data)
 
         flash(form_data, "info")
+        flash(name, "success")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
