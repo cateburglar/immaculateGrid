@@ -24,9 +24,9 @@ def update_salaries_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
+        updated_rows = 0
         peopleNotExist=0
         teamNotExist=0
-        skipCount=0
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
@@ -34,7 +34,7 @@ def update_salaries_from_csv(file_path):
         for row in reader:
             salaries_record = Salaries(
                 playerID=row['playerID'],
-                yearID=int(row['yearID']),
+                yearId=int(row['yearID']),
                 teamID=row['teamID'],
                 salary=float(row['salary']),
             )
@@ -60,26 +60,25 @@ def update_salaries_from_csv(file_path):
                 session.query(Salaries)
                 .filter_by(
                     playerID=salaries_record.playerID,
-                    yearID=salaries_record.yearID,
+                    yearId=salaries_record.yearId,
                     teamID=salaries_record.teamID,
                 )
                 .first()
             )
             if existing_entry:
-                skipCount+=1
-                #if we make an error log, message can go here
-                continue
-            
+                updated_rows += 1
             else:
-                # Insert a new record
-                session.add(salaries_record)
                 new_rows += 1
 
-            session.commit()
+            session.merge(salaries_record)
 
-    session.close()
-    return {"new_rows": new_rows, "rows skipped bc already exist: ": skipCount,
-            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
-            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
+        session.commit()
+        session.close()
+    return {
+        "new_rows": new_rows,
+        "updated_rows": updated_rows,
+        "peopleNotExist": peopleNotExist, 
+        "teamNotExist": teamNotExist
+    }
 
 

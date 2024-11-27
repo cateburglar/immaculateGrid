@@ -505,12 +505,16 @@ class Fielding(Base):
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(Float, nullable=True)
 
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID_stint", "playerID", "yearID", "teamID", "stint"),
+    )
+
 class Salaries(Base):
     __tablename__ = "salaries"
     salaries_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
-    yearID = Column(SmallInteger, nullable=False)
-    lgID = Column(String(2), nullable=False)
+    yearId = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
     salary = Column(Double, nullable=True)
 
@@ -538,7 +542,7 @@ class FieldingPost(Base):
     # this speeds up data retrieval by these columns
     __table_args__ = (
         Index("idx_teamID", "teamID"),
-        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+        Index("idx_playerID_yearID_teamID_round", "playerID", "yearID", "teamID", "round"),
     )
 
 
