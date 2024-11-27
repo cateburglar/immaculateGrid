@@ -46,6 +46,7 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    collegeplaying_player = relationship("CollegePlaying", back_populates="collegeplaying_player")
     managers = relationship("Manager", back_populates="people")
     awards = relationship("Awards", back_populates="player")
     awardsshare = relationship("AwardsShare", back_populates="player")
@@ -205,6 +206,17 @@ class Leagues(Base):
         back_populates="loser_league",
     )
 
+class CollegePlaying(Base):
+    __tablename__ = 'collegeplaying'
+    collegeplaying_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    schoolID = Column(String(15), ForeignKey("schools.schoolId"), nullable=True)
+    yearID = Column(SmallInteger, nullable=True)
+
+    # Define relationships
+    collegeplaying_player = relationship("People", back_populates="collegeplaying_player")
+    collegeplaying_school = relationship("Schools", back_populates="collegeplaying_school")
+
 class Teams(Base):
     __tablename__ = "teams"
     teams_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
@@ -320,6 +332,8 @@ class Schools(Base):
     school_state = Column(String(55), nullable=True)
     school_country = Column(String(55), nullable=True)
 
+    # Define relationships
+    collegeplaying_school = relationship("CollegePlaying", back_populates="collegeplaying_school")
 
 class SeriesPost(Base):
     __tablename__ = "seriespost"
