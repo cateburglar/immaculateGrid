@@ -147,46 +147,48 @@ class MiscFilter(QueryFilter):
 
     def apply(self):
         awards_alias = aliased(Awards, name=f"awards_{self.alias_suffix}")
+        allstarfull_alias = aliased(
+            AllstarFull, name=f"allstarfull_{self.alias_suffix}"
+        )
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
 
-        if self.category == "all_star":
-            self.query = self.query.filter(People.all_star == True)
-        elif self.category == "born_outside_us":
+        if self.category == "All Star":
+            self.query = self.query.join(
+                allstarfull_alias, People.playerID == allstarfull_alias.playerID
+            )
+        elif self.category == "Born Outside US":
             self.query = self.query.filter(People.birthCountry != "USA")
-        elif self.category == "cy_young":
+        elif self.category == "First Round Draft Pick":
+            self.query = self.query.filter(People.first_round_draft_pick == True)
+        elif self.category == "Hall of Fame":
+            self.query = self.query.filter(People.hall_of_fame == True)
+        elif self.category == "Only One Team":
+            self.query = self.query.filter(People.only_one_team == True)
+        elif self.category == "No Hitter":
+            self.query = self.query.filter(People.threw_a_no_hitter == True)
+        elif self.category == "WS Champ":
+            self.query = self.query.filter(People.world_series_champ == True)
+        else:  # Standard awards
             self.query = self.query.join(
                 awards_alias, People.playerID == awards_alias.playerID
-            ).filter(awards_alias.awardID == "Cy Young Award")
-        elif self.category == "first_round_draft_pick":
-            self.query = self.query.filter(People.first_round_draft_pick == True)
-        elif self.category == "gold_glove":
-            self.query = self.query.filter(People.gold_glove == True)
-        elif self.category == "hall_of_fame":
-            self.query = self.query.filter(People.hall_of_fame == True)
-        elif self.category == "mvp":
-            self.query = self.query.filter(People.mvp == True)
-        elif self.category == "only_one_team":
-            self.query = self.query.filter(People.only_one_team == True)
-        elif self.category == "rookie_of_the_year":
-            self.query = self.query.filter(People.rookie_of_the_year == True)
-        elif self.category == "silver_slugger":
-            self.query = self.query.filter(People.silver_slugger == True)
-        elif self.category == "threw_a_no_hitter":
-            self.query = self.query.filter(People.threw_a_no_hitter == True)
-        elif self.category == "world_series_champ":
-            self.query = self.query.filter(People.world_series_champ == True)
+            ).filter(awards_alias.awardID == self.category)
 
+        # If a team is provided, ensure award was earned with that team
         if self.team:
-            appearances_alias = aliased(
-                Appearances, name=f"appearances_{self.alias_suffix}"
-            )
+            if self.category == "All Star":
+                self.query = self.query.filter(allstarfull_alias.teamID == self.team)
 
-            # Filter by players who played on the team and got the award in that season
-            self.query = (
-                self.query.join(
-                    appearances_alias, People.playerID == appearances_alias.playerID
+            else:
+                # Filter by players who played on the team and got the award in that season
+                self.query = (
+                    self.query.join(
+                        appearances_alias,
+                        People.playerID == appearances_alias.playerID,
+                    )
+                    .filter(appearances_alias.teamID == self.team)
+                    .filter(appearances_alias.yearID == awards_alias.yearID)
                 )
-                .filter(appearances_alias.teamID == self.team)
-                .filter(appearances_alias.yearID == awards_alias.yearID)
-            )
 
         return self.query

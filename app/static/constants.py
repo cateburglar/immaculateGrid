@@ -41,7 +41,6 @@ OPTION_GROUPS = {
         "Born Outside US": "Born Outside US 50 States and DC",
         "First Round Draft Pick": "First Round Draft Pick",
         "Hall of Fame": "Inducted into the Hall of Fame",
-        "MVP": "Regular Season MVP",
         "Only One Team": "Played for Only One Team",
         "No Hitter": "Threw a No‑Hitter",
         "WS Champ": "World Series Champ",
