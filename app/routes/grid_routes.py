@@ -53,7 +53,8 @@ def perform_query(form_data):
 
     if result:
         player_name = f"{result.nameFirst} {result.nameLast}"
-        return player_name
+        player_years = f"{result.birthYear} - {"Present" if result.deathYear == None else result.deathYear}"
+        return {"player_name": player_name, "player_years": player_years}
 
     return None
 
@@ -78,10 +79,13 @@ def get_player():
                 form_data=form_data,
             )
 
-        name = perform_query(form_data)
+        result = perform_query(form_data)
 
         flash(form_data, "info")
-        flash(name, "success")
+
+        if result:
+            flash(result["player_name"], "success")
+            flash(result["player_years"], "success")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
