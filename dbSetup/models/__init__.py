@@ -15,6 +15,7 @@ all_models = [
     PitchingPost,
     Appearances,
     Fielding,
+    Manager,
     Batting,
     BattingPost,
     FieldingPost,

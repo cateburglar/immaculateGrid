@@ -2,6 +2,7 @@ from .awards_csv_service import upload_awards_csv
 from .awardsshare_csv_service import upload_awardsshare_csv
 from .allstarfull_csv_service import upload_allstarfull_csv
 from .people_csv_service import upload_people_csv
+from .managers_csv_service import upload_managers_csv
 from .schools_csv_service import upload_schools_csv
 from .seriespost_csv_service import upload_seriespost_csv
 from .teams_csv_service import upload_teams_csv
