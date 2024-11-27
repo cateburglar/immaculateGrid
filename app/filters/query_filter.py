@@ -43,9 +43,17 @@ class TeamFilter(QueryFilter):
         appearances_alias = aliased(
             Appearances, name=f"appearances_{self.alias_suffix}"
         )
+
+        # Create a subquery to get the teamIDs that match the team name
+        team_subquery = (
+            self.query.session.query(Teams.teamID)
+            .filter(Teams.team_name == self.team)
+            .subquery()
+        )
+
         self.query = self.query.join(
             appearances_alias, People.playerID == appearances_alias.playerID
-        ).filter(appearances_alias.teamID == self.team)
+        ).filter(appearances_alias.teamID.in_(team_subquery))
         return self.query
 
 
@@ -189,9 +197,17 @@ class MiscFilter(QueryFilter):
 
         # If a team is provided, ensure award was earned with that team
         if self.team:
-            if self.category == "All Star":
-                self.query = self.query.filter(allstarfull_alias.teamID == self.team)
+            # Create a subquery to get the teamIDs that match the team name
+            team_subquery = (
+                self.query.session.query(Teams.teamID)
+                .filter(Teams.team_name == self.team)
+                .subquery()
+            )
 
+            if self.category == "All Star":
+                self.query = self.query.filter(
+                    allstarfull_alias.teamID.in_(team_subquery)
+                )
             else:
                 # Filter by players who played on the team and got the award in that season
                 self.query = (
@@ -199,7 +215,7 @@ class MiscFilter(QueryFilter):
                         appearances_alias,
                         People.playerID == appearances_alias.playerID,
                     )
-                    .filter(appearances_alias.teamID == self.team)
+                    .filter(appearances_alias.teamID.in_(team_subquery))
                     .filter(appearances_alias.yearID == awards_alias.yearID)
                 )
 
