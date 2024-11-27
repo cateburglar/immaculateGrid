@@ -1,8 +1,11 @@
 # Personal ignores
 change_log_icko.md
+change_log_icko.html
 pyrightconfig.json
 *.bak
 .editorconfig
+.DS_Store
+.Rhistory
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,7 +1,7 @@
 import csv
 import os
 from multiprocessing import Pool
-from models import Appearances, People, Teams
+from models import Batting, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 import csi3335f2024 as cfg
 
@@ -12,50 +12,52 @@ def process_chunk(chunk_data):
     new_rows, updated_rows, peopleNotExist, teamNotExists, = 0, 0, 0, 0
 
     for row in chunk_data:
-        appearances_record = Appearances(
-            playerID=row["playerID"],
-            yearID=int(row["yearID"]),
-            teamID=row["teamID"],
-            G_all=row["G_all"] or None,
-            GS=row["GS"] or None,
-            G_batting=row["G_batting"] or None,
-            G_defense=row["G_defense"] or None,
-            G_p=row["G_p"] or None,
-            G_c=row["G_c"] or None,
-            G_1b=row["G_1b"] or None,
-            G_2b=row["G_2b"] or None,
-            G_3b=row["G_3b"] or None,
-            G_ss=row["G_ss"] or None,
-            G_lf=row["G_lf"] or None,
-            G_cf=row["G_cf"] or None,
-            G_rf=row["G_rf"] or None,
-            G_of=row["G_of"] or None,
-            G_dh=row["G_dh"] or None,
-            G_ph=row["G_ph"] or None,
-            G_pr=row["G_pr"] or None,
+        batting_record = Batting(
+            playerID=row['playerID'],
+            yearId=int(row['yearID']),
+            stint=int(row['stint']),
+            teamID=row['teamID'].strip(),
+            b_G=int(row['G']) if row['G'] else None,
+            b_AB=int(row['AB']) if row['AB'] else None,
+            b_R=int(row['R']) if row['R'] else None,
+            b_H=int(row['H']) if row['H'] else None,
+            b_2B=int(row['2B']) if row['2B'] else None,
+            b_3B=int(row['3B']) if row['3B'] else None,
+            b_HR=int(row['HR']) if row['HR'] else None,
+            b_RBI=int(row['RBI']) if row['RBI'] else None,
+            b_SB=int(row['SB']) if row['SB'] else None,
+            b_CS=int(row['CS']) if row['CS'] else None,
+            b_BB=int(row['BB']) if row['BB'] else None,
+            b_SO=int(row['SO']) if row['SO'] else None,
+            b_IBB=int(row['IBB']) if row['IBB'] else None,
+            b_HBP=int(row['HBP']) if row['HBP'] else None,
+            b_SH=int(row['SH']) if row['SH'] else None,
+            b_SF=int(row['SF']) if row['SF'] else None,
+            b_GIDP=int(row['GIDP']) if row['GIDP'] else None,
         )
 
         # Check if playerID exists
-        if not session.query(People).filter_by(playerID=appearances_record.playerID).first():
+        if not session.query(People).filter_by(playerID=batting_record.playerID).first():
             peopleNotExist += 1
             continue
 
         # Check if teamID exists
-        if not session.query(Teams).filter_by(teamID=appearances_record.teamID).first():
+        if not session.query(Teams).filter_by(teamID=batting_record.teamID).first():
             teamNotExists += 1
             continue
 
         # Check for existing record
-        if session.query(Appearances).filter_by(
-            playerID=appearances_record.playerID,
-            yearID=appearances_record.yearID,
-            teamID=appearances_record.teamID,
+        if session.query(Batting).filter_by(
+            playerID=batting_record.playerID,
+            yearId=batting_record.yearId,
+            teamID=batting_record.teamID,
+            stint=batting_record.stint
         ).first():
             updated_rows += 1
         else:
             new_rows += 1
 
-        session.merge(appearances_record)
+        session.merge(batting_record)
 
     session.commit()
     session.close()
@@ -75,11 +77,11 @@ def split_csv(file_path, chunksize=10000):
             # <start>:<end>
             yield reader[i:i + chunksize]
 
-def upload_appearances_csv():
-    print("Updating appearances table")
-    csv_file_path = get_csv_path("Appearances.csv")
+def upload_batting_csv():
+    print("Updating batting table")
+    csv_file_path = get_csv_path("Batting.csv")
     if not os.path.exists(csv_file_path):
-        print("Error: Appearances.csv not found")
+        print("Error: Batting.csv not found")
         return
 
     chunks = list(split_csv(csv_file_path))
