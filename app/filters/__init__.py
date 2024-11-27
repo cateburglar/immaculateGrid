@@ -6,7 +6,6 @@ from .query_filter import (
     TeamFilter,
 )
 
-# Optionally, you can define a list of available filters for easier imports
 FILTERS = {
     "career_stat": CareerStatFilter,
     "season_stat": SeasonStatFilter,
