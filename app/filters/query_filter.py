@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from sqlalchemy import func
 from sqlalchemy.orm import Query, aliased
 
 from ..models import *
@@ -165,7 +166,18 @@ class MiscFilter(QueryFilter):
         elif self.category == "Hall of Fame":
             self.query = self.query.filter(People.hall_of_fame == True)
         elif self.category == "Only One Team":
-            self.query = self.query.filter(People.only_one_team == True)
+            # Get players who have only played for one team
+            subquery = (
+                self.query.session.query(Appearances.playerID)
+                .group_by(Appearances.playerID)
+                .having(func.count(func.distinct(Appearances.teamID)) == 1)
+                .subquery()
+            )
+
+            # Join the People to the matching players
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
         elif self.category == "No Hitter":
             self.query = self.query.filter(People.threw_a_no_hitter == True)
         elif self.category == "WS Champ":
