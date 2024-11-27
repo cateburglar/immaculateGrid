@@ -60,21 +60,31 @@ def process_row(row, session, counts):
         if not school:
             raise ValueError(f"School with schoolID {schoolID} not found")
 
+        collegeplaying_record = CollegePlaying(
+            playerID=row[0],
+            schoolID=row[1],
+            yearID=row[2],
+        )
+
         # Check if the row already exists in the collegeplaying table
-        existing_entry = session.query(CollegePlaying).filter_by(playerID=playerID, schoolID=schoolID, yearID=yearID).first()
+        existing_entry = (
+            session.query(CollegePlaying)
+            .filter_by(
+                playerID=playerID,
+                schoolID=schoolID,
+                yearID=yearID
+            )
+            .first()
+        )
 
         if existing_entry:
             # Update the existing entry
             counts["updated_rows"] += 1
         else:
             # Insert a new record
-            new_entry = CollegePlaying(
-                playerID=playerID,
-                schoolID=schoolID,
-                yearID=yearID,
-            )
-            session.add(new_entry)
             counts["new_rows"] += 1
+
+        session.merge(collegeplaying_record)
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")
     except ValueError as e:
