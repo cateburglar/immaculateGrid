@@ -18,6 +18,12 @@
 #include <time.h>
 #include <float.h>
 
+typedef struct Bench {
+  int chunkSize;
+  int scalar;
+  double timeElapsed;
+} benchmark_t;
+
  /**
   * update_processconfig
   *
@@ -112,6 +118,7 @@ int main(void)
 {
   const int chunkSizes[] = {1000, 5000, 10000, 25000};
   const int processScalars[] = {1, 2, 4, 8};
+  benchmark_t *benchmarks;
   double fastestTime = DBL_MAX;
   int fastestChunk = 0;
   char fastestProcess[80] = {0};
@@ -125,43 +132,55 @@ int main(void)
     exit(EXIT_FAILURE);
   }
 
+  benchmarks = malloc(
+            sizeof(benchmark_t)
+            * (sizeof(chunkSizes) / sizeof(chunkSizes[0]))
+            * (sizeof(processScalars) / sizeof(processScalars[0]))
+  );
+
+  if(benchmarks == NULL) {
+    perror("Failed malloc");
+    exit(EXIT_FAILURE);
+  }
+
   fprintf(log_file, "%-12s%-32s%10s\n", "NUM_CHUNKS", "NUM_PROCESSES", "TIME(s)");
 
   /* Iterate over all combinations of chunk sizes and number of cores */
   for (i = 0; i < (int)(sizeof(chunkSizes) / sizeof(chunkSizes[0])); i++) {
     for (j = 0; j < (int)(sizeof(processScalars) / sizeof(processScalars[0])); j++) {
-      int chunkSize = chunkSizes[i];
-      int scalar = processScalars[j];
       char numProcesses[80];
-      double timeTaken;
+
+      benchmarks->chunkSize = chunkSizes[i];
+      benchmarks->scalar = processScalars[j];
 
       /**
        * We dynamically calculate the number of processes using the number
        * of cores on the current machine. If the number of cores cannot
        * be determined using os.cpu_count, we use 4 as the default scalar.
        * */
-      sprintf(numProcesses, "(os.cpu_count() or 4) * %d", scalar);
+      sprintf(numProcesses, "(os.cpu_count() or 4) * %d", benchmarks->scalar);
 
       /* Update processconfig.py */
-      update_processconfig(chunkSize, numProcesses);
+      update_processconfig(benchmarks->chunkSize, numProcesses);
 
       /* Run the script and measure the time */
-      timeTaken = run_updatedb();
+      benchmarks->timeElapsed = run_updatedb();
 
       /* Log the results */
-      fprintf(log_file, "%-12d%-32s%10.2f\n", chunkSize, numProcesses, timeTaken);
-      printf("CHUNK_SIZE=%d, NUM_PROCESSES=%s, TIME=%.2f seconds\n", chunkSize, numProcesses, timeTaken);
+      fprintf(log_file, "%-12d%-32s%10.2f\n", benchmarks->chunkSize, numProcesses, benchmarks->timeElapsed);
+      printf("CHUNK_SIZE=%d, NUM_PROCESSES=%s, TIME=%.2f seconds\n", benchmarks->chunkSize, numProcesses, benchmarks->timeElapsed);
 
       /* Save fastest */
-      if(timeTaken < fastestTime) {
-        fastestTime = timeTaken;
-        fastestChunk = chunkSize;
+      if(benchmarks->timeElapsed < fastestTime) {
+        fastestTime = benchmarks->timeElapsed;
+        fastestChunk = benchmarks->chunkSize;
         strncpy(fastestProcess, numProcesses, 80);
       }
     }
   }
 
   fclose(log_file);
+  free(benchmarks);
 
   /* Save fastest config to processconfig.py */
   printf("\nFastest configuration: CHUNK_SIZE=%d, NUM_PROCESSES=%s, TIME=%.2f seconds\n",
