@@ -162,6 +162,7 @@ class MiscFilter(QueryFilter):
         appearances_alias = aliased(
             Appearances, name=f"appearances_{self.alias_suffix}"
         )
+        seriespost_alias = aliased(SeriesPost, name=f"seriespost_{self.alias_suffix}")
 
         if self.category == "All Star":
             self.query = self.query.join(
@@ -189,7 +190,22 @@ class MiscFilter(QueryFilter):
         elif self.category == "No Hitter":
             self.query = self.query.filter(People.threw_a_no_hitter == True)
         elif self.category == "WS Champ":
-            self.query = self.query.filter(People.world_series_champ == True)
+            appearances_ws_alias = aliased(
+                Appearances, name=f"appearances_ws_{self.alias_suffix}"
+            )
+            self.query = (
+                self.query.join(
+                    appearances_ws_alias,
+                    People.playerID == appearances_ws_alias.playerID,
+                )
+                .join(
+                    seriespost_alias,
+                    (appearances_ws_alias.teamID == seriespost_alias.teamIDwinner)
+                    & (appearances_ws_alias.yearID == seriespost_alias.yearID),
+                )
+                .filter(seriespost_alias.round == "WS")
+            )
+
         else:  # Standard awards
             self.query = self.query.join(
                 awards_alias, People.playerID == awards_alias.playerID
