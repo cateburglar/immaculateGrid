@@ -1,4 +1,4 @@
-player_name,war,playerID,playerID
+player_name,war,playerID
 Babe Ruth,182.6,ruthba01
 Walter Johnson,166.9,johnswa01
 Cy Young,163.6,youngcy01
@@ -38,7 +38,7 @@ Cal Ripken,95.9,ripkeca99
 Roberto Clemente,94.9,clemero01
 Bert Blyleven,94.5,blylebe01
 Cap Anson,94.3,ansonca01
-Adrian Beltre,93.5,beltrad01
+Adrian Beltré,93.5,beltrad01
 Jimmie Foxx,93.0,foxxji01
 Al Kaline,92.8,kalinal01
 Wade Boggs,91.4,boggswa01
@@ -101,7 +101,7 @@ Alan Trammell,70.6,trammal01
 Barry Larkin,70.5,larkiba01
 Ron Santo,70.5,santoro01
 Gary Carter,70.2,cartega01
-Carlos Beltran,70.1,beltrca01
+Carlos Beltrán,70.1,beltrca01
 Scott Rolen,70.1,rolensc01
 Mookie Betts,69.6,bettsmo01
 Ed Delahanty,69.6,delahed01
@@ -111,16 +111,16 @@ Manny Ramirez,69.3,ramirma02
 Tony Gwynn,69.2,gwynnto02
 John Smoltz,69.0,smoltjo01
 Eddie Murray,68.7,murraed02
-Ivan Rodriguez,68.7,rodriiv01
+Iván Rodríguez,68.7,rodriiv01
 Red Ruffing,68.6,ruffire01
 Carlton Fisk,68.5,fiskca01
 Carl Hubbell,68.5,hubbeca01
 Jim Palmer,68.5,palmeji01
 Kenny Lofton,68.4,loftoke01
-Edgar Martinez,68.4,martied01
+Edgar Martínez,68.4,martied01
 Pee Wee Reese,68.4,reesepe01
 Al Simmons,68.3,simmoal01
-Robinson Cano,68.1,canoro01
+Robinson Canó,68.1,canoro01
 Fred Clarke,68.0,clarkfr01
 Graig Nettles,67.9,nettlgr01
 Ryne Sandberg,67.9,sandbry01
@@ -255,12 +255,12 @@ Joe Mauer,55.2,mauerjo01
 Joe Sewell,54.7,seweljo01
 Kevin Appier,54.5,appieke01
 Joe Medwick,54.5,medwijo01
-Jose Cruz,54.4,cruzjo01
+José Cruz,54.4,cruzjo01
 Willie Keeler,54.3,keelewi01
 Sam Rice,54.3,ricesa01
 Vada Pinson,54.2,pinsova01
 Ian Kinsler,54.1,kinslia01
-Tony Perez,53.9,perezto01
+Tony Pérez,53.9,perezto01
 Ron Cey,53.7,ceyro01
 Harry Hooper,53.6,hoopeha01
 Jerry Koosman,53.6,koosmje01
@@ -269,10 +269,10 @@ David Wells,53.5,wellsda01
 Wilbur Cooper,53.4,coopewi01
 Chris Sale,53.4,salech01
 Jimmy Collins,53.3,colliji01
-Minnie Minoso,53.3,minosmi01
+Minnie Miñoso,53.3,minosmi01
 Billy Pierce,53.2,piercbi02
 Joe Tinker,53.2,tinkejo01
-Cesar Cedeno,53.1,cedence01
+César Cedeño,53.1,cedence01
 Jack Clark,53.1,clarkja01
 Bert Campaneris,53.0,campabe01
 Dwight Gooden,53.0,goodedw01
@@ -283,7 +283,7 @@ Babe Adams,52.6,adamsba01
 Fred McGriff,52.6,mcgrifr01
 Bid McPhee,52.5,mcphebi01
 Waite Hoyt,52.4,hoytwa01
-Jose Ramirez,52.4,ramirjo01
+José Ramírez,52.4,ramirjo01
 Jim O'Rourke,52.3,orourji01
 Aaron Judge,52.2,judgeaa01
 Norm Cash,52.0,cashno01
@@ -324,7 +324,7 @@ Ellis Burks,49.8,burksel01
 Jamie Moyer,49.8,moyerja01
 Brett Butler,49.7,butlebr01
 Mickey Cochrane,49.7,cochrmi01
-Felix Hernandez,49.7,hernafe02
+Félix Hernández,49.7,hernafe02
 Eddie Rommel,49.7,rommeed01
 Francisco Lindor,49.6,lindofr01
 Bernie Williams,49.6,willibe02
@@ -338,7 +338,7 @@ Jimmy Key,48.9,keyji01
 Sandy Koufax,48.9,koufasa01
 Dutch Leonard,48.9,leonadu02
 Jim Fregosi,48.7,fregoji01
-Dennis Martinez,48.7,martide01
+Dennis Martínez,48.7,martide01
 Doc White,48.6,whitedo01
 Jack Stivetts,48.5,stiveja01
 Buddy Myer,48.4,myerbu01
@@ -388,7 +388,7 @@ Ed Konetchy,46.5,koneted01
 Dale Murphy,46.5,murphda05
 Mark Grace,46.4,gracema01
 Murry Dickson,46.3,dicksmu01
-Bartolo Colon,46.2,colonba01
+Bartolo Colón,46.2,colonba01
 Dizzy Dean,46.2,deandi01
 Vern Stephens,46.2,stephve01
 Willie Wilson,46.2,wilsowi02
@@ -401,14 +401,14 @@ Lon Warneke,45.8,warnelo01
 John McGraw,45.7,mcgrajo02
 Rusty Staub,45.7,staubru01
 Del Pratt,45.6,prattde01
-Javier Vazquez,45.6,vazquja01
+Javier Vázquez,45.6,vazquja01
 Omar Vizquel,45.6,vizquom01
 Roger Peckinpaugh,45.5,peckiro01
 Deacon White,45.5,whitede01
 Larry French,45.4,frencla01
 Augie Galan,45.4,galanau01
 Lou Brock,45.3,brocklo01
-Tony Fernandez,45.3,fernato01
+Tony Fernández,45.3,NULL
 Addie Joss,45.3,jossad01
 Brad Radke,45.3,radkebr01
 Jacob deGrom,45.2,degroja01
@@ -420,7 +420,7 @@ Claude Passeau,45.1,passecl01
 Herb Pennock,45.1,pennohe01
 Harry Stovey,45.0,stoveha01
 Rocky Colavito,44.9,colavro01
-J.D. Drew,44.9,drewjd01
+J.D. Drew,44.9,NULL
 Paul Hines,44.9,hinespa01
 Dixie Walker,44.9,walkedi02
 Bill Donovan,44.8,donovbi02
@@ -459,7 +459,7 @@ Milt Pappas,43.7,pappami01
 Bob Welch,43.7,welchbo01
 Julio Franco,43.6,francju01
 Charlie Keller,43.6,kellech01
-Adrian Gonzalez,43.5,gonzaad01
+Adrián González,43.5,NULL
 Jon Lester,43.5,lestejo01
 Jack Morris,43.5,morrija02
 Fielder Jones,43.4,jonesfi01
@@ -481,7 +481,7 @@ Ken Williams,42.7,willike02
 Wally Berger,42.6,bergewa01
 Elmer Smith,42.6,smithel02
 Schoolboy Rowe,42.5,rowesc01
-Jose Canseco,42.4,cansejo01
+José Canseco,42.4,NULL
 Lenny Dykstra,42.4,dykstle01
 Davey Lopes,42.4,lopesda01
 Don Mattingly,42.4,mattido01
@@ -497,7 +497,7 @@ John Candelaria,41.9,candejo01
 Harlond Clift,41.9,cliftha01
 Curt Flood,41.9,floodcu01
 Bill Nicholson,41.9,nichobi01
-Placido Polanco,41.9,polanpl01
+Plácido Polanco,41.9,NULL
 Ken Singleton,41.9,singlke01
 Christian Yelich,41.9,yelicch01
 Roy Campanella,41.8,camparo01
@@ -542,13 +542,13 @@ Andy Messersmith,40.2,messean01
 David Price,40.2,priceda01
 Smoky Joe Wood,40.2,woodjo02
 Albert Belle,40.1,belleal01
-Dave Concepcion,40.1,conceda01
+Dave Concepción,40.1,NULL
 Dave Parker,40.1,parkeda01
 Ryan Zimmerman,40.1,zimmery01
 Al Leiter,40.0,leiteal01
 Clyde Milan,40.0,milancl01
 Tom Zachary,40.0,zachato01
-Moises Alou,39.9,aloumo01
+Moisés Alou,39.9,NULL
 George Gore,39.9,gorege01
 George Burns,39.8,burnsge02
 Danny Darwin,39.8,darwida01
@@ -578,9 +578,9 @@ Russell Martin,38.9,martiru01
 Paul O'Neill,38.9,oneilpa01
 Harold Baines,38.8,baineha01
 Charlie Bennett,38.8,bennech01
-Magglio Ordonez,38.8,ordonma01
+Magglio Ordóñez,38.8,NULL
 Lefty Gomez,38.7,gomezle01
-Juan Gonzalez,38.7,gonzaju03
+Juan González,38.7,NULL
 Ed McKean,38.7,mckeaed01
 Don Newcombe,38.7,newcodo01
 Pie Traynor,38.7,traynpi01
@@ -610,7 +610,7 @@ Ray Lankford,38.2,lankfra01
 Josh Gibson,38.1,gibsojo99
 Troy Glaus,38.1,glaustr01
 Steve Garvey,38.0,garvest01
-Hanley Ramirez,38.0,ramirha01
+Hanley Ramírez,38.0,NULL
 Carlos Santana,38.0,santaca01
 Gus Weyhing,37.8,weyhigu01
 Paul Blair,37.7,blairpa01
@@ -624,7 +624,7 @@ Dick McAuliffe,37.6,mcauldi01
 Charlie Root,37.6,rootch01
 Jim Maloney,37.5,malonji01
 Mark Gubicza,37.4,gubicma01
-Jose Reyes,37.4,reyesjo02
+José Reyes,37.4,NULL
 Cy Williams,37.4,willicy01
 Madison Bumgarner,37.3,bumgama01
 Guy Hecker,37.3,heckegu01
@@ -645,7 +645,7 @@ Garry Maddox,36.8,maddoga01
 Corey Seager,36.8,seageco01
 Rube Walberg,36.8,walberu01
 Earl Whitehill,36.8,whiteea01
-Jose Bautista,36.7,bautijo02
+José Bautista,36.7,NULL
 Wally Moses,36.6,moseswa01
 Andy Pafko,36.6,pafkoan01
 George Scott,36.6,scottge02
@@ -655,10 +655,10 @@ Candy Cummings,36.5,cummica01
 Kevin Kiermaier,36.5,kiermke01
 Bill Mazeroski,36.5,mazerbi01
 Don Money,36.5,moneydo01
-Jose Rijo,36.5,rijojo01
+José Rijo,36.5,NULL
 Bill Bradley,36.4,bradlbi01
 Juan Soto,36.4,sotoju01
-J.T. Realmuto,36.3,realmjt01
+J.T. Realmuto,36.3,NULL
 Trea Turner,36.3,turnetr01
 Rick Wise,36.3,wiseri01
 Don Buford,36.2,bufordo01
@@ -681,7 +681,7 @@ Ed Williamson,35.7,willine01
 Burt Hooton,35.6,hootobu01
 Deacon Phillippe,35.6,phillde01
 Ed Reulbach,35.6,reulbed01
-Edwin Encarnacion,35.5,encared01
+Edwin Encarnación,35.5,NULL
 Denny Lyons,35.5,lyonsde01
 Salvador Perez,35.5,perezsa02
 Mickey Vernon,35.5,vernomi01
@@ -722,7 +722,7 @@ Travis Fryman,34.4,frymatr01
 Alex Gordon,34.4,gordoal01
 Frank Killen,34.4,killefr01
 Howie Pollet,34.4,polleho01
-B.J. Surhoff,34.4,surhobj01
+B.J. Surhoff,34.4,NULL
 Tim Wakefield,34.4,wakefti01
 Michael Brantley,34.3,brantmi02
 Thornton Lee,34.3,leeth01
@@ -730,7 +730,7 @@ Derek Lowe,34.3,lowede01
 Slim Sallee,34.3,sallesl01
 Elvis Andrus,34.2,andruel01
 Chris Carpenter,34.2,carpech02
-Freddy Garcia,34.2,garcifr02
+Freddy García,34.2,NULL
 Harry Howell,34.2,howelha01
 Willie McGee,34.2,mcgeewi01
 Johnny Pesky,34.2,peskyjo01
@@ -771,7 +771,7 @@ Yu Darvish,33.1,darviyu01
 Rick Monday,33.1,mondari01
 Earl Torgeson,33.1,torgeea01
 Ray Schalk,33.0,schalra01
-Gavvy Cravath,32.9,cravaga01
+Gavy Cravath,32.9,NULL
 Jim Devlin,32.9,devliji03
 Richie Hebner,32.9,hebneri01
 Brian Jordan,32.9,jordabr01
@@ -793,8 +793,8 @@ Billy Hoy,32.5,hoydu01
 Rube Marquard,32.5,marquru01
 John Valentin,32.5,valenjo02
 Jimmy Williams,32.5,williji99
-Aramis Ramirez,32.4,ramirar01
-Edgar Renteria,32.4,renteed01
+Aramis Ramírez,32.4,NULL
+Édgar Rentería,32.4,NULL
 Al Rosen,32.4,rosenal01
 Joe Start,32.4,startjo01
 Ezra Sutton,32.4,suttoez01
@@ -810,7 +810,7 @@ Monte Irvin,32.1,irvinmo01
 Bobby Murcer,32.1,murcebo01
 Sonny Siebert,32.1,siebeso01
 Sonny Gray,32.0,grayso01
-Victor Martinez,32.0,martivi01
+Víctor Martínez,32.0,NULL
 Brian McCann,32.0,mccanbr01
 Johnny Antonelli,31.9,antonjo02
 Larry Dierker,31.9,dierkla01
@@ -818,13 +818,13 @@ Scott Fletcher,31.9,fletcsc01
 Barry Zito,31.9,zitoba01
 Marty Marion,31.8,marioma01
 Charlie Ferguson,31.7,ferguch02
-Andres Galarraga,31.7,galaran01
+Andrés Galarraga,31.7,NULL
 Claude Hendrix,31.7,hendrcl01
 Frank McCormick,31.7,mccorfr01
 Wally Pipp,31.7,pippwa01
 Ed Brandt,31.6,branded01
 Chick Stahl,31.6,stahlch01
-Jose Valentin,31.6,valenjo03
+José Valentín,31.6,NULL
 Rudy York,31.6,yorkru01
 Andy Benes,31.5,benesan01
 Eddie Joost,31.5,joosted01
@@ -860,7 +860,7 @@ Ginger Beaumont,30.5,beaumgi01
 Bill Byrd,30.5,byrdbi01
 Arlie Latham,30.5,lathaar01
 Sal Maglie,30.5,maglisa01
-J.D. Martinez,30.5,martijd02
+J.D. Martinez,30.5,NULL
 Jose Quintana,30.5,quintjo01
 Greg Swindell,30.5,swindgr01
 Mike Garcia,30.4,garcimi03
@@ -872,7 +872,7 @@ Joe Nuxhall,30.4,nuxhajo01
 Jhonny Peralta,30.4,peraljh01
 Harry Steinfeldt,30.4,steinha01
 Cecil Travis,30.4,travice01
-Jose Abreu,30.3,abreujo02
+José Abreu,30.3,NULL
 Teddy Higuera,30.3,higuete01
 Joe Kuhel,30.3,kuheljo01
 Bobby Bonilla,30.2,bonilbo01
@@ -883,7 +883,7 @@ Hooks Wiltse,30.2,wiltsho01
 Sherm Lollar,30.1,lollash01
 Kevin McReynolds,30.1,mcreyke01
 Del Ennis,30.0,ennisde01
-Livan Hernandez,30.0,hernali01
+Liván Hernández,30.0,NULL
 Buck Leonard,30.0,leonabu99
 Lance Lynn,30.0,lynnla01
 John Titus,30.0,titusjo01
@@ -897,15 +897,15 @@ Johnny Podres,29.8,podrejo01
 Hal Trosky,29.8,troskha02
 Lloyd Waner,29.8,wanerll01
 Brandon Belt,29.7,beltbr01
-Asdrubal Cabrera,29.7,cabreas01
+Asdrúbal Cabrera,29.7,NULL
 Phil Garner,29.7,garneph01
-Javy Lopez,29.7,lopezja01
+Javy López,29.7,NULL
 Joe Niekro,29.7,niekrjo01
 Preacher Roe,29.7,roepr01
 Marquis Grissom,29.6,grissma02
 Bing Miller,29.6,millebi02
 Hal Schumacher,29.6,schumha02
-Raul Mondesi,29.5,mondera01
+Raúl Mondesí,29.5,NULL
 Brian Roberts,29.5,roberbr01
 Jason Schmidt,29.5,schmija01
 Johnny Sain,29.4,sainjo01
@@ -927,6 +927,7 @@ Johnny Kling,29.1,klingjo01
 Kevin Mitchell,29.1,mitchke01
 Benny Kauff,29.0,kauffbe01
 Tino Martinez,29.0,martiti02
+Nip Winters,29.0,NULL
 Coco Crisp,28.9,crispco01
 Baby Doll Jacobson,28.9,jacobba01
 Ellis Kinder,28.9,kindeel01
@@ -936,7 +937,7 @@ Lee Smith,28.9,smithle02
 Elmer Valo,28.9,valoel01
 John Anderson,28.8,anderjo02
 Bob Bailey,28.8,bailebo01
-A.J. Burnett,28.8,burneaj01
+A.J. Burnett,28.8,NULL
 Matt Carpenter,28.8,carpema01
 Mike Donlin,28.8,donlimi01
 Kevin Seitzer,28.8,seitzke01
@@ -952,7 +953,7 @@ Vernon Wells,28.6,wellsve01
 Don Baylor,28.5,baylodo01
 Alex Fernandez,28.5,fernaal01
 Freddie Lindstrom,28.5,lindsfr01
-Bobby Avila,28.4,avilabo01
+Bobby Ávila,28.4,NULL
 Brandon Phillips,28.4,phillbr01
 Jack Rowe,28.4,roweja01
 Gio Gonzalez,28.3,gonzagi01
@@ -963,7 +964,7 @@ Lee Meadows,28.3,meadole01
 Bob Meusel,28.3,meusebo01
 Terry Pendleton,28.3,pendlte01
 Terry Puhl,28.3,puhlte01
-Cesar Tovar,28.3,tovarce01
+César Tovar,28.3,NULL
 Josh Hamilton,28.2,hamiljo03
 Mike Hampton,28.2,hamptmi01
 Lindy McDaniel,28.2,mcdanli01
@@ -971,13 +972,13 @@ Melvin Mora,28.2,morame01
 Jarrod Washburn,28.2,washbja01
 Bob Watson,28.2,watsobo01
 Rondell White,28.2,whitero02
-J.J. Hardy,28.1,hardyjj01
+J.J. Hardy,28.1,NULL
 Paul Konerko,28.1,konerpa01
 Reb Russell,28.1,russere01
 Del Crandall,28.0,crandde01
 Trevor Hoffman,28.0,hoffmtr01
 Denis Menke,28.0,menkede01
-Anibal Sanchez,28.0,sanchan01
+Aníbal Sánchez,28.0,NULL
 Terry Steinbach,28.0,steinte01
 General Crowder,27.9,crowdal01
 Hal McRae,27.9,mcraeha01
@@ -993,7 +994,7 @@ Jouett Meekin,27.8,meekijo01
 Grady Sizemore,27.8,sizemgr01
 Garry Templeton,27.8,templga01
 Ross Barnes,27.7,barnero01
-Carlos Guillen,27.7,guillca01
+Carlos Guillén,27.7,NULL
 Marcell Ozuna,27.7,ozunama01
 Billy Wagner,27.7,wagnebi02
 Don Wilson,27.7,wilsodo01

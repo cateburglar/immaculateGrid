@@ -2,12 +2,46 @@ import csv
 import os
 import re
 
-csv_file_path = os.path.join("dbSetup", "static", "csv", "CareerWAR.csv")
-new_csv = os.path.join("dbSetup", "static", "csv", "CareerWARUpdated.csv")
+war_file_path = os.path.join("dbSetup", "static", "csv", "CareerWARUpdated.csv")
+people_csv_path = os.path.join("dbSetup", "static", "csv", "People.csv")
+new_csv = os.path.join("dbSetup", "static", "csv", "CareerWAR.csv")
 
-# Process the raw data
+SPANISH_TO_ENGLISH = {
+    "á": "a",
+    "é": "e",
+    "í": "i",
+    "ó": "o",
+    "ú": "u",
+    "ü": "u",
+    "ñ": "n",
+    "Á": "A",
+    "É": "E",
+    "Í": "I",
+    "Ó": "O",
+    "Ú": "U",
+    "Ü": "U",
+    "Ñ": "N",
+}
+
+
+def replace_spanish_characters(text):
+    for spanish_char, english_char in SPANISH_TO_ENGLISH.items():
+        text = text.replace(spanish_char, english_char)
+    return text
+
+
+# Read the People.csv file and create a dictionary mapping full names to rows
+people_dict = {}
+with open(people_csv_path, mode="r") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        full_name = f"{row['nameFirst']} {row['nameLast']}".strip()
+        full_name = replace_spanish_characters(full_name)
+        people_dict[full_name] = row
+
+# Process the CareerWAR.csv data
 rows = []
-with open(csv_file_path, mode="r") as file:
+with open(war_file_path, mode="r") as file:
     reader = csv.reader(file)
 
     # Print out raw lines for debugging
@@ -20,42 +54,30 @@ with open(csv_file_path, mode="r") as file:
     headers = lines[0]
     for line in lines[1:]:
         # Extract the relevant fields
-        player = line[0]
+        player = replace_spanish_characters(line[0])
         war = line[1]
-        pa = line[2]
-        ip = line[3]
-        bats_throws = line[4]
-        age = line[5]
+        playerid = line[2]
 
-        # Print player for debugging
-        print(f"Player: {player}")
+        if playerid == "NULL":
+            people_row = people_dict[player] if player in people_dict else None
+            if people_row:
+                playerid = people_row["playerID"]
+            else:
+                playerid = "NULL"
 
-        # Remove all numeric characters from the player name
-        player_name = re.sub(r"[\d\(\)\+]", "", player).strip()
-
-        # Print cleaned player name for debugging
-        print(f"Cleaned Player Name: {player_name}")
-
-        # Prepare the row data
-        row_data = [
-            player_name,
-            war,
-            pa,
-            ip,
-            bats_throws,
-            age,
-        ]
+        row = [player, war, playerid]
+        rows.append(row)
 
         # Print row data for debugging
-        print(f"Row Data: {row_data}")
+        print(f"Row Data: {row}")
 
-        # Add the row data to the output list
-        rows.append(row_data)
 
 # Write the processed data to the new CSV file
 with open(new_csv, mode="w", newline="") as file:
     writer = csv.writer(file)
-    writer.writerow(headers)
+    writer.writerow(
+        headers + ["playerID"]
+    )  # Add any other headers from People.csv as needed
     writer.writerows(rows)
 
 print(f"Updated CSV file saved as {new_csv}")
