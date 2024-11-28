@@ -56,7 +56,7 @@ void update_processconfig(int chunkSize, const char numProcesses[])
  /**
   * run_updatedb
   *
-  * Runs the update_db script
+  * Runs the update_db script. Re-seeds our database to stabalize results.
   *
   * Parameters:
   *   - none
@@ -69,6 +69,14 @@ double run_updatedb(void)
   clock_t start, end;
   double cpu_time_used;
   int result;
+
+  /* Re-seed database with initial values to stabalize results */
+  printf("Re-seeding database\n");
+  result = system("mysql -uroot -ppassword seaquail < dbSetup/static/seaquail_dump.sql");
+  if (result != 0) {
+    fprintf(stderr, "Error re-seeding database. Exit code: %d\n", result);
+    exit(EXIT_FAILURE);
+  }
 
   /* Start timing */
   start = clock();
