@@ -1,0 +1,17 @@
+NUM_CHUNKS  NUM_PROCESSES                      TIME(s)
+1000        (os.cpu_count() or 4) * 1           149.00
+1000        (os.cpu_count() or 4) * 2           154.00
+1000        (os.cpu_count() or 4) * 4           192.00
+1000        (os.cpu_count() or 4) * 8           197.00
+5000        (os.cpu_count() or 4) * 1           149.00
+5000        (os.cpu_count() or 4) * 2           153.00
+5000        (os.cpu_count() or 4) * 4           186.00
+5000        (os.cpu_count() or 4) * 8           196.00
+10000       (os.cpu_count() or 4) * 1           154.00
+10000       (os.cpu_count() or 4) * 2           164.00
+10000       (os.cpu_count() or 4) * 4           166.00
+10000       (os.cpu_count() or 4) * 8           170.00
+25000       (os.cpu_count() or 4) * 1           171.00
+25000       (os.cpu_count() or 4) * 2           172.00
+25000       (os.cpu_count() or 4) * 4           174.00
+25000       (os.cpu_count() or 4) * 8           179.00
