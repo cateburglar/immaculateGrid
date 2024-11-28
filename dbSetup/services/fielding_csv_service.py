@@ -103,8 +103,8 @@ def process_chunk(chunk_data):
                         setattr(existing_record, column.name, new_value)
                         updated = True
 
-                    if updated:
-                        updated_rows += 1  # Only count as updated if something changed
+                if updated:
+                    updated_rows += 1  # Only count as updated if something changed
             else:
                 new_rows += 1
                 session.add(fielding_record)

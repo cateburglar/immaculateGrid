@@ -112,8 +112,8 @@ def update_pitching_from_csv(file_path):
                         setattr(existing_entry, column.name, new_value)
                         updated = True
 
-                    if updated:
-                        updateCount += 1  # Only count as updated if something changed
+                if updated:
+                    updateCount += 1  # Only count as updated if something changed
             else:
                 new_rows += 1
                 session.add(pitching_record)

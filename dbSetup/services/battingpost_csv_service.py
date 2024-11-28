@@ -103,8 +103,8 @@ def update_battingpost_from_csv(file_path):
                         setattr(existing_entry, column.name, new_value)
                         updated = True
 
-                    if updated:
-                        updated_rows += 1  # Only count as updated if something changed
+                if updated:
+                    updated_rows += 1  # Only count as updated if something changed
             else:
                 inserted_rows += 1
                 session.add(battingpost_record)

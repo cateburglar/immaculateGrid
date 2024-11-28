@@ -122,8 +122,8 @@ def process_row(row, session, counts, in_season):
                     setattr(existing_entry, column.name, new_value)
                     updated = True
 
-                if updated:
-                    counts["updated_rows"] += 1 # Only count as updated if something changed
+            if updated:
+                counts["updated_rows"] += 1 # Only count as updated if something changed
         else:
             counts["new_rows"] += 1
             session.add(manager_entry)
