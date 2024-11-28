@@ -10,6 +10,7 @@ from .fielding_csv_service import upload_fielding_csv
 from .fieldingpost_csv_service import upload_fieldingpost_csv
 from .homegames_csv_service import upload_homegames_csv
 from .managers_csv_service import upload_managers_csv
+from .nohitters_csv_service import upload_nohitters_csv
 from .parks_csv_service import upload_parks_csv
 from .people_csv_service import upload_people_csv
 from .pitching_csv_service import upload_pitching_csv

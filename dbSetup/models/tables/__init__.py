@@ -209,13 +209,20 @@ class NoHitters(Base):
     __tablename__ = "nohitters"
     nohitters_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
-    yearId = Column(SmallInteger, nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), nullable=False)
+    date = Column(String(9), nullable=False)
+    type = Column(String(1), nullable=False)
 
     __table_args__ = (
         Index("k_nohitters_team", "teamID"),  # Index for teamID
         Index(
-            "nohitters_playerID_yearID_teamID", "playerID", "yearId", "teamID"
+            "nohitters_playerID_yearID_teamID_date_type",
+            "playerID",
+            "yearID",
+            "teamID",
+            "date",
+            "type",
         ),  # Composite index
     )
 
