@@ -180,7 +180,9 @@ class PositionFilter(QueryFilter):
 
         # If a team is provided, filter by team ID
         if self.team:
-            self.query = self.query.filter(appearances_alias.teamID == self.team)
+            team_filter = TeamFilter(self.query, self.team)
+            self.query = team_filter.apply()
+            #self.query = self.query.filter(appearances_alias.teamID == self.team)
 
         return self.query
 
