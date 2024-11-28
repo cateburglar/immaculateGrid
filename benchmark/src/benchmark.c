@@ -66,7 +66,7 @@ void update_processconfig(int chunkSize, const char numProcesses[])
   * */
 double run_updatedb(void)
 {
-  clock_t start, end;
+  time_t tic, toc;
   double cpu_time_used;
   int result;
 
@@ -79,7 +79,7 @@ double run_updatedb(void)
   }
 
   /* Start timing */
-  start = clock();
+  time(&tic);
 
   /* Run the Python script */
   result = system("python3 dbSetup/update_db.py appearances fielding batting");
@@ -90,8 +90,8 @@ double run_updatedb(void)
   }
 
   /* End timing */
-  end = clock();
-  cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+  time(&toc);
+  cpu_time_used = difftime(toc, tic);
 
   return cpu_time_used;
 }
@@ -125,7 +125,7 @@ int main(void)
     exit(EXIT_FAILURE);
   }
 
-  fprintf(log_file, "%12s%32s%10s\n", "NUM_CHUNKS", "NUM_PROCESSES", "TIME(s)");
+  fprintf(log_file, "%-12s%-32s%10s\n", "NUM_CHUNKS", "NUM_PROCESSES", "TIME(s)");
 
   /* Iterate over all combinations of chunk sizes and number of cores */
   for (i = 0; i < (int)(sizeof(chunkSizes) / sizeof(chunkSizes[0])); i++) {
@@ -149,7 +149,7 @@ int main(void)
       timeTaken = run_updatedb();
 
       /* Log the results */
-      fprintf(log_file, "%-12d%32s%10.2f\n", chunkSize, numProcesses, timeTaken);
+      fprintf(log_file, "%-12d%-32s%10.2f\n", chunkSize, numProcesses, timeTaken);
       printf("CHUNK_SIZE=%d, NUM_PROCESSES=%s, TIME=%.2f seconds\n", chunkSize, numProcesses, timeTaken);
 
       /* Save fastest */
