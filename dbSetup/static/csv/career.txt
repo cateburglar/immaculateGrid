@@ -1,0 +1,1018 @@
+
+Rank	Player (yrs, age)	Wins Above Replacement	PA	IP	Bats/Throws
+1.	Babe Ruth+ (22)	182.6	10628	1221.1	L
+2.	Walter Johnson+ (21)	166.9	2534	5914.1	R
+3.	Cy Young+ (22)	163.6	3104	7356.0	R
+4.	Barry Bonds (22)	162.8	12606		L
+5.	Willie Mays+ (23)	156.2	12545		R
+6.	Ty Cobb+ (24)	151.5	13103	5.0	L
+7.	Henry Aaron+ (23)	143.1	13941		R
+8.	Roger Clemens (24)	139.2	213	4916.2	R
+9.	Tris Speaker+ (22)	134.9	12020	1.0	L
+10.	Honus Wagner+ (21)	131.0	11766	8.1	R
+11.	Stan Musial+ (22)	128.5	12721	0.0	L
+12.	Rogers Hornsby+ (23)	127.0	9481		R
+13.	Eddie Collins+ (25)	124.3	12087		L
+14.	Ted Williams+ (19)	121.8	9792	2.0	L
+15.	Grover Alexander+ (20)	119.6	1981	5190.0	R
+16.	Alex Rodriguez (22)	117.6	12207		R
+17.	Kid Nichols+ (15)	116.3	2264	5067.1	B
+18.	Lou Gehrig+ (17)	113.7	9665		L
+19.	Rickey Henderson+ (25)	111.1	13346		R
+20.	Mel Ott+ (22)	110.9	11347		L
+21.	Mickey Mantle+ (18)	110.2	9910		B
+22.	Tom Seaver+ (20)	109.9	1552	4783.0	R
+23.	Frank Robinson+ (21)	107.2	11744		R
+24.	Nap Lajoie+ (21)	106.9	10471		R
+ 	Mike Schmidt+ (18)	106.9	10062		R
+26.	Lefty Grove+ (17)	106.8	1580	3940.2	L
+27.	Christy Mathewson+ (17)	106.7	1900	4788.2	R
+28.	Greg Maddux+ (23)	106.6	1812	5008.1	R
+29.	Albert Pujols (22)	101.4	13041	1.0	R
+30.	Randy Johnson+ (22)	101.1	691	4135.1	R
+31.	Joe Morgan+ (22)	100.6	11329		L
+32.	Warren Spahn+ (21)	100.1	2056	5243.2	L
+33.	Carl Yastrzemski+ (23)	96.5	13992		L
+34.	Eddie Mathews+ (17)	95.9	10101		L
+ 	Phil Niekro+ (24)	95.9	1707	5404.0	R
+ 	Cal Ripken Jr.+ (21)	95.9	12883		R
+37.	Roberto Clemente+ (18)	94.9	10212		R
+38.	Bert Blyleven+ (22)	94.5	514	4970.0	R
+39.	Cap Anson+ (27)	94.3	11331	4.0	R
+40.	Adrian Beltré+ (21)	93.5	12130		R
+41.	Jimmie Foxx+ (20)	93.0	9677	23.2	R
+42.	Al Kaline+ (22)	92.8	11597		R
+43.	Wade Boggs+ (18)	91.4	10740	2.1	L
+44.	Eddie Plank+ (17)	90.9	1783	4495.2	L
+45.	Steve Carlton+ (24)	90.2	1881	5217.2	L
+46.	Gaylord Perry+ (22)	90.0	1220	5350.0	R
+47.	Bob Gibson+ (17)	89.2	1489	3884.1	R
+48.	George Brett+ (21)	88.6	11625		L
+49.	Tim Keefe+ (14)	86.9	2262	5049.2	R
+50.	Mike Trout (14, 32)	86.2	6647		R
+51.	Robin Roberts+ (19)	86.1	1784	4688.2	B
+52.	Chipper Jones+ (19)	85.3	10614		B
+53.	Charlie Gehringer+ (19)	84.7	10245		L
+54.	George Davis+ (20)	84.5	10188	4.0	B
+55.	Roger Connor+ (18)	84.3	8847		B
+56.	Fergie Jenkins+ (19)	84.2	1010	4500.2	R
+57.	Pedro Martinez+ (18)	83.9	518	2827.1	R
+58.	Ken Griffey Jr.+ (22)	83.8	11304		L
+59.	John Clarkson+ (12)	83.2	2060	4536.1	R
+60.	Mike Mussina+ (18)	82.8	54	3562.2	L
+61.	Nolan Ryan+ (27)	81.3	957	5386.0	R
+62.	Rod Carew+ (19)	81.2	10550		L
+63.	Tom Glavine+ (22)	80.7	1645	4413.1	L
+64.	Justin Verlander (19, 41)	80.5	60	3415.2	R
+65.	Jeff Bagwell+ (15)	79.9	9431		R
+66.	Pete Rose (24)	79.5	15890		B
+ 	Curt Schilling (20)	79.5	901	3261.0	R
+68.	Clayton Kershaw (17, 36)	79.4	847	2742.2	L
+69.	Joe DiMaggio+ (13)	79.1	7672		R
+70.	Dan Brouthers+ (19)	78.7	7691	23.0	L
+71.	Brooks Robinson+ (23)	78.5	11782		R
+72.	Arky Vaughan+ (14)	77.9	7723		L
+73.	Zack Greinke (20)	77.5	600	3389.1	R
+74.	Luke Appling+ (20)	77.4	10254		R
+ 	Robin Yount+ (20)	77.4	12249		R
+76.	Ozzie Smith+ (19)	76.9	10778		B
+77.	Bobby Wallace+ (25)	76.4	9631	402.0	R
+78.	Jim McCormick (10)	76.2	2104	4275.2	R
+79.	Paul Molitor+ (21)	75.6	12167		R
+80.	Sam Crawford+ (19)	75.4	10627		L
+ 	Old Hoss Radbourn+ (12)	75.4	2654	4527.1	R
+ 	Max Scherzer (17, 39)	75.4	529	2878.0	R
+83.	Bill Dahlen (21)	75.3	10438		R
+84.	Johnny Bench+ (17)	75.1	8674		R
+ 	Lou Whitaker (19)	75.1	9967		L
+86.	Paul Waner+ (20)	74.8	10767		L
+87.	Reggie Jackson+ (21)	74.0	11418		L
+88.	Frank Thomas+ (19)	73.8	10075		R
+89.	Pud Galvin+ (15)	73.4	2788	6003.1	R
+90.	Jim Thome+ (22)	73.1	10313		L
+91.	Larry Walker+ (17)	72.7	8030		L
+92.	Harry Heilmann+ (17)	72.2	8972		R
+93.	Rafael Palmeiro (20)	71.9	12046		L
+94.	Frankie Frisch+ (19)	71.8	10101		B
+95.	Derek Jeter+ (20)	71.3	12602		R
+96.	Bobby Grich (17)	71.1	8220		R
+97.	Ted Lyons+ (21)	70.6	1729	4161.0	B
+ 	Johnny Mize+ (15)	70.6	7372		L
+ 	Alan Trammell+ (20)	70.6	9376		R
+100.	Barry Larkin+ (19)	70.5	9057		R
+ 	Ron Santo+ (15)	70.5	9397		R
+102.	Gary Carter+ (19)	70.2	9019		R
+103.	Carlos Beltrán (20)	70.1	11031		B
+ 	Scott Rolen+ (17)	70.1	8518		R
+105.	Mookie Betts (11, 31)	69.6	6273		R
+ 	Ed Delahanty+ (16)	69.6	8402		R
+107.	Rick Reuschel (19)	69.5	1304	3548.1	R
+108.	Tim Raines+ (23)	69.4	10359		B
+109.	Manny Ramirez (19)	69.3	9774		R
+110.	Tony Gwynn+ (20)	69.2	10232		L
+111.	John Smoltz+ (21)	69.0	1167	3473.0	R
+112.	Eddie Murray+ (21)	68.7	12817		B
+ 	Iván Rodríguez+ (21)	68.7	10270		R
+114.	Red Ruffing+ (22)	68.6	2084	4344.0	R
+115.	Carlton Fisk+ (24)	68.5	9853		R
+ 	Carl Hubbell+ (16)	68.5	1397	3590.1	R
+ 	Jim Palmer+ (19)	68.5	537	3948.0	R
+118.	Kenny Lofton (17)	68.4	9235		L
+ 	Edgar Martínez+ (18)	68.4	8674		R
+ 	Pee Wee Reese+ (16)	68.4	9472		R
+121.	Al Simmons+ (20)	68.3	9520		R
+122.	Robinson Canó (17)	68.1	9550		L
+123.	Fred Clarke+ (21)	68.0	9863		L
+124.	Graig Nettles (22)	67.9	10228		L
+ 	Ryne Sandberg+ (16)	67.9	9282		R
+126.	Kevin Brown (19)	67.8	575	3256.1	R
+127.	Ernie Banks+ (19)	67.7	10396		R
+128.	Dwight Evans (20)	67.2	10569		R
+129.	Miguel Cabrera (21)	67.1	11796		R
+ 	Don Drysdale+ (14)	67.1	1309	3432.0	R
+131.	Roberto Alomar+ (17)	67.0	10400		B
+132.	Don Sutton+ (23)	66.7	1559	5282.1	R
+133.	Tony Mullane (13)	66.6	2971	4531.1	B
+134.	Ed Walsh+ (14)	66.5	1173	2964.1	R
+135.	Buddy Bell (18)	66.4	10009		R
+136.	Luis Tiant (19)	66.1	570	3486.1	R
+137.	Goose Goslin+ (18)	66.0	9831		L
+138.	Willie Randolph (18)	65.9	9462		R
+ 	Duke Snider+ (18)	65.9	8237		L
+140.	Amos Rusie+ (10)	65.8	1765	3778.2	R
+141.	Craig Biggio+ (20)	65.5	12504		R
+142.	Andre Dawson+ (21)	64.9	10769		R
+143.	Joe Cronin+ (20)	64.7	8840		R
+144.	Reggie Smith (17)	64.5	8051		B
+ 	Chase Utley (16)	64.5	7863		L
+ 	Joey Votto (17)	64.5	8746		L
+147.	Willie McCovey+ (22)	64.4	9692		L
+148.	Richie Ashburn+ (15)	64.2	9737		L
+ 	Roy Halladay+ (16)	64.2	305	2749.1	R
+ 	Dave Winfield+ (22)	64.2	12358		R
+151.	Jackie Robinson+ (11)	63.9	5941		R
+152.	Red Faber+ (20)	63.8	1559	4086.2	B
+ 	Clark Griffith+ (21)	63.8	1590	3385.2	R
+154.	Billy Williams+ (18)	63.6	10519		L
+155.	Bob Feller+ (18)	63.4	1486	3827.0	R
+156.	Lou Boudreau+ (15)	63.2	7025		R
+ 	Billy Hamilton+ (14)	63.2	7609		L
+ 	Vic Willis+ (13)	63.2	1632	3996.0	R
+159.	Juan Marichal+ (16)	62.9	1343	3507.0	R
+160.	Home Run Baker+ (13)	62.8	6677		L
+ 	Ken Boyer (15)	62.8	8274		R
+ 	Paul Goldschmidt (14, 36)	62.8	8292		R
+ 	Hal Newhouser+ (17)	62.8	1160	2993.0	L
+164.	Andruw Jones (17)	62.7	8664		R
+165.	David Cone (17)	62.3	470	2898.2	L
+ 	CC Sabathia (19)	62.3	127	3577.1	L
+ 	John Ward+ (17)	62.3	8114	2469.2	L
+ 	Mickey Welch+ (13)	62.3	2286	4802.0	R
+169.	Joe Jackson (13)	62.2	5697		L
+170.	Dennis Eckersley+ (24)	62.1	196	3285.2	R
+ 	Mark McGwire (16)	62.1	7660		R
+172.	Stan Coveleski+ (14)	62.0	1196	3082.0	R
+173.	Todd Helton+ (17)	61.8	9453		L
+174.	Jack Glasscock (17)	61.6	7552	7.0	R
+ 	Tommy John (26)	61.6	1030	4710.1	R
+176.	Sal Bando (16)	61.5	8289	3.0	R
+177.	Bullet Rogan+ (13)	61.3	2345	1500.0	R
+178.	Jake Beckley+ (20)	61.2	10518	4.0	L
+179.	Early Wynn+ (23)	61.0	1904	4564.0	B
+180.	Tommy Bond (10)	60.9	1997	3628.2	R
+181.	Charlie Buffinton (11)	60.7	2309	3404.0	R
+ 	Willie Davis (18)	60.7	9822		L
+ 	Freddie Freeman (15, 34)	60.7	8736		L
+184.	Gary Sheffield (22)	60.5	10947		R
+185.	Jim Edmonds (17)	60.4	7980		L
+ 	Zack Wheat+ (19)	60.4	10007		L
+187.	Keith Hernandez (17)	60.3	8553		L
+ 	Harmon Killebrew+ (22)	60.3	9833		R
+ 	Dazzy Vance+ (16)	60.3	1114	2966.2	R
+190.	Bobby Abreu (18)	60.2	10081		L
+ 	Andy Pettitte (18)	60.2	237	3316.0	L
+ 	Al Spalding+ (8)	60.2	1988	2886.1	R
+193.	Wes Ferrell (15)	60.1	1345	2623.0	R
+194.	Ichiro Suzuki (19)	60.0	10734	1.0	L
+195.	Jesse Burkett+ (16)	59.7	9629	123.0	L
+196.	Yogi Berra+ (19)	59.5	8364		L
+ 	Jim Bunning+ (17)	59.5	1401	3760.1	R
+ 	Bob Caruthers (10)	59.5	2906	2828.2	L
+ 	Vladimir Guerrero+ (16)	59.5	9059		R
+ 	Mike Piazza+ (16)	59.5	7745		R
+
+201.	Sherry Magee (16)	59.4	8560		R
+202.	Mark Buehrle (16)	59.1	140	3283.1	L
+ 	Eddie Cicotte (14)	59.1	1232	3226.0	B
+204.	Cole Hamels (15)	59.0	778	2698.0	L
+ 	Joe McGinnity+ (10)	59.0	1424	3441.1	R
+ 	Urban Shocker (13)	59.0	1050	2681.2	R
+207.	Bret Saberhagen (16)	58.9	227	2562.2	R
+208.	Dick Allen (15)	58.7	7315		R
+ 	Darrell Evans (21)	58.7	10737		L
+ 	Jack Quinn (23)	58.7	1513	3920.1	R
+211.	Evan Longoria (16)	58.6	8206		R
+ 	Sammy Sosa (18)	58.6	9896		R
+213.	Rube Waddell+ (13)	58.4	1139	2961.1	R
+214.	Mordecai Brown+ (14)	58.2	1244	3172.1	B
+ 	John Olerud (17)	58.2	9063		L
+216.	Chuck Finley (17)	57.9	59	3197.1	L
+ 	Tim Hudson (17)	57.9	710	3126.2	R
+218.	Bobby Bonds (14)	57.8	8090		R
+ 	Manny Machado (13, 31)	57.8	7517		R
+220.	Enos Slaughter+ (19)	57.6	9087		L
+ 	Willie Stargell+ (21)	57.6	9027		L
+ 	Joe Torre+ (18)	57.6	8802		R
+223.	Billy Herman+ (15)	57.4	8641		R
+224.	George Sisler+ (15)	57.2	9018	111.0	L
+225.	Whitey Ford+ (16)	57.1	1208	3170.1	L
+ 	Frank Tanana (21)	57.1	64	4188.1	L
+227.	Larry Doby+ (17)	56.8	6920		L
+228.	Nolan Arenado (12, 33)	56.7	7078		R
+229.	Bill Terry+ (14)	56.6	7111		L
+230.	Will Clark (15)	56.5	8283		L
+231.	Bill Dickey+ (17)	56.4	7065		L
+ 	Dave Stieb (16)	56.4	2	2895.1	R
+233.	Johnny Damon (18)	56.3	10917		L
+ 	Mariano Rivera+ (19)	56.3	4	1283.2	R
+235.	Robin Ventura (16)	56.1	8271	1.0	L
+236.	Orel Hershiser (18)	56.0	949	3130.1	R
+ 	Jim Whitney (10)	56.0	2306	3496.1	R
+238.	Luis Aparicio+ (18)	55.9	11231		R
+ 	Eppa Rixey+ (21)	55.9	1667	4494.2	R
+240.	Jim Wynn (15)	55.8	8011		R
+241.	Chet Lemon (16)	55.7	7874		R
+242.	Max Carey+ (20)	55.6	10772		B
+ 	Joe Gordon+ (11)	55.6	6537		R
+ 	Bob Johnson (13)	55.6	8051		R
+245.	Hank Greenberg+ (13)	55.5	6098		R
+ 	Stan Hack (16)	55.5	8509		L
+ 	Gabby Hartnett+ (20)	55.5	7300		R
+ 	George Uhle (17)	55.5	1513	3119.2	R
+249.	Jeff Kent (17)	55.4	9537		R
+ 	Bobby Mathews (15)	55.4	2559	4956.0	R
+
+251.	David Ortiz+ (20)	55.3	10091		L
+ 	Jack Powell (16)	55.3	1764	4389.0	R
+253.	Joe Mauer+ (15)	55.2	7960		L
+254.	Joe Sewell+ (14)	54.7	8333		L
+255.	Kevin Appier (16)	54.5	90	2595.1	R
+ 	Joe Medwick+ (17)	54.5	8143		R
+257.	José Cruz (19)	54.4	8931		L
+258.	Willie Keeler+ (19)	54.3	9619		L
+ 	Sam Rice+ (20)	54.3	10260	39.1	L
+260.	Vada Pinson (18)	54.2	10405		L
+261.	Ian Kinsler (14)	54.1	8299	1.0	R
+262.	Tony Pérez+ (23)	53.9	10861		R
+263.	Ron Cey (17)	53.7	8344		R
+264.	Harry Hooper+ (17)	53.6	10277	2.0	L
+ 	Jerry Koosman (19)	53.6	1052	3839.1	R
+266.	Bucky Walters (19)	53.5	2150	3104.2	R
+ 	David Wells (21)	53.5	200	3439.0	L
+268.	Wilbur Cooper (15)	53.4	1317	3480.0	R
+ 	Chris Sale (14, 35)	53.4	27	1958.1	L
+270.	Jimmy Collins+ (14)	53.3	7460		R
+ 	Minnie Miñoso+ (20)	53.3	8233		R
+272.	Billy Pierce (18)	53.2	1255	3306.2	L
+ 	Joe Tinker+ (15)	53.2	7167		R
+274.	César Cedeño (17)	53.1	8133		R
+ 	Jack Clark (18)	53.1	8230		R
+276.	Bert Campaneris (19)	53.0	9625	1.0	R
+ 	Dwight Gooden (16)	53.0	849	2800.2	R
+278.	Burleigh Grimes+ (19)	52.9	1687	4180.0	R
+279.	Jose Altuve (14, 34)	52.8	8042		R
+280.	Elmer Flick+ (13)	52.7	6434		L
+281.	Babe Adams (19)	52.6	1111	2995.1	L
+ 	Fred McGriff+ (19)	52.6	10174		L
+283.	Bid McPhee+ (18)	52.5	9429		R
+284.	Waite Hoyt+ (21)	52.4	1423	3762.1	R
+ 	José Ramírez (12, 31)	52.4	6086		B
+286.	Jim O'Rourke+ (23)	52.3	9052	19.2	R
+287.	Aaron Judge (9, 32)	52.2	4323		R
+288.	Norm Cash (17)	52.0	7914		L
+ 	Larry Jackson (14)	52.0	1192	3262.2	R
+290.	Lance Berkman (15)	51.9	7814		B
+ 	Dustin Pedroia (14)	51.9	6777		R
+292.	Johan Santana (12)	51.7	279	2025.2	L
+293.	Earl Averill+ (13)	51.6	7221		L
+ 	Luis Gonzalez (19)	51.6	10531		L
+295.	Brian Downing (20)	51.5	9309		R
+ 	Toby Harrah (17)	51.5	8767		R
+297.	Bobby Doerr+ (14)	51.4	8030		R
+298.	Carl Mays (15)	51.3	1202	3021.1	L
+ 	Al Orth (15)	51.3	1792	3354.2	L
+300.	Brian Giles (15)	51.1	7836		L
+
+ 	Bryce Harper (13, 31)	51.1	7085		L
+ 	Kirby Puckett+ (12)	51.1	7831		R
+303.	Bob Elliott (15)	50.9	8207		R
+ 	Tony Phillips (18)	50.9	9110		B
+305.	Torii Hunter (19)	50.7	9692		R
+306.	Theodore Breitenstein (11)	50.6	1538	2973.1	L
+ 	Mark Teixeira (14)	50.6	8029		B
+308.	Jason Giambi (20)	50.5	8908		L
+ 	Jim Kaat+ (25)	50.5	1363	4530.1	L
+ 	Kenny Rogers (20)	50.5	75	3302.2	L
+311.	Tommy Bridges (16)	50.4	1144	2826.1	R
+ 	Joe Kelley+ (17)	50.4	8163		R
+ 	Silver King (10)	50.4	1477	3180.2	R
+ 	Ted Simmons+ (21)	50.4	9685		B
+315.	Fred Lynn (17)	50.2	7923		L
+316.	Orlando Cepeda+ (17)	50.1	8699		R
+ 	Mark Langston (16)	50.1	100	2962.2	R
+318.	Dave Bancroft+ (16)	50.0	8250		B
+ 	Roy Oswalt (13)	50.0	796	2245.1	R
+ 	Wilbur Wood (17)	50.0	381	2684.0	R
+321.	Dizzy Trout (15)	49.9	1048	2725.2	R
+322.	Ellis Burks (18)	49.8	8177		R
+ 	Jamie Moyer (25)	49.8	502	4074.0	L
+324.	Brett Butler (17)	49.7	9545		L
+ 	Mickey Cochrane+ (13)	49.7	6211		L
+ 	Félix Hernández (15)	49.7	59	2729.2	R
+ 	Eddie Rommel (13)	49.7	960	2557.0	R
+328.	Francisco Lindor (10, 30)	49.6	6116		B
+ 	Bernie Williams (16)	49.6	9053		B
+330.	Jimmy Sheckard (17)	49.5	9147		L
+ 	Turkey Stearnes+ (18)	49.5	4279	7.0	L
+ 	Willie Wells+ (21)	49.5	4471	0.2	R
+333.	Nellie Fox+ (19)	49.4	10351		L
+334.	Andrew McCutchen (16, 37)	49.3	9156		R
+335.	David Wright (14)	49.2	6872		R
+336.	Jimmy Key (15)	48.9	3	2591.2	R
+ 	Sandy Koufax+ (12)	48.9	858	2324.1	R
+ 	Dutch Leonard (20)	48.9	1161	3218.1	R
+339.	Jim Fregosi (18)	48.7	7404		R
+ 	Dennis Martínez (23)	48.7	604	3999.2	R
+341.	Doc White (13)	48.6	1532	3041.0	L
+342.	Jack Stivetts (11)	48.5	2148	2887.2	R
+343.	Buddy Myer (17)	48.4	8194		L
+344.	Larry Gardner (17)	48.3	7714		L
+ 	Heinie Groh (16)	48.3	7040		R
+346.	Bob Lemon+ (15)	48.2	1330	2850.0	L
+ 	Dolf Luque (20)	48.2	1192	3220.1	R
+348.	Oscar Charleston+ (17)	48.1	3885	80.2	L
+ 	Kiki Cuyler+ (18)	48.1	8100		R
+ 	Heinie Manush+ (17)	48.1	8422		L
+
+ 	Bobby Veach (14)	48.1	7579	2.0	L
+352.	Charles Bender+ (16)	48.0	1286	3017.0	R
+ 	Ralph Kiner+ (10)	48.0	6256		R
+ 	Mickey Lolich (16)	48.0	1017	3638.1	B
+ 	Wally Schang (19)	48.0	6440		B
+356.	Buck Ewing+ (18)	47.9	5772	47.0	R
+ 	Joe Judge (20)	47.9	9188		L
+358.	Ron Guidry (14)	47.8	0	2392.0	L
+ 	Bobo Newsom (20)	47.8	1442	3759.1	R
+360.	Johnny Evers+ (18)	47.7	7230		L
+ 	Jim Rice+ (16)	47.7	9058		R
+362.	Tony Lazzeri+ (14)	47.6	7314		R
+ 	Jimmy Rollins (17)	47.6	10240		B
+ 	Nap Rucker (10)	47.6	859	2375.1	R
+365.	Devon White (17)	47.3	8080		B
+366.	Curtis Granderson (16)	47.2	8306		L
+ 	George Mullin (14)	47.2	1701	3686.2	R
+368.	Ryan Braun (14)	47.1	7340		R
+ 	Art Fletcher (13)	47.1	6044		R
+ 	Tommy Leach (19)	47.1	9075		R
+ 	Bob Shawkey (15)	47.1	1136	2937.0	R
+ 	Miguel Tejada (16)	47.1	9205		R
+373.	Bill Foster+ (14)	47.0	623	1499.2	B
+ 	Jesse Tannehill (15)	47.0	1561	2759.1	B
+ 	Frank Viola (15)	47.0	210	2836.1	L
+376.	Satchel Paige+ (22)	46.9	708	1751.2	R
+377.	Gene Tenace (15)	46.8	5527		R
+ 	Hippo Vaughn (13)	46.8	1017	2730.0	B
+ 	Roy White (15)	46.8	7736		B
+ 	Hoyt Wilhelm+ (21)	46.8	493	2254.1	R
+381.	Mike Cameron (17)	46.7	7884		R
+ 	Josh Donaldson (13)	46.7	5856	1.0	R
+383.	Chuck Klein+ (17)	46.6	7172		L
+ 	Matt Williams (17)	46.6	7595		R
+385.	Lave Cross (21)	46.5	9745		R
+ 	Ed Konetchy (15)	46.5	8675	16.2	R
+ 	Dale Murphy (18)	46.5	9041		R
+388.	Mark Grace (16)	46.4	9290	1.0	L
+389.	Murry Dickson (18)	46.3	1143	3052.1	R
+390.	Bartolo Colón (21)	46.2	326	3461.2	R
+ 	Dizzy Dean+ (12)	46.2	766	1967.1	R
+ 	Vern Stephens (15)	46.2	7243		R
+ 	Willie Wilson (19)	46.2	8317		B
+394.	Thurman Munson (11)	46.1	5905		R
+395.	Frank Chance+ (17)	46.0	5138		R
+ 	King Kelly+ (16)	46.0	6457	45.2	R
+397.	Edd Roush+ (18)	45.8	8157		L
+ 	Marcus Semien (12, 33)	45.8	6539		R
+ 	Lon Warneke (15)	45.8	1080	2782.1	R
+400.	John McGraw+ (17)	45.7	4946		L
+
+ 	Rusty Staub (23)	45.7	11229		L
+402.	Del Pratt (13)	45.6	7632		R
+ 	Javier Vázquez (14)	45.6	692	2840.0	R
+ 	Omar Vizquel (24)	45.6	12013		B
+405.	Roger Peckinpaugh (17)	45.5	8396		R
+ 	Deacon White+ (20)	45.5	6973	10.0	L
+407.	Larry French (14)	45.4	1198	3152.0	R
+ 	Augie Galan (16)	45.4	7007		B
+409.	Lou Brock+ (19)	45.3	11240		L
+ 	Tony Fernández (17)	45.3	8793		B
+ 	Addie Joss+ (9)	45.3	919	2327.0	R
+ 	Brad Radke (12)	45.3	34	2451.0	R
+413.	Jacob deGrom (11, 36)	45.2	423	1367.0	L
+ 	Adam Wainwright (18)	45.2	848	2668.1	R
+415.	Vida Blue (17)	45.1	618	3343.1	B
+ 	Earle Combs+ (12)	45.1	6514		L
+ 	Larry Doyle (14)	45.1	7400		L
+ 	Claude Passeau (13)	45.1	1051	2719.2	R
+ 	Herb Pennock+ (22)	45.1	1427	3571.2	B
+420.	Harry Stovey (14)	45.0	6848	9.1	R
+421.	Rocky Colavito (14)	44.9	7559	5.2	R
+ 	J.D. Drew (14)	44.9	6153		L
+ 	Paul Hines (20)	44.9	7470	1.0	R
+ 	Dixie Walker (18)	44.9	7669		L
+425.	Bill Donovan (18)	44.8	1449	2964.2	B
+ 	Bill Freehan (15)	44.8	6900		R
+ 	Buster Posey (12)	44.8	5607		R
+ 	Red Schoendienst+ (19)	44.8	9224		B
+429.	Jim Gilliam (17)	44.7	8887		B
+ 	Red Lucas (16)	44.7	1608	2542.0	L
+ 	Steve Rogers (13)	44.7	1045	2837.2	R
+ 	Giancarlo Stanton (15, 34)	44.7	6896		R
+433.	Noodles Hahn (8)	44.6	813	2029.1	L
+ 	Chuck Knoblauch (12)	44.6	7387		R
+435.	Lonny Frey (14)	44.5	6402		L
+ 	Matt Holliday (15)	44.5	7981		R
+ 	Troy Tulowitzki (13)	44.5	5415		R
+ 	Ben Zobrist (14)	44.5	6836	1.0	B
+439.	Cupid Childs (13)	44.4	6770		L
+ 	Carlos Correa (10, 29)	44.4	4760		R
+ 	Carlos Delgado (17)	44.4	8657		L
+ 	Sam Thompson+ (15)	44.4	6526		L
+443.	Nomar Garciaparra (14)	44.3	6116		R
+ 	Brett Gardner (14)	44.3	6614		L
+ 	Mel Harder (20)	44.3	1315	3426.1	R
+446.	Steve Finley (19)	44.2	10460	1.0	L
+ 	Travis Jackson+ (15)	44.2	6682		R
+448.	George Foster (18)	44.1	7812		R
+449.	Rabbit Maranville+ (23)	44.0	11260		R
+450.	Al Dark (14)	43.9	7833	1.0	R
+
+ 	Carlos Zambrano (12)	43.9	744	1959.0	B
+452.	Gil Hodges+ (18)	43.8	8104		R
+ 	Shohei Ohtani (7, 29)	43.8	3602	481.2	L
+ 	Jimmy Ryan (18)	43.8	9127	117.0	R
+ 	Fred Tenney (17)	43.8	8834	2.0	L
+456.	Al Oliver (18)	43.7	9778		L
+ 	Milt Pappas (17)	43.7	1176	3186.0	R
+ 	Bob Welch (17)	43.7	668	3092.0	R
+459.	Julio Franco (23)	43.6	9731		R
+ 	Charlie Keller (13)	43.6	4604		L
+461.	Adrián González (15)	43.5	8046		L
+ 	Jon Lester (16)	43.5	423	2740.0	L
+ 	Jack Morris+ (18)	43.5	1	3824.0	R
+464.	Fielder Jones (15)	43.4	7924		L
+465.	Gerrit Cole (12, 33)	43.3	286	1954.0	R
+ 	Curt Simmons (20)	43.3	1257	3348.1	L
+467.	Dolph Camilli (12)	43.2	6354		L
+ 	Cliff Lee (13)	43.2	321	2156.2	L
+469.	Hugh Duffy+ (17)	43.1	7842		R
+ 	Ned Garver (14)	43.1	962	2477.1	R
+ 	Mel Stottlemyre (11)	43.1	846	2661.1	R
+472.	Tony Oliva+ (15)	43.0	6880		L
+473.	Roger Bresnahan+ (17)	42.9	5389	50.1	R
+474.	Amos Otis (17)	42.8	8247		R
+475.	Ben Chapman (15)	42.7	7427	141.1	R
+ 	Jack Chesbro+ (11)	42.7	1155	2896.2	R
+ 	Sad Sam Jones (22)	42.7	1495	3883.0	R
+ 	Jorge Posada (17)	42.7	7150		B
+ 	Ken Williams (14)	42.7	5625		L
+480.	Wally Berger (11)	42.6	5666		R
+ 	Elmer Smith (14)	42.6	5422	1210.1	L
+482.	Schoolboy Rowe (15)	42.5	1023	2219.1	R
+483.	José Canseco (17)	42.4	8129	1.0	R
+ 	Lenny Dykstra (12)	42.4	5282		L
+ 	Davey Lopes (16)	42.4	7340		R
+ 	Don Mattingly (14)	42.4	7722		L
+487.	Hughie Jennings+ (18)	42.3	5648		R
+488.	Felipe Alou (17)	42.2	7908		R
+ 	Harry Brecheen (12)	42.2	746	1907.2	L
+ 	Phil Rizzuto+ (13)	42.2	6719		R
+491.	Nelson Cruz (19)	42.1	8396		R
+ 	Gary Gaetti (20)	42.1	9817	2.1	R
+ 	Yadier Molina (19)	42.1	8554	2.0	R
+ 	Darryl Strawberry (17)	42.1	6326		L
+495.	John Candelaria (19)	41.9	688	2525.2	L
+ 	Harlond Clift (12)	41.9	6895		R
+ 	Curt Flood (15)	41.9	6958		R
+ 	Bill Nicholson (16)	41.9	6420		L
+ 	Plácido Polanco (16)	41.9	7887		R
+ 	Ken Singleton (15)	41.9	8559		B
+
+ 	Christian Yelich (12, 32)	41.9	6383		L
+502.	Roy Campanella+ (18)	41.8	5727	15.1	R
+ 	Kid Gleason (22)	41.8	8211	2389.1	B
+ 	Jason Heyward (15, 34)	41.8	6900		L
+ 	Sam McDowell (15)	41.8	851	2492.1	L
+506.	Doug DeCinces (15)	41.7	6534		R
+ 	Jason Kendall (15)	41.7	8702		R
+508.	Dick Bartell (18)	41.6	8745		R
+ 	Jim Perry (17)	41.6	980	3285.2	B
+510.	Eddie Stanky (11)	41.5	5439		R
+ 	Mike Tiernan (13)	41.5	6732	19.2	L
+ 	Fernando Valenzuela (17)	41.5	1044	2930.0	L
+513.	George Van Haltren (17)	41.3	9020	689.1	L
+ 	Andy Van Slyke (13)	41.3	6495		L
+515.	Jack Fournier (15)	41.2	6034	1.0	L
+ 	Claude Osteen (18)	41.2	1220	3460.2	L
+517.	Tom Candiotti (16)	41.1	360	2725.0	R
+ 	Frank Dwyer (12)	41.1	1339	2819.0	R
+ 	Rich Gossage+ (22)	41.1	93	1809.1	R
+520.	Mark Belanger (18)	41.0	6602		R
+ 	Hardy Richardson (14)	41.0	6044	16.0	R
+522.	Catfish Hunter+ (15)	40.9	710	3449.1	R
+ 	Camilo Pascual (18)	40.9	1073	2930.2	R
+ 	Darrell Porter (17)	40.9	6570		L
+525.	Xander Bogaerts (12, 31)	40.8	6517		R
+ 	Hooks Dauss (15)	40.8	1324	3390.2	R
+ 	Bob Friend (16)	40.8	1299	3611.0	R
+ 	Mike Griffin (12)	40.8	6848		L
+ 	Sadie McMahon (9)	40.8	1191	2634.0	R
+530.	Gil McDougald (10)	40.7	5398		R
+ 	Roy Thomas (13)	40.7	6602	2.2	L
+532.	David Justice (14)	40.6	6602		L
+533.	Carney Lansford (15)	40.5	7905		R
+ 	Sam Leever (13)	40.5	1078	2660.2	R
+ 	Tim Salmon (14)	40.5	7039		R
+ 	Cy Seymour (16)	40.5	6227	1038.0	L
+ 	Jim Sundberg (16)	40.5	6899		R
+538.	Pete Browning (13)	40.4	5315	0.1	R
+ 	Virgil Trucks (17)	40.4	1012	2682.1	R
+540.	Andy Messersmith (12)	40.2	826	2230.1	R
+ 	David Price (14)	40.2	71	2143.2	L
+ 	Smoky Joe Wood (14)	40.2	2282	1434.1	R
+543.	Albert Belle (12)	40.1	6676		R
+ 	Dave Concepción (19)	40.1	9641	1.1	R
+ 	Dave Parker (19)	40.1	10184		L
+ 	Ryan Zimmerman (16)	40.1	7402		R
+547.	Al Leiter (19)	40.0	613	2391.0	L
+ 	Clyde Milan (16)	40.0	8338		L
+ 	Tom Zachary (19)	40.0	1236	3126.1	L
+550.	Moisés Alou (17)	39.9	7913		R
+
+ 	George Gore (14)	39.9	6104		L
+552.	George Burns (15)	39.8	8254		R
+ 	Danny Darwin (21)	39.8	334	3016.2	R
+ 	Anthony Rizzo (14, 34)	39.8	7336	1.0	L
+ 	Reggie Sanders (17)	39.8	7043		R
+556.	Pink Hawley (10)	39.7	1307	3012.2	L
+557.	Alex Bregman (9, 30)	39.6	4832		R
+ 	Tommy Henrich (11)	39.6	5411		L
+ 	Maury Wills (14)	39.6	8306		B
+560.	Rafael Furcal (14)	39.5	7237		B
+ 	Babe Herman (13)	39.5	6230		L
+ 	Lance Parrish (19)	39.5	7797		R
+563.	Jesse Barfield (12)	39.4	5394		R
+ 	Donie Bush (16)	39.4	8774		B
+ 	George Cuppy (10)	39.4	1066	2283.0	R
+ 	Jake Daubert (15)	39.4	8749		L
+ 	Bill Dinneen (12)	39.4	1281	3074.2	L
+ 	Jon Matlack (13)	39.4	541	2363.0	L
+569.	Curt Davis (13)	39.2	904	2325.0	R
+ 	Jake Peavy (15)	39.2	598	2377.0	R
+571.	Carl Crawford (15)	39.1	7178		L
+ 	Howard Ehmke (15)	39.1	1089	2820.2	R
+ 	Rico Petrocelli (13)	39.1	6171		R
+ 	Boog Powell (17)	39.1	7810		L
+575.	Bill Hutchison (9)	38.9	1425	3079.1	R
+ 	Russell Martin (14)	38.9	6648	4.0	R
+ 	Paul O'Neill (17)	38.9	8329	2.0	L
+578.	Harold Baines+ (22)	38.8	11092		L
+ 	Charlie Bennett (15)	38.8	4310		R
+ 	Magglio Ordóñez (15)	38.8	7745		R
+581.	Lefty Gomez+ (14)	38.7	1024	2503.0	L
+ 	Juan González (17)	38.7	7155		R
+ 	Ed McKean (13)	38.7	7626		R
+ 	Don Newcombe (12)	38.7	1033	2251.2	L
+ 	Pie Traynor+ (17)	38.7	8298		R
+ 	Hack Wilson+ (12)	38.7	5557		R
+587.	Kent Hrbek (14)	38.6	7137		L
+ 	Starling Marte (13, 35)	38.6	5978		R
+ 	Bill White (13)	38.6	6680		L
+590.	Lorenzo Cain (13)	38.5	4758		R
+ 	Jeff Pfeffer (13)	38.5	932	2407.1	R
+ 	Lonnie Smith (17)	38.5	5952		R
+ 	Tim Wallach (17)	38.5	8908	2.0	R
+594.	Johnny Callison (16)	38.4	7437		L
+ 	Matt Chapman (8, 31)	38.4	4235		R
+ 	Kirk Gibson (17)	38.4	6656		L
+ 	Charlie Hough (25)	38.4	250	3801.1	R
+ 	Ed Morris (7)	38.4	1157	2678.0	B
+599.	Eric Chavez (17)	38.3	6228		L
+ 	Chili Davis (19)	38.3	9997	2.0	B
+
+ 	Harry Davis (22)	38.3	7390		R
+ 	Bill Madlock (15)	38.3	7372		R
+ 	Roger Maris (12)	38.3	5847		L
+ 	Justin Turner (16, 39)	38.3	6311	1.0	R
+605.	Max Bishop (12)	38.2	5793		L
+ 	Ray Brown+ (14)	38.2	1407	1480.2	B
+ 	Sid Gordon (13)	38.2	5814		R
+ 	Ray Lankford (14)	38.2	6675		L
+609.	Josh Gibson+ (14)	38.1	2526	1.2	R
+ 	Troy Glaus (13)	38.1	6355		R
+611.	Steve Garvey (19)	38.0	9466		R
+ 	Hanley Ramírez (15)	38.0	7127		R
+ 	Carlos Santana (15, 38)	38.0	8780		B
+614.	Gus Weyhing (14)	37.8	1980	4337.0	R
+615.	Paul Blair (17)	37.7	6673		R
+ 	Jeff Heath (14)	37.7	5561		L
+ 	Ernie Lombardi+ (17)	37.7	6353		R
+ 	Terry Turner (17)	37.7	6666		R
+619.	Lu Blue (13)	37.6	7223		B
+ 	Frank Howard (16)	37.6	7353		R
+ 	George Kell+ (15)	37.6	7529		R
+ 	Dick McAuliffe (16)	37.6	7162		L
+ 	Charlie Root (17)	37.6	1192	3197.1	R
+624.	Jim Maloney (12)	37.5	696	1849.0	L
+625.	Mark Gubicza (14)	37.4	0	2223.1	R
+ 	José Reyes (16)	37.4	8240	1.0	B
+ 	Cy Williams (19)	37.4	7727		L
+628.	Madison Bumgarner (15)	37.3	731	2209.1	R
+ 	Guy Hecker (9)	37.3	3052	2924.0	R
+ 	John Lackey (15)	37.3	265	2840.1	R
+ 	George Springer (11, 34)	37.3	5789		R
+632.	Jay Bell (18)	37.1	8525		R
+ 	Andrelton Simmons (11)	37.1	4816	1.0	R
+634.	Dusty Baker (19)	37.0	8022		R
+ 	Bullet Joe Bush (17)	37.0	1324	3085.1	R
+ 	Fred Dunlap (12)	37.0	4264	2.2	R
+ 	Dutch Leonard (11)	37.0	817	2192.0	L
+ 	Kip Selbach (13)	37.0	7122		R
+639.	Herman Long (16)	36.9	8512		L
+ 	Kyle Seager (11)	36.9	6204		L
+641.	Phil Cavarretta (22)	36.8	7703		L
+ 	Dick Groat (14)	36.8	8180		R
+ 	Garry Maddox (15)	36.8	6777		R
+ 	Corey Seager (10, 30)	36.8	4442		L
+ 	Rube Walberg (15)	36.8	1005	2644.0	L
+ 	Earl Whitehill (17)	36.8	1451	3564.2	L
+647.	José Bautista (15)	36.7	7244		R
+648.	Wally Moses (17)	36.6	8256		L
+ 	Andy Pafko (17)	36.6	7028		R
+ 	George Scott (14)	36.6	8269		R
+
+ 	Mule Suttles+ (21)	36.6	3623	16.0	R
+652.	Ray Caldwell (12)	36.5	1270	2242.0	L
+ 	Candy Cummings+ (6)	36.5	1084	2149.2	R
+ 	Kevin Kiermaier (12, 34)	36.5	4040		L
+ 	Bill Mazeroski+ (17)	36.5	8379		R
+ 	Don Money (16)	36.5	6998		R
+ 	José Rijo (14)	36.5	511	1880.0	R
+658.	Bill Bradley (14)	36.4	6052	1.0	R
+ 	Juan Soto (7, 25)	36.4	4088		L
+660.	J.T. Realmuto (11, 33)	36.3	4992		R
+ 	Trea Turner (10, 31)	36.3	4967		R
+ 	Rick Wise (18)	36.3	741	3127.1	R
+663.	Don Buford (10)	36.2	5347		B
+ 	Johnny Cueto (17, 38)	36.2	655	2256.1	R
+665.	Eric Davis (17)	36.1	6147		R
+ 	Art Devlin (10)	36.1	5250		R
+667.	Cecil Cooper (17)	36.0	7939		L
+ 	Paul Derringer (15)	36.0	1357	3645.0	R
+ 	Bob Rush (13)	36.0	872	2410.2	R
+670.	Fritz Ostermueller (15)	35.9	823	2066.2	L
+ 	Freddy Parent (12)	35.9	5592		R
+672.	Jim Bottomley+ (16)	35.8	8358		L
+ 	Freddie Fitzsimmons (19)	35.8	1264	3223.2	R
+ 	Wally Joyner (16)	35.8	8115		L
+675.	Josh Beckett (14)	35.7	335	2051.0	R
+ 	Tommy Holmes (11)	35.7	5566		L
+ 	Willie Kamm (13)	35.7	6946		R
+ 	Danny Murphy (16)	35.7	5996		R
+ 	Ed Williamson (13)	35.7	5082	35.0	R
+680.	Burt Hooton (15)	35.6	913	2652.0	R
+ 	Deacon Phillippe (13)	35.6	1070	2607.0	R
+ 	Ed Reulbach (13)	35.6	985	2632.1	R
+683.	Edwin Encarnación (16)	35.5	8126		R
+ 	Denny Lyons (13)	35.5	5029		R
+ 	Salvador Perez (13, 34)	35.5	6263		R
+ 	Mickey Vernon (20)	35.5	9839		L
+687.	Dave Foutz (13)	35.4	4859	1997.1	R
+ 	Miller Huggins+ (13)	35.4	6825		B
+ 	Rick Rhoden (16)	35.4	830	2593.2	R
+690.	Aaron Nola (10, 31)	35.3	318	1621.1	R
+ 	Jack Taylor (10)	35.3	1165	2626.0	R
+692.	Zack Wheeler (10, 34)	35.2	323	1578.2	L
+693.	Dan Haren (13)	35.1	478	2419.2	R
+ 	Jerry Reuss (22)	35.1	1195	3669.2	L
+695.	Doyle Alexander (19)	35.0	300	3367.2	R
+ 	Brady Anderson (15)	35.0	7737		L
+ 	George Burns (16)	35.0	7249		R
+ 	Tom Gordon (21)	35.0	2	2108.0	R
+ 	Bump Hadley (16)	35.0	1147	2945.2	R
+ 	Howie Kendrick (15)	35.0	6421		R
+
+ 	Brickyard Kennedy (12)	35.0	1342	3030.0	R
+ 	Eddie Yost (18)	35.0	9177		R
+703.	Ron Fairly (21)	34.9	8437		L
+ 	Will White (10)	34.9	1537	3542.2	B
+705.	William Bell (14)	34.8	731	1438.2	R
+ 	Jimmy Dykes (22)	34.8	9353	2.0	R
+ 	Frank White (18)	34.8	8468		R
+708.	Cool Papa Bell+ (21)	34.7	5361	309.2	B
+ 	Shawn Green (15)	34.7	7963		L
+ 	Stuffy McInnis (19)	34.7	8642		R
+ 	Claude Ritchey (13)	34.7	6858		B
+ 	Bobby Shantz (16)	34.7	646	1935.2	R
+713.	Shin-Soo Choo (16)	34.6	7157		L
+ 	Carl Furillo (15)	34.6	7022		R
+ 	Derrek Lee (15)	34.6	7963		R
+ 	Jered Weaver (12)	34.6	57	2067.1	R
+717.	Jeff Cirillo (14)	34.5	6136	1.0	R
+ 	Ken Griffey (19)	34.5	8049		L
+ 	Pedro Guerrero (15)	34.5	6115		R
+720.	Travis Fryman (13)	34.4	7217		R
+ 	Alex Gordon (14)	34.4	7250	2.1	L
+ 	Frank Killen (10)	34.4	1148	2511.1	L
+ 	Howie Pollet (14)	34.4	790	2107.1	L
+ 	B.J. Surhoff (19)	34.4	9106		L
+ 	Tim Wakefield (19)	34.4	130	3226.1	R
+726.	Michael Brantley (15)	34.3	6149		L
+ 	Thornton Lee (16)	34.3	886	2331.1	L
+ 	Derek Lowe (17)	34.3	534	2671.1	R
+ 	Slim Sallee (14)	34.3	1032	2821.2	R
+730.	Elvis Andrus (15)	34.2	8603		R
+ 	Chris Carpenter (15)	34.2	501	2219.1	R
+ 	Freddy García (15)	34.2	99	2264.0	R
+ 	Harry Howell (13)	34.2	1519	2567.2	R
+ 	Willie McGee (18)	34.2	8188		B
+ 	Johnny Pesky (10)	34.2	5516		L
+ 	John Tudor (12)	34.2	443	1797.0	L
+737.	Bob Allison (13)	34.1	5924		R
+ 	Russ Ford (7)	34.1	571	1487.1	R
+ 	Ron Gant (16)	34.1	7320		R
+ 	Bruce Hurst (15)	34.1	331	2417.1	L
+ 	Marty McManus (15)	34.1	7567		R
+742.	Corey Kluber (13)	34.0	32	1641.2	R
+ 	Dan McGann (12)	34.0	6057		B
+ 	Ken McMullen (16)	34.0	5731		R
+745.	Tony Cuccinello (15)	33.9	6880		R
+ 	Rick Sutcliffe (18)	33.9	657	2697.2	L
+747.	Ray Durham (14)	33.8	8423		B
+ 	George Grantham (13)	33.8	5900		L
+ 	Billy Nash (15)	33.8	6742	1.1	R
+ 	Robby Thompson (11)	33.8	5235		R
+
+751.	Anthony Rendon (12, 34)	33.7	5022		R
+752.	Nick Markakis (15)	33.6	9321		L
+ 	Bobby Thomson (15)	33.6	6961		R
+ 	Heinie Zimmerman (13)	33.6	5744		R
+755.	Joe Adcock (17)	33.5	7305		R
+ 	Dom DiMaggio (11)	33.5	6478		R
+ 	Mark Ellis (12)	33.5	5728		R
+758.	Smoky Burgess (18)	33.4	5014		L
+ 	Ken Caminiti (15)	33.4	7127		B
+ 	Elbie Fletcher (12)	33.4	5828		L
+761.	Kid Elberfeld (14)	33.3	5296		R
+ 	Harvey Haddix (14)	33.3	871	2235.0	L
+ 	Charlie Leibrandt (14)	33.3	315	2308.0	R
+ 	Dwayne Murphy (12)	33.3	5242		L
+ 	Jud Wilson+ (21)	33.3	3563		L
+766.	Ken Keltner (13)	33.2	6316		R
+ 	Johnny Logan (13)	33.2	5893		R
+ 	Gene Woodling (17)	33.2	6618		L
+769.	Yu Darvish (12, 37)	33.1	165	1706.0	R
+ 	Rick Monday (19)	33.1	7162		L
+ 	Earl Torgeson (15)	33.1	6046		L
+772.	Ray Schalk+ (18)	33.0	6242		R
+773.	Gavy Cravath (11)	32.9	4663		R
+ 	Jim Devlin (5)	32.9	1202	1405.0	R
+ 	Richie Hebner (18)	32.9	7027		L
+ 	Brian Jordan (15)	32.9	5646		R
+ 	Van Mungo (14)	32.9	838	2113.0	R
+778.	Bill Doran (12)	32.8	5922		B
+ 	Ron Hunt (12)	32.8	6158		R
+ 	Matt Olson (9, 30)	32.8	4473		L
+ 	Riggs Stephenson (14)	32.8	5136		R
+782.	Rico Carty (15)	32.7	6318		R
+ 	Sid Fernandez (15)	32.7	629	1866.2	L
+ 	Jesse Haines+ (19)	32.7	1215	3208.2	R
+ 	Mickey Rivers (15)	32.7	6027		L
+ 	Ross Youngs+ (10)	32.7	5337		L
+787.	Mort Cooper (11)	32.6	724	1840.2	R
+ 	Pat Hentgen (14)	32.6	97	2075.1	R
+ 	Adam Jones (14)	32.6	7516		R
+ 	Sam West (16)	32.6	6974		L
+791.	Billy Hoy (14)	32.5	8386		L
+ 	Rube Marquard+ (18)	32.5	1197	3306.2	B
+ 	John Valentin (11)	32.5	4511		R
+ 	Jimmy Williams (11)	32.5	6138		R
+795.	Aramis Ramírez (18)	32.4	8986		R
+ 	Édgar Rentería (16)	32.4	9066		R
+ 	Al Rosen (10)	32.4	4374		R
+ 	Joe Start (16)	32.4	4907		L
+ 	Ezra Sutton (18)	32.4	5537	6.0	R
+ 	Kevin Youkilis (10)	32.4	4436		R
+
+801.	Roy Cullenbine (10)	32.3	4787		B
+ 	Darin Erstad (14)	32.3	6628		L
+ 	Vern Law (16)	32.3	1003	2672.0	R
+ 	Stephen Strasburg (13)	32.3	521	1470.0	R
+ 	Justin Upton (16)	32.3	7649		R
+806.	John Denny (13)	32.2	656	2148.2	R
+ 	Eddie Lopat (12)	32.2	999	2439.1	L
+808.	Monte Irvin+ (18)	32.1	4062		R
+ 	Bobby Murcer (17)	32.1	7718		L
+ 	Sonny Siebert (12)	32.1	725	2152.0	R
+811.	Sonny Gray (12, 34)	32.0	118	1737.1	R
+ 	Víctor Martínez (16)	32.0	8166		B
+ 	Brian McCann (15)	32.0	6850		L
+814.	Johnny Antonelli (12)	31.9	745	1992.1	L
+ 	Larry Dierker (14)	31.9	876	2333.2	R
+ 	Scott Fletcher (15)	31.9	5976		R
+ 	Barry Zito (15)	31.9	418	2576.2	L
+818.	Marty Marion (13)	31.8	6143		R
+819.	Charlie Ferguson (4)	31.7	1078	1514.2	B
+ 	Andrés Galarraga (19)	31.7	8916		R
+ 	Claude Hendrix (10)	31.7	991	2371.1	R
+ 	Frank McCormick (13)	31.7	6207		R
+ 	Wally Pipp (15)	31.7	7837		L
+824.	Ed Brandt (11)	31.6	878	2268.1	L
+ 	Chick Stahl (10)	31.6	5718	2.0	L
+ 	José Valentín (16)	31.6	6317		B
+ 	Rudy York (13)	31.6	6723		R
+828.	Andy Benes (14)	31.5	880	2505.1	R
+ 	Eddie Joost (17)	31.5	6791		R
+ 	Shane Victorino (12)	31.5	5164		R
+831.	Ted Kluszewski (15)	31.4	6470		L
+ 	Bill Lee (14)	31.4	1099	2864.0	R
+ 	Bill Russell (18)	31.4	8021		R
+834.	Mike Boddicker (14)	31.3	0	2123.2	R
+ 	Chick Hafey+ (13)	31.3	5116		R
+ 	Topsy Hartsel (14)	31.3	5842		L
+837.	Jacoby Ellsbury (11)	31.2	5375		L
+ 	Ketel Marte (10, 30)	31.2	4536		B
+ 	Adonis Terry (14)	31.2	2555	3514.1	R
+840.	Duke Farrell (18)	31.1	6269		B
+ 	Bill Sherdel (15)	31.1	1071	2709.1	L
+ 	Brandon Webb (7)	31.1	457	1319.2	R
+843.	Bill Joyce (8)	31.0	4163		L
+ 	Ken Raffensberger (15)	31.0	779	2151.2	R
+845.	Orlando Hudson (11)	30.9	5413		B
+ 	Hunter Pence (14)	30.9	7006		R
+ 	Trevor Story (9, 31)	30.9	3806		R
+ 	Greg Vaughn (15)	30.9	7070		R
+849.	Jim Bagby (9)	30.8	727	1821.2	B
+ 	Rick Ferrell+ (18)	30.8	7076		R
+
+851.	Jim Barr (12)	30.7	601	2065.1	R
+ 	Ice Box Chamberlain (10)	30.7	1146	2521.2	R
+ 	Firpo Marberry (14)	30.7	731	2067.1	R
+ 	James Shields (13)	30.7	154	2616.0	R
+ 	Hank Thompson (12)	30.7	4217		L
+856.	Willis Hudlin (16)	30.6	1006	2613.1	R
+ 	Chris Speier (19)	30.6	8155		R
+858.	Ginger Beaumont (12)	30.5	6313		L
+ 	Bill Byrd (15)	30.5	880	1366.1	B
+ 	Arlie Latham (17)	30.5	7524		R
+ 	Sal Maglie (10)	30.5	645	1723.0	R
+ 	J.D. Martinez (14, 36)	30.5	6865		R
+ 	Jose Quintana (13, 35)	30.5	184	1969.2	R
+ 	Greg Swindell (17)	30.5	286	2233.1	R
+865.	Mike Garcia (14)	30.4	792	2174.2	R
+ 	Mike Hargrove (12)	30.4	6694		L
+ 	John Hiller (15)	30.4	108	1242.0	R
+ 	Frank Lary (12)	30.4	830	2162.1	R
+ 	Gary Matthews (16)	30.4	8189		R
+ 	Joe Nuxhall (16)	30.4	861	2302.2	L
+ 	Jhonny Peralta (15)	30.4	7319		R
+ 	Harry Steinfeldt (14)	30.4	6712		R
+ 	Cecil Travis (12)	30.4	5417		L
+874.	José Abreu (11, 37)	30.3	6220		R
+ 	Teddy Higuera (9)	30.3	0	1380.0	B
+ 	Joe Kuhel (18)	30.3	9097		L
+877.	Bobby Bonilla (16)	30.2	8257	1.0	B
+ 	Lance Johnson (14)	30.2	5800		L
+ 	Max Lanier (14)	30.2	599	1619.1	R
+ 	Woody Williams (15)	30.2	617	2216.1	R
+ 	Hooks Wiltse (12)	30.2	835	2112.1	R
+882.	Sherm Lollar (18)	30.1	6221		R
+ 	Kevin McReynolds (12)	30.1	6039		R
+884.	Del Ennis (14)	30.0	7944		R
+ 	Liván Hernández (17)	30.0	1113	3189.0	R
+ 	Buck Leonard+ (14)	30.0	2614		L
+ 	Lance Lynn (13, 37)	30.0	333	2006.1	B
+ 	John Titus (11)	30.0	5842		L
+889.	Dean Chance (11)	29.9	759	2147.1	R
+ 	Bob Ewing (11)	29.9	955	2301.0	R
+ 	Von Hayes (12)	29.9	6052		L
+ 	Pete Runnels (14)	29.9	7329		L
+893.	DJ LeMahieu (14, 35)	29.8	6680		R
+ 	Kevin Millwood (16)	29.8	550	2720.1	R
+ 	Johnny Podres (15)	29.8	852	2265.0	L
+ 	Hal Trosky (11)	29.8	5750		L
+ 	Lloyd Waner+ (18)	29.8	8337		L
+898.	Brandon Belt (13)	29.7	5483		L
+ 	Asdrúbal Cabrera (15)	29.7	7401	1.1	B
+ 	Phil Garner (16)	29.7	6861		R
+
+ 	Javy López (15)	29.7	5793		R
+ 	Joe Niekro (22)	29.7	1165	3584.1	R
+ 	Preacher Roe (12)	29.7	722	1914.1	R
+904.	Marquis Grissom (17)	29.6	8959		R
+ 	Dick McBride (6)	29.6	1209	2082.0	
+ 	Bing Miller (16)	29.6	6896		R
+ 	Hal Schumacher (13)	29.6	961	2482.1	R
+908.	Raúl Mondesí (13)	29.5	6369		R
+ 	Brian Roberts (14)	29.5	6253		B
+ 	Jason Schmidt (14)	29.5	712	1996.1	R
+911.	Johnny Sain (11)	29.4	857	2125.2	R
+ 	Charles Zimmer (19)	29.4	5078		R
+913.	Ray Chapman (9)	29.3	4608		R
+ 	Brandon Crawford (14, 37)	29.3	6318	2.1	L
+ 	Tom Haller (12)	29.3	4520		L
+ 	Buddy Lewis (11)	29.3	5940		L
+ 	Jim Piersall (17)	29.3	6593		R
+ 	Mickey Tettleton (14)	29.3	5745		B
+919.	Doug Drabek (13)	29.2	808	2535.0	R
+ 	Dutch Ruether (11)	29.2	1074	2124.2	L
+ 	Kevin Tapani (13)	29.2	311	2265.0	R
+ 	Jayson Werth (15)	29.2	6366		R
+923.	Matt Cain (13)	29.1	708	2085.2	R
+ 	Luis Castillo (15)	29.1	7471		B
+ 	George Hendrick (18)	29.1	7834		R
+ 	Johnny Kling (13)	29.1	4655		R
+ 	Kevin Mitchell (13)	29.1	4696		R
+928.	Benny Kauff (8)	29.0	3566		L
+ 	Tino Martinez (16)	29.0	8044		L
+ 	Nip Winters (8)	29.0	690	1114.2	L
+931.	Coco Crisp (15)	28.9	6627		B
+ 	Baby Doll Jacobson (11)	28.9	6078		R
+ 	Ellis Kinder (12)	28.9	499	1479.2	R
+ 	Art Nehf (15)	28.9	1047	2707.2	L
+ 	Red Rolfe (10)	28.9	5407		L
+ 	Lee Smith+ (18)	28.9	71	1289.1	R
+ 	Elmer Valo (20)	28.9	6092		L
+938.	John Anderson (14)	28.8	6785		B
+ 	Bob Bailey (17)	28.8	7043		R
+ 	A.J. Burnett (17)	28.8	575	2731.1	R
+ 	Matt Carpenter (14, 38)	28.8	5773	1.1	L
+ 	Mike Donlin (12)	28.8	4294	16.1	L
+ 	Kevin Seitzer (12)	28.8	6062	0.1	R
+944.	Edgardo Alfonzo (12)	28.7	6108		R
+ 	Ossie Bluege (18)	28.7	7458		R
+ 	Billy Jurges (17)	28.7	7018		R
+ 	Henry Larkin (10)	28.7	5303		R
+ 	Gary Peters (14)	28.7	875	2081.0	L
+ 	Chris Short (15)	28.7	786	2325.0	R
+950.	Lew Burdette (18)	28.6	1124	3067.1	R
+
+ 	Alfonso Soriano (16)	28.6	8395		R
+ 	Vernon Wells (15)	28.6	7212		R
+953.	Don Baylor (19)	28.5	9401		R
+ 	Alex Fernandez (10)	28.5	146	1760.1	R
+ 	Freddie Lindstrom+ (13)	28.5	6109		R
+956.	Bobby Ávila (11)	28.4	5344		R
+ 	Brandon Phillips (17)	28.4	7992		R
+ 	Jack Rowe (12)	28.4	4626		L
+959.	Gio Gonzalez (13)	28.3	475	1933.0	R
+ 	Carlos Lee (14)	28.3	8787		R
+ 	Sixto Lezcano (12)	28.3	4814		R
+ 	Tim McCarver (21)	28.3	6206		L
+ 	Lee Meadows (15)	28.3	1201	3160.2	L
+ 	Bob Meusel (11)	28.3	6031		R
+ 	Terry Pendleton (15)	28.3	7637		B
+ 	Terry Puhl (15)	28.3	5480		L
+ 	César Tovar (12)	28.3	6177	1.0	R
+968.	Josh Hamilton (9)	28.2	4350		L
+ 	Mike Hampton (16)	28.2	845	2268.1	R
+ 	Lindy McDaniel (21)	28.2	412	2139.1	R
+ 	Melvin Mora (13)	28.2	6158		R
+ 	Jarrod Washburn (12)	28.2	53	1863.2	L
+ 	Bob Watson (19)	28.2	6962		R
+ 	Rondell White (15)	28.2	5852		R
+975.	J.J. Hardy (13)	28.1	6309		R
+ 	Paul Konerko (18)	28.1	9505		R
+ 	Reb Russell (9)	28.1	1063	1291.2	L
+978.	Del Crandall (16)	28.0	5584		R
+ 	Trevor Hoffman+ (18)	28.0	36	1089.1	R
+ 	Denis Menke (13)	28.0	5936		R
+ 	Aníbal Sánchez (16)	28.0	400	2017.2	R
+ 	Terry Steinbach (14)	28.0	5905		R
+983.	General Crowder (11)	27.9	929	2344.1	L
+ 	Hal McRae (19)	27.9	8059		R
+ 	George Mogridge (15)	27.9	843	2265.2	L
+ 	Mike Moore (14)	27.9	1	2831.2	R
+ 	Roy Smalley (13)	27.9	6596		B
+ 	Denard Span (11)	27.9	5956		L
+ 	Amos Strunk (17)	27.9	5828		L
+990.	Clete Boyer (16)	27.8	6368		R
+ 	Jackie Jensen (11)	27.8	6080		R
+ 	Jack McDowell (12)	27.8	0	1889.0	R
+ 	Jouett Meekin (10)	27.8	1172	2605.1	R
+ 	Grady Sizemore (10)	27.8	4724		L
+ 	Garry Templeton (16)	27.8	8208		B
+996.	Ross Barnes (9)	27.7	2507	1.1	R
+ 	Carlos Guillén (14)	27.7	5277		B
+ 	Marcell Ozuna (12, 33)	27.7	6123		R
+ 	Billy Wagner (16)	27.7	21	903.0	L
+ 	Don Wilson (9)	27.7	664	1748.1	R
