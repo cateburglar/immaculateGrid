@@ -9,7 +9,7 @@ from sqlalchemy import (
     String,
     Float,
     UniqueConstraint,
-    Boolean,
+    CheckConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -607,8 +607,7 @@ class Divisions(Base):
     divID = Column(String(2), nullable=False)
     lgID = Column(String(2), ForeignKey(Leagues.lgID), nullable=False)
     division_name = Column(String, nullable=False)
-    #changed from string(1) to boolean so that invalid data cannot be read in
-    division_active = Column(Boolean, nullable=False)
+    division_active = Column(String(1), nullable=False)
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
@@ -616,5 +615,7 @@ class Divisions(Base):
         # no rows can have the same combination of divID and lgID
         UniqueConstraint("divID", "lgID", name="uq_div_lg"),
         Index("idx_lgID", "lgID"), 
-        Index("idx_divID", "divID")
+        Index("idx_divID", "divID"),
+        # Ensure division_active is always 'Y' or 'N'
+        CheckConstraint("division_active IN ('Y', 'N')", name="chk_division_active"),
     )
