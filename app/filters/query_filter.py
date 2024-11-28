@@ -155,6 +155,7 @@ class MiscFilter(QueryFilter):
         self.team = team
 
     def apply(self):
+        # Create aliases to join tables
         awards_alias = aliased(Awards, name=f"awards_{self.alias_suffix}")
         allstarfull_alias = aliased(
             AllstarFull, name=f"allstarfull_{self.alias_suffix}"
@@ -163,17 +164,29 @@ class MiscFilter(QueryFilter):
             Appearances, name=f"appearances_{self.alias_suffix}"
         )
         seriespost_alias = aliased(SeriesPost, name=f"seriespost_{self.alias_suffix}")
+        draft_alias = aliased(Draft, name=f"draft_{self.alias_suffix}")
+        nohitters_alias = aliased(NoHitters, name=f"nohitters_{self.alias_suffix}")
 
+        # Finds all stars by joining with allstarfull
         if self.category == "All Star":
             self.query = self.query.join(
                 allstarfull_alias, People.playerID == allstarfull_alias.playerID
             )
+
+        # Finds players born outside the US by checking the birthCountry
         elif self.category == "Born Outside US":
             self.query = self.query.filter(People.birthCountry != "USA")
+
+        # Finds first round picks by joining with the draft table
         elif self.category == "First Round Draft Pick":
-            self.query = self.query.filter(People.first_round_draft_pick == True)
+            self.query = self.query.join(
+                draft_alias, People.playerID == draft_alias.playerID
+            )
         elif self.category == "Hall of Fame":
             self.query = self.query.filter(People.hall_of_fame == True)
+
+        # Finds players who only played on one team by joining with appearances and
+        # filtering to players who only appeared with one team
         elif self.category == "Only One Team":
             # Get players who have only played for one team
             subquery = (
@@ -187,8 +200,15 @@ class MiscFilter(QueryFilter):
             self.query = self.query.join(
                 subquery, People.playerID == subquery.c.playerID
             )
+
+        # Finds players who have thrown no-hitters by joining with the no-hitters table
         elif self.category == "No Hitter":
-            self.query = self.query.filter(People.threw_a_no_hitter == True)
+            self.query = self.query.join(
+                nohitters_alias, People.playerID == nohitters_alias.playerID
+            )
+
+        # Finds WS Champs by joining appearances and seriespost to find players who played on
+        # winning teams
         elif self.category == "WS Champ":
             appearances_ws_alias = aliased(
                 Appearances, name=f"appearances_ws_{self.alias_suffix}"
@@ -206,12 +226,14 @@ class MiscFilter(QueryFilter):
                 .filter(seriespost_alias.round == "WS")
             )
 
+        # Finds standard awards by joining with the awards table and filtering
+        # by awards rows with the category
         else:  # Standard awards
             self.query = self.query.join(
                 awards_alias, People.playerID == awards_alias.playerID
             ).filter(awards_alias.awardID == self.category)
 
-        # If a team is provided, ensure award was earned with that team
+        # If a team is provided, ensure rows match that team
         if self.team:
             # Create a subquery to get the teamIDs that match the team name
             team_subquery = (
@@ -220,12 +242,15 @@ class MiscFilter(QueryFilter):
                 .subquery()
             )
 
+            # Since appearances isn't used to find all stars this has to be done
+            # separately
             if self.category == "All Star":
                 self.query = self.query.filter(
                     allstarfull_alias.teamID.in_(team_subquery)
                 )
+
             else:
-                # Filter by players who played on the team and got the award in that season
+                # Filter by players who played on the team in that season
                 self.query = (
                     self.query.join(
                         appearances_alias,
