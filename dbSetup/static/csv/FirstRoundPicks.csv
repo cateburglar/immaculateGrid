@@ -1,61 +1,57 @@
-Year,Rnd,DT,FrRnd,RdPck,Tm,Signed,Bonus,Name,Pos,WAR,G,AB,HR,BA,OPS,G,W,L,ERA,WHIP,SV,Type,Drafted Out of,Name-additional
-2024,1,,FrRnd,1,Guardians,Y,$8950000,Travis Bazzana (minors),2B,,,,,,,,,,,,,4Yr,Oregon State University (Corvallis OR),-9999
-2023,1,,FrRnd,1,Pirates,Y,$9200000,Paul Skenes (minors),P,5.9,0,0,,,,23,11,3,1.96,0.95,0,4Yr,Louisiana State University (Baton Rouge LA),skenepa01
-2022,1,,FrRnd,1,Orioles,Y,$8190000,Jackson Holliday (minors),SS,0.1,60,190,5,.190,.565,,,,,,,HS,Stillwater HS (Stillwater OK),hollija01
-2021,1,,FrRnd,1,Pirates,Y,$6500000,Henry Davis (minors),C,-2.0,99,329,8,.192,.590,,,,,,,4Yr,University of Louisville (Louisville KY),davishe01
-2020,1,,FrRnd,1,Tigers,Y,$8416300,Spencer Torkelson (minors),3B,-0.3,361,1308,49,.221,.693,,,,,,,4Yr,Arizona State University (Tempe AZ),torkesp01
-2019,1,,FrRnd,1,Orioles,Y,$8100000,Adley Rutschman (minors),C,13.1,415,1557,52,.261,.772,,,,,,,4Yr,Oregon State University (Corvallis OR),rutscad01
-2018,1,,FrRnd,1,Tigers,Y,$7500000,Casey Mize (minors),RHP,2.9,2,2,0,.000,.333,61,9,19,4.36,1.30,0,4Yr,Auburn University (Auburn AL),mizeca01
-2017,1,,FrRnd,1,Twins,Y,$6725000,Royce Lewis (minors),SS,3.4,152,549,33,.268,.825,,,,,,,HS,JSerra Catholic HS (San Juan Capistrano CA),lewisro02
-2016,1,,FrRnd,1,Phillies,Y,$6100000,Mickey Moniak (minors),OF,0.8,275,856,32,.230,.673,,,,,,,HS,La Costa Canyon HS (Carlsbad CA),moniami01
-2015,1,,FrRnd,1,Diamondbacks,Y,$6500000,Dansby Swanson (minors),SS,23.4,1123,4142,140,.252,.734,,,,,,,4Yr,Vanderbilt University (Nashville TN),swansda01
-2014,1,,FrRnd,1,Astros,N,,Brady Aiken (minors),LHP,,,,,,,,,,,,,HS,Cathedral Catholic HS (San Diego CA),-9999
-2013,1,,FrRnd,1,Astros,Y,$6350000,Mark Appel (minors),RHP,0.3,1,0,0,,,6,0,0,1.74,1.16,0,4Yr,Stanford University (Palo Alto CA),appelma01
-2012,1,,FrRnd,1,Astros,Y,$4800000,Carlos Correa (minors),SS,44.4,1109,4179,187,.275,.826,,,,,,,HS,Puerto Rico Baseball Academy (Gurabo Puerto Rico),correca01
-2011,1,,FrRnd,1,Pirates,Y,$8000000,Gerrit Cole (minors),RHP,43.3,128,251,3,.163,.393,317,153,80,3.18,1.09,0,4Yr,University of California Los Angeles (Los Angeles CA),colege01
-2010,1,,FrRnd,1,Nationals,Y,$6250000,Bryce Harper (minors),OF,51.1,1653,5934,336,.281,.911,,,,,,,JC,College of Southern Nevada (Henderson NV),harpebr03
-2009,1,,FrRnd,1,Nationals,Y,$7500000,Stephen Strasburg (minors),RHP,32.3,233,440,4,.152,.400,247,113,62,3.24,1.10,0,4Yr,San Diego State University (San Diego CA),strasst01
-2008,1,,FrRnd,1,Rays,Y,$6150000,Tim Beckham (minors),SS,3.2,484,1639,63,.247,.724,,,,,,,HS,Griffin HS (Griffin GA),beckhti01
-2007,1,,FrRnd,1,Devil Rays,Y,$5600000,David Price (minors),LHP,40.2,59,65,0,.123,.298,400,157,82,3.32,1.16,3,4Yr,Vanderbilt University (Nashville TN),priceda01
-2006,1,,FrRnd,1,Royals,Y,$3500000,Luke Hochevar (minors),RHP,3.7,18,16,0,.063,.125,279,46,65,4.98,1.34,3,,,hochelu01
-2005,1,,FrRnd,1,Diamondbacks,Y,$6100000,Justin Upton (minors),SS,32.3,1845,6721,325,.261,.812,,,,,,,HS,Great Bridge HS (Chesapeake VA),uptonju01
-2004,1,,FrRnd,1,Padres,Y,$3150000,Matt Bush (minors),SS,1.8,8,0,0,,,217,12,11,3.75,1.20,15,HS,Mission Bay HS (San Diego CA),bushma01
-2003,1,,FrRnd,1,Devil Rays,Y,$3700000,Delmon Young (minors),OF,3.2,1118,4108,109,.283,.737,,,,,,,HS,Adolfo Camarillo HS (Camarillo CA),youngde03
-2002,1,,FrRnd,1,Pirates,Y,$4000000,Bryan Bullington (minors),RHP,-0.2,6,3,0,.333,.667,26,1,9,5.62,1.58,0,4Yr,Ball State University (Muncie IN),bullibr01
-2001,1,,FrRnd,1,Twins,Y,$5150000,Joe Mauer (minors),C,55.2,1858,6930,143,.306,.827,,,,,,,HS,Cretin HS (St. Paul MN),mauerjo01
-2000,1,,FrRnd,1,Marlins,Y,$3000000,Adrián González (minors),1B,43.5,1929,7139,317,.287,.843,,,,,,,HS,Eastlake HS (Chula Vista CA),gonzaad01
-1999,1,,FrRnd,1,Devil Rays,Y,$3960000,Josh Hamilton (minors),OF,28.2,1027,3909,200,.290,.865,,,,,,,HS,Athens Drive HS (Raleigh NC),hamiljo03
-1998,1,,FrRnd,1,Phillies,Y,$3150000,Pat Burrell (minors),3B,18.9,1640,5503,292,.253,.834,,,,,,,4Yr,University of Miami (Coral Gables FL),burrepa01
-1997,1,,FrRnd,1,Tigers,Y,$2505000,Matt Anderson (minors),RHP,-0.6,22,0,0,,,257,15,7,5.19,1.58,26,4Yr,Rice University (Houston TX),anderma01
-1996,1,,FrRnd,1,Pirates,Y,$2000000,Kris Benson (minors),RHP,12.9,165,321,1,.131,.337,206,70,75,4.42,1.39,0,4Yr,Clemson University (Clemson SC),bensokr01
-1995,1,,FrRnd,1,Angels,Y,$1575000,Darin Erstad (minors),OF,32.3,1654,6024,124,.282,.743,,,,,,,4Yr,University of Nebraska-Lincoln (Lincoln NE),erstada01
-1994,1,,FrRnd,1,Mets,Y,$1550000,Paul Wilson (minors),RHP,2.0,97,184,1,.103,.271,170,40,58,4.86,1.45,0,4Yr,Florida State University (Tallahassee FL),wilsopa02
-1993,1,,FrRnd,1,Mariners,Y,$1000000,Alex Rodriguez (minors),SS,117.6,2784,10566,696,.295,.930,,,,,,,HS,Westminster Christian School (Miami FL),rodrial01
-1992,1,,FrRnd,1,Astros,Y,$700000,Phil Nevin (minors),3B,15.9,1217,4188,208,.270,.814,,,,,,,4Yr,California State University Fullerton (Fullerton CA),nevinph01
-1991,1,,FrRnd,1,Yankees,Y,$1550000,Brien Taylor (minors),LHP,,,,,,,,,,,,,HS,East Carteret HS (Beaufort NC),-9999
-1990,1,,FrRnd,1,Braves,Y,$275000,Chipper Jones (minors),SS,85.3,2499,8984,468,.303,.930,,,,,,,HS,The Bolles School (Jacksonville FL),jonesch06
-1989,1,,FrRnd,1,Orioles,Y,$350000,Ben McDonald (minors),RHP,20.8,1,1,0,.000,.000,211,78,70,3.91,1.26,0,4Yr,Louisiana State University (Baton Rouge LA),mcdonbe01
-1988,1,,FrRnd,1,Padres,Y,$235000,Andy Benes (minors),RHP,31.5,385,741,8,.143,.390,403,155,139,3.97,1.31,1,4Yr,University of Evansville (Evansville IN),benesan01
-1987,1,,FrRnd,1,Mariners,Y,$160000,Ken Griffey Jr. (minors),OF,83.8,2671,9801,630,.284,.907,,,,,,,HS,Archbishop Moeller HS (Cincinnati OH),griffke02
-1986,1,,FrRnd,1,Pirates,Y,$180000,Jeff King (minors),SS,16.9,1201,4262,154,.256,.749,,,,,,,4Yr,University of Arkansas (Fayetteville AR),kingje01
-1985,1,,FrRnd,1,Brewers,Y,$150000,B.J. Surhoff (minors),SS,34.4,2313,8258,188,.282,.745,,,,,,,4Yr,University of North Carolina at Chapel Hill (Chapel Hill NC),surhob.01
-1984,1,,FrRnd,1,Mets,Y,$150500,Shawn Abner (minors),OF,-1.3,392,840,11,.227,.591,,,,,,,HS,Mechanicsburg Area HS (Mechanicsburg PA),abnersh01
-1983,1,,FrRnd,1,Twins,N,,Tim Belcher (minors),RHP,26.0,201,388,2,.124,.300,394,146,140,4.16,1.34,5,4Yr,Mount Vernon Nazarene University (Mount Vernon OH),belchti01
-1982,1,,FrRnd,1,Cubs,Y,$135000,Shawon Dunston (minors),SS,11.6,1814,5927,150,.269,.712,,,,,,,HS,Thomas Jefferson HS (Brooklyn NY),dunstsh01
-1981,1,,FrRnd,1,Mariners,Y,$100000,Mike Moore (minors),RHP,27.9,4,1,0,.000,.000,450,161,176,4.39,1.42,2,4Yr,Oral Roberts University (Tulsa OK),mooremi01
-1980,1,,FrRnd,1,Mets,Y,$152500,Darryl Strawberry (minors),OF,42.1,1583,5418,335,.259,.862,,,,,,,HS,Crenshaw HS (Los Angeles CA),strawda01
-1979,1,,FrRnd,1,Mariners,Y,$60000,Al Chambers (minors),OF,-0.4,57,120,2,.208,.618,,,,,,,HS,John Harris HS (Harrisburg PA),chambal01
-1978,1,,FrRnd,1,Braves,Y,$162000,Bob Horner (minors),3B,21.9,1020,3777,218,.277,.839,,,,,,,4Yr,Arizona State University (Tempe AZ),hornebo01
-1977,1,,FrRnd,1,White Sox,Y,$32000,Harold Baines (minors),1B,38.8,2830,9908,384,.289,.820,,,,,,,HS,St. Michaels HS (St. Michaels MD),baineha01
-1976,1,,FrRnd,1,Astros,Y,$100000,Floyd Bannister (minors),LHP,26.4,55,80,0,.175,.383,431,134,143,4.06,1.33,0,4Yr,Arizona State University (Tempe AZ),bannifl01
-1975,1,,FrRnd,1,Angels,Y,$125000,Danny Goodwin (minors),C,-1.7,252,636,13,.236,.674,,,,,,,4Yr,Southern University and A&M College (Baton Rouge LA),goodwda01
-1974,1,,FrRnd,1,Padres,Y,$90000,Bill Almon (minors),SS,4.7,1236,3330,36,.254,.648,,,,,,,4Yr,Brown University (Providence RI),almonbi01
-1973,1,,FrRnd,1,Rangers,Y,$65000,David Clyde (minors),LHP,0.6,1,0,0,,,84,18,33,4.63,1.53,0,HS,Westchester HS (Houston TX),clydeda01
-1972,1,,FrRnd,1,Padres,Y,$70000,Dave Roberts (minors),3B,0.3,709,2017,49,.240,.644,,,,,,,4Yr,University of Oregon (Eugene OR),roberda06
-1971,1,,FrRnd,1,White Sox,N,,Danny Goodwin (minors),C,-1.7,252,636,13,.236,.674,,,,,,,HS,Peoria HS (Peoria IL),goodwda01
-1970,1,,FrRnd,1,Padres,Y,$75000,Mike Ivie (minors),C,7.2,857,2694,81,.269,.744,,,,,,,HS,Walker HS (Atlanta GA),iviemi01
-1969,1,,FrRnd,1,Senators,Y,$88000,Jeff Burroughs (minors),OF,17.7,1689,5536,240,.261,.795,,,,,,,HS,Woodrow Wilson HS (Long Beach CA),burroje01
-1968,1,,FrRnd,1,Mets,Y,$74000,Tim Foli (minors),SS,5.7,1696,6047,25,.251,.593,,,,,,,HS,Notre Dame HS (Sherman Oaks CA),foliti01
-1967,1,,FrRnd,1,Yankees,Y,$65000,Ron Blomberg (minors),1B,9.4,461,1333,52,.293,.832,,,,,,,HS,Druid Hills HS (Atlanta GA),blombro01
-1966,1,,FrRnd,1,Mets,Y,$75000,Steven Chilcott (minors),C,,,,,,,,,,,,,HS,Antelope Valley HS (Lancaster CA),-9999
-1965,1,,FrRnd,1,Athletics,Y,$100000,Rick Monday (minors),OF,33.1,1986,6136,241,.264,.804,,,,,,,4Yr,Arizona State University (Tempe AZ),mondari01
+yearID,teamID,playerID
+2023,PIT,skenepa01
+2022,BAL,hollija01
+2021,PIT,davishe01
+2020,DET,torkesp01
+2019,BAL,rutscad01
+2018,DET,mizeca01
+2017,MIN,lewisro02
+2016,PHI,moniami01
+2015,ARI,swansda01
+2013,HOU,appelma01
+2012,HOU,correca01
+2011,PIT,colege01
+2010,WSN,harpebr03
+2009,WSN,strasst01
+2008,TBR,beckhti01
+2007,TBD,priceda01
+2006,KCR,hochelu01
+2005,ARI,uptonju01
+2004,SDP,bushma01
+2003,TBD,youngde03
+2002,PIT,bullibr01
+2001,MIN,mauerjo01
+2000,FLO,gonzaad01
+1999,TBD,hamiljo03
+1998,PHI,burrepa01
+1997,DET,anderma01
+1996,PIT,bensokr01
+1995,ANA,erstada01
+1994,NYM,wilsopa02
+1993,SEA,rodrial01
+1992,HOU,nevinph01
+1990,ATL,jonesch06
+1989,BAL,mcdonbe01
+1988,SDP,benesan01
+1987,SEA,griffke02
+1986,PIT,kingje01
+1985,MIL,surhob.01
+1984,NYM,abnersh01
+1983,MIN,belchti01
+1982,CHC,dunstsh01
+1981,SEA,mooremi01
+1980,NYM,strawda01
+1979,SEA,chambal01
+1978,ATL,hornebo01
+1977,CHW,baineha01
+1976,HOU,bannifl01
+1975,ANA,goodwda01
+1974,SDP,almonbi01
+1973,TEX,clydeda01
+1972,SDP,roberda06
+1971,CHW,goodwda01
+1970,SDP,iviemi01
+1969,WSA,burroje01
+1968,NYM,foliti01
+1967,NYY,blombro01
+1965,OAK,mondari01

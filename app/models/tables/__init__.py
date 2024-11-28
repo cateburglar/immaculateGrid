@@ -1,4 +1,5 @@
 from sqlalchemy import (
+    Boolean,
     Column,
     Date,
     Double,
@@ -10,7 +11,7 @@ from sqlalchemy import (
     String,
     UniqueConstraint,
 )
-from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
+from sqlalchemy.orm import DeclarativeBase, relationship
 
 
 class Base(DeclarativeBase):
@@ -41,15 +42,41 @@ class People(Base):
     throws = Column(String(255), nullable=True)
     debutDate = Column(Date, nullable=True)
     finalGameDate = Column(Date, nullable=True)
+    nl_hof = Column(Boolean, nullable=True, default=False)
 
     __table_args__ = (Index("idx_nameLast", "nameLast"),)  # nameLast is MUL in the db
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    collegeplaying_player = relationship(
+        "CollegePlaying", back_populates="collegeplaying_player"
+    )
+    managers = relationship("Manager", back_populates="people")
     awards = relationship("Awards", back_populates="player")
     awardsshare = relationship("AwardsShare", back_populates="player")
     batting_entries = relationship("Batting", back_populates="player")
     battingpost_entries = relationship("BattingPost", back_populates="player")
+
+
+class Manager(Base):
+    __tablename__ = "managers"
+
+    managers_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    inSeason = Column(SmallInteger, nullable=False)
+    manager_G = Column(SmallInteger, nullable=True)
+    manager_W = Column(SmallInteger, nullable=True)
+    manager_L = Column(SmallInteger, nullable=True)
+    teamRank = Column(SmallInteger, nullable=True)
+    plyrMgr = Column(String(1), nullable=True)
+    half = Column(SmallInteger, nullable=True)  # Use a constraint for values 1 or 2
+
+    __table_args__ = {"mysql_charset": "utf8mb3", "mysql_collate": "utf8mb3_general_ci"}
+
+    # Define relationship
+    people = relationship("People", back_populates="managers")
 
 
 class Awards(Base):
@@ -165,6 +192,43 @@ class BattingPost(Base):
     player = relationship("People", back_populates="battingpost_entries")
 
 
+class Draft(Base):
+    __tablename__ = "draft"
+    draft_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+
+    __table_args__ = (
+        Index("k_draft_team", "teamID"),  # Index for teamID
+        Index(
+            "draft_playerID_yearID_teamID", "playerID", "yearID", "teamID"
+        ),  # Composite index
+    )
+
+
+class NoHitters(Base):
+    __tablename__ = "nohitters"
+    nohitters_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    date = Column(String(9), nullable=False)
+    type = Column(String(1), nullable=False)
+
+    __table_args__ = (
+        Index("k_nohitters_team", "teamID"),  # Index for teamID
+        Index(
+            "nohitters_playerID_yearID_teamID_date_type",
+            "playerID",
+            "yearID",
+            "teamID",
+            "date",
+            "type",
+        ),  # Composite index
+    )
+
+
 class Leagues(Base):
     __tablename__ = "leagues"
     lgID = Column(String(2), primary_key=True, nullable=False)
@@ -187,6 +251,24 @@ class Leagues(Base):
         "SeriesPost",
         foreign_keys="[SeriesPost.lgIDloser]",
         back_populates="loser_league",
+    )
+
+
+class CollegePlaying(Base):
+    __tablename__ = "collegeplaying"
+    collegeplaying_ID = Column(
+        Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    schoolID = Column(String(15), ForeignKey("schools.schoolId"), nullable=True)
+    yearID = Column(SmallInteger, nullable=True)
+
+    # Define relationships
+    collegeplaying_player = relationship(
+        "People", back_populates="collegeplaying_player"
+    )
+    collegeplaying_school = relationship(
+        "Schools", back_populates="collegeplaying_school"
     )
 
 
@@ -304,6 +386,11 @@ class Schools(Base):
     school_city = Column(String(55), nullable=True)
     school_state = Column(String(55), nullable=True)
     school_country = Column(String(55), nullable=True)
+
+    # Define relationships
+    collegeplaying_school = relationship(
+        "CollegePlaying", back_populates="collegeplaying_school"
+    )
 
 
 class SeriesPost(Base):
