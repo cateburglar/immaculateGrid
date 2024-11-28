@@ -207,6 +207,16 @@ class Leagues(Base):
     teams_entries = relationship(
         "Teams", foreign_keys="[Teams.lgID]", back_populates="league"
     )
+    league_seriespost_winner = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.lgIDwinner]",
+        back_populates="winner_league",
+    )
+    league_seriespost_loser = relationship(
+        "SeriesPost",
+        foreign_keys="[SeriesPost.lgIDloser]",
+        back_populates="loser_league",
+    )
 
 class CollegePlaying(Base):
     __tablename__ = 'collegeplaying'
@@ -347,7 +357,9 @@ class SeriesPost(Base):
     __tablename__ = "seriespost"
     seriespost_ID = Column(Integer, primary_key=True, nullable=False)
     teamIDwinner = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    lgIDwinner = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
     teamIDloser = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    lgIDloser = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     round = Column(String(5), nullable=False)
     wins = Column(SmallInteger, nullable=True)
@@ -357,7 +369,9 @@ class SeriesPost(Base):
     __table_args__ = (
         UniqueConstraint(
             "teamIDwinner",
+            "lgIDwinner",
             "teamIDloser",
+            "lgIDloser",
             "yearID",
             "round",
             name="uq_seriespost",
@@ -369,6 +383,12 @@ class SeriesPost(Base):
     )
     loser = relationship(
         "Teams", foreign_keys=[teamIDloser], back_populates="seriespost_loser"
+    )
+    winner_league = relationship(
+        "Leagues", foreign_keys=[lgIDwinner], back_populates="league_seriespost_winner"
+    )
+    loser_league = relationship(
+        "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
     )
 
 class Pitching(Base):

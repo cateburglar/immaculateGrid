@@ -49,7 +49,9 @@ def process_row(row, session, counts):
             yearID=int(row["yearID"]),
             round=(row["round"]),
             teamIDwinner=(row["teamIDwinner"]),
+            lgIDwinner=(row["lgIDwinner"]),
             teamIDloser=(row["teamIDloser"]),
+            lgIDloser=(row["lgIDloser"]),
             wins=(int(row["wins"]) if row["wins"] else None),
             losses=(int(row["losses"]) if row["losses"] else None),
             ties=(int(row["ties"]) if row["ties"] else None),
@@ -61,7 +63,9 @@ def process_row(row, session, counts):
                 yearID=entry.yearID,
                 round=entry.round,
                 teamIDwinner=entry.teamIDwinner,
+                lgIDwinner=entry.lgIDwinner,
                 teamIDloser=entry.teamIDloser,
+                lgIDloser=entry.lgIDloser,            
                 )
             .first()
         )
