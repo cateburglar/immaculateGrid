@@ -66,7 +66,7 @@ class CareerStatFilter(QueryFilter):
         operator: str,
         value: float,
         team: str = None,
-        alias_suffix: int = random.randint(1,10000),
+        alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
@@ -96,7 +96,7 @@ class SeasonStatFilter(QueryFilter):
         operator: str,
         value: float,
         team: str = None,
-        alias_suffix: int = random.randint(1,10000),
+        alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
