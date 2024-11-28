@@ -22,7 +22,7 @@ def upload_people_csv():
 
 
 def update_people_from_csv(file_path):
-    counts = {"updated_rows": 0}
+    counts = {"updated_rows": 0, "new_rows":0,}
     try:
         with open(file_path, newline="") as csvfile:
             reader = csv.DictReader(csvfile)
@@ -45,7 +45,8 @@ def update_people_from_csv(file_path):
     except Exception as e:
         session.rollback()
         raise RuntimeError(f"Unexpected error: {str(e)}")
-
+    finally:
+        session.close()
     return counts
 
 
@@ -77,10 +78,40 @@ def process_row(row, session, counts):
         )
 
         with session.no_autoflush:
-            session.merge(entry)
-            session.commit()
-            counts["updated_rows"] += 1
+            existing_entry = (
+                session.query(People)
+                .filter_by(
+                    playerID=entry.playerID
+                )
+                .first()
+            )        
+            
+            if existing_entry:
+                for column in People.__table__.columns:
+                    # Skip the 'ID' column as it should not be modified
+                    if column.name == 'playerID':
+                        continue
 
+                    updated = False
+                    new_value = getattr(entry, column.name)
+                    existing_value = getattr(existing_entry, column.name)
+
+                    #skip if both columns are null
+                    if new_value is None and existing_value is None:
+                        continue
+
+                    # If the values are different, update the existing record
+                    if new_value != existing_value :
+                        setattr(existing_entry, column.name, new_value)
+                        updated = True
+
+                    if updated:
+                        counts["updated_rows"] += 1  # Only count as updated if something changed
+            else:
+                counts["new_rows"] += 1
+                session.add(entry) 
+
+            session.commit()
     except OperationalError as e:
         session.rollback()
         if "Deadlock found when trying to get lock" in str(e):

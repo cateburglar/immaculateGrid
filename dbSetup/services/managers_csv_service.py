@@ -1,6 +1,6 @@
 import csv
 from csi3335f2024 import mysql
-from models import Manager
+from models import Manager, People, Teams
 from sqlalchemy.exc import SQLAlchemyError
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 
@@ -34,7 +34,7 @@ def update_managers_from_csv(file_path, in_season):
         with open(file_path, newline="") as csvfile:
             reader = csv.DictReader(csvfile)
             session = create_session_from_str(create_enginestr_from_values(mysql))
-            counts = {"updated_rows": 0, "new_rows": 0}
+            counts = {"updated_rows": 0, "new_rows": 0, "peopleNotExist" : 0, "teamsNotExist" : 0}
             # Process rows
             for row in reader:
                 process_row(row, session, counts, in_season)
@@ -45,6 +45,8 @@ def update_managers_from_csv(file_path, in_season):
         raise RuntimeError(f"Error updating managers from CSV: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error: {str(e)}")
+    finally:
+        session.close()
 
     return counts
 
@@ -76,6 +78,20 @@ def process_row(row, session, counts, in_season):
             half=int(half) if half else None  # Only populate half for ManagersHalf.csv
         )
 
+        # Check if playerID exists in people table
+        player_exists = session.query(People).filter_by(playerID=manager_entry.playerID).first()
+        if not player_exists:
+            counts["peopleNotExist"]+=1
+            #if we make an error log, a message can go here
+            return
+
+        # Check if teamid exists in teams table
+        team_exists = session.query(Teams).filter_by(teamID=manager_entry.teamID).first()
+        if not team_exists:
+            counts["teamNotExists"]+=1
+            #if we make an error log, a message can go here
+            return
+
         # Check if a row with the same playerID and yearID exists
         existing_entry = (
             session.query(Manager)
@@ -88,11 +104,29 @@ def process_row(row, session, counts, in_season):
         )
 
         if existing_entry:
-            counts["updated_rows"] += 1
+            for column in Manager.__table__.columns:
+                # Skip the 'ID' column as it should not be modified
+                if column.name == 'managers_ID':
+                    continue
+
+                updated = False
+                new_value = getattr(manager_entry, column.name)
+                existing_value = getattr(existing_entry, column.name)
+
+                #skip if both columns are null
+                if new_value is None and existing_value is None:
+                    continue
+
+                # If the values are different, update the existing record
+                if existing_value is None or new_value != existing_value :
+                    setattr(existing_entry, column.name, new_value)
+                    updated = True
+
+                if updated:
+                    counts["updated_rows"] += 1 # Only count as updated if something changed
         else:
             counts["new_rows"] += 1
-
-        session.merge(manager_entry)
+            session.add(manager_entry)
 
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")

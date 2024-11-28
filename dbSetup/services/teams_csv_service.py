@@ -26,7 +26,7 @@ def update_teams_from_csv(file_path):
         with open(file_path, newline="") as csvfile:
             reader = csv.DictReader(csvfile)
             session = create_session_from_str(create_enginestr_from_values(mysql))
-            counts = {"updated_rows": 0}
+            counts = {"updated_rows": 0, "new_rows":0}
             # Process rows
             for row in reader:
                 process_row(row, session, counts)
@@ -37,14 +37,15 @@ def update_teams_from_csv(file_path):
         raise RuntimeError(f"Error updating teams from CSV: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error: {str(e)}")
-
+    finally:
+        session.close()
     return counts
 
 
 def process_row(row, session, counts):
     try:
         entry = Teams(
-            yearID=(int(row["yearID"]) if row["yearID"] else None),
+            yearID=int(row["yearID"]),
             lgID=(row["lgID"] or None),
             teamID=(row["teamID"] or None),
             franchID=(row["franchID"] or None),
@@ -91,7 +92,40 @@ def process_row(row, session, counts):
             team_PPF=(int(row["PPF"]) if row["PPF"] else None),
         )
 
-        session.merge(entry)
-        counts["updated_rows"] += 1
+        existing_entry = (
+            session.query(Teams)
+            .filter_by(
+                teamID=entry.teamID,
+                yearID=entry.yearID,
+            )
+            .first()
+        )
+
+        # Check for existing record
+        if existing_entry:
+            for column in Teams.__table__.columns:
+                # Skip the 'ID' column as it should not be modified
+                if column.name == 'teams_ID':
+                    continue
+
+                updated = False
+                new_value = getattr(entry, column.name)
+                existing_value = getattr(existing_entry, column.name)
+
+                #skip if both columns are null
+                if new_value is None and existing_value is None:
+                    continue
+
+                # If the values are different, update the existing record
+                if existing_value is None or new_value != existing_value :
+                    setattr(existing_entry, column.name, new_value)
+                    updated = True
+
+                if updated:
+                    counts["updated_rows"] += 1  # Only count as updated if something changed
+        else:
+            session.add(entry)
+            counts["new_rows"] += 1
+
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")

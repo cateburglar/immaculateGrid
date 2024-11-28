@@ -40,7 +40,9 @@ def update_collegeplaying_from_csv(file_path):
         raise RuntimeError(f"Error updating collegeplaying from CSV: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error: {str(e)}")
-
+    finally:
+        session.close()
+        
     return counts
 
 
@@ -77,14 +79,32 @@ def process_row(row, session, counts):
             .first()
         )
 
+        # Check for existing record
         if existing_entry:
-            # Update the existing entry
-            counts["updated_rows"] += 1
-        else:
-            # Insert a new record
-            counts["new_rows"] += 1
+            for column in CollegePlaying.__table__.columns:
+                # Skip the 'ID' column as it should not be modified
+                if column.name == 'collegeplaying_ID':
+                    continue
 
-        session.merge(collegeplaying_record)
+                updated = False
+                new_value = getattr(collegeplaying_record, column.name)
+                existing_value = getattr(existing_entry, column.name)
+
+                #skip if both columns are null
+                if new_value is None and existing_value is None:
+                    continue
+
+                # If the values are different, update the existing record
+                if existing_value is None or new_value != existing_value :
+                    setattr(existing_entry, column.name, new_value)
+                    updated = True
+
+                if updated:
+                    counts["updated_rows"] += 1  # Only count as updated if something changed
+        else:
+            counts["new_rows"] += 1
+            session.add(collegeplaying_record)
+
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")
     except ValueError as e:

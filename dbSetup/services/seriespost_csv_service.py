@@ -26,7 +26,7 @@ def update_seriespost_from_csv(file_path):
         with open(file_path, newline="") as csvfile:
             reader = csv.DictReader(csvfile)
             session = create_session_from_str(create_enginestr_from_values(mysql))
-            counts = {"updated_rows": 0}
+            counts = {"updated_rows": 0, "new_rows":0,}
             # Process rows
             for row in reader:
                 process_row(row, session, counts)
@@ -37,6 +37,8 @@ def update_seriespost_from_csv(file_path):
         raise RuntimeError(f"Error updating seriespost from CSV: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error: {str(e)}")
+    finally:
+        session.close()
 
     return counts
 
@@ -44,18 +46,51 @@ def update_seriespost_from_csv(file_path):
 def process_row(row, session, counts):
     try:
         entry = SeriesPost(
-            yearID=(int(row["yearID"]) if row["yearID"] else None),
-            round=(row["round"] or None),
-            teamIDwinner=(row["teamIDwinner"] or None),
-            lgIDwinner=(row["lgIDwinner"] or None),
-            teamIDloser=(row["teamIDloser"] or None),
-            lgIDloser=(row["lgIDloser"] or None),
+            yearID=int(row["yearID"]),
+            round=(row["round"]),
+            teamIDwinner=(row["teamIDwinner"]),
+            teamIDloser=(row["teamIDloser"]),
             wins=(int(row["wins"]) if row["wins"] else None),
             losses=(int(row["losses"]) if row["losses"] else None),
             ties=(int(row["ties"]) if row["ties"] else None),
         )
 
-        session.merge(entry)
-        counts["updated_rows"] += 1
+        existing_entry = (
+            session.query(SeriesPost)
+            .filter_by(
+                yearID=entry.yearID,
+                round=entry.round,
+                teamIDwinner=entry.teamIDwinner,
+                teamIDloser=entry.teamIDloser,
+                )
+            .first()
+        )
+
+        # Check for existing record
+        if existing_entry:
+            for column in SeriesPost.__table__.columns:
+                # Skip the 'ID' column as it should not be modified
+                if column.name == 'seriespost_ID':
+                    continue
+
+                updated = False
+                new_value = getattr(entry, column.name)
+                existing_value = getattr(existing_entry, column.name)
+
+                #skip if both columns are null
+                if new_value is None and existing_value is None:
+                    continue
+
+                # If the values are different, update the existing record
+                if existing_value is None or new_value != existing_value :
+                    setattr(existing_entry, column.name, new_value)
+                    updated = True
+
+                if updated:
+                    counts["updated_rows"] += 1  # Only count as updated if something changed
+        else:
+            counts["new_rows"] += 1
+            session.add(entry)
+
     except SQLAlchemyError as e:
         raise RuntimeError(f"Error processing row: {str(e)}")

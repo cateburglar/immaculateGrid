@@ -9,6 +9,7 @@ from sqlalchemy import (
     String,
     Float,
     UniqueConstraint,
+    Boolean,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
 
@@ -42,7 +43,9 @@ class People(Base):
     debutDate = Column(Date, nullable=True)
     finalGameDate = Column(Date, nullable=True)
 
-    __table_args__ = (Index("idx_nameLast", "nameLast"),)  # nameLast is MUL in the db
+    __table_args__ = (
+        Index("idx_nameLast", "nameLast"),
+    )  # nameLast is MUL in the db
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
@@ -69,6 +72,8 @@ class Manager(Base):
     half = Column(SmallInteger, nullable=True)  # Use a constraint for values 1 or 2
 
     __table_args__ = (
+        UniqueConstraint("playerID", "yearID", "teamID", "inSeason",
+                         name="uq_player_year_team_inseason"),
         {"mysql_charset": "utf8mb3", "mysql_collate": "utf8mb3_general_ci"}
     )
 
@@ -89,6 +94,8 @@ class Awards(Base):
     # Define indexes
     __table_args__ = (
         Index("fk_awd_peo", "playerID"),
+        UniqueConstraint("awardID", "yearID", "playerID", "lgID", 
+                         name="uq_award_year_player_lg"),
     )
 
     # Define relationships
@@ -109,6 +116,7 @@ class AwardsShare(Base):
     # Define indexes
     __table_args__ = (
         Index("fk_awdshr_peo", "playerID"),
+        UniqueConstraint("awardID", "yearID", "playerID", "lgID", name="uq_award_year_player_lg"),
     )
 
     # Define relationships
@@ -118,7 +126,7 @@ class Batting(Base):
     __tablename__ = "batting"
     batting_ID = Column(Integer, primary_key=True, nullable=False)
     playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
-    yearId = Column(SmallInteger, nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
     teamID = Column(String(3), nullable=False)
     stint = Column(SmallInteger, nullable=False)
     b_G = Column(SmallInteger, nullable=True)
@@ -142,7 +150,9 @@ class Batting(Base):
     # Indexes
     __table_args__ = (
         Index("k_bat_team", "teamID"),  # Index for teamID
-        Index("batting_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+        Index("batting_playerID_yearID_teamID", "playerID", "yearID", "teamID"),  # Composite index
+        UniqueConstraint("playerID","yearID","teamID", "stint", 
+                         name="uq_player_year_team_stint"),
     )
 
     # Define relationships
@@ -176,7 +186,9 @@ class BattingPost(Base):
     # Indexes
     __table_args__ = (
         Index("k_bp_team", "teamID"),  # Index for teamID
-        Index("battingpost_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+        Index("battingpost_playerID_yearID_teamID", "playerID", "yearId", "teamID"),  # Composite index
+        UniqueConstraint("playerID", "yearId", "teamID", "round", 
+                         name="uq_player_year_team_round"),
     )
 
     # Relationships
@@ -195,16 +207,6 @@ class Leagues(Base):
     teams_entries = relationship(
         "Teams", foreign_keys="[Teams.lgID]", back_populates="league"
     )
-    league_seriespost_winner = relationship(
-        "SeriesPost",
-        foreign_keys="[SeriesPost.lgIDwinner]",
-        back_populates="winner_league",
-    )
-    league_seriespost_loser = relationship(
-        "SeriesPost",
-        foreign_keys="[SeriesPost.lgIDloser]",
-        back_populates="loser_league",
-    )
 
 class CollegePlaying(Base):
     __tablename__ = 'collegeplaying'
@@ -216,6 +218,15 @@ class CollegePlaying(Base):
     # Define relationships
     collegeplaying_player = relationship("People", back_populates="collegeplaying_player")
     collegeplaying_school = relationship("Schools", back_populates="collegeplaying_school")
+
+        # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_schoolID", "schoolID"),
+        Index("idx_playerID", "playerID"),
+        UniqueConstraint("playerID", "schoolID", "yearID", 
+                        name="uq_player_school_year"),
+    )
 
 class Teams(Base):
     __tablename__ = "teams"
@@ -274,7 +285,6 @@ class Teams(Base):
         Index("idx_lgID", "lgID"),
         Index("idx_franchID", "franchID"),
         UniqueConstraint(
-            "teams_ID",
             "teamID",
             "yearID",
             name="uq_teams",
@@ -296,7 +306,6 @@ class Teams(Base):
         back_populates="loser",
     )
 
-
 class AllstarFull(Base):
     __tablename__ = "allstarfull"
     allstarfull_ID = Column(Integer, primary_key=True, nullable=False)
@@ -310,7 +319,6 @@ class AllstarFull(Base):
 
     __table_args__ = (
         UniqueConstraint(
-            "allstarfull_ID",
             "playerID",
             "lgID",
             "teamID",
@@ -323,14 +331,14 @@ class AllstarFull(Base):
     league = relationship("Leagues", back_populates="allstarfull_entries")
     player = relationship("People", back_populates="allstarfull_entries")
 
-
 class Schools(Base):
     __tablename__ = "schools"
     schoolId = Column(String(15), primary_key=True, nullable=False)
-    school_name = Column(String(255), nullable=True)
-    school_city = Column(String(55), nullable=True)
-    school_state = Column(String(55), nullable=True)
-    school_country = Column(String(55), nullable=True)
+    #none of the following column values are ever null, AND it doesnt make sense to allow them to be null
+    school_name = Column(String(255), nullable=False)
+    school_city = Column(String(55), nullable=False)
+    school_state = Column(String(55), nullable=False)
+    school_country = Column(String(55), nullable=False)
 
     # Define relationships
     collegeplaying_school = relationship("CollegePlaying", back_populates="collegeplaying_school")
@@ -339,9 +347,7 @@ class SeriesPost(Base):
     __tablename__ = "seriespost"
     seriespost_ID = Column(Integer, primary_key=True, nullable=False)
     teamIDwinner = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
-    lgIDwinner = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
     teamIDloser = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
-    lgIDloser = Column(String(3), ForeignKey("leagues.lgID"), nullable=False)
     yearID = Column(SmallInteger, nullable=False)
     round = Column(String(5), nullable=False)
     wins = Column(SmallInteger, nullable=True)
@@ -350,11 +356,8 @@ class SeriesPost(Base):
 
     __table_args__ = (
         UniqueConstraint(
-            "seriespost_ID",
             "teamIDwinner",
-            "lgIDwinner",
             "teamIDloser",
-            "lgIDloser",
             "yearID",
             "round",
             name="uq_seriespost",
@@ -366,12 +369,6 @@ class SeriesPost(Base):
     )
     loser = relationship(
         "Teams", foreign_keys=[teamIDloser], back_populates="seriespost_loser"
-    )
-    winner_league = relationship(
-        "Leagues", foreign_keys=[lgIDwinner], back_populates="league_seriespost_winner"
-    )
-    loser_league = relationship(
-        "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
     )
 
 class Pitching(Base):
@@ -406,6 +403,15 @@ class Pitching(Base):
     p_SH = Column(SmallInteger, nullable=True)
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+        UniqueConstraint("playerID", "yearID", "teamID", 
+                         "stint", name="uq_player_year_team_stint"),
+    )
 
 class PitchingPost(Base):
     __tablename__ = "pitchingpost"
@@ -445,8 +451,9 @@ class PitchingPost(Base):
     __table_args__ = (
         Index("idx_teamID", "teamID"),
         Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+        UniqueConstraint("playerID", "yearID", "teamID", 
+                         "round", name="uq_player_year_team_round"),
     )
-
 
 class Appearances(Base):
     __tablename__ = "appearances"
@@ -481,8 +488,8 @@ class Appearances(Base):
             "playerID",
             "yearID",
         ),
+        UniqueConstraint("playerID", "yearID", "teamID", name="uq_player_year_team"),
     )
-
 
 class Fielding(Base):
     __tablename__ = "fielding"
@@ -504,6 +511,14 @@ class Fielding(Base):
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(Float, nullable=True)
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+        UniqueConstraint("playerID", "yearID", "teamID", "stint", "position", name="uq_player_team_year_stint_position"),
+    )
 
 class FieldingPost(Base):
     __tablename__ = "fieldingpost"
@@ -530,8 +545,8 @@ class FieldingPost(Base):
     __table_args__ = (
         Index("idx_teamID", "teamID"),
         Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+        UniqueConstraint("playerID", "yearID", "teamID", "round", "position", name="uq_player_team_year_round_position"),
     )
-
 
 class HomeGames(Base):
     __tablename__ = "homegames"
@@ -547,8 +562,10 @@ class HomeGames(Base):
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
-    __table_args__ = (Index("idx_parkID", "parkID"),)
-
+    __table_args__ = (
+        Index("idx_parkID", "parkID"),
+        UniqueConstraint("teamID", "parkID", "yearID", name="unq_team_park_year"),
+    )
 
 class Parks(Base):
     __tablename__ = "parks"
@@ -559,6 +576,10 @@ class Parks(Base):
     state = Column(String, nullable=False)
     country = Column(String, nullable=False)
 
+    __table_args__ = (
+        # no rows can have the same combination of divID and lgID
+        UniqueConstraint("park_name", "city", "state", "country", name="uq_entry"),
+    )
 
 class Divisions(Base):
     __tablename__ = "divisions"
@@ -566,11 +587,14 @@ class Divisions(Base):
     divID = Column(String(2), nullable=False)
     lgID = Column(String(2), ForeignKey(Leagues.lgID), nullable=False)
     division_name = Column(String, nullable=False)
-    division_active = Column(String(1), nullable=False)
-
-    # no rows can have the same combination of divID and lgID
-    __table_args__ = (UniqueConstraint("divID", "lgID", name="uq_div_lg"),)
+    #changed from string(1) to boolean so that invalid data cannot be read in
+    division_active = Column(Boolean, nullable=False)
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
-    __table_args__ = (Index("idx_lgID", "lgID"), Index("idx_divID", "divID"))
+    __table_args__ = (
+        # no rows can have the same combination of divID and lgID
+        UniqueConstraint("divID", "lgID", name="uq_div_lg"),
+        Index("idx_lgID", "lgID"), 
+        Index("idx_divID", "divID")
+    )
