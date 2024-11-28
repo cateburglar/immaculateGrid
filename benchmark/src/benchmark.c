@@ -82,7 +82,7 @@ double run_updatedb(void)
   start = clock();
 
   /* Run the Python script */
-  result = system("python3 dbSetup/update_db.py");
+  result = system("python3 dbSetup/update_db.py appearances fielding batting");
   if (result != 0) {
     fprintf(stderr, "Error running update_db.py script. Exit code: %d\n", result);
     fprintf(stderr, "Are you running in a python virtual environment?\n");
