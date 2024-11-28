@@ -26,13 +26,18 @@ def depth_chart():
         if year < 1871 or year > 2023:
             flag=True
             flash("year must be >= 1871 and <= 2023", "error")
+        
         if flag:
             return render_template("depth_chart.html", form=form)
         
         team_ID = team.teamID
+
         # Query the database for the player's batting stats for the given yearID and teamID
         #THIS WILL BE REPLACED BY BATTING STATS EVENTUALLY TODO
         players = db.session.query(Fielding).filter_by(yearID=year, teamID=team_ID).all()
+        if not players:
+            flash("No players found for the selected team and year.", "info")
+            return render_template("depth_chart.html", form=form)
 
         # Group players by position
         depth_chart_data = {}
@@ -45,6 +50,7 @@ def depth_chart():
 
 
         # Query the database for batting leaders---- TODO cant do this yet...!!!!!!!!!!!!!!!!!
+        batting_leaders = []
         '''
         batting_leaders = db.session.query(Batting).filter_by(yearID=year, teamID=team_ID).order_by(
             Batting.homeRuns.desc(),
@@ -69,9 +75,9 @@ def depth_chart():
              "depth_chart.html", 
              form=form, 
              yearID=year, 
-             teamID=teamName, 
+             teamName=teamName, 
              depth_chart_data=depth_chart_data,
-             #batting_leaders=batting_leaders, TODO
+             batting_leaders=batting_leaders,
              pitching_leaders=pitching_leaders
         )
 

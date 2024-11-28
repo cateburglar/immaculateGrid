@@ -3,8 +3,8 @@ from wtforms import StringField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
 class DepthChartForm(FlaskForm):
-    teamName = StringField("Team Name", validators=[DataRequired()])
-    yearID = IntegerField("Year", validators=[DataRequired()])
+    teamName = StringField("Team Name", render_kw={'placeholder': 'Enter team name'}, validators=[DataRequired()])
+    yearID = IntegerField("Year", render_kw={'placeholder': 'Enter year'}, validators=[DataRequired()])
 
     # Dropdown for Position Stats with specific options
     #   choices: Each choice is a tuple 
