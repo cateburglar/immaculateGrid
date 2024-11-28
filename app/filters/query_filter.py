@@ -4,6 +4,7 @@ from sqlalchemy.orm import Query, aliased
 
 from ..models import Appearances, People, Pitching
 from ..static.constants import APPEARANCES_MAPPING
+import random
 
 class QueryFilter(ABC):
     """
@@ -33,7 +34,7 @@ class TeamFilter(QueryFilter):
         self,
         query: Query,
         team: str,
-        alias_suffix: int = 1,
+        alias_suffix: int = random.randint(1,10000),
     ):
         super().__init__(query, alias_suffix)
         self.team = team
@@ -56,7 +57,7 @@ class CareerStatFilter(QueryFilter):
         operator: str,
         value: float,
         team: str = None,
-        alias_suffix: int = 2,
+        alias_suffix: int = random.randint(1,10000),
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
@@ -86,7 +87,7 @@ class SeasonStatFilter(QueryFilter):
         operator: str,
         value: float,
         team: str = None,
-        alias_suffix: int = 3,
+        alias_suffix: int = random.randint(1,10000),
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
@@ -131,7 +132,7 @@ class PositionFilter(QueryFilter):
         query: Query,
         position: str,
         team: str = None,
-        alias_suffix: int = 4,
+        alias_suffix: int = random.randint(1,10000),
     ):
         
         """
@@ -181,7 +182,7 @@ class MiscFilter(QueryFilter):
         query: Query,
         category: str,
         team: str = None,
-        alias_suffix: int = 5,
+        alias_suffix: int = random.randint(1,10000),
     ):
         super().__init__(query, alias_suffix)
         self.category = category
