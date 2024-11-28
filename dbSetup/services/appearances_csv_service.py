@@ -4,6 +4,7 @@ from multiprocessing import Pool
 from models import Appearances, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 import csi3335f2024 as cfg
+from processconfig import CHUNK_SIZE, NUM_PROCESSES
 
 # Function to process a chunk of the CSV
 def process_chunk(chunk_data):
@@ -67,7 +68,7 @@ def process_chunk(chunk_data):
     }
 
 # Split CSV into chunks
-def split_csv(file_path, chunksize=10000):
+def split_csv(file_path, chunksize=CHUNK_SIZE):
     with open(file_path, newline="") as csvfile:
         reader = list(csv.DictReader(csvfile))
         for i in range(0, len(reader), chunksize):
@@ -85,7 +86,7 @@ def upload_appearances_csv():
     chunks = list(split_csv(csv_file_path))
 
     # Use multiprocessing to process chunks
-    with Pool(processes=os.cpu_count()) as pool:
+    with Pool(processes=NUM_PROCESSES) as pool:
         results = pool.map(process_chunk, chunks)
 
     # Aggregate results
