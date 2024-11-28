@@ -3,6 +3,8 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from .static.constants import OPTION_GROUPS, TEAM_MAPPINGS
+
 
 def model_to_dict(model):
     """
@@ -48,3 +50,90 @@ def create_session_from_str(enginestr):
     except Exception as e:
         print(f"Error creating session: {e}")
         return None
+
+
+def extract_form_data(request_form):
+    return {
+        "prompt1": {
+            "prompt1-option": request_form.get("prompt1-option"),
+            "prompt1-operator": request_form.get("prompt1-operator"),
+            "prompt1-number": request_form.get("prompt1-number"),
+            "prompt1-team": request_form.get("prompt1-team"),
+        },
+        "prompt2": {
+            "prompt2-option": request_form.get("prompt2-option"),
+            "prompt2-operator": request_form.get("prompt2-operator"),
+            "prompt2-number": request_form.get("prompt2-number"),
+            "prompt2-team": request_form.get("prompt2-team"),
+        },
+    }
+
+
+def validate_form_data(form_data):
+    errors = []
+
+    # Check required fields
+    if not form_data["prompt1"]["prompt1-option"]:
+        errors.append("Prompt 1 is required.")
+    if not form_data["prompt2"]["prompt2-option"]:
+        errors.append("Prompt 2 is required.")
+
+    # Check additional fields for prompt1
+    if (
+        form_data["prompt1"]["prompt1-option"] in OPTION_GROUPS["Career Options"].keys()
+        or form_data["prompt1"]["prompt1-option"]
+        in OPTION_GROUPS["Season Options"].keys()
+    ):
+        if not form_data["prompt1"]["prompt1-operator"]:
+            errors.append("Operator for Prompt 1 is required.")
+        if not form_data["prompt1"]["prompt1-number"]:
+            errors.append("Number for Prompt 1 is required.")
+    if (
+        form_data["prompt1"]["prompt1-option"] == "played_for_team"
+        and not form_data["prompt1"]["prompt1-team"]
+    ):
+        errors.append("Team for Prompt 1 is required.")
+
+    # Check additional fields for prompt2
+    if (
+        form_data["prompt2"]["prompt2-option"] in OPTION_GROUPS["Career Options"].keys()
+        or form_data["prompt2"]["prompt2-option"]
+        in OPTION_GROUPS["Season Options"].keys()
+    ):
+        if not form_data["prompt2"]["prompt2-operator"]:
+            errors.append("Operator for Prompt 2 is required.")
+        if not form_data["prompt2"]["prompt2-number"]:
+            errors.append("Number for Prompt 2 is required.")
+    if (
+        form_data["prompt2"]["prompt2-option"] == "played_for_team"
+        and not form_data["prompt2"]["prompt2-team"]
+    ):
+        errors.append("Team for Prompt 2 is required.")
+
+    return errors
+
+
+# Returns an array of two dictionaries, one for each prompt
+def parse_prompts(form_data):
+    params = []
+    if form_data["prompt1"]:
+        params.append(
+            {
+                "option": form_data["prompt1"]["prompt1-option"],
+                "operator": form_data["prompt1"]["prompt1-operator"],
+                "number": form_data["prompt1"]["prompt1-number"],
+                "team": form_data["prompt1"]["prompt1-team"],
+            }
+        )
+
+    if form_data["prompt2"]:
+        params.append(
+            {
+                "option": form_data["prompt2"]["prompt2-option"],
+                "operator": form_data["prompt2"]["prompt2-operator"],
+                "number": form_data["prompt2"]["prompt2-number"],
+                "team": form_data["prompt2"]["prompt2-team"],
+            }
+        )
+
+    return params

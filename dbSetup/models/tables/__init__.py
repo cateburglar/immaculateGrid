@@ -2,12 +2,12 @@ from sqlalchemy import (
     Column,
     Date,
     Double,
+    Float,
     ForeignKey,
     Index,
     Integer,
     SmallInteger,
     String,
-    Float,
     UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship
@@ -46,8 +46,75 @@ class People(Base):
 
     # Define relationship
     allstarfull_entries = relationship("AllstarFull", back_populates="player")
+    collegeplaying_player = relationship(
+        "CollegePlaying", back_populates="collegeplaying_player"
+    )
+    managers = relationship("Manager", back_populates="people")
+    awards = relationship("Awards", back_populates="player")
+    awardsshare = relationship("AwardsShare", back_populates="player")
     batting_entries = relationship("Batting", back_populates="player")
     battingpost_entries = relationship("BattingPost", back_populates="player")
+
+
+class Manager(Base):
+    __tablename__ = "managers"
+
+    managers_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    inSeason = Column(SmallInteger, nullable=False)
+    manager_G = Column(SmallInteger, nullable=True)
+    manager_W = Column(SmallInteger, nullable=True)
+    manager_L = Column(SmallInteger, nullable=True)
+    teamRank = Column(SmallInteger, nullable=True)
+    plyrMgr = Column(String(1), nullable=True)
+    half = Column(SmallInteger, nullable=True)  # Use a constraint for values 1 or 2
+
+    __table_args__ = {"mysql_charset": "utf8mb3", "mysql_collate": "utf8mb3_general_ci"}
+
+    # Define relationship
+    people = relationship("People", back_populates="managers")
+
+
+class Awards(Base):
+    __tablename__ = "awards"
+
+    awards_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    awardID = Column(String(255), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    lgID = Column(String(2), nullable=False)
+    tie = Column(String(1), nullable=True)
+    notes = Column(String(100), nullable=True)
+
+    # Define indexes
+    __table_args__ = (Index("fk_awd_peo", "playerID"),)
+
+    # Define relationships
+    player = relationship("People", back_populates="awards")
+
+
+class AwardsShare(Base):
+    __tablename__ = "awardsshare"
+
+    awardsshare_ID = Column(
+        Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    awardID = Column(String(255), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    lgID = Column(String(2), nullable=False)
+    pointsWon = Column(Double, nullable=True)
+    pointsMax = Column(SmallInteger, nullable=True)
+    votesFirst = Column(Double, nullable=True)
+
+    # Define indexes
+    __table_args__ = (Index("fk_awdshr_peo", "playerID"),)
+
+    # Define relationships
+    player = relationship("People", back_populates="awardsshare")
+
 
 class Batting(Base):
     __tablename__ = "batting"
@@ -77,11 +144,14 @@ class Batting(Base):
     # Indexes
     __table_args__ = (
         Index("k_bat_team", "teamID"),  # Index for teamID
-        Index("batting_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+        Index(
+            "batting_playerID_yearID_teamID", "playerID", "yearId", "teamID"
+        ),  # Composite index
     )
 
     # Define relationships
     player = relationship("People", back_populates="batting_entries")
+
 
 class BattingPost(Base):
     __tablename__ = "battingpost"
@@ -111,11 +181,51 @@ class BattingPost(Base):
     # Indexes
     __table_args__ = (
         Index("k_bp_team", "teamID"),  # Index for teamID
-        Index("battingpost_playerID_yearID_teamID", "playerID", "yearId", "teamID")  # Composite index
+        Index(
+            "battingpost_playerID_yearID_teamID", "playerID", "yearId", "teamID"
+        ),  # Composite index
     )
 
     # Relationships
     player = relationship("People", back_populates="battingpost_entries")
+
+
+class Draft(Base):
+    __tablename__ = "draft"
+    draft_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+
+    __table_args__ = (
+        Index("k_draft_team", "teamID"),  # Index for teamID
+        Index(
+            "draft_playerID_yearID_teamID", "playerID", "yearID", "teamID"
+        ),  # Composite index
+    )
+
+
+class NoHitters(Base):
+    __tablename__ = "nohitters"
+    nohitters_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), nullable=False)
+    date = Column(String(9), nullable=False)
+    type = Column(String(1), nullable=False)
+
+    __table_args__ = (
+        Index("k_nohitters_team", "teamID"),  # Index for teamID
+        Index(
+            "nohitters_playerID_yearID_teamID_date_type",
+            "playerID",
+            "yearID",
+            "teamID",
+            "date",
+            "type",
+        ),  # Composite index
+    )
+
 
 class Leagues(Base):
     __tablename__ = "leagues"
@@ -140,6 +250,25 @@ class Leagues(Base):
         foreign_keys="[SeriesPost.lgIDloser]",
         back_populates="loser_league",
     )
+
+
+class CollegePlaying(Base):
+    __tablename__ = "collegeplaying"
+    collegeplaying_ID = Column(
+        Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    schoolID = Column(String(15), ForeignKey("schools.schoolId"), nullable=True)
+    yearID = Column(SmallInteger, nullable=True)
+
+    # Define relationships
+    collegeplaying_player = relationship(
+        "People", back_populates="collegeplaying_player"
+    )
+    collegeplaying_school = relationship(
+        "Schools", back_populates="collegeplaying_school"
+    )
+
 
 class Teams(Base):
     __tablename__ = "teams"
@@ -256,6 +385,11 @@ class Schools(Base):
     school_state = Column(String(55), nullable=True)
     school_country = Column(String(55), nullable=True)
 
+    # Define relationships
+    collegeplaying_school = relationship(
+        "CollegePlaying", back_populates="collegeplaying_school"
+    )
+
 
 class SeriesPost(Base):
     __tablename__ = "seriespost"
@@ -296,6 +430,7 @@ class SeriesPost(Base):
         "Leagues", foreign_keys=[lgIDloser], back_populates="league_seriespost_loser"
     )
 
+
 class Pitching(Base):
     __tablename__ = "pitching"
     pitching_ID = Column(Integer, primary_key=True, nullable=False)
@@ -329,6 +464,7 @@ class Pitching(Base):
     p_SF = Column(SmallInteger, nullable=True)
     p_GIDP = Column(SmallInteger, nullable=True)
 
+
 class PitchingPost(Base):
     __tablename__ = "pitchingpost"
     pitchingpost_ID = Column(Integer, primary_key=True, nullable=False)
@@ -341,7 +477,7 @@ class PitchingPost(Base):
     p_G = Column(SmallInteger, nullable=True)
     p_GS = Column(SmallInteger, nullable=True)
     p_CG = Column(SmallInteger, nullable=True)
-    p_SHO =Column(SmallInteger, nullable=True)
+    p_SHO = Column(SmallInteger, nullable=True)
     p_SV = Column(SmallInteger, nullable=True)
     p_IPouts = Column(Integer, nullable=True)
     p_H = Column(SmallInteger, nullable=True)
@@ -426,6 +562,7 @@ class Fielding(Base):
     f_SB = Column(SmallInteger, nullable=True)
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(Float, nullable=True)
+
 
 class FieldingPost(Base):
     __tablename__ = "fieldingpost"
