@@ -1,4 +1,5 @@
 from sqlalchemy import (
+    Boolean,
     Column,
     Date,
     Double,
@@ -41,6 +42,7 @@ class People(Base):
     throws = Column(String(255), nullable=True)
     debutDate = Column(Date, nullable=True)
     finalGameDate = Column(Date, nullable=True)
+    nl_hof = Column(Boolean, nullable=True, default=False)
 
     __table_args__ = (Index("idx_nameLast", "nameLast"),)  # nameLast is MUL in the db
 

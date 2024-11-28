@@ -207,6 +207,10 @@ class MiscFilter(QueryFilter):
                 nohitters_alias, People.playerID == nohitters_alias.playerID
             )
 
+        # Gets the players who are in the NLHOF
+        elif self.category == "Negro Leagues":
+            self.query = self.query.filter(People.nl_hof == True)
+
         # Finds WS Champs by joining appearances and seriespost to find players who played on
         # winning teams
         elif self.category == "WS Champ":
