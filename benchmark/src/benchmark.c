@@ -18,6 +18,20 @@
 #include <time.h>
 #include <float.h>
 
+ /**
+  * update_processconfig
+  *
+  * Updates our processconfig file with the number of chunks and
+  * number of process our services will use when reading large
+  * files.
+  *
+  * Parameters:
+  *   - chunkSize: size of each chunk
+  *   - numProcesses: number of processes to use
+  *
+  * Output:
+  *   - none
+  * */
 void update_processconfig(int chunkSize, const char numProcesses[])
 {
   FILE *file;
@@ -39,6 +53,17 @@ void update_processconfig(int chunkSize, const char numProcesses[])
          chunkSize, numProcesses);
 }
 
+ /**
+  * run_updatedb
+  *
+  * Runs the update_db script
+  *
+  * Parameters:
+  *   - none
+  *
+  * Output:
+  *   - none
+  * */
 double run_updatedb(void)
 {
   clock_t start, end;
@@ -51,7 +76,7 @@ double run_updatedb(void)
   /* Run the Python script */
   result = system("python3 dbSetup/update_db.py");
   if (result != 0) {
-    fprintf(stderr, "Error running update-db.py script. Exit code: %d\n", result);
+    fprintf(stderr, "Error running update_db.py script. Exit code: %d\n", result);
     fprintf(stderr, "Are you running in a python virtual environment?\n");
     exit(EXIT_FAILURE);
   }
@@ -63,6 +88,18 @@ double run_updatedb(void)
   return cpu_time_used;
 }
 
+ /**
+  * main
+  *
+  * Runs all combinations of chunk sizes and number of processes.
+  * Finds the fastest combination and saves that in processconfig.
+  *
+  * Parameters:
+  *   - none
+  *
+  * Output:
+  *   - none
+  * */
 int main(void)
 {
   const int chunkSizes[] = {1000, 5000, 10000, 25000};
@@ -71,9 +108,10 @@ int main(void)
   int fastestChunk = 0;
   char fastestProcess[80] = {0};
   int i, j;
+  FILE *log_file;
 
   /* Open a file to log the results */
-  FILE *log_file = fopen("benchmark_results.txt", "w");
+  log_file = fopen("benchmark_results.txt", "w");
   if (log_file == NULL) {
     perror("Error opening benchmark_results.txt");
     exit(EXIT_FAILURE);
