@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
+from sqlalchemy import func
 from sqlalchemy.orm import Query, aliased
 
-from ..models import Appearances, People, Pitching
+from ..models import *
 
 
 class QueryFilter(ABC):
@@ -42,9 +43,17 @@ class TeamFilter(QueryFilter):
         appearances_alias = aliased(
             Appearances, name=f"appearances_{self.alias_suffix}"
         )
+
+        # Create a subquery to get the teamIDs that match the team name
+        team_subquery = (
+            self.query.session.query(Teams.teamID)
+            .filter(Teams.team_name == self.team)
+            .subquery()
+        )
+
         self.query = self.query.join(
             appearances_alias, People.playerID == appearances_alias.playerID
-        ).filter(appearances_alias.teamID == self.team)
+        ).filter(appearances_alias.teamID.in_(team_subquery))
         return self.query
 
 
@@ -146,34 +155,113 @@ class MiscFilter(QueryFilter):
         self.team = team
 
     def apply(self):
-        if self.team:
-            self.query = self.query.join(
-                Appearances, People.playerID == Appearances.playerID
-            ).filter(Appearances.teamID == self.team)
+        # Create aliases to join tables
+        awards_alias = aliased(Awards, name=f"awards_{self.alias_suffix}")
+        allstarfull_alias = aliased(
+            AllstarFull, name=f"allstarfull_{self.alias_suffix}"
+        )
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
+        seriespost_alias = aliased(SeriesPost, name=f"seriespost_{self.alias_suffix}")
+        draft_alias = aliased(Draft, name=f"draft_{self.alias_suffix}")
+        nohitters_alias = aliased(NoHitters, name=f"nohitters_{self.alias_suffix}")
 
-        if self.category == "all_star":
-            self.query = self.query.filter(People.all_star == True)
-        elif self.category == "born_outside_us":
+        # Finds all stars by joining with allstarfull
+        if self.category == "All Star":
+            self.query = self.query.join(
+                allstarfull_alias, People.playerID == allstarfull_alias.playerID
+            )
+
+        # Finds players born outside the US by checking the birthCountry
+        elif self.category == "Born Outside US":
             self.query = self.query.filter(People.birthCountry != "USA")
-        elif self.category == "cy_young":
-            self.query = self.query.filter(People.cy_young == True)
-        elif self.category == "first_round_draft_pick":
-            self.query = self.query.filter(People.first_round_draft_pick == True)
-        elif self.category == "gold_glove":
-            self.query = self.query.filter(People.gold_glove == True)
-        elif self.category == "hall_of_fame":
+
+        # Finds first round picks by joining with the draft table
+        elif self.category == "First Round Draft Pick":
+            self.query = self.query.join(
+                draft_alias, People.playerID == draft_alias.playerID
+            )
+        elif self.category == "Hall of Fame":
             self.query = self.query.filter(People.hall_of_fame == True)
-        elif self.category == "mvp":
-            self.query = self.query.filter(People.mvp == True)
-        elif self.category == "only_one_team":
-            self.query = self.query.filter(People.only_one_team == True)
-        elif self.category == "rookie_of_the_year":
-            self.query = self.query.filter(People.rookie_of_the_year == True)
-        elif self.category == "silver_slugger":
-            self.query = self.query.filter(People.silver_slugger == True)
-        elif self.category == "threw_a_no_hitter":
-            self.query = self.query.filter(People.threw_a_no_hitter == True)
-        elif self.category == "world_series_champ":
-            self.query = self.query.filter(People.world_series_champ == True)
+
+        # Finds players who only played on one team by joining with appearances and
+        # filtering to players who only appeared with one team
+        elif self.category == "Only One Team":
+            # Get players who have only played for one team
+            subquery = (
+                self.query.session.query(Appearances.playerID)
+                .group_by(Appearances.playerID)
+                .having(func.count(func.distinct(Appearances.teamID)) == 1)
+                .subquery()
+            )
+
+            # Join the People to the matching players
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
+        # Finds players who have thrown no-hitters by joining with the no-hitters table
+        elif self.category == "No Hitter":
+            self.query = self.query.join(
+                nohitters_alias, People.playerID == nohitters_alias.playerID
+            )
+
+        # Gets the players who are in the NLHOF
+        elif self.category == "Negro Leagues":
+            self.query = self.query.filter(People.nl_hof == True)
+
+        # Finds WS Champs by joining appearances and seriespost to find players who played on
+        # winning teams
+        elif self.category == "WS Champ":
+            appearances_ws_alias = aliased(
+                Appearances, name=f"appearances_ws_{self.alias_suffix}"
+            )
+            self.query = (
+                self.query.join(
+                    appearances_ws_alias,
+                    People.playerID == appearances_ws_alias.playerID,
+                )
+                .join(
+                    seriespost_alias,
+                    (appearances_ws_alias.teamID == seriespost_alias.teamIDwinner)
+                    & (appearances_ws_alias.yearID == seriespost_alias.yearID),
+                )
+                .filter(seriespost_alias.round == "WS")
+            )
+
+        # Finds standard awards by joining with the awards table and filtering
+        # by awards rows with the category
+        else:  # Standard awards
+            self.query = self.query.join(
+                awards_alias, People.playerID == awards_alias.playerID
+            ).filter(awards_alias.awardID == self.category)
+
+        # If a team is provided, ensure rows match that team
+        if self.team:
+            # Create a subquery to get the teamIDs that match the team name
+            team_subquery = (
+                self.query.session.query(Teams.teamID)
+                .filter(Teams.team_name == self.team)
+                .subquery()
+            )
+
+            # Since appearances isn't used to find all stars this has to be done
+            # separately
+            if self.category == "All Star":
+                self.query = self.query.filter(
+                    allstarfull_alias.teamID.in_(team_subquery)
+                )
+
+            else:
+                # Filter by players who played on the team in that season
+                self.query = (
+                    self.query.join(
+                        appearances_alias,
+                        People.playerID == appearances_alias.playerID,
+                    )
+                    .filter(appearances_alias.teamID.in_(team_subquery))
+                    .filter(appearances_alias.yearID == awards_alias.yearID)
+                )
 
         return self.query
