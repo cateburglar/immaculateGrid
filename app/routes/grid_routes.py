@@ -44,7 +44,7 @@ def perform_query(form_data):
             ).apply()
         elif option == "played_for_team":
             query = TeamFilter(query, team, i).apply()
-        elif option.startswith("played_"):
+        elif option in OPTION_GROUPS["Position Options"]:
             query = PositionFilter(query, option, team).apply()
         else:
             query = MiscFilter(query, option, team).apply()
