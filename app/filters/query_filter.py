@@ -35,7 +35,7 @@ class TeamFilter(QueryFilter):
         self,
         query: Query,
         team: str,
-        alias_suffix: int = random.randint(1,10000),
+        alias_suffix: int =0,
     ):
         super().__init__(query, alias_suffix)
         self.team = team
@@ -135,35 +135,32 @@ Returns:
     query: The SQLAlchemy query object with the position filter applied.
 """
 class PositionFilter(QueryFilter):
-
+    """
+    Initializes the filter with a given query, position, team, and alias suffix.
+    
+    :param query: SQLAlchemy query object to apply the filter to.
+    :param position: The position abbreviation to filter by (e.g., "P" for Pitched).
+    :param team: Optional team ID to filter by.
+    :param alias_suffix: Optional suffix for table aliasing.
+    """
     def __init__(
         self,
         query: Query,
         position: str,
         team: str = None,
-        alias_suffix: int = random.randint(1,10000),
+        alias_suffix: int=0,
     ):
-        
-        """
-        Initializes the filter with a given query, position, team, and alias suffix.
-        
-        :param query: SQLAlchemy query object to apply the filter to.
-        :param position: The position abbreviation to filter by (e.g., "P" for Pitched).
-        :param team: Optional team ID to filter by.
-        :param alias_suffix: Optional suffix for table aliasing.
-        """
         super().__init__(query, alias_suffix)
         self.position = position
         self.team = team
 
+    """
+    Applies the position filter to the query using the appropriate field from
+    the APPEARANCES table based on the position abbreviation (e.g., "P" for pitcher).
+    
+    :return: The modified query with the applied filter.
+    """
     def apply(self):
-        """
-        Applies the position filter to the query using the appropriate field from
-        the APPEARANCES table based on the position abbreviation (e.g., "P" for pitcher).
-        
-        :return: The modified query with the applied filter.
-        """
-        
         # Get the corresponding field from the APPEARANCES table for the position
         position_field = APPEARANCES_MAPPING[self.position]
 
@@ -180,9 +177,10 @@ class PositionFilter(QueryFilter):
 
         # If a team is provided, filter by team ID
         if self.team:
-            team_filter = TeamFilter(self.query, self.team)
+            team_filter = TeamFilter(self.query, self.team, self.alias_suffix)
+            self.alias_suffix += 1
+
             self.query = team_filter.apply()
-            #self.query = self.query.filter(appearances_alias.teamID == self.team)
 
         return self.query
 
@@ -193,7 +191,7 @@ class MiscFilter(QueryFilter):
         query: Query,
         category: str,
         team: str = None,
-        alias_suffix: int = random.randint(1,10000),
+        alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.category = category
