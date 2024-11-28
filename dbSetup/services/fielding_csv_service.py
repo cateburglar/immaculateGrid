@@ -4,7 +4,7 @@ from multiprocessing import Pool
 from models import Fielding, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 import csi3335f2024 as cfg
-from processconfig import CHUNK_SIZE, NUM_PROCESSES
+from .processconfig import CHUNK_SIZE, NUM_PROCESSES
 
 # Function to process a chunk of the CSV
 def process_chunk(chunk_data):
