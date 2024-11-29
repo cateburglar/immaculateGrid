@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy import func
+from sqlalchemy import cast, func
 from sqlalchemy.orm import Query, aliased
 
 from ..models import *
@@ -74,15 +74,49 @@ class CareerStatFilter(QueryFilter):
         self.team = team
 
     def apply(self):
-        if self.team:
-            self.query = self.query.join(
-                Appearances, People.playerID == Appearances.playerID
-            ).filter(Appearances.teamID == self.team)
+        # Create aliases for joins
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
+
+        if self.stat == "avg_career":
+            # Query to calculate career AVG
+            self.query = (
+                self.query(
+                    Batting.playerID,
+                    func.sum(Batting.b_H).label("career_hits"),
+                    func.sum(Batting.b_AB).label("career_at_bats"),
+                    (cast(func.sum(Batting.b_H), Float) / func.sum(Batting.b_AB)).label(
+                        "career_avg"
+                    ),
+                )
+                .group_by(Batting.playerID)
+                .having(
+                    (cast(func.sum(Batting.b_H), Float) / func.sum(Batting.b_AB))
+                    >= self.value
+                )
+            )
 
         if self.operator == "greater_than":
             self.query = self.query.filter(getattr(People, self.stat) >= self.value)
         elif self.operator == "less_than":
             self.query = self.query.filter(getattr(People, self.stat) <= self.value)
+
+        # Filter by players who played on that team at least once
+        if self.team:
+            # Create a subquery to get the teamIDs that match the team name
+            team_subquery = (
+                self.query.session.query(Teams.teamID)
+                .filter(Teams.team_name == self.team)
+                .subquery()
+            )
+
+            # Join People and Appearances then filter by players who have at least one appearance
+            # with the team in question
+            self.query = self.query.join(
+                appearances_alias,
+                People.playerID == appearances_alias.playerID,
+            ).filter(appearances_alias.teamID.in_(team_subquery))
 
         return self.query
 
