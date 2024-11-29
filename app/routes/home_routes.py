@@ -16,7 +16,7 @@ os.makedirs(log_dir, exist_ok=True)
 
 # Configure custom logger
 log_file_path = os.path.join(log_dir, "home_logs.log")
-logger = logging.getLogger("grid_routes_logger")
+logger = logging.getLogger("home_routes_logger")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler(log_file_path)
 formatter = logging.Formatter("%(asctime)s - %(message)s")
