@@ -79,6 +79,7 @@ class CareerStatFilter(QueryFilter):
             Appearances, name=f"appearances_{self.alias_suffix}"
         )
         batting_alias = aliased(Batting, name=f"batting_{self.alias_suffix}")
+        pitching_alias = aliased(Pitching, name=f"pitching_{self.alias_suffix}")
 
         if self.stat == "avg_career":
             # Subquery to calculate career AVG
@@ -99,6 +100,40 @@ class CareerStatFilter(QueryFilter):
                         / func.sum(batting_alias.b_AB)
                     )
                     >= self.value
+                )
+                .subquery()
+            )
+
+            # Join the subquery with the original People query
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
+        # Subquery to get playerids that meet ERA, then join with the original People query
+        elif self.stat == "era_career":
+            # Subquery to calculate career AVG
+            subquery = (
+                # ERA = (ER / IPOuts / 3) * 9
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    (
+                        (
+                            (func.sum(pitching_alias.p_ER))
+                            / (func.sum(pitching_alias.p_IPouts) / 3.0)
+                        )
+                        * 9.0
+                    ),
+                )
+                .group_by(pitching_alias.playerID)
+                .having(
+                    (
+                        (
+                            (func.sum(pitching_alias.p_ER))
+                            / (func.sum(pitching_alias.p_IPouts) / 3.0)
+                        )
+                        * 9.0
+                    )
+                    <= self.value
                 )
                 .subquery()
             )
