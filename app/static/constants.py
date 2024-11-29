@@ -1,13 +1,13 @@
 OPTION_GROUPS = {
     "Career Options": {
-        "avg_career": "AVG Career Greater Than",
-        "era_career": "ERA Career Less Than",
-        "wins_career": "Wins Career More Than",
-        "k_career": "K Career More Than",
-        "hits_career": "Hits Career More Than",
-        "hr_career": "HR Career More Than",
-        "save_career": "Save Career More Than",
-        "war_career": "WAR Career More Than",
+        "avg_career": "Career Batting AVG More Than",
+        "era_career": "Career Pitching ERA Less Than",
+        "wins_career_p": "Career Pitching Wins More Than",
+        "k_career": "Career Pitching K More Than",
+        "hits_career": "Career Batting Hits More Than",
+        "hr_career": "Career Batting HR More Than",
+        "save_career": "Career Pitching Saves More Than",
+        "war_career": "Career Pitching WAR More Than",
     },
     "Season Options": {
         "avg_season": "AVG Season",

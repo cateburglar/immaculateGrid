@@ -111,7 +111,7 @@ class CareerStatFilter(QueryFilter):
 
         # Subquery to get playerids that meet ERA, then join with the original People query
         elif self.stat == "era_career":
-            # Subquery to calculate career AVG
+            # Subquery to calculate career ERA
             subquery = (
                 # ERA = (ER / IPOuts / 3) * 9
                 self.query.session.query(
@@ -135,6 +135,24 @@ class CareerStatFilter(QueryFilter):
                     )
                     <= self.value
                 )
+                .subquery()
+            )
+
+            # Join the subquery with the original People query
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
+        # Gets players with >= pitching wins and joins it with the People query
+        elif self.stat == "wins_career_p":
+            # Subquery to calculate pitching career wins
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_W),
+                )
+                .group_by(pitching_alias.playerID)
+                .having(func.sum(pitching_alias.p_W) >= self.value)
                 .subquery()
             )
 
