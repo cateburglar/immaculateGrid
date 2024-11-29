@@ -161,6 +161,60 @@ class CareerStatFilter(QueryFilter):
                 subquery, People.playerID == subquery.c.playerID
             )
 
+        # Gets players with strikouts >= k and joins with People
+        elif self.stat == "k_career":
+            # Subquery to calculate pitching career strikeouts
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_SO),
+                )
+                .group_by(pitching_alias.playerID)
+                .having(func.sum(pitching_alias.p_SO) >= self.value)
+                .subquery()
+            )
+
+            # Join the subquery with the original People query
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
+        # Gets players with career hits >= hits and joins with People
+        elif self.stat == "hits_career":
+            # Subquery to calculate career hits
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_H),
+                )
+                .group_by(batting_alias.playerID)
+                .having(func.sum(batting_alias.b_H) >= self.value)
+                .subquery()
+            )
+
+            # Join the subquery with the original People query
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
+        # Gets players with hr >= hrs and joins with People
+        elif self.stat == "hr_career":
+            # Subquery to calculate career hrs
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_HR),
+                )
+                .group_by(batting_alias.playerID)
+                .having(func.sum(batting_alias.b_HR) >= self.value)
+                .subquery()
+            )
+
+            # Join the subquery with the original People query
+            self.query = self.query.join(
+                subquery, People.playerID == subquery.c.playerID
+            )
+
         # Filter by players who played on that team at least once
         if self.team:
             # Create a subquery to get the teamIDs that match the team name
