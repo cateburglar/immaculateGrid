@@ -7,7 +7,7 @@ OPTION_GROUPS = {
         "hits_career": "Career Batting Hits More Than",
         "hr_career": "Career Batting HR More Than",
         "save_career": "Career Pitching Saves More Than",
-        "war_career": "Career Pitching WAR More Than",
+        "war_career": "Career WAR More Than",
     },
     "Season Options": {
         "avg_season": "AVG Season",

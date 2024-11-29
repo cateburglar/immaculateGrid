@@ -73,6 +73,9 @@ class CareerStatFilter(QueryFilter):
         self.value = value
         self.team = team
 
+    def join_queries(self, sq):
+        return self.query.join(sq, People.playerID == sq.c.playerID)
+
     def apply(self):
         # Create aliases for joins
         appearances_alias = aliased(
@@ -80,9 +83,11 @@ class CareerStatFilter(QueryFilter):
         )
         batting_alias = aliased(Batting, name=f"batting_{self.alias_suffix}")
         pitching_alias = aliased(Pitching, name=f"pitching_{self.alias_suffix}")
+        war_alias = aliased(CareerWarLeaders, name=f"war_{self.alias_suffix}")
 
+        subquery = None
+        # Creates subquery to get playerids that meet AVG value
         if self.stat == "avg_career":
-            # Subquery to calculate career AVG
             subquery = (
                 self.query.session.query(
                     batting_alias.playerID,
@@ -104,12 +109,7 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
-            )
-
-        # Subquery to get playerids that meet ERA, then join with the original People query
+        # Creates subquery to get playerids that are under ERA value
         elif self.stat == "era_career":
             # Subquery to calculate career ERA
             subquery = (
@@ -138,12 +138,7 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
-            )
-
-        # Gets players with >= pitching wins and joins it with the People query
+        # Creates subquery for players with >= pitching wins
         elif self.stat == "wins_career_p":
             # Subquery to calculate pitching career wins
             subquery = (
@@ -156,12 +151,7 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
-            )
-
-        # Gets players with strikouts >= k and joins with People
+        # Creates subquery for players with strikouts >= k
         elif self.stat == "k_career":
             # Subquery to calculate pitching career strikeouts
             subquery = (
@@ -174,12 +164,7 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
-            )
-
-        # Gets players with career hits >= hits and joins with People
+        # Creates subquery for players with career hits >= hits
         elif self.stat == "hits_career":
             # Subquery to calculate career hits
             subquery = (
@@ -192,12 +177,7 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
-            )
-
-        # Gets players with hr >= hrs and joins with People
+        # Creates subquery for players with hr >= hrs
         elif self.stat == "hr_career":
             # Subquery to calculate career hrs
             subquery = (
@@ -210,10 +190,29 @@ class CareerStatFilter(QueryFilter):
                 .subquery()
             )
 
-            # Join the subquery with the original People query
-            self.query = self.query.join(
-                subquery, People.playerID == subquery.c.playerID
+        # Creates subquery for players with career sv >= saves
+        elif self.stat == "save_career":
+            # Subquery to calculate pitching career saves
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_SV),
+                )
+                .group_by(pitching_alias.playerID)
+                .having(func.sum(pitching_alias.p_SV) >= self.value)
+                .subquery()
             )
+
+        # Filters query for players that meet WAR value
+        elif self.stat == "war_career":
+            # Subquery to return players that meet WAR value
+            self.query = self.query.join(
+                war_alias, war_alias.playerID == People.playerID
+            ).filter(war_alias.war >= self.value)
+
+        # Join subqueries to the People query
+        if subquery != None:
+            self.query = self.join_queries(subquery)
 
         # Filter by players who played on that team at least once
         if self.team:
