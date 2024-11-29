@@ -1,3 +1,4 @@
+import random
 from abc import ABC, abstractmethod
 
 from sqlalchemy import func
@@ -5,7 +6,7 @@ from sqlalchemy.orm import Query, aliased
 
 from ..models import *
 from ..static.constants import APPEARANCES_MAPPING
-import random
+
 
 class QueryFilter(ABC):
     """
@@ -35,7 +36,7 @@ class TeamFilter(QueryFilter):
         self,
         query: Query,
         team: str,
-        alias_suffix: int =0,
+        alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.team = team
@@ -134,21 +135,24 @@ Methods:
 Returns:
     query: The SQLAlchemy query object with the position filter applied.
 """
+
+
 class PositionFilter(QueryFilter):
     """
     Initializes the filter with a given query, position, team, and alias suffix.
-    
+
     :param query: SQLAlchemy query object to apply the filter to.
     :param position: The position abbreviation to filter by (e.g., "P" for Pitched).
     :param team: Optional team ID to filter by.
     :param alias_suffix: Optional suffix for table aliasing.
     """
+
     def __init__(
         self,
         query: Query,
         position: str,
         team: str = None,
-        alias_suffix: int=0,
+        alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.position = position
@@ -160,17 +164,22 @@ class PositionFilter(QueryFilter):
     
     :return: The modified query with the applied filter.
     """
+
     def apply(self):
         # Get the corresponding field from the APPEARANCES table for the position
         position_field = APPEARANCES_MAPPING[self.position]
 
         # Alias the Appearances table for the query
         # so that we can join the appearances table multiple times if needed
-        appearances_alias = aliased(Appearances, name=f"appearances_{self.alias_suffix}")
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
         self.alias_suffix += 1
 
         # Join the Appearances table with People and filter by the position field
-        self.query = self.query.join(appearances_alias, People.playerID == appearances_alias.playerID)
+        self.query = self.query.join(
+            appearances_alias, People.playerID == appearances_alias.playerID
+        )
 
         # Filter based on the number of games played for the position (should be greater than 0)
         self.query = self.query.filter(getattr(appearances_alias, position_field) > 0)
@@ -294,6 +303,12 @@ class MiscFilter(QueryFilter):
             if self.category == "All Star":
                 self.query = self.query.filter(
                     allstarfull_alias.teamID.in_(team_subquery)
+                )
+
+            # No-hitters teams need to be filtered separately
+            elif self.category == "No Hitter":
+                self.query = self.query.filter(
+                    nohitters_alias.teamID.in_(team_subquery)
                 )
 
             else:
