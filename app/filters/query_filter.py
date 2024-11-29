@@ -62,14 +62,12 @@ class CareerStatFilter(QueryFilter):
         self,
         query: Query,
         stat: str,
-        operator: str,
         value: float,
         team: str = None,
         alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
-        self.operator = operator
         self.value = value
         self.team = team
 
