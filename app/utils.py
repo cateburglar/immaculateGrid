@@ -56,13 +56,11 @@ def extract_form_data(request_form):
     return {
         "prompt1": {
             "prompt1-option": request_form.get("prompt1-option"),
-            "prompt1-operator": request_form.get("prompt1-operator"),
             "prompt1-number": request_form.get("prompt1-number"),
             "prompt1-team": request_form.get("prompt1-team"),
         },
         "prompt2": {
             "prompt2-option": request_form.get("prompt2-option"),
-            "prompt2-operator": request_form.get("prompt2-operator"),
             "prompt2-number": request_form.get("prompt2-number"),
             "prompt2-team": request_form.get("prompt2-team"),
         },
@@ -84,8 +82,6 @@ def validate_form_data(form_data):
         or form_data["prompt1"]["prompt1-option"]
         in OPTION_GROUPS["Season Options"].keys()
     ):
-        if not form_data["prompt1"]["prompt1-operator"]:
-            errors.append("Operator for Prompt 1 is required.")
         if not form_data["prompt1"]["prompt1-number"]:
             errors.append("Number for Prompt 1 is required.")
     if (
@@ -100,8 +96,6 @@ def validate_form_data(form_data):
         or form_data["prompt2"]["prompt2-option"]
         in OPTION_GROUPS["Season Options"].keys()
     ):
-        if not form_data["prompt2"]["prompt2-operator"]:
-            errors.append("Operator for Prompt 2 is required.")
         if not form_data["prompt2"]["prompt2-number"]:
             errors.append("Number for Prompt 2 is required.")
     if (
@@ -120,7 +114,6 @@ def parse_prompts(form_data):
         params.append(
             {
                 "option": form_data["prompt1"]["prompt1-option"],
-                "operator": form_data["prompt1"]["prompt1-operator"],
                 "number": form_data["prompt1"]["prompt1-number"],
                 "team": form_data["prompt1"]["prompt1-team"],
             }
@@ -130,7 +123,6 @@ def parse_prompts(form_data):
         params.append(
             {
                 "option": form_data["prompt2"]["prompt2-option"],
-                "operator": form_data["prompt2"]["prompt2-operator"],
                 "number": form_data["prompt2"]["prompt2-number"],
                 "team": form_data["prompt2"]["prompt2-team"],
             }
