@@ -27,7 +27,7 @@ def update_homegames_from_csv(file_path):
         new_rows = 0
         parksNotExist=0
         teamNotExist=0
-
+        updated_rows=0
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
 
@@ -61,12 +61,47 @@ def update_homegames_from_csv(file_path):
                 #if we make an error log, a message could go here.
                 continue
 
-            session.merge(homegames_record)
-            new_rows += 1
 
-            session.commit()
+            existing_entry = (
+                session.query(HomeGames)
+                .filter_by(
+                    teamID=homegames_record.teamID,
+                    yearID=homegames_record.yearID,
+                    parkID=homegames_record.parkID,
+                )
+                .first()
+            )
 
-    session.close()
+            # Check for existing record
+            if existing_entry:
+                for column in HomeGames.__table__.columns:
+                    # Skip the 'ID' column as it should not be modified
+                    if column.name == 'homegames_ID':
+                        continue
+
+                    updated = False
+                    new_value = getattr(homegames_record, column.name)
+                    existing_value = getattr(existing_entry, column.name)
+
+                    #skip if both columns are null
+                    if new_value is None and existing_value is None:
+                        continue
+
+                    # If the values are different, update the existing record
+                    if existing_value is None or new_value != existing_value :
+                        setattr(existing_entry, column.name, new_value)
+                        updated = True
+
+                if updated:
+                    updated_rows += 1  # Only count as updated if something changed
+            else:
+                new_rows += 1
+                session.add(homegames_record)
+            
+        #commit remaining batch
+        session.commit()
+        session.close()
+
     return {"updated rows": new_rows,
             "rows skipped bc their parkid didn't exist in parks table: ": parksNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
