@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -66,6 +66,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             # Log in the user and manage 'remember me' option
             login_user(user, remember=form.remember_me.data)
+            session["username"] = user.username
             flash(f"Welcome, {user.nameFirst} {user.nameLast}!", "success")
             return redirect(url_for("home_routes.home"))
 
