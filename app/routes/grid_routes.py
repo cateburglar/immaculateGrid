@@ -96,12 +96,14 @@ def get_player():
 
         flash(form_data, "info")
 
-        if result:
+        if result != None:
             flash(result["player_name"], "success")
             flash(result["player_years"], "success")
             # Add player to the session ids
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
+        else:
+            flash("No player could be found that meets those criteria", "error")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
