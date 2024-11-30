@@ -83,14 +83,32 @@ def update_battingpost_from_csv(file_path):
                 .first()
             )
 
-            # Determine if it's an insert or update
+            # Check for existing record
             if existing_entry:
-                updated_rows += 1
+                for column in BattingPost.__table__.columns:
+                    # Skip the 'ID' column as it should not be modified
+                    if column.name == 'battingpost_ID':
+                        continue
+
+                    updated = False
+                    new_value = getattr(battingpost_record, column.name)
+                    existing_value = getattr(existing_entry, column.name)
+
+                    #skip if both columns are null
+                    if new_value is None and existing_value is None:
+                        continue
+
+                    # If the values are different, update the existing record
+                    if existing_value is None or new_value != existing_value :
+                        setattr(existing_entry, column.name, new_value)
+                        updated = True
+
+                if updated:
+                    updated_rows += 1  # Only count as updated if something changed
             else:
                 inserted_rows += 1
+                session.add(battingpost_record)
 
-            # Use merge to handle upsert
-            session.merge(battingpost_record)
             batch_counter += 1
 
             # Commit in batches

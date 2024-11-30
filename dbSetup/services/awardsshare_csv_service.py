@@ -65,13 +65,31 @@ def update_awardsshare_from_csv(file_path):
                 .first()
             )
 
+            # Check for existing record
             if existing_entry:
-                updated_rows += 1
+                for column in AwardsShare.__table__.columns:
+                    # Skip the 'ID' column as it should not be modified
+                    if column.name == 'awardsshare_ID':
+                        continue
+
+                    updated = False
+                    new_value = getattr(awardsshare_record, column.name)
+                    existing_value = getattr(existing_entry, column.name)
+
+                    #skip if both columns are null
+                    if new_value is None and existing_value is None:
+                        continue
+
+                    # If the values are different, update the existing record
+                    if existing_value is None or new_value != existing_value :
+                        setattr(existing_entry, column.name, new_value)
+                        updated = True
+
+                if updated:
+                    updated_rows += 1  # Only count as updated if something changed
             else:
                 new_rows += 1
-
-            # Handle upsert operation
-            session.merge(awardsshare_record)
+                session.add(awardsshare_record)
 
         session.commit()
         session.close()
