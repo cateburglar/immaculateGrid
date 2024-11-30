@@ -1,5 +1,7 @@
+import logging
+import os
+
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from sqlalchemy.orm import aliased
 
 from app import db
 
@@ -10,9 +12,22 @@ from ..filters import (
     SeasonStatFilter,
     TeamFilter,
 )
-from ..models import Appearances, People, Teams
+from ..models import People
 from ..static.constants import OPTION_GROUPS, TEAM_MAPPINGS
 from ..utils import extract_form_data, parse_prompts, validate_form_data
+
+# Ensure the logging directory exists
+log_dir = os.path.join("app", "logging")
+os.makedirs(log_dir, exist_ok=True)
+
+# Configure custom logger
+log_file_path = os.path.join(log_dir, "grid_logs.log")
+logger = logging.getLogger("grid_routes_logger")
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(log_file_path)
+formatter = logging.Formatter("%(asctime)s - %(message)s")
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
@@ -78,9 +93,14 @@ def get_player():
         # Extract form data
         form_data = extract_form_data(request_form=request.form)
 
+        # Log form data
+        username = session.get("username", "Unknown User")
+        logger.info(f"User {username} Form Data: {form_data}")
+
         # Validate form data
         errors = validate_form_data(form_data)
         if errors:
+            logger.info(f"Invalid Request: {errors}")
             for error in errors:
                 flash(error, "error")
 
@@ -94,9 +114,9 @@ def get_player():
 
         result = perform_query(form_data, returned_player_ids)
 
-        flash(form_data, "info")
-
         if result:
+            logger.info(f"Player Returned: {result["player_name"]}")
+            logger.info(f"Years Returned: {result["player_years"]}")
             flash(result["player_name"], "success")
             flash(result["player_years"], "success")
             # Add player to the session ids
