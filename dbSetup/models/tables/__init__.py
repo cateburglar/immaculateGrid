@@ -218,6 +218,21 @@ class BattingPost(Base):
     player = relationship("People", back_populates="battingpost_entries")
 
 
+class CareerWarLeaders(Base):
+    __tablename__ = "careerwarleaders"
+    careerwarleaders_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    war = Column(Double, nullable=False)
+
+    __table_args__ = (
+        Index(
+            "careerwarleaders_playerID_war",
+            "playerID",
+            "war",
+        ),  # Composite index
+    )
+
+
 class Draft(Base):
     __tablename__ = "draft"
     draft_ID = Column(Integer, primary_key=True, nullable=False)

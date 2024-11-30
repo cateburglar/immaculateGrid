@@ -45,18 +45,13 @@ def perform_query(form_data, returned_player_ids):
     team = None
     for i, param in enumerate(params):
         option = param["option"]
-        operator = param["operator"]
         number = param["number"]
         team = param["team"] if param["team"] else team
 
         if option in OPTION_GROUPS["Career Options"].keys():
-            query = CareerStatFilter(
-                query, option, operator, float(number), team
-            ).apply()
+            query = CareerStatFilter(query, option, float(number), team, i).apply()
         elif option in OPTION_GROUPS["Season Options"].keys():
-            query = SeasonStatFilter(
-                query, option, operator, float(number), team
-            ).apply()
+            query = SeasonStatFilter(query, option, float(number), team).apply()
         elif option == "played_for_team":
             query = TeamFilter(query, team, i).apply()
         elif option in OPTION_GROUPS["Position Options"]:
@@ -71,7 +66,11 @@ def perform_query(form_data, returned_player_ids):
 
     if result:
         player_name = f"{result.nameFirst} {result.nameLast}"
-        player_years = f"{result.birthYear} - {"Present" if result.deathYear else result.deathYear}"
+        debut_year = str(result.debutDate)[:4] if result.debutDate else "Unknown"
+        final_year = (
+            str(result.finalGameDate)[:4] if result.finalGameDate else "Present"
+        )
+        player_years = f"{debut_year} - {final_year}"
         return {
             "player_id": result.playerID,
             "player_name": player_name,
