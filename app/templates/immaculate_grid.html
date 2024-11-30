@@ -3,20 +3,22 @@
 {% from "_macros.html" import prompt %}
 
 {% block content %}
-<div class="grid-container">
-    <h1 class="grid-title">Immaculate Grid Solver</h1>
-    <form action="{{ url_for('grid_routes.get_player') }}" method="POST" class="prompts-form">
-        <div class="prompts-container">
-            {{ prompt('Prompt 1', 'prompt1',  team_mappings, option_groups, form_data.get('prompt1') if form_data else None) }}
-            {{ prompt('Prompt 2', 'prompt2', team_mappings, option_groups, form_data.get('prompt2') if form_data else None) }}
-        </div>
-        <button type="submit" class="submit-button">Get Player</button>
-    </form>
+<div class="container">
+    <div class="grid-container">
+        <h1 class="grid-title">Immaculate Grid Solver</h1>
+        <form action="{{ url_for('grid_routes.get_player') }}" method="POST" class="prompts-form">
+            <div class="prompts-container">
+                {{ prompt('Prompt 1', 'prompt1',  team_mappings, option_groups, form_data.get('prompt1') if form_data else None) }}
+                {{ prompt('Prompt 2', 'prompt2', team_mappings, option_groups, form_data.get('prompt2') if form_data else None) }}
+            </div>
+            <button type="submit" class="submit-button">Get Player</button>
+        </form>
+    </div>
     <div class="results">
         {% for player in returned_player_ids %}
-            <div>
-                <h3>{{player}}</h3>
-            </div>
+        <div class="player">
+            <h3>{{player}}</h3>
+        </div>
         {% endfor %}
     </div>
 </div>

@@ -8,6 +8,16 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.results {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
 /* Grid page title styling */
 .grid-title {
     font-size: 2rem;
