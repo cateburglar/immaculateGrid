@@ -361,6 +361,7 @@ class MiscFilter(QueryFilter):
         )
         seriespost_alias = aliased(SeriesPost, name=f"seriespost_{self.alias_suffix}")
         draft_alias = aliased(Draft, name=f"draft_{self.alias_suffix}")
+        halloffame_alias = aliased(HallofFame, name=f"halloffame_{self.alias_suffix}")
         nohitters_alias = aliased(NoHitters, name=f"nohitters_{self.alias_suffix}")
 
         # Finds all stars by joining with allstarfull
@@ -379,7 +380,9 @@ class MiscFilter(QueryFilter):
                 draft_alias, People.playerID == draft_alias.playerID
             )
         elif self.category == "Hall of Fame":
-            self.query = self.query.filter(People.hall_of_fame == True)
+            self.query = self.query.join(
+                halloffame_alias, halloffame_alias.playerID == People.playerID
+            ).filter(halloffame_alias.inducted == "Y")
 
         # Finds players who only played on one team by joining with appearances and
         # filtering to players who only appeared with one team
@@ -456,14 +459,15 @@ class MiscFilter(QueryFilter):
                 )
 
             else:
-                # Filter by players who played on the team in that season
-                self.query = (
-                    self.query.join(
-                        appearances_alias,
-                        People.playerID == appearances_alias.playerID,
+
+                # Join players how played for the team to people on playerid
+                self.query = self.query.join(
+                    appearances_alias, People.playerID == appearances_alias.playerID
+                ).filter(appearances_alias.teamID.in_(team_subquery))
+
+                if self.category != "Hall of Fame":
+                    self.query = self.query.filter(
+                        appearances_alias.yearID == awards_alias.yearID
                     )
-                    .filter(appearances_alias.teamID.in_(team_subquery))
-                    .filter(appearances_alias.yearID == awards_alias.yearID)
-                )
 
         return self.query
