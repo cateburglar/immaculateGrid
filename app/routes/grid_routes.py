@@ -127,5 +127,8 @@ def get_player():
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
-        "immaculate_grid.html", team_mappings=TEAM_MAPPINGS, option_groups=OPTION_GROUPS
+        "immaculate_grid.html",
+        team_mappings=TEAM_MAPPINGS,
+        option_groups=OPTION_GROUPS,
+        returned_player_ids=returned_player_ids,
     )

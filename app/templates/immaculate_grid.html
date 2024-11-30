@@ -12,5 +12,12 @@
         </div>
         <button type="submit" class="submit-button">Get Player</button>
     </form>
+    <div class="results">
+        {% for player in returned_player_ids %}
+            <div>
+                <h3>{{player}}</h3>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
