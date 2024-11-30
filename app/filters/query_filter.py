@@ -449,6 +449,12 @@ class MiscFilter(QueryFilter):
                     allstarfull_alias.teamID.in_(team_subquery)
                 )
 
+            # No-hitters teams need to be filtered separately
+            elif self.category == "No Hitter":
+                self.query = self.query.filter(
+                    nohitters_alias.teamID.in_(team_subquery)
+                )
+
             else:
                 # Filter by players who played on the team in that season
                 self.query = (
