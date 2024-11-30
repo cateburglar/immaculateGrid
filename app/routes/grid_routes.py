@@ -114,7 +114,7 @@ def get_player():
 
         result = perform_query(form_data, returned_player_ids)
 
-        if result:
+        if result != None:
             logger.info(f"Player Returned: {result["player_name"]}")
             logger.info(f"Years Returned: {result["player_years"]}")
             flash(result["player_name"], "success")
@@ -122,6 +122,8 @@ def get_player():
             # Add player to the session ids
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
+        else:
+            flash("No player could be found that meets those criteria", "error")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(

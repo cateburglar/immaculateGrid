@@ -207,6 +207,20 @@ class Draft(Base):
     )
 
 
+class HallofFame(Base):
+    __tablename__ = "halloffame"
+    halloffame_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    votedBy = Column(String(64), nullable=False)
+    ballots = Column(SmallInteger, nullable=True)
+    needed = Column(SmallInteger, nullable=True)
+    votes = Column(SmallInteger, nullable=True)
+    inducted = Column(String(1), nullable=True)
+    category = Column(String(20), nullable=True)
+    note = Column(String(255), nullable=True)
+
+
 class NoHitters(Base):
     __tablename__ = "nohitters"
     nohitters_ID = Column(Integer, primary_key=True, nullable=False)
