@@ -46,7 +46,8 @@ def perform_query(form_data, returned_player_ids):
     for i, param in enumerate(params):
         option = param["option"]
         number = param["number"]
-        team = param["team"] if param["team"] else team
+        if param["team"] != None:
+            team = param["team"]
 
         if option in OPTION_GROUPS["Career Options"].keys():
             query = CareerStatFilter(query, option, float(number), team, i).apply()

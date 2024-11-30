@@ -330,10 +330,14 @@ class PositionFilter(QueryFilter):
 
         # If a team is provided, filter by team ID
         if self.team:
-            team_filter = TeamFilter(self.query, self.team, self.alias_suffix)
-            self.alias_suffix += 1
+            # Create a subquery to get the teamIDs that match the team name
+            team_subquery = (
+                self.query.session.query(Teams.teamID)
+                .filter(Teams.team_name == self.team)
+                .subquery()
+            )
 
-            self.query = team_filter.apply()
+            self.query = self.query.filter(appearances_alias.teamID.in_(team_subquery))
 
         return self.query
 
