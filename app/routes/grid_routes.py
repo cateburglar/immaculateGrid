@@ -176,7 +176,7 @@ def get_player():
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
         else:
-            flash("No player could be found that meets those criteria", "error")
+            flash("No player could be found that meets those criteria", "danger")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(

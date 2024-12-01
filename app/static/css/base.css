@@ -74,9 +74,9 @@ html, body {
 }
 
 .alert-danger {
-  color: var(--dark-red);
+  color: var(--jet);
   background-color: var(--amaranth-pink);
-  border-color: var(--rose-pompadour);
+  border-color: var(--amaranth-pink);
 }
 
 .alert-warning {
