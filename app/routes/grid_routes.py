@@ -176,3 +176,13 @@ def get_player():
         option_groups=OPTION_GROUPS,
         returned_players=returned_players,
     )
+
+
+@grid_routes.route("/clear_players", methods=["POST"])
+def clear_players():
+    # Clear the returned_players and returned_player_ids from the session
+    session.pop("returned_players", None)
+    session.pop("returned_player_ids", None)
+    logger.info(f"Clearing results list for {session["username"]}")
+    flash("Player list cleared.", "info")
+    return redirect(url_for("grid_routes.get_player"))
