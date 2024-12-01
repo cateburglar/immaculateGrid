@@ -1,6 +1,6 @@
 import logging
 import os
-
+from .depthchart_routes import depth_chart
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -29,11 +29,7 @@ home_routes = Blueprint("home_routes", __name__, template_folder="templates")
 # /
 @home_routes.route("/")
 def home():
-    return render_template(
-        "home.html",
-        title="Home",
-        message="SQL more like sea quail amiright?",
-    )
+    return depth_chart()
 
 
 @home_routes.route("/signup", methods=["GET", "POST"])
