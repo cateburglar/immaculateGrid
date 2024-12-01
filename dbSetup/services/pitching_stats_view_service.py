@@ -8,7 +8,7 @@ def create_pitching_stats_view():
 
     # Query to create the view
     create_view_sql = """
-    CREATE VIEW pitchingstatsview AS
+    CREATE OR REPLACE VIEW pitchingstatsview AS
     SELECT
         pi.playerID,
         pi.teamID,
@@ -34,8 +34,10 @@ def create_pitching_stats_view():
         ((pi.p_BFP - pi.p_R) / (pi.p_BFP - pi.p_BB - pi.p_HBP - pi.p_SO)) * 100 AS p_LOB_percent,
         (pi.p_HR / (pi.p_HR + pi.p_SO)) AS p_HR_div_FB,
         ((13 * pi.p_HR + 3 * (pi.p_BB + pi.p_HBP) - 2 * pi.p_SO) / (pi.p_IPouts / 3.0)) AS p_FIP,
-        -- p_XFIP requires league avg HR rates
-        NULL AS p_XFIP,
+        -- p_xFIP requires league avg HR rates
+        -- xFIP = ((13*HR)+(3*(BB+HBP))-(2*K))/IP + FIP Constant
+        -- FIP Constant = lgERA - (((13*lgHR)+(3*(lgBB+lgHBP))-(2*lgK))/lgIP)
+        NULL AS p_xFIP,
         -- p_WAR requires additional data not present in our current database
         NULL AS p_WAR
     FROM pitching pi
