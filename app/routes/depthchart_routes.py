@@ -22,10 +22,10 @@ def depth_chart():
         team = db.session.query(Teams).filter_by(team_name=teamName).first()
         if not team:
             flag=True
-            flash("team not found", "error")
+            flash("team not found", "danger")
         if year < 1871 or year > 2023:
             flag=True
-            flash("year must be >= 1871 and <= 2023", "error")
+            flash("year must be >= 1871 and <= 2023", "danger")
         
         if flag:
             return render_template("depth_chart.html", form=form)
