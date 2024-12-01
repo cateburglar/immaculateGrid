@@ -67,6 +67,7 @@ def perform_query(form_data, returned_player_ids):
 
     result = query.first()
 
+    # Parse player info from result
     if result:
         player_name = f"{result.nameFirst} {result.nameLast}"
         debut_year = str(result.debutDate)[:4] if result.debutDate else "Unknown"
@@ -74,12 +75,22 @@ def perform_query(form_data, returned_player_ids):
             str(result.finalGameDate)[:4] if result.finalGameDate else "Present"
         )
         player_years = f"{debut_year} - {final_year}"
+
+        # Get the photo and link to the Baseball Reference page
         player_photo = get_baseball_reference_photo(result.playerID)
+
+        # If no photo is retrieved, don't supply a link
+        player_link = None
+        if player_photo != None:
+            player_link = f"https://www.baseball-reference.com/players/{result.playerID[0]}/{result.playerID}.shtml"
+
+        # Return the players info
         return {
             "player_id": result.playerID,
             "player_name": player_name,
             "player_years": player_years,
             "player_photo": player_photo,
+            "player_link": player_link,
         }
 
     return None

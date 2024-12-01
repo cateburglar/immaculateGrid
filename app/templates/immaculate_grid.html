@@ -19,11 +19,11 @@
     </div>
     <div class="results-grid">
         {% for player in returned_players | reverse %}
-        <div class="player">
+        <a class="player" href="{{player.player_link}}">
             <h3>{{player.player_name}}</h3>
             <img src="{{player.player_photo}}">
             <h4>{{player.player_years}}</h4>
-        </div>
+        </a>
         {% endfor %}
     </div>
 </div>
