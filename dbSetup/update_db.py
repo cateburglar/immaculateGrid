@@ -2,7 +2,7 @@ import argparse
 import inspect
 
 import services  # Assuming services.py is in the same directory
-
+from services import create_pitching_stats_view
 
 def main():
     parser = argparse.ArgumentParser(description="Update database.")
@@ -13,7 +13,17 @@ def main():
         nargs="*",
         help="Names of the tables to update (e.g., people teams allstarfull schools). If no tables are provided, all will be updated.",
     )
+    parser.add_argument(
+        "--create-view",
+        action="store_true",
+        help="Create the 'pitchingstatsview' View",
+    )
     args = parser.parse_args()
+
+    if args.create_view:
+        create_pitching_stats_view()
+        print("View creation triggered successfully.")
+        return
 
     # If no tables are specified, call all functions in services
     tables_to_update = args.tables if args.tables else get_all_service_functions()
