@@ -249,19 +249,99 @@ class SeasonStatFilter(QueryFilter):
         self.value = value
         self.team = team
 
-    def apply(self):
-        if self.team:
+    def apply_operator(self, field):
+        '''if self.team:
             self.query = self.query.join(
                 Appearances, People.playerID == Appearances.playerID
-            ).filter(Appearances.teamID == self.team)
+            ).filter(Appearances.teamID == self.team)'''
 
         if self.operator == "greater_than":
-            self.query = self.query.filter(getattr(People, self.stat) >= self.value)
+            return field >= self.value
         elif self.operator == "less_than":
-            self.query = self.query.filter(getattr(People, self.stat) <= self.value)
+            return field <= self.value
+        else:
+            raise ValueError(f"Unsupported operator: {self.operator}")
+
+    def apply(self):
+        batting_alias = aliased(Batting, name=f"batting_{self.alias_suffix}")
+        pitching_alias = aliased(Pitching, name=f"pitching_{self.alias_suffix}")
+        war_alias = aliased(SeasonWarLeaders, name=f"war_{self.alias_suffix}")
+        filter_condition = None
+
+        # Handle each stat type
+        if self.stat == "avg_season":
+            # Batting average: H / AB
+            filter_condition = self.apply_operator(
+                (cast(func.sum(batting_alias.b_H), Float) / func.sum(batting_alias.b_AB))
+            )
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "era_season":
+            # ERA: (ER / (IPOuts / 3)) * 9
+            filter_condition = self.apply_operator(
+                ((func.sum(pitching_alias.p_ER) / (func.sum(pitching_alias.p_IPouts) / 3.0)) * 9.0)
+            )
+            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
+
+        elif self.stat == "hr_season":
+            filter_condition = self.apply_operator(func.sum(batting_alias.b_HR))
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "win_season":
+            filter_condition = self.apply_operator(func.sum(pitching_alias.p_W))
+            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
+
+        elif self.stat == "rbi_season":
+            filter_condition = self.apply_operator(func.sum(batting_alias.b_RBI))
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "run_season":
+            filter_condition = self.apply_operator(func.sum(batting_alias.b_R))
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "hits_season":
+            filter_condition = self.apply_operator(func.sum(batting_alias.b_H))
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "k_season":
+            filter_condition = self.apply_operator(func.sum(pitching_alias.p_SO))
+            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
+
+        elif self.stat == "hr_sb_season":
+            # HR / SB ratio
+            filter_condition = self.apply_operator(
+                cast(func.sum(batting_alias.b_HR), Float) / func.sum(batting_alias.b_SB)
+            )
+            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+
+        elif self.stat == "save_season":
+            filter_condition = self.apply_operator(func.sum(pitching_alias.p_SV))
+            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
+
+        elif self.stat == "war_season":
+            filter_condition = self.apply_operator(func.sum(war_alias.war))
+            self.query = self.query.join(war_alias, People.playerID == war_alias.playerID)
+
+        else:
+            raise ValueError(f"Unsupported stat: {self.stat}")
+
+        # Apply the filter condition
+        if filter_condition is not None:
+            self.query = self.query.filter(filter_condition)
+
+        # If a team is provided, filter players by team
+        if self.team:
+            appearances_alias = aliased(Appearances, name=f"appearances_{self.alias_suffix}")
+            team_subquery = (
+                self.query.session.query(Teams.teamID)
+                .filter(Teams.team_name == self.team)
+                .subquery()
+            )
+            self.query = self.query.join(
+                appearances_alias, People.playerID == appearances_alias.playerID
+            ).filter(appearances_alias.teamID.in_(team_subquery))
 
         return self.query
-
 
 """
 PositionFilter applies a filter to the query to include players who have 
@@ -279,8 +359,6 @@ Methods:
 Returns:
     query: The SQLAlchemy query object with the position filter applied.
 """
-
-
 class PositionFilter(QueryFilter):
     """
     Initializes the filter with a given query, position, team, and alias suffix.
