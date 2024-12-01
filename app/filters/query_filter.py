@@ -238,107 +238,172 @@ class SeasonStatFilter(QueryFilter):
         self,
         query: Query,
         stat: str,
-        operator: str,
         value: float,
         team: str = None,
         alias_suffix: int = 0,
     ):
         super().__init__(query, alias_suffix)
         self.stat = stat
-        self.operator = operator
         self.value = value
         self.team = team
 
-    def apply_operator(self, field):
-        '''if self.team:
-            self.query = self.query.join(
-                Appearances, People.playerID == Appearances.playerID
-            ).filter(Appearances.teamID == self.team)'''
-
-        if self.operator == "greater_than":
-            return field >= self.value
-        elif self.operator == "less_than":
-            return field <= self.value
-        else:
-            raise ValueError(f"Unsupported operator: {self.operator}")
+    def join_queries(self, sq):
+        return self.query.join(sq, People.playerID == sq.c.playerID)
 
     def apply(self):
+        # Create aliases for joins
+        appearances_alias = aliased(
+            Appearances, name=f"appearances_{self.alias_suffix}"
+        )
         batting_alias = aliased(Batting, name=f"batting_{self.alias_suffix}")
         pitching_alias = aliased(Pitching, name=f"pitching_{self.alias_suffix}")
         war_alias = aliased(SeasonWarLeaders, name=f"war_{self.alias_suffix}")
-        filter_condition = None
 
-        # Handle each stat type
+        subquery = None
+        # Creates subquery to get playerids that meet AVG value
         if self.stat == "avg_season":
-            # Batting average: H / AB
-            filter_condition = self.apply_operator(
-                (cast(func.sum(batting_alias.b_H), Float) / func.sum(batting_alias.b_AB))
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_H).label("career_hits"),
+                    func.sum(batting_alias.b_AB).label("career_at_bats"),
+                    (
+                        cast(func.sum(batting_alias.b_H), Float)
+                        / func.sum(batting_alias.b_AB)
+                    ).label("season_avg"),
+                )
+                .group_by(batting_alias.playerID, batting_alias.yearId)
+                .having(
+                    (
+                        cast(func.sum(batting_alias.b_H), Float)
+                        / func.sum(batting_alias.b_AB)
+                    )
+                    >= self.value
+                )
+                .subquery()
             )
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
 
+        # Creates subquery to get playerids that are under ERA value
         elif self.stat == "era_season":
-            # ERA: (ER / (IPOuts / 3)) * 9
-            filter_condition = self.apply_operator(
-                ((func.sum(pitching_alias.p_ER) / (func.sum(pitching_alias.p_IPouts) / 3.0)) * 9.0)
+            # Subquery to calculate career ERA
+            subquery = (
+                # ERA = (ER / IPOuts / 3) * 9
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    (
+                        (
+                            (func.sum(pitching_alias.p_ER))
+                            / (func.sum(pitching_alias.p_IPouts) / 3.0)
+                        )
+                        * 9.0
+                    ),
+                )
+                .group_by(pitching_alias.playerID, pitching_alias.yearID)
+                .having(
+                    (
+                        (
+                            (func.sum(pitching_alias.p_ER))
+                            / (func.sum(pitching_alias.p_IPouts) / 3.0)
+                        )
+                        * 9.0
+                    )
+                    <= self.value
+                )
+                .subquery()
             )
-            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
 
-        elif self.stat == "hr_season":
-            filter_condition = self.apply_operator(func.sum(batting_alias.b_HR))
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
-
+        # Creates subquery for players with >= pitching wins
         elif self.stat == "win_season":
-            filter_condition = self.apply_operator(func.sum(pitching_alias.p_W))
-            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
-
-        elif self.stat == "rbi_season":
-            filter_condition = self.apply_operator(func.sum(batting_alias.b_RBI))
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
-
-        elif self.stat == "run_season":
-            filter_condition = self.apply_operator(func.sum(batting_alias.b_R))
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
-
-        elif self.stat == "hits_season":
-            filter_condition = self.apply_operator(func.sum(batting_alias.b_H))
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
-
-        elif self.stat == "k_season":
-            filter_condition = self.apply_operator(func.sum(pitching_alias.p_SO))
-            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
-
-        elif self.stat == "hr_sb_season":
-            # HR / SB ratio
-            filter_condition = self.apply_operator(
-                cast(func.sum(batting_alias.b_HR), Float) / func.sum(batting_alias.b_SB)
+            print(self.value)
+            # Subquery to calculate pitching career wins
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_W),
+                )
+                .group_by(pitching_alias.playerID, pitching_alias.yearID)
+                .having(func.sum(pitching_alias.p_W) >= self.value)
+                .subquery()
             )
-            self.query = self.query.join(batting_alias, People.playerID == batting_alias.playerID)
+            print(subquery)
 
+        # Creates subquery for players with strikouts >= k
+        elif self.stat == "k_season":
+            # Subquery to calculate pitching career strikeouts
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_SO),
+                )
+                .group_by(pitching_alias.playerID, pitching_alias.yearID)
+                .having(func.sum(pitching_alias.p_SO) >= self.value)
+                .subquery()
+            )
+
+        # Creates subquery for players with career hits >= hits
+        elif self.stat == "hits_season":
+            # Subquery to calculate career hits
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_H),
+                )
+                .group_by(batting_alias.playerID, batting_alias.yearId)
+                .having(func.sum(batting_alias.b_H) >= self.value)
+                .subquery()
+            )
+
+        # Creates subquery for players with hr >= hrs
+        elif self.stat == "hr_season":
+            # Subquery to calculate career hrs
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_HR),
+                )
+                .group_by(batting_alias.playerID, batting_alias.yearId)
+                .having(func.sum(batting_alias.b_HR) >= self.value)
+                .subquery()
+            )
+
+        # Creates subquery for players with career sv >= saves
         elif self.stat == "save_season":
-            filter_condition = self.apply_operator(func.sum(pitching_alias.p_SV))
-            self.query = self.query.join(pitching_alias, People.playerID == pitching_alias.playerID)
+            # Subquery to calculate pitching career saves
+            subquery = (
+                self.query.session.query(
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_SV),
+                )
+                .group_by(pitching_alias.playerID, pitching_alias.yearID)
+                .having(func.sum(pitching_alias.p_SV) >= self.value)
+                .subquery()
+            )
 
+        # Filters query for players that meet WAR value
         elif self.stat == "war_season":
-            filter_condition = self.apply_operator(func.sum(war_alias.war))
-            self.query = self.query.join(war_alias, People.playerID == war_alias.playerID)
+            # Subquery to return players that meet WAR value
+            self.query = self.query.join(
+                war_alias, war_alias.playerID == People.playerID
+            ).filter(war_alias.war >= self.value)
 
-        else:
-            raise ValueError(f"Unsupported stat: {self.stat}")
+        # Join subqueries to the People query
+        if subquery != None:
+            self.query = self.join_queries(subquery)
 
-        # Apply the filter condition
-        if filter_condition is not None:
-            self.query = self.query.filter(filter_condition)
-
-        # If a team is provided, filter players by team
+        # Filter by players who played on that team at least once
         if self.team:
-            appearances_alias = aliased(Appearances, name=f"appearances_{self.alias_suffix}")
+            # Create a subquery to get the teamIDs that match the team name
             team_subquery = (
                 self.query.session.query(Teams.teamID)
                 .filter(Teams.team_name == self.team)
                 .subquery()
             )
+
+            # Join People and Appearances then filter by players who have at least one appearance
+            # with the team in question
             self.query = self.query.join(
-                appearances_alias, People.playerID == appearances_alias.playerID
+                appearances_alias,
+                People.playerID == appearances_alias.playerID,
             ).filter(appearances_alias.teamID.in_(team_subquery))
 
         return self.query
