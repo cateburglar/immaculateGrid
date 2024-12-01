@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import app.csi3335f2024 as cfg
-from dbSetup.models.tables import AllstarFull
+from app.models import AllstarFull
 
 
 def get_all_entries_allstarfull():
