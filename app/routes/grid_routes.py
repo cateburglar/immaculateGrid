@@ -83,10 +83,16 @@ def perform_query(form_data, returned_player_ids):
 
 @grid_routes.route("/", methods=["GET", "POST"])
 def get_player():
+
+    # Store returned player info
+    if "returned_players" not in session:
+        session["returned_players"] = []
+
     # Store the player ids that are returned
     if "returned_player_ids" not in session:
         session["returned_player_ids"] = []
 
+    returned_players = session["returned_players"]
     returned_player_ids = set(session["returned_player_ids"])
 
     if request.method == "POST":
@@ -95,7 +101,6 @@ def get_player():
 
         # Log form data
         username = session.get("username", "Unknown User")
-        logger.info(f"User {username} Form Data: {form_data}")
 
         # Validate form data
         errors = validate_form_data(form_data)
@@ -115,10 +120,14 @@ def get_player():
         result = perform_query(form_data, returned_player_ids)
 
         if result != None:
+            # Log output
             logger.info(f"Player Returned: {result["player_name"]}")
             logger.info(f"Years Returned: {result["player_years"]}")
-            flash(result["player_name"], "success")
-            flash(result["player_years"], "success")
+
+            # Add player info to session info
+            returned_players.append(result)
+            session["returned_players"] = returned_players
+
             # Add player to the session ids
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
@@ -130,5 +139,5 @@ def get_player():
         "immaculate_grid.html",
         team_mappings=TEAM_MAPPINGS,
         option_groups=OPTION_GROUPS,
-        returned_player_ids=returned_player_ids,
+        returned_players=returned_players,
     )
