@@ -18,6 +18,7 @@
         {% for player in returned_players | reverse %}
         <div class="player">
             <h3>{{player.player_name}}</h3>
+            <img src="{{player.player_photo}}">
             <h4>{{player.player_years}}</h4>
         </div>
         {% endfor %}
