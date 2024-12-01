@@ -55,6 +55,8 @@ class People(Base):
     managers = relationship("Manager", back_populates="people")
     awards = relationship("Awards", back_populates="player")
     awardsshare = relationship("AwardsShare", back_populates="player")
+    pitching_entries = relationship("Pitching", back_populates="player")
+    pitchingpost_entries = relationship("PitchingPost", back_populates="player")
     batting_entries = relationship("Batting", back_populates="player")
     battingpost_entries = relationship("BattingPost", back_populates="player")
 
@@ -539,6 +541,8 @@ class Pitching(Base):
         ),
     )
 
+    player = relationship("People", back_populates="pitching_entries")
+
 
 class PitchingPost(Base):
     __tablename__ = "pitchingpost"
@@ -582,6 +586,8 @@ class PitchingPost(Base):
             "playerID", "yearID", "teamID", "round", name="uq_player_year_team_round"
         ),
     )
+
+    player = relationship("People", back_populates="pitchingpost_entries")
 
 
 class Appearances(Base):
