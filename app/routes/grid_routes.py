@@ -41,8 +41,6 @@ def perform_query(form_data, returned_player_ids):
     # Extract parameters from the form data
     params = parse_prompts(form_data)
 
-    flash(params, "info")
-
     # Apply filters based on the form data
     team = None
     for i, param in enumerate(params):
