@@ -49,15 +49,11 @@ def depth_chart():
             depth_chart_data[position].append(player)
 
 
-        # Query the database for batting leaders---- TODO cant do this yet...!!!!!!!!!!!!!!!!!
+        # Query the database for batting leaders---- TODO will be modded!!!!!!!!!!!!!!!!
         batting_leaders = []
-        '''
         batting_leaders = db.session.query(Batting).filter_by(yearID=year, teamID=team_ID).order_by(
-            Batting.homeRuns.desc(),
-            Batting.battingAverage.desc(),
-            Batting.RBIs.desc()
+            Batting.b_2B.desc(),
         ).limit(5).all()  # Adjust limit as needed
-        '''
 
         # Query the database for pitching leaders ----- TODO WILL BE MODDED !!!!!!!!!!!!!!!
         pitching_leaders = db.session.query(
