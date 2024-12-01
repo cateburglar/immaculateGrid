@@ -1,6 +1,8 @@
 import logging
 import os
 
+import requests
+from bs4 import BeautifulSoup
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 from app import db
@@ -72,13 +74,48 @@ def perform_query(form_data, returned_player_ids):
             str(result.finalGameDate)[:4] if result.finalGameDate else "Present"
         )
         player_years = f"{debut_year} - {final_year}"
+        player_photo = get_baseball_reference_photo(result.playerID)
+        flash(player_photo, "info")
         return {
             "player_id": result.playerID,
             "player_name": player_name,
             "player_years": player_years,
+            "player_photo": player_photo,
         }
 
     return None
+
+
+def get_baseball_reference_photo(player_id):
+    # Construct the URL for the player's page on Baseball-Reference
+    url = f"https://www.baseball-reference.com/players/{player_id[0]}/{player_id}.shtml"
+
+    # Send a GET request to fetch the page content
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # Parse the HTML content of the page
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Find the div element with the class "media-item"
+        media_item_div = soup.find("div", {"class": "media-item"})
+
+        if media_item_div:
+            # Find the img element within the div
+            img_tag = media_item_div.find("img")
+
+            if img_tag and "src" in img_tag.attrs:
+                # Return the image URL
+                return img_tag["src"]
+            else:
+                logger.warning(f"Image not available for {player_id}")
+                return None
+        else:
+            logger.warning(f"Media item div not found for {player_id}")
+            return None
+    else:
+        logger.error(f"Player not found for {player_id}")
+        return None
 
 
 @grid_routes.route("/", methods=["GET", "POST"])

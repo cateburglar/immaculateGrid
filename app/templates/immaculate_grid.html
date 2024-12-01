@@ -15,7 +15,7 @@
         </form>
     </div>
     <div class="results">
-        {% for player in returned_players %}
+        {% for player in returned_players | reverse %}
         <div class="player">
             <h3>{{player.player_name}}</h3>
             <h4>{{player.player_years}}</h4>
