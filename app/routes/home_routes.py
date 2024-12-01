@@ -103,7 +103,18 @@ def login():
 
 @home_routes.route("/logout")
 def logout():
+    # Log logout
     logger.info(f"Logout: {session["username"]}")
+
+    # Logout user
     logout_user()
+
+    # Clear session variables
+    logger.info(f"Clearing {session["username"]} session variables")
+    session.pop("returned_players", None)
+    session.pop("returned_player_ids", None)
+    session.pop("username", None)
+
+    # Flash a message and redirect home
     flash("You have been logged out.", "info")
     return redirect(url_for("home_routes.login"))

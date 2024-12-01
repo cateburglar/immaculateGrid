@@ -8,14 +8,22 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.results {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-    align-items: center;
-    align-content: center;
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.player {
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: center;
+}
+
+.player img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Grid page title styling */

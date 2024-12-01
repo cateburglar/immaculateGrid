@@ -75,7 +75,6 @@ def perform_query(form_data, returned_player_ids):
         )
         player_years = f"{debut_year} - {final_year}"
         player_photo = get_baseball_reference_photo(result.playerID)
-        flash(player_photo, "info")
         return {
             "player_id": result.playerID,
             "player_name": player_name,
@@ -146,7 +145,6 @@ def get_player():
             for error in errors:
                 flash(error, "error")
 
-            flash(form_data, "info")
             return render_template(
                 "immaculate_grid.html",
                 team_mappings=TEAM_MAPPINGS,
