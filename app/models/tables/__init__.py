@@ -192,6 +192,21 @@ class BattingPost(Base):
     player = relationship("People", back_populates="battingpost_entries")
 
 
+class CareerWarLeaders(Base):
+    __tablename__ = "careerwarleaders"
+    careerwarleaders_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    war = Column(Double, nullable=False)
+
+    __table_args__ = (
+        Index(
+            "careerwarleaders_playerID_war",
+            "playerID",
+            "war",
+        ),  # Composite index
+    )
+
+
 class Draft(Base):
     __tablename__ = "draft"
     draft_ID = Column(Integer, primary_key=True, nullable=False)
@@ -205,6 +220,20 @@ class Draft(Base):
             "draft_playerID_yearID_teamID", "playerID", "yearID", "teamID"
         ),  # Composite index
     )
+
+
+class HallofFame(Base):
+    __tablename__ = "halloffame"
+    halloffame_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    votedBy = Column(String(64), nullable=False)
+    ballots = Column(SmallInteger, nullable=True)
+    needed = Column(SmallInteger, nullable=True)
+    votes = Column(SmallInteger, nullable=True)
+    inducted = Column(String(1), nullable=True)
+    category = Column(String(20), nullable=True)
+    note = Column(String(255), nullable=True)
 
 
 class NoHitters(Base):

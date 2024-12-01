@@ -4,10 +4,12 @@ from .awards_csv_service import upload_awards_csv
 from .awardsshare_csv_service import upload_awardsshare_csv
 from .batting_csv_service import upload_batting_csv
 from .battingpost_csv_service import upload_battingpost_csv
+from .careerwarleaders_csv_service import upload_careerwarleaders_csv
 from .collegeplaying_csv_service import upload_collegeplaying_csv
 from .draft_csv_service import upload_draft_csv
 from .fielding_csv_service import upload_fielding_csv
 from .fieldingpost_csv_service import upload_fieldingpost_csv
+from .halloffame_csv_service import upload_halloffame_csv
 from .homegames_csv_service import upload_homegames_csv
 from .managers_csv_service import upload_managers_csv
 from .nlhof_csv_service import upload_nlhof_csv

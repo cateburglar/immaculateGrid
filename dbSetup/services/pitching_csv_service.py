@@ -25,14 +25,13 @@ def update_pitching_from_csv(file_path):
     with open(file_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         new_rows = 0
-        peopleNotExist=0
         teamNotExists=0
-        skipCount=0
+        updateCount=0
+        peopleNotExist=0
+        batch_counter, batch_size = 0,500
 
         # Create session
         session = create_session_from_str(create_enginestr_from_values(mysql=cfg.mysql))
-        skipCount=0
-        peopleNotExist=0
         for row in reader:
             pitching_record = Pitching(
                 playerID=row['playerID'],
@@ -93,17 +92,42 @@ def update_pitching_from_csv(file_path):
                 .first()
             )
 
+            # Check for existing record
             if existing_entry:
-                skipCount+=1
-                #if we make error log, message can go here
-                continue
-            else:
-                # Insert a new record
-                session.add(pitching_record)
-                new_rows += 1
+                for column in Pitching.__table__.columns:
+                    # Skip the 'ID' column as it should not be modified
+                    if column.name == 'pitching_ID':
+                        continue
 
-            session.commit()
-    session.close()
-    return {"new_rows": new_rows, "rows skipped bc already existed: ": skipCount,
+                    updated = False
+                    new_value = getattr(pitching_record, column.name)
+                    existing_value = getattr(existing_entry, column.name)
+
+                    #skip if both columns are null
+                    if new_value is None and existing_value is None:
+                        continue
+
+                    # If the values are different, update the existing record
+                    if existing_value is None or new_value != existing_value :
+                        setattr(existing_entry, column.name, new_value)
+                        updated = True
+
+                if updated:
+                    updateCount += 1  # Only count as updated if something changed
+            else:
+                new_rows += 1
+                session.add(pitching_record)
+            
+            batch_counter += 1
+
+            # Commit in batches
+            if batch_counter >= batch_size:
+                session.commit()
+                batch_counter = 0
+
+        # Commit remaining batch
+        session.commit()
+        session.close()
+    return {"new_rows": new_rows, "rows updated: ": updateCount,
             "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}
