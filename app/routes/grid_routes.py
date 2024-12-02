@@ -52,7 +52,7 @@ def perform_query(form_data, returned_player_ids):
         if option in OPTION_GROUPS["Career Options"].keys():
             query = CareerStatFilter(query, option, float(number), team, i).apply()
         elif option in OPTION_GROUPS["Season Options"].keys():
-            query = SeasonStatFilter(query, option, float(number), team).apply()
+            query = SeasonStatFilter(query, option, float(number), team, i).apply()
         elif option == "played_for_team":
             query = TeamFilter(query, team, i).apply()
         elif option in OPTION_GROUPS["Position Options"]:

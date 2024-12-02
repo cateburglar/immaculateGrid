@@ -232,6 +232,21 @@ class CareerWarLeaders(Base):
         ),  # Composite index
     )
 
+class SeasonWarLeaders(Base):
+    __tablename__ = "seasonwarleaders"
+    seasonwarleaders_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    war = Column(Double, nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+
+    __table_args__ = (
+        Index(
+            "seasonwarleaders_playerID_war",
+            "playerID",
+            "war",
+        ),  # Composite index
+    )
+
 
 class Draft(Base):
     __tablename__ = "draft"
