@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import logging
 import os
 
@@ -30,10 +31,14 @@ file_handler = logging.FileHandler(log_file_path)
 formatter = logging.Formatter("%(asctime)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
+=======
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+>>>>>>> 484ee0f (Fixing bug with dropdown menus being linked)
 
 grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
 
+<<<<<<< HEAD
 def perform_query(form_data, returned_player_ids):
     # Get base query
     query = db.session.query(People)
@@ -199,3 +204,24 @@ def clear_players():
     logger.info(f"Clearing results list for {session["username"]}")
     flash("Player list cleared.", "info")
     return redirect(url_for("grid_routes.get_player"))
+=======
+@grid_routes.route("/", methods=["GET", "POST"])
+def get_player():
+    if request.method == "POST":
+        # Extract form data
+        prompt1 = request.form.get("prompt1")
+        prompt2 = request.form.get("prompt2")
+        operator = request.form.get("operator")
+        number = request.form.get("number")
+        team = request.form.get("team")
+        position = request.form.get("position")
+
+        # Perform necessary actions with the extracted data
+        # For example, query a database or perform calculations
+
+        # Flash a message or redirect to another page
+        flash("Form submitted successfully!", "success")
+        return redirect(url_for("grid_routes.get_player"))
+
+    return render_template("immaculate_grid.html")
+>>>>>>> 484ee0f (Fixing bug with dropdown menus being linked)

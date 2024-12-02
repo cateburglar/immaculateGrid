@@ -39,10 +39,14 @@
                 <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
 <<<<<<< HEAD
+<<<<<<< HEAD
             <a class="navbar-link" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
 =======
             <a class="navbar-link" href="{{ url_for('grid_routes.prompts') }}">Immaculate Grid Solver</a>
 >>>>>>> 0f9d042 (adding prompts with dropdown menus)
+=======
+            <a class="navbar-link" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
+>>>>>>> 484ee0f (Fixing bug with dropdown menus being linked)
             <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>
