@@ -1,26 +1,26 @@
 OPTION_GROUPS = {
     "Career Options": {
-        "avg_career": "AVG Career",
-        "era_career": "ERA Career",
-        "wins_career": "Wins Career",
-        "k_career": "K Career",
-        "hits_career": "Hits Career",
-        "hr_career": "HR Career",
-        "save_career": "Save Career",
-        "war_career": "WAR Career",
+        "avg_career": "Career Batting AVG More Than",
+        "era_career": "Career ERA Less Than",
+        "wins_career_p": "Career Pitching Wins More Than",
+        "k_career": "Career K More Than",
+        "hits_career": "Career Hits More Than",
+        "hr_career": "Career HR More Than",
+        "save_career": "Career Saves More Than",
+        "war_career": "Career WAR More Than",
     },
     "Season Options": {
-        "avg_season": "AVG Season",
-        "era_season": "ERA Season",
-        "hr_season": "HR Season",
-        "win_season": "Win Season",
-        "rbi_season": "RBI Season",
-        "run_season": "Run Season",
-        "hits_season": "Hits Season",
-        "k_season": "K Season",
+        "avg_season": "Season Batting Avg >=",
+        "era_season": "Season ERA <=",
+        "hr_season": "Season HR >=",
+        "win_season": "Season Wins >=",
+        "rbi_season": "Season RBI >=",
+        "run_season": "Season Run >=",
+        "hits_season": "Season Hits >=",
+        "k_season": "Season K >=",
         "hr_sb_season": "HR / SB Season",
-        "save_season": "Save Season",
-        "war_season": "WAR Season",
+        "save_season": "Season Saves >=",
+        "war_season": "Season WAR >=",
     },
     "Team Options": {"played_for_team": "Played For Team"},
     "Position Options": {
@@ -199,15 +199,15 @@ TEAM_MAPPINGS = [
 TEAM_MAPPINGS = {team: team for team in TEAM_MAPPINGS}
 
 APPEARANCES_MAPPING = {
-    "P": "G_p",       # Games as pitcher
-    "C": "G_c",       # Games as catcher
-    "1B": "G_1b",     # Games as first baseman
-    "2B": "G_2b",     # Games as second baseman
-    "3B": "G_3b",     # Games as third baseman
-    "SS": "G_ss",     # Games as shortstop
-    "LF": "G_lf",     # Games as left fielder
-    "CF": "G_cf",     # Games as center fielder
-    "RF": "G_rf",     # Games as right fielder
-    "OF": "G_of",     # Games as outfielder
-    "DH": "G_dh",     # Games as designated hitter
+    "P": "G_p",  # Games as pitcher
+    "C": "G_c",  # Games as catcher
+    "1B": "G_1b",  # Games as first baseman
+    "2B": "G_2b",  # Games as second baseman
+    "3B": "G_3b",  # Games as third baseman
+    "SS": "G_ss",  # Games as shortstop
+    "LF": "G_lf",  # Games as left fielder
+    "CF": "G_cf",  # Games as center fielder
+    "RF": "G_rf",  # Games as right fielder
+    "OF": "G_of",  # Games as outfielder
+    "DH": "G_dh",  # Games as designated hitter
 }

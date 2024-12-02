@@ -36,6 +36,9 @@ def update_nohitters_from_csv(file_path):
         session.rollback()
         raise RuntimeError(f"Unexpected error: {str(e)}")
 
+    finally:
+        session.close()
+
     return counts
 
 

@@ -27,17 +27,9 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="additional-dropdown" id="additional-dropdown-operator-{{ name }}" style="display: none;">
-            <h4>Select Operator</h4>
-            <select class="searchable-dropdown" name="{{ name }}-operator">
-                <option value="" disabled {% if not value or not value.get(name + '-operator') %}selected{% endif %}>Select an operator</option>
-                <option value="greater_than" {% if value and value.get(name + '-operator') == 'greater_than' %}selected{% endif %}>Greater Than</option>
-                <option value="less_than" {% if value and value.get(name + '-operator') == 'less_than' %}selected{% endif %}>Less Than</option>
-            </select>
-        </div>
         <div class="additional-dropdown" id="additional-dropdown-number-{{ name }}" style="display: none;">
-            <h4>Enter Number</h4>
-            <input type="number" class="number-input" step="any" min="0" placeholder="Enter a number" name="{{ name }}-number" value="{{ value.get(name + '-number') if value else '' }}">
+            <h4>Enter a number</h4>
+            <input type="number" class="number-input" step="any" min="0" placeholder="0.00" name="{{ name }}-number" value="{{ value.get(name + '-number') if value else '' }}">
         </div>
     </div>
 </div>
@@ -48,25 +40,25 @@
         const optionConfig = {
             played_for_team: ["team"],
             only_one_team: ["one_team"],
-            avg_career: ["operator", "number"],
-            era_career: ["operator", "number"],
-            wins_career: ["operator", "number"],
-            k_career: ["operator", "number"],
-            hits_career: ["operator", "number"],
-            hr_career: ["operator", "number"],
-            save_career: ["operator", "number"],
-            war_career: ["operator", "number"],
-            avg_season: ["operator", "number"],
-            era_season: ["operator", "number"],
-            hr_season: ["operator", "number"],
-            win_season: ["operator", "number"],
-            rbi_season: ["operator", "number"],
-            run_season: ["operator", "number"],
-            hits_season: ["operator", "number"],
-            k_season: ["operator", "number"],
-            hr_sb_season: ["operator", "number"],
-            save_season: ["operator", "number"],
-            war_season: ["operator", "number"]
+            avg_career: ["number"],
+            era_career: ["number"],
+            wins_career_p: ["number"],
+            k_career: ["number"],
+            hits_career: ["number"],
+            hr_career: ["number"],
+            save_career: ["number"],
+            war_career: ["number"],
+            avg_season: ["number"],
+            era_season: ["number"],
+            hr_season: ["number"],
+            win_season: ["number"],
+            rbi_season: ["number"],
+            run_season: ["number"],
+            hits_season: ["number"],
+            k_season: ["number"],
+            hr_sb_season: ["number"],
+            save_season: ["number"],
+            war_season: ["number"]
         };
 
         function updateDropdowns(name) {
@@ -75,9 +67,6 @@
 
             // Show or hide "team" input
             $(`#additional-dropdown-team-${name}`).toggle(additionalInputs.includes("team") || additionalInputs.includes("one_team"));
-
-            // Show or hide "operator" input
-            $(`#additional-dropdown-operator-${name}`).toggle(additionalInputs.includes("operator"));
 
             // Show or hide "number" input
             $(`#additional-dropdown-number-${name}`).toggle(additionalInputs.includes("number"));

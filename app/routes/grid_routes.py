@@ -45,18 +45,14 @@ def perform_query(form_data, returned_player_ids):
     team = None
     for i, param in enumerate(params):
         option = param["option"]
-        operator = param["operator"]
         number = param["number"]
-        team = param["team"] if param["team"] else team
+        if param["team"] != None:
+            team = param["team"]
 
         if option in OPTION_GROUPS["Career Options"].keys():
-            query = CareerStatFilter(
-                query, option, operator, float(number), team
-            ).apply()
+            query = CareerStatFilter(query, option, float(number), team, i).apply()
         elif option in OPTION_GROUPS["Season Options"].keys():
-            query = SeasonStatFilter(
-                query, option, operator, float(number), team
-            ).apply()
+            query = SeasonStatFilter(query, option, float(number), team, i).apply()
         elif option == "played_for_team":
             query = TeamFilter(query, team, i).apply()
         elif option in OPTION_GROUPS["Position Options"]:
@@ -71,7 +67,11 @@ def perform_query(form_data, returned_player_ids):
 
     if result:
         player_name = f"{result.nameFirst} {result.nameLast}"
-        player_years = f"{result.birthYear} - {"Present" if result.deathYear else result.deathYear}"
+        debut_year = str(result.debutDate)[:4] if result.debutDate else "Unknown"
+        final_year = (
+            str(result.finalGameDate)[:4] if result.finalGameDate else "Present"
+        )
+        player_years = f"{debut_year} - {final_year}"
         return {
             "player_id": result.playerID,
             "player_name": player_name,
@@ -114,7 +114,7 @@ def get_player():
 
         result = perform_query(form_data, returned_player_ids)
 
-        if result:
+        if result != None:
             logger.info(f"Player Returned: {result["player_name"]}")
             logger.info(f"Years Returned: {result["player_years"]}")
             flash(result["player_name"], "success")
@@ -122,6 +122,8 @@ def get_player():
             # Add player to the session ids
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
+        else:
+            flash("No player could be found that meets those criteria", "error")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
