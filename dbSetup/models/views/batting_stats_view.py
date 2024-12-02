@@ -1,3 +1,4 @@
+from flask import session
 from sqlalchemy import text
 from utils import create_enginestr_from_values, create_session_from_str
 from sqlalchemy.orm import Session
@@ -7,10 +8,7 @@ database_values = {
     "dialect": "sqlite",  # Replace with your actual database dialect
     "database": "your_database.db",  # Replace with your actual database name
 }
-engine_str = create_enginestr_from_values(database_values)  # Ensure this function works correctly
 
-# Create a SQLAlchemy engine
-engine = create_session_from_str(engine_str)  # Ensure this function initializes a session/engine properly
 
 # Define the SQL query
 create_view_query = """
@@ -66,6 +64,5 @@ FROM (
 """
 
 # Execute the raw SQL
-with Session(engine) as session:
-    session.execute(text(create_view_query))
-    session.commit()
+ session.commit()
+ session.close()
