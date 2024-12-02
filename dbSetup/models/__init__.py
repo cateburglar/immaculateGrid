@@ -5,6 +5,7 @@ from .tables import *
 all_models = [
     AllstarFull,
     Appearances,
+    Appearances,
     Awards,
     AwardsShare,
     Batting,
@@ -20,6 +21,7 @@ all_models = [
     People,
     Pitching,
     PitchingPost,
+    Salaries,
     Schools,
     SeriesPost,
     Teams,
