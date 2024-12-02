@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from sqlalchemy import desc
 from wtforms import IntegerField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
@@ -32,6 +33,7 @@ class TeamSummaryForm(FlaskForm):
             db.session.query(Teams.yearID)
             .filter(Teams.team_name == team_name)
             .distinct()
+            .order_by(desc(Teams.yearID))
             .all()
         )
         years = [year[0] for year in available_years]
