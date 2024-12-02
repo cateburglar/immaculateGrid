@@ -131,9 +131,11 @@
             </tbody>
         </table>
     {% endif %}
+
+    {% if depth_chart_data %}
+        {% include "depth_chart.html" %}
+    {% endif %}
 </div>
-{% block chart %}
-{% endblock %}
 {% endblock %}
 
 {% block scripts %}

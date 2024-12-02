@@ -1,22 +1,12 @@
-{% extends "team_summary.html" %}
-
-{% block title %}
-    {% if teamName and yearID %}
-        Depth Chart for {{ teamName }} - {{ yearID }}
-    {% else %}
-        Depth Chart
-    {% endif %}
-{% endblock %}
-
-{% block content %}
+<div>
     <h1>MLB Team Depth Chart</h1>
-
+    {{ chart_form.hidden_tag() }}
     <form method="POST">
         <div>
-            {{ form.positionStats.label }} {{ form.positionStats() }}
+            {{ chart_form.positionStats.label }} {{ chart_form.positionStats() }}
         </div>
         <div>
-            {{ form.pitcherStats.label }} {{ form.pitcherStats() }}
+            {{ chart_form.pitcherStats.label }} {{ chart_form.pitcherStats() }}
         </div>
         <button type="submit">Generate Depth Chart</button>
     </form>
@@ -48,4 +38,4 @@
     {% else %}
         <p>No depth chart data available for {{ teamName }} in {{ yearID }}.</p>
     {% endif %}
-{% endblock %}
+</div>

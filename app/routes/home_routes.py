@@ -167,13 +167,17 @@ def home():
         if not pitching_leaders:
             flash(f"No pitching leaders found for {team_name} in {year}", "warning")
 
+        depth_chart_data = getDepthChartData(team_ID, year)
+
         return render_template(
             "team_summary.html",
             form=form,
+            chart_form=DepthChartForm(),
             batting_leaders=batting_leaders,
             pitching_leaders=pitching_leaders,
             teamName=team_name,
             yearID=year,
+            depth_chart_data=depth_chart_data,
         )
 
     return render_template("team_summary.html", form=form)
@@ -185,7 +189,7 @@ def get_years(team_name):
     return jsonify({"years": years})
 
 
-def displayDepthChart(team_name, year, form):
+def getDepthChartData(team_name, year):
     team_ID = team_name
 
     # Query the database for the player's batting stats for the given yearID and teamID
@@ -193,7 +197,7 @@ def displayDepthChart(team_name, year, form):
     players = db.session.query(Fielding).filter_by(yearID=year, teamID=team_ID).all()
     if not players:
         flash("No players found for the selected team and year.", "info")
-        return render_template("depth_chart.html", form=form)
+        return None
     # Group players by position
     depth_chart_data = {}
     for player in players:
@@ -203,10 +207,4 @@ def displayDepthChart(team_name, year, form):
         # THIS WILL CONTAIN BATTING STATS TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         depth_chart_data[position].append(player)
 
-    return render_template(
-        "depth_chart.html",
-        form=form,
-        yearID=year,
-        teamName=team_name,
-        depth_chart_data=depth_chart_data,
-    )
+    return depth_chart_data
