@@ -129,10 +129,6 @@ def home():
         team_name = form.teamName.data
         year = form.yearID.data
 
-        if year == "":
-            flash(f"Year must be provided", "danger")
-            return render_template("team_summary.html", form=form)
-
         # Get team_ID matching the team_name
         result = (
             db.session.query(Teams.teamID)
