@@ -22,3 +22,4 @@ from .schools_csv_service import upload_schools_csv
 from .seriespost_csv_service import upload_seriespost_csv
 from .teams_csv_service import upload_teams_csv
 from .test_service import execute_tests
+from .seasonwarleaders_csv_service import upload_seasonwarleaders_csv
