@@ -338,6 +338,24 @@ class SeasonStatFilter(QueryFilter):
                 .subquery()
             )
 
+        # Creates subquery for players with hr >= hrs
+        elif self.stat == "hr_season":
+            # Subquery to calculate career hrs
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_HR),
+                )
+                .filter(
+                    (self.team is None) or (batting_alias.teamID.in_(team_subquery))
+                )
+                .group_by(
+                    batting_alias.playerID, batting_alias.yearId, batting_alias.stint
+                )
+                .having(func.sum(batting_alias.b_HR) >= self.value)
+                .subquery()
+            )
+
         # Creates subquery for players with >= pitching wins
         elif self.stat == "win_season":
             print(self.value)
@@ -357,27 +375,44 @@ class SeasonStatFilter(QueryFilter):
                 .subquery()
             )
 
-        # Creates subquery for players with strikouts >= k
-        elif self.stat == "k_season":
-            # Subquery to calculate pitching career strikeouts
+        elif self.stat == "rbi_season":
+            # Subquery to calculate season RBI
             subquery = (
                 self.query.session.query(
-                    pitching_alias.playerID,
-                    func.sum(pitching_alias.p_SO),
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_RBI),
                 )
                 .filter(
-                    (self.team is None) or (pitching_alias.teamID.in_(team_subquery))
+                    (self.team is None) or (batting_alias.teamID.in_(team_subquery))
                 )
                 .group_by(
-                    pitching_alias.playerID, pitching_alias.yearID, pitching_alias.stint
+                    batting_alias.playerID, batting_alias.yearId, batting_alias.stint
                 )
-                .having(func.sum(pitching_alias.p_SO) >= self.value)
+                .having(func.sum(batting_alias.b_RBI) >= self.value)
+                .subquery()
+            )
+
+        # Creates subquery for players with run >= runs
+        elif self.stat == "run_season":
+            # Subquery to calculate season hrs
+            subquery = (
+                self.query.session.query(
+                    batting_alias.playerID,
+                    func.sum(batting_alias.b_R),
+                )
+                .filter(
+                    (self.team is None) or (batting_alias.teamID.in_(team_subquery))
+                )
+                .group_by(
+                    batting_alias.playerID, batting_alias.yearId, batting_alias.stint
+                )
+                .having(func.sum(batting_alias.b_R) >= self.value)
                 .subquery()
             )
 
         # Creates subquery for players with career hits >= hits
         elif self.stat == "hits_season":
-            # Subquery to calculate career hits
+            # Subquery to calculate season hits
             subquery = (
                 self.query.session.query(
                     batting_alias.playerID,
@@ -393,41 +428,26 @@ class SeasonStatFilter(QueryFilter):
                 .subquery()
             )
 
-        # Creates subquery for players with hr >= hrs
-        elif self.stat == "hr_season":
-            # Subquery to calculate career hrs
+        # Creates subquery for players with strikouts >= k
+        elif self.stat == "k_season":
+            # Subquery to calculate pitching season strikeouts
             subquery = (
                 self.query.session.query(
-                    batting_alias.playerID,
-                    func.sum(batting_alias.b_HR),
+                    pitching_alias.playerID,
+                    func.sum(pitching_alias.p_SO),
                 )
                 .filter(
-                    (self.team is None) or (batting_alias.teamID.in_(team_subquery))
+                    (self.team is None) or (pitching_alias.teamID.in_(team_subquery))
                 )
                 .group_by(
-                    batting_alias.playerID, batting_alias.yearId, batting_alias.stint
+                    pitching_alias.playerID, pitching_alias.yearID, pitching_alias.stint
                 )
-                .having(func.sum(batting_alias.b_HR) >= self.value)
+                .having(func.sum(pitching_alias.p_SO) >= self.value)
                 .subquery()
             )
 
-        # Creates subquery for players with run >= runs
-        elif self.stat == "run_season":
-            # Subquery to calculate career hrs
-            subquery = (
-                self.query.session.query(
-                    batting_alias.playerID,
-                    func.sum(batting_alias.b_R),
-                )
-                .filter(
-                    (self.team is None) or (batting_alias.teamID.in_(team_subquery))
-                )
-                .group_by(
-                    batting_alias.playerID, batting_alias.yearId, batting_alias.stint
-                )
-                .having(func.sum(batting_alias.b_R) >= self.value)
-                .subquery()
-            )
+        elif self.stat == "hr_sb_season":
+            return None
 
         # Creates subquery for players with career sv >= saves
         elif self.stat == "save_season":
