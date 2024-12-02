@@ -6,6 +6,7 @@ from .views import *
 all_models = [
     AllstarFull,
     Appearances,
+    Appearances,
     Awards,
     AwardsShare,
     Batting,
@@ -22,6 +23,7 @@ all_models = [
     Pitching,
     PitchingPost,
     PitchingStatsView,
+    Salaries,
     Schools,
     SeriesPost,
     Teams,

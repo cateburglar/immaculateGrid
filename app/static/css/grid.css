@@ -1,6 +1,13 @@
-/* Center the grid page and style it */
+/* Container for the whole page */
+.solver-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container for just the grid solver */
 .grid-container {
-    max-width: 600px;
+    width: 700px;
     margin: 0 auto;
     padding: 20px;
     background-color: var(--mimi-pink);
@@ -8,11 +15,42 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Grid page title styling */
+/* Container for the player results */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Player card */
+.player {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--jet);
+}
+
+/* Player card image */
+.player img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+}
+
+/* Grid solver title styling */
 .grid-title {
     font-size: 2rem;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: var(--jet);
 }
 
@@ -34,14 +72,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Main dropdowns in each prompt */
 .searchable-dropdown {
     width: 100%;
 }
 
+/* Subsequent dropdowns */
 .additional-dropdowns {
     width: 100%;
 }
 
+/* Each additional dropdown (Styling was made before multidropdowns were removed */
 .additional-dropdown {
     width: 100%;
     display: flex;
@@ -49,10 +90,12 @@
     align-items: center;
 }
 
+/* Title for dropdown */
 .additional-dropdown h4 {
     color: var(--jet);
 }
 
+/* Search box styling */
 .additional-dropdown .searchable-dropdown,
 .additional-dropdown select {
     width: 100%;
@@ -63,6 +106,7 @@
     width: 100% !important;
 }
 
+/* Styling for the numbers */
 .additional-dropdown .number-input {
     width: 90%;
     padding: 10px;
@@ -72,6 +116,7 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* Get player button styling */
 .submit-button {
     display: flex;
     width: 100%;
@@ -89,4 +134,24 @@
 
 .submit-button:hover {
     background-color: var(--rose-pompadour)
+}
+
+/* Clear Players button styling */
+.clear-button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--jet);
+    background-color: var(--red);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: var(--dark-red)
 }
