@@ -1,4 +1,3 @@
-
 /* Container for the whole page */
 .solver-container {
     display: flex;
@@ -8,27 +7,14 @@
 
 /* Container for just the grid solver */
 .grid-container {
-    width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--mimi-pink);
-=======
-/* Center the grid page and style it */
-.grid-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-<<<<<<< HEAD
-    background-color: var(--french-gray);
->>>>>>> 0f9d042 (adding prompts with dropdown menus)
-=======
-    background-color: var(--mimi-pink);
->>>>>>> 529aac4 (Adding styling to the get player button)
+    background-color: var(--mimi-pink); /* Ensure this is the correct color */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< HEAD
 /* Container for the player results */
 .results-grid {
     display: grid;
@@ -60,18 +46,11 @@
     object-fit: cover;
 }
 
-/* Grid solver title styling */
-.grid-title {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 25px;
-=======
 /* Grid page title styling */
 .grid-title {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 20px;
->>>>>>> 0f9d042 (adding prompts with dropdown menus)
     color: var(--jet);
 }
 
@@ -86,35 +65,24 @@
     width: 45%;
     display: flex;
     flex-direction: column;
-
-    background-color: var(--amaranth-pink);
-
-    background-color: var(--white-smoke-hsl);
-
-    background-color: var(--amaranth-pink);
-
+    background-color: var(--amaranth-pink); /* Choose one background color */
     margin: auto;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Main dropdowns in each prompt */
 .searchable-dropdown {
     width: 100%;
 }
 
-
 /* Subsequent dropdowns */
-
 .additional-dropdowns {
     width: 100%;
 }
 
-
-/* Each additional dropdown (Styling was made before multidropdowns were removed */
-
+/* Each additional dropdown */
 .additional-dropdown {
     width: 100%;
     display: flex;
@@ -122,18 +90,12 @@
     align-items: center;
 }
 
-<<<<<<< HEAD
 /* Title for dropdown */
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown h4 {
     color: var(--jet);
 }
 
-<<<<<<< HEAD
 /* Search box styling */
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 .additional-dropdown .searchable-dropdown,
 .additional-dropdown select {
     width: 100%;
@@ -145,8 +107,6 @@
 }
 
 /* Styling for the numbers */
-
-
 .additional-dropdown .number-input {
     width: 90%;
     padding: 10px;
@@ -157,8 +117,6 @@
 }
 
 /* Get player button styling */
-
-}
 .submit-button {
     display: flex;
     width: 100%;
@@ -175,8 +133,7 @@
 }
 
 .submit-button:hover {
-    background-color: var(--rose-pompadour)
-<<<<<<< HEAD
+    background-color: var(--rose-pompadour);
 }
 
 /* Clear Players button styling */
@@ -196,6 +153,5 @@
 }
 
 .clear-button:hover {
-    background-color: var(--dark-red)
-
-    width: 100%;
+    background-color: var(--dark-red);
+}
