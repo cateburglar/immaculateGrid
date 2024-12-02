@@ -64,5 +64,5 @@ FROM (
 """
 
 # Execute the raw SQL
- session.commit()
- session.close()
+session.commit()
+session.close()
