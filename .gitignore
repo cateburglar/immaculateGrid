@@ -6,6 +6,8 @@ pyrightconfig.json
 .editorconfig
 .DS_Store
 .Rhistory
+benchmark.out
+benchmark.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
