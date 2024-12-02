@@ -1,6 +1,8 @@
 import logging
 import os
 
+import requests
+from bs4 import BeautifulSoup
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 from app import db
@@ -39,7 +41,9 @@ def perform_query(form_data, returned_player_ids):
     # Extract parameters from the form data
     params = parse_prompts(form_data)
 
-    flash(params, "info")
+    # Check if the second prompt provides a team but the first does not
+    if len(params) > 1 and params[0]["team"] is None and params[1]["team"] is not None:
+        params.reverse()
 
     # Apply filters based on the form data
     team = None
@@ -65,6 +69,7 @@ def perform_query(form_data, returned_player_ids):
 
     result = query.first()
 
+    # Parse player info from result
     if result:
         player_name = f"{result.nameFirst} {result.nameLast}"
         debut_year = str(result.debutDate)[:4] if result.debutDate else "Unknown"
@@ -72,21 +77,71 @@ def perform_query(form_data, returned_player_ids):
             str(result.finalGameDate)[:4] if result.finalGameDate else "Present"
         )
         player_years = f"{debut_year} - {final_year}"
+
+        # Get the photo and link to the Baseball Reference page
+        player_photo = get_baseball_reference_photo(result.playerID)
+
+        # If no photo is retrieved, don't supply a link
+        player_link = None
+        if player_photo != None:
+            player_link = f"https://www.baseball-reference.com/players/{result.playerID[0]}/{result.playerID}.shtml"
+
+        # Return the players info
         return {
             "player_id": result.playerID,
             "player_name": player_name,
             "player_years": player_years,
+            "player_photo": player_photo,
+            "player_link": player_link,
         }
 
     return None
 
 
+def get_baseball_reference_photo(player_id):
+    # Construct the URL for the player's page on Baseball-Reference
+    url = f"https://www.baseball-reference.com/players/{player_id[0]}/{player_id}.shtml"
+
+    # Send a GET request to fetch the page content
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # Parse the HTML content of the page
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Find the div element with the class "media-item"
+        media_item_div = soup.find("div", {"class": "media-item"})
+
+        if media_item_div:
+            # Find the img element within the div
+            img_tag = media_item_div.find("img")
+
+            if img_tag and "src" in img_tag.attrs:
+                # Return the image URL
+                return img_tag["src"]
+            else:
+                logger.warning(f"Image not available for {player_id}")
+                return None
+        else:
+            logger.warning(f"Media item div not found for {player_id}")
+            return None
+    else:
+        logger.error(f"Player not found for {player_id}")
+        return None
+
+
 @grid_routes.route("/", methods=["GET", "POST"])
 def get_player():
+
+    # Store returned player info
+    if "returned_players" not in session:
+        session["returned_players"] = []
+
     # Store the player ids that are returned
     if "returned_player_ids" not in session:
         session["returned_player_ids"] = []
 
+    returned_players = session["returned_players"]
     returned_player_ids = set(session["returned_player_ids"])
 
     if request.method == "POST":
@@ -95,7 +150,6 @@ def get_player():
 
         # Log form data
         username = session.get("username", "Unknown User")
-        logger.info(f"User {username} Form Data: {form_data}")
 
         # Validate form data
         errors = validate_form_data(form_data)
@@ -104,7 +158,6 @@ def get_player():
             for error in errors:
                 flash(error, "error")
 
-            flash(form_data, "info")
             return render_template(
                 "immaculate_grid.html",
                 team_mappings=TEAM_MAPPINGS,
@@ -115,17 +168,34 @@ def get_player():
         result = perform_query(form_data, returned_player_ids)
 
         if result != None:
+            # Log output
             logger.info(f"Player Returned: {result["player_name"]}")
             logger.info(f"Years Returned: {result["player_years"]}")
-            flash(result["player_name"], "success")
-            flash(result["player_years"], "success")
+
+            # Add player info to session info
+            returned_players.append(result)
+            session["returned_players"] = returned_players
+
             # Add player to the session ids
             returned_player_ids.add(result["player_id"])
             session["returned_player_ids"] = list(returned_player_ids)
         else:
-            flash("No player could be found that meets those criteria", "error")
+            flash("No player could be found that meets those criteria", "danger")
         return redirect(url_for("grid_routes.get_player"))
 
     return render_template(
-        "immaculate_grid.html", team_mappings=TEAM_MAPPINGS, option_groups=OPTION_GROUPS
+        "immaculate_grid.html",
+        team_mappings=TEAM_MAPPINGS,
+        option_groups=OPTION_GROUPS,
+        returned_players=returned_players,
     )
+
+
+@grid_routes.route("/clear_players", methods=["POST"])
+def clear_players():
+    # Clear the returned_players and returned_player_ids from the session
+    session.pop("returned_players", None)
+    session.pop("returned_player_ids", None)
+    logger.info(f"Clearing results list for {session["username"]}")
+    flash("Player list cleared.", "info")
+    return redirect(url_for("grid_routes.get_player"))
