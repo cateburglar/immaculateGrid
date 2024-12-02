@@ -2,9 +2,7 @@
 
 {% block content %}
 <div class="container">
-    {% if teamName %}
-        <h1>{{teamName}} Team Summary</h1>
-    {% else %}
+    {% if teamName == null %}
         <h1>Team Summary</h1>
     {% endif %}
     <form action="{{ url_for('home_routes.home') }}" method="POST">
@@ -19,6 +17,10 @@
         </div>
         <button type="submit" class="btn btn-primary" disabled id="submit-btn">Get Team Summary</button>
     </form>
+
+    {% if teamName %}
+        <h1>{{teamName}} Team Summary</h1>
+    {% endif %}
 
     {% if pitching_leaders %}
         <h2>Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
