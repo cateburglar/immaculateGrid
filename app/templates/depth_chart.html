@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "team_summary.html" %}
 
 {% block title %}
     {% if teamName and yearID %}
@@ -12,13 +12,6 @@
     <h1>MLB Team Depth Chart</h1>
 
     <form method="POST">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.teamName.label }} {{ form.teamName() }}
-        </div>
-        <div>
-            {{ form.yearID.label }} {{ form.yearID() }}
-        </div>
         <div>
             {{ form.positionStats.label }} {{ form.positionStats() }}
         </div>
@@ -27,115 +20,6 @@
         </div>
         <button type="submit">Generate Depth Chart</button>
     </form>
-
-    <!-- Pitching Leaders Section -->
-    {% if pitching_leaders %}
-        <h2>Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Player ID</th>
-                    <th>Age</th>
-                    <th>G</th>
-                    <th>GS</th>
-                    <th>IP</th>
-                    <th>K%</th>
-                    <th>BB%</th>
-                    <th>HR/9</th>
-                    <th>BABIP</th>
-                    <th>LOB%</th>
-                    <th>GB%</th>
-                    <th>HR/FB</th>
-                    <th>ERA</th>
-                    <th>FIP</th>
-                    <th>xFIP</th>
-                    <th>WAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for leader in pitching_leaders %}
-                    <tr>
-                        <td>{{ leader.playerID }}</td>
-                        <td>{{ leader.Age }}</td>
-                        <td>{{ leader.G }}</td>
-                        <td>{{ leader.GS }}</td>
-                        <td>{{ leader.IP }}</td>
-                        <td>{{ leader.K }}</td>
-                        <td>{{ leader.BB }}</td>
-                        <td>{{ leader.HR_9 }}</td>
-                        <td>{{ leader.BABIP }}</td>
-                        <td>{{ leader.LOB }}</td>
-                        <td>{{ leader.GB }}</td>
-                        <td>{{ leader.HR_FB }}</td>
-                        <td>{{ leader.ERA }}</td>
-                        <td>{{ leader.FIP }}</td>
-                        <td>{{ leader.xFIP }}</td>
-                        <td>{{ leader.WAR }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No pitching leader data available for {{ teamName }} in {{ yearID }}.</p>
-    {% endif %}
-
-    <!-- Batting Leaders Section -->
-    {% if batting_leaders %}
-        <h2>Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Player ID</th>
-                    <th>Age</th>
-                    <th>G</th>
-                    <th>PA</th>
-                    <th>HR</th>
-                    <th>SB</th>
-                    <th>BB%</th>
-                    <th>K%</th>
-                    <th>ISO</th>
-                    <th>BABIP</th>
-                    <th>AVG</th>
-                    <th>OBP</th>
-                    <th>SLG</th>
-                    <th>wOBA</th>
-                    <th>wRC+</th>
-                    <th>BsR</th>
-                    <th>Off</th>
-                    <th>Def</th>
-                    <th>WAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for leader in batting_leaders %}
-                    <tr>
-                        <td>{{ leader.playerID }}</td>
-                        <td>{{ leader.Age }}</td>
-                        <td>{{ leader.G }}</td>
-                        <td>{{ leader.PA }}</td>
-                        <td>{{ leader.HR }}</td>
-                        <td>{{ leader.SB }}</td>
-                        <td>{{ leader.BB }}</td>
-                        <td>{{ leader.K }}</td>
-                        <td>{{ leader.ISO }}</td>
-                        <td>{{ leader.BABIP }}</td>
-                        <td>{{ leader.AVG }}</td>
-                        <td>{{ leader.OBP }}</td>
-                        <td>{{ leader.SLG }}</td>
-                        <td>{{ leader.wOBA }}</td>
-                        <td>{{ leader.wRC }}</td>
-                        <td>{{ leader.BsR }}</td>
-                        <td>{{ leader.Off }}</td>
-                        <td>{{ leader.Def }}</td>
-                        <td>{{ leader.WAR }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No batting leader data available for {{ teamName }} in {{ yearID }}.</p>
-    {% endif %}
-
 
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
