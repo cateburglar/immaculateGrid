@@ -41,6 +41,10 @@ def perform_query(form_data, returned_player_ids):
     # Extract parameters from the form data
     params = parse_prompts(form_data)
 
+    # Check if the second prompt provides a team but the first does not
+    if len(params) > 1 and params[0]["team"] is None and params[1]["team"] is not None:
+        params.reverse()
+
     # Apply filters based on the form data
     team = None
     for i, param in enumerate(params):
