@@ -18,6 +18,7 @@ from .parks_csv_service import upload_parks_csv
 from .people_csv_service import upload_people_csv
 from .pitching_csv_service import upload_pitching_csv
 from .pitchingpost_csv_service import upload_pitchingpost_csv
+from .salaries_csv_service import upload_salaries_csv
 from .schools_csv_service import upload_schools_csv
 from .seriespost_csv_service import upload_seriespost_csv
 from .teams_csv_service import upload_teams_csv

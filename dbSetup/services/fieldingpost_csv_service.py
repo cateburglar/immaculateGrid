@@ -157,7 +157,9 @@ def update_fieldingpost_from_csv(file_path):
         finally:
             session.close()
 
-    return {"new rows": new_rows,
-            "updated rows: ": updated_rows,
-            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
-            "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist}
+    return {
+        "new rows": new_rows,
+        "updated rows: ": updated_rows,
+        "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+        "rows skipped bc their teamid didnt exist in teams table: ": teamNotExist
+    }

@@ -672,7 +672,6 @@ class Fielding(Base):
         ),
     )
 
-
 class FieldingPost(Base):
     __tablename__ = "fieldingpost"
     fieldingpost_ID = Column(Integer, primary_key=True, nullable=False)
@@ -708,6 +707,24 @@ class FieldingPost(Base):
         ),
     )
 
+class Salaries(Base):
+    __tablename__ = "salaries"
+    salaries_ID = Column(Integer, primary_key=True, nullable=False)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    yearId = Column(SmallInteger, nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    salary = Column(Double, nullable=True)
+
+    __table_args__ = (
+        Index("key_team", "teamID"),
+        Index("salaries_playerID", "playerID"),
+        UniqueConstraint(
+            "playerID",
+            "yearId",
+            "teamID",
+            name="uq_salary_player_year_team"),
+        {"mysql_charset": "utf8mb3", "mysql_collate": "utf8mb3_general_ci"},
+    )
 
 class HomeGames(Base):
     __tablename__ = "homegames"
