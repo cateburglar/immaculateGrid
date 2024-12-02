@@ -69,12 +69,13 @@ def create_pitching_stats_view():
         (pi.p_HR / (pi.p_HR + pi.p_SO)) AS p_HR_div_FB,
         -- FIP Requires a FIP constant
         -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
-        -- FIP Constant = lgERA - (((13*lgHR)+(3*(lgBB+lgHBP))-(2*lgK))/lgIP)
-        ((13*pi.p_HR+3*(pi.p_BB+pi.p_HBP)-2*pi.p_SO)/(pi.p_IPouts/3.0))+(l.lgERA-(((13*l.lgHR)+(3*(l.lgBB+l.lgHBP))-(2*l.lgK))/l.lgIP)) AS p_FIP,
+        -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
+        ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP,
         -- p_xFIP requires league avg HR rates
-        -- xFIP = ((13*HR)+(3*(BB+HBP))-(2*K))/IP + FIP Constant
+        -- xFIP = ((13 * (FB * (lgHR / lgFB)) + 3 * (BB + HBP) - 2 * K) / IP) + FIP constant
         -- FIP Constant = lgERA - (((13*lgHR)+(3*(lgBB+lgHBP))-(2*lgK))/lgIP)
-        ((13*pi.p_HR)+(3*(pi.p_BB+pi.p_HBP))-(2*pi.p_SO))/(pi.p_IPouts / 3.0) + (lgERA-(((13*l.lgHR)+(3*(l.lgBB+l.lgHBP))-(2*l.lgK))/l.lgIP)) AS p_xFIP,
+        -- well... p_FB is not present in our database
+        ((13 * (pi.p_FB * l.lgHR_per_FB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
         -- p_WAR requires additional data not present in our current database
         NULL AS p_WAR
     FROM pitching pi
