@@ -2,7 +2,7 @@ import argparse
 import inspect
 
 import services  # Assuming services.py is in the same directory
-from services import create_pitching_stats_view
+from services import create_lgavg_view, create_pitching_stats_view
 
 def main():
     parser = argparse.ArgumentParser(description="Update database.")
@@ -21,6 +21,7 @@ def main():
     args = parser.parse_args()
 
     if args.create_view:
+        create_lgavg_view()
         create_pitching_stats_view()
         print("View creation triggered successfully.")
         return
