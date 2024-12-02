@@ -12,15 +12,15 @@
                 <div class="form-row">
                     <div class="summary-form-group">
                         {{ form.teamName.label(class="form-label") }}
-                        {{ form.teamName(class="form-control") }}
+                        {{ form.teamName(class="summary-form-control") }}
                     </div>
                     <div class="summary-form-group {% if not yearID %}none{% endif %}" id="year-group">
                         {{ form.yearID.label(class="form-label") }}
-                        {{ form.yearID(class="form-control") }}
+                        {{ form.yearID(class="summary-form-control") }}
                     </div>
                 </div>
                 <div class="form-row">
-                    <button type="submit" class="btn summary-btn-submit" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Team Summary</button>
+                    <button type="submit" class="btn form-row-submit" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Team Summary</button>
                 </div>
             </form>
         </div>
