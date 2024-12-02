@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Container for the whole page */
 .solver-container {
     display: flex;
@@ -18,8 +18,12 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
+<<<<<<< HEAD
     background-color: var(--french-gray);
 >>>>>>> 0f9d042 (adding prompts with dropdown menus)
+=======
+    background-color: var(--mimi-pink);
+>>>>>>> 529aac4 (Adding styling to the get player button)
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -82,35 +86,35 @@
     width: 45%;
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
+
     background-color: var(--amaranth-pink);
-=======
+
     background-color: var(--white-smoke-hsl);
->>>>>>> 0f9d042 (adding prompts with dropdown menus)
+
+    background-color: var(--amaranth-pink);
+
     margin: auto;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< HEAD
+
 /* Main dropdowns in each prompt */
 .searchable-dropdown {
     width: 100%;
 }
 
-<<<<<<< HEAD
+
 /* Subsequent dropdowns */
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
+
 .additional-dropdowns {
     width: 100%;
 }
 
-<<<<<<< HEAD
+
 /* Each additional dropdown (Styling was made before multidropdowns were removed */
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
+
 .additional-dropdown {
     width: 100%;
     display: flex;
@@ -140,10 +144,9 @@
     width: 100% !important;
 }
 
-<<<<<<< HEAD
 /* Styling for the numbers */
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
+
+
 .additional-dropdown .number-input {
     width: 90%;
     padding: 10px;
@@ -151,10 +154,11 @@
     border: 1px solid var(--french-gray);
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-<<<<<<< HEAD
 }
 
 /* Get player button styling */
+
+}
 .submit-button {
     display: flex;
     width: 100%;
@@ -172,6 +176,7 @@
 
 .submit-button:hover {
     background-color: var(--rose-pompadour)
+<<<<<<< HEAD
 }
 
 /* Clear Players button styling */
@@ -192,10 +197,5 @@
 
 .clear-button:hover {
     background-color: var(--dark-red)
-=======
-.searchable-dropdown {
+
     width: 100%;
->>>>>>> 0f9d042 (adding prompts with dropdown menus)
-=======
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
-}
