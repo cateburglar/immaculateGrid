@@ -9,7 +9,7 @@
             {{ form.teamName.label(class="form-label") }}
             {{ form.teamName(class="form-control") }}
         </div>
-        <div class="form-group">
+        <div class="form-group" id="year-group" style="display:none;">
             <h2 id="year-instruction">Select a team name to get available years</h2>
             <select class="searchable-dropdown main-dropdown" id="year-select" name="year-select" disabled>
                 <option value="" disabled selected>Select a year</option>
@@ -136,11 +136,13 @@
         // Handle teamName change event to dynamically update year options
         $('select[name="teamName"]').on('change', function() {
             const teamName = $(this).val();
+            var yearGroup = $('#year-group');
             const yearSelect = $('#year-select');
             const yearInstruction = $('#year-instruction');
             const submitBtn = $('#submit-btn');
 
             if (!teamName) {
+                yearGroup.hide();
                 yearSelect.empty().prop('disabled', true);
                 yearInstruction.text("Select a team name to get available years");
                 submitBtn.prop('disabled', true);
@@ -148,6 +150,7 @@
             }
 
             $.getJSON(`/get_years/${teamName}`, function(data) {
+                yearGroup.show();
                 yearSelect.empty().prop('disabled', false);
                 yearInstruction.text("Select a year:");
                 yearSelect.append(new Option("Select a year", "", true, true)).prop('disabled', false);
