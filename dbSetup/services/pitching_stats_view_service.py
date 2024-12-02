@@ -2,6 +2,8 @@
 #
 # [Calculating FIP](https://library.fangraphs.com/pitching/fip/)
 # [Calculating xFIP](https://www.mlb.com/glossary/advanced-stats/expected-fielding-independent-pitching)
+# [WAR Calculations](https://www.samford.edu/sports-analytics/fans/2023/Sabermetrics-101-Understanding-the-Calculation-of-WAR)
+# [WAR Calculation - fangraph](https://library.fangraphs.com/war/calculating-war-pitchers/)
 
 from csi3335f2024 import mysql
 from sqlalchemy import text
@@ -40,6 +42,33 @@ def create_pitching_stats_view():
     # Create session
     session = create_session_from_str(create_enginestr_from_values(mysql))
 
+    """
+    Notes regarding calculations
+
+    1.  FIP
+    -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
+    -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
+
+    2.  xFIP
+    -- p_xFIP requires league avg HR rates
+    -- xFIP = ((13 * (FB * (lgHR / lgFB)) + 3 * (BB + HBP) - 2 * K) / IP) + FIP constant
+    -- FIP Constant = lgERA - (((13*lgHR)+(3*(lgBB+lgHBP))-(2*lgK))/lgIP)
+    -- well... p_FB and lgFB is not present in our database
+
+    3.  WAR
+    There are two different ways to calculate WAR, noted as fWAR and bWAR
+    [WAR Calculations](https://www.samford.edu/sports-analytics/fans/2023/Sabermetrics-101-Understanding-the-Calculation-of-WAR)
+
+    -- From <https://library.fangraphs.com/war/calculating-war-pitchers/>
+    -- WAR = [[([(League FIP - FIP) / Pitcher specific runs per win] + Replacement Level) * (IP / 9)] * Leverage Multiplier for Relievers] + League Correction
+
+    -- fWAR from samford
+    -- fWAR = (Batting runs + Base Running runs + Fielding Runs + Positional Adjustment + League Adjustment + Replacement Runs) / (Runs per win)
+
+    -- bWAR from samford
+    -- bWAR = (Batting runs + Base running runs +/- Runs from GIDP + Fielding Runs + Positional Adjustment runs + Replacement level runs) / (Runs per win)
+    """
+
     # Query to create pitching stats view
     create_pitchingview_sql = """
     CREATE OR REPLACE VIEW pitchingstatsview AS
@@ -67,16 +96,9 @@ def create_pitching_stats_view():
         (pi.p_H - pi.p_HR) / (pi.p_BFP - pi.p_SO - pi.p_HR + pi.p_BB) AS p_BABIP,
         ((pi.p_BFP - pi.p_R) / (pi.p_BFP - pi.p_BB - pi.p_HBP - pi.p_SO)) * 100 AS p_LOB_percent,
         (pi.p_HR / (pi.p_HR + pi.p_SO)) AS p_HR_div_FB,
-        -- FIP Requires a FIP constant
-        -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
-        -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
         ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP,
-        -- p_xFIP requires league avg HR rates
-        -- xFIP = ((13 * (FB * (lgHR / lgFB)) + 3 * (BB + HBP) - 2 * K) / IP) + FIP constant
-        -- FIP Constant = lgERA - (((13*lgHR)+(3*(lgBB+lgHBP))-(2*lgK))/lgIP)
-        -- well... p_FB and lgFB is not present in our database
-        ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
-        -- p_WAR requires additional data not present in our current database
+        -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
+        NULL AS p_xFIP,
         NULL AS p_WAR
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
