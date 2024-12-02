@@ -259,6 +259,9 @@ class SeasonStatFilter(QueryFilter):
         pitching_alias = aliased(Pitching, name=f"pitching_{self.alias_suffix}")
         war_alias = aliased(SeasonWarLeaders, name=f"war_{self.alias_suffix}")
 
+        subquery = None
+        team_subquery = None
+
         # If a team is provided, restrict results to ones earned on that team
         if self.team:
             appearances_teams_alias = aliased(
@@ -278,7 +281,6 @@ class SeasonStatFilter(QueryFilter):
                 People.playerID == appearances_teams_alias.playerID,
             ).filter(appearances_teams_alias.teamID.in_(team_subquery))
 
-        subquery = None
         # Creates subquery to get playerids that meet AVG value
         if self.stat == "avg_season":
             subquery = (
@@ -294,7 +296,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -325,7 +330,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        pitching_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and pitching_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -355,7 +363,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -367,7 +378,6 @@ class SeasonStatFilter(QueryFilter):
 
         # Creates subquery for players with >= pitching wins
         elif self.stat == "win_season":
-            print(self.value)
             # Subquery to calculate pitching career wins
             subquery = (
                 self.query.session.query(
@@ -377,7 +387,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        pitching_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and pitching_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -397,7 +410,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -418,7 +434,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -439,7 +458,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -460,7 +482,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        pitching_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and pitching_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -481,7 +506,10 @@ class SeasonStatFilter(QueryFilter):
                 .filter(
                     or_(
                         self.team is None,
-                        batting_alias.teamID.in_(team_subquery),
+                        (
+                            team_subquery is not None
+                            and batting_alias.teamID.in_(team_subquery)
+                        ),
                     )
                 )
                 .group_by(
@@ -505,7 +533,13 @@ class SeasonStatFilter(QueryFilter):
                     func.sum(pitching_alias.p_SV),
                 )
                 .filter(
-                    (self.team is None) or (pitching_alias.teamID.in_(team_subquery))
+                    or_(
+                        self.team is None,
+                        (
+                            team_subquery is not None
+                            and pitching_alias.teamID.in_(team_subquery)
+                        ),
+                    )
                 )
                 .group_by(
                     pitching_alias.playerID, pitching_alias.yearID, pitching_alias.stint
