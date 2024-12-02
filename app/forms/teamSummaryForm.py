@@ -15,6 +15,14 @@ class TeamSummaryForm(FlaskForm):
         validators=[DataRequired()],
     )
 
+    yearID = SelectField(
+        "Year",
+        choices=[],
+        id="year-select",
+        validators=[DataRequired()],
+        validate_choice=False,
+    )
+
     submit = SubmitField("Get Team Summary")
 
     @staticmethod

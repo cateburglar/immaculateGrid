@@ -124,16 +124,14 @@ def logout():
 def home():
     form = TeamSummaryForm()
 
-    if not form.validate_on_submit():
-        flash("Form validation failed. Please check the input.", "danger")
-        for field, errors in form.errors.items():
-            for error in errors:
-                flash(f"Error in {field}: {error}", "danger")
-
     if form.validate_on_submit():
         # Get form data
         team_name = form.teamName.data
-        year = request.form.get("year-select")
+        year = form.yearID.data
+
+        if year == "":
+            flash(f"Year must be provided", "danger")
+            return render_template("team_summary.html", form=form)
 
         # Get team_ID matching the team_name
         result = (

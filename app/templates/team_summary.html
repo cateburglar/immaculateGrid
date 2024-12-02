@@ -2,18 +2,20 @@
 
 {% block content %}
 <div class="container">
-    <h1>Team Summary</h1>
+    {% if teamName %}
+        <h1>{{teamName}} Team Summary</h1>
+    {% else %}
+        <h1>Team Summary</h1>
+    {% endif %}
     <form action="{{ url_for('home_routes.home') }}" method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.teamName.label(class="form-label") }}
             {{ form.teamName(class="form-control") }}
         </div>
-        <div class="form-group" id="year-group" style="display:none;">
-            <h2 id="year-instruction">Select a team name to get available years</h2>
-            <select class="searchable-dropdown main-dropdown" id="year-select" name="year-select" disabled>
-                <option value="" disabled selected>Select a year</option>
-            </select>
+        <div class="form-group {% if not yearID %}none{% endif %}" id="year-group">
+            {{ form.yearID.label(class="form-label") }}
+            {{ form.yearID(class="form-control") }}
         </div>
         <button type="submit" class="btn btn-primary" disabled id="submit-btn">Get Team Summary</button>
     </form>
@@ -133,33 +135,47 @@
             allowClear: true
         });
 
-        // Handle teamName change event to dynamically update year options
-        $('select[name="teamName"]').on('change', function() {
-            const teamName = $(this).val();
-            var yearGroup = $('#year-group');
-            const yearSelect = $('#year-select');
-            const yearInstruction = $('#year-instruction');
-            const submitBtn = $('#submit-btn');
+        // Get the initial yearID value from the server-side context
+        var initialYearID = "{{ yearID }}";
 
-            if (!teamName) {
-                yearGroup.hide();
-                yearSelect.empty().prop('disabled', true);
-                yearInstruction.text("Select a team name to get available years");
-                submitBtn.prop('disabled', true);
-                return;
-            }
+        // Function to populate the year select field
+        function populateYearSelect(teamName, selectedYear) {
+            var yearGroup = $('#year-group');
+            var yearSelect = $('select[name="yearID"]');
+            var submitBtn = $('#submit-btn');
 
             $.getJSON(`/get_years/${teamName}`, function(data) {
                 yearGroup.show();
                 yearSelect.empty().prop('disabled', false);
-                yearInstruction.text("Select a year:");
                 yearSelect.append(new Option("Select a year", "", true, true)).prop('disabled', false);
                 data.years.forEach(year => {
-                    yearSelect.append(new Option(year, year));
+                    var option = new Option(year, year);
+                    if (year == selectedYear) {
+                        option.selected = true;
+                    }
+                    yearSelect.append(option);
                 });
                 submitBtn.prop('disabled', false);
             });
+        }
+
+        // Handle teamName change event to dynamically update yearID options
+        $('select[name="teamName"]').on('change', function() {
+            var teamName = $(this).val();
+            if (!teamName) {
+                $('#year-group').hide();
+                $('select[name="yearID"]').empty().prop('disabled', true);
+                $('#submit-btn').prop('disabled', true);
+                return;
+            }
+            populateYearSelect(teamName, initialYearID);
         });
+
+        // Ensure the year group is visible if a team is already selected
+        var selectedTeam = $('select[name="teamName"]').val();
+        if (selectedTeam) {
+            populateYearSelect(selectedTeam, initialYearID);
+        }
     });
 </script>
 {% endblock %}
