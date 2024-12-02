@@ -8,6 +8,7 @@ from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from models import Appearances, People, Teams
 from utils import create_enginestr_from_values, create_session_from_str, get_csv_path
 import csi3335f2024 as cfg
+from .processconfig import CHUNK_SIZE, NUM_PROCESSES
 
 # Retry decorator for deadlock handling
 def retry_on_deadlock(tries=3, delay=2):
@@ -134,7 +135,7 @@ def process_chunk(chunk_data):
     }
 
 # Split CSV into chunks
-def split_csv(file_path, chunksize=10000):
+def split_csv(file_path, chunksize=CHUNK_SIZE):
     with open(file_path, newline="") as csvfile:
         reader = list(csv.DictReader(csvfile))
         for i in range(0, len(reader), chunksize):
@@ -152,7 +153,7 @@ def upload_appearances_csv():
     chunks = list(split_csv(csv_file_path))
 
     # Use multiprocessing to process chunks
-    with Pool(processes=os.cpu_count()) as pool:
+    with Pool(processes=NUM_PROCESSES) as pool:
         results = pool.map(process_chunk, chunks)
 
     # Aggregate results

@@ -1,5 +1,4 @@
-from flask import flash, redirect, url_for
-from flask_login import UserMixin, logout_user
+from flask_login import UserMixin
 
 from app import db
 
