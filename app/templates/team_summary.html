@@ -2,21 +2,29 @@
 
 {% block content %}
 <div class="container">
-    {% if teamName == null %}
-        <h1>Team Summary</h1>
-    {% endif %}
-    <form action="{{ url_for('home_routes.home') }}" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.teamName.label(class="form-label") }}
-            {{ form.teamName(class="form-control") }}
+    <div class="summary-form-container">
+        {% if not teamName %}
+            <h1>Team Summary</h1>
+        {% endif %}
+        <div class="summary-form">
+            <form action="{{ url_for('home_routes.home') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-row">
+                    <div class="summary-form-group">
+                        {{ form.teamName.label(class="form-label") }}
+                        {{ form.teamName(class="form-control") }}
+                    </div>
+                    <div class="summary-form-group {% if not yearID %}none{% endif %}" id="year-group">
+                        {{ form.yearID.label(class="form-label") }}
+                        {{ form.yearID(class="form-control") }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn summary-btn-submit" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Team Summary</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group {% if not yearID %}none{% endif %}" id="year-group">
-            {{ form.yearID.label(class="form-label") }}
-            {{ form.yearID(class="form-control") }}
-        </div>
-        <button type="submit" class="btn btn-primary" disabled id="submit-btn">Get Team Summary</button>
-    </form>
+    </div>
 
     {% if teamName %}
         <h1>{{teamName}} Team Summary</h1>
