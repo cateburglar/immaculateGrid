@@ -325,7 +325,6 @@ class SeasonStatFilter(QueryFilter):
                 .having(func.sum(pitching_alias.p_W) >= self.value)
                 .subquery()
             )
-            print(subquery)
 
         # Creates subquery for players with strikouts >= k
         elif self.stat == "k_season":
@@ -408,6 +407,7 @@ class SeasonStatFilter(QueryFilter):
 
         return self.query
 
+
 """
 PositionFilter applies a filter to the query to include players who have 
 played a specific position in a given team. If a team is provided, 
@@ -424,6 +424,8 @@ Methods:
 Returns:
     query: The SQLAlchemy query object with the position filter applied.
 """
+
+
 class PositionFilter(QueryFilter):
     """
     Initializes the filter with a given query, position, team, and alias suffix.
