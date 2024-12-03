@@ -137,7 +137,8 @@ def create_pitching_stats_view():
         ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP
         -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
         -- NULL AS p_xFIP,
-        -- NULL AS p_WAR
+        -- NULL AS p_WAR,
+        -- NULL AS p_GB_percent
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavg l ON pi.yearID = l.yearID;

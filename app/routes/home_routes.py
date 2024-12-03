@@ -17,7 +17,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
 
-from ..models import Batting, Fielding, Pitching, Teams, User
+from ..models import Batting, Fielding, Pitching, Teams, User, Pitching, PitchingStatsView
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -170,39 +170,39 @@ def home():
             stats_logger.error(
                 f"ERROR: No batting leaders returned for{team_name}, {year}"
             )
-
-        # Query the database for pitching leaders ----- TODO WILL BE MODDED !!!!!!!!!!!!!!!
-        pitching_leaders = (
-            db.session.query(
-                Pitching.playerID, Pitching.p_W, Pitching.p_L, Pitching.p_SO
+        with db.session.no_autoflush:
+            pitching_leaders = (
+                db.session.query(PitchingStatsView)
+                .filter(PitchingStatsView.yearID == year, 
+                        PitchingStatsView.teamID == team_ID)
+                .order_by(PitchingStatsView.p_ERA.asc(), 
+                        PitchingStatsView.p_FIP.asc())
+                .all()
             )
-            .filter(Pitching.yearID == year, Pitching.teamID == team_ID)
-            .order_by(Pitching.p_W.desc(), Pitching.p_L.asc(), Pitching.p_SO.desc())
-            .all()
-        )
+            if pitching_leaders:
+                pitching_leaders = preprocess_pitching_leaders(pitching_leaders)
+            else:
+                flash(f"No pitching leaders found for {team_name} in {year}", "warning")
+                stats_logger.error(
+                    f"ERROR: No pitching leaders returned for {team_name}, {year}"
+                )
 
-        if not pitching_leaders:
-            flash(f"No pitching leaders found for {team_name} in {year}", "warning")
-            stats_logger.error(
-                f"ERROR: No pitching leaders returned for {team_name}, {year}"
+            depth_chart_data = getDepthChartData(team_ID, year)
+
+            stats_logger.info(
+                f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
             )
 
-        depth_chart_data = getDepthChartData(team_ID, year)
-
-        stats_logger.info(
-            f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
-        )
-
-        return render_template(
-            "team_summary.html",
-            form=form,
-            chart_form=DepthChartForm(),
-            batting_leaders=batting_leaders,
-            pitching_leaders=pitching_leaders,
-            teamName=team_name,
-            yearID=year,
-            depth_chart_data=depth_chart_data,
-        )
+            return render_template(
+                "team_summary.html",
+                form=form,
+                chart_form=DepthChartForm(),
+                batting_leaders=batting_leaders,
+                pitching_leaders=pitching_leaders,
+                teamName=team_name,
+                yearID=year,
+                depth_chart_data=depth_chart_data,
+            )
 
     return render_template("team_summary.html", form=form)
 
@@ -232,3 +232,22 @@ def getDepthChartData(team_name, year):
         depth_chart_data[position].append(player)
 
     return depth_chart_data
+
+
+def preprocess_pitching_leaders(pitching_leaders):
+    """Preprocess pitching leaders to handle None values and round numbers."""
+    for leader in pitching_leaders:
+        leader.p_ERA = round(leader.p_ERA or 0, 3)
+        leader.p_FIP = round(leader.p_FIP or 0, 3)
+        leader.p_K_percent = round(leader.p_K_percent or 0, 3)
+        leader.p_BB_percent = round(leader.p_BB_percent or 0, 3)
+        leader.p_HR_div9 = round(leader.p_HR_div9 or 0, 3)
+        leader.p_BABIP = round(leader.p_BABIP or 0, 3)
+        leader.p_LOB_percent = round(leader.p_LOB_percent or 0, 3)
+        leader.age = round(leader.age or 0, 0)
+        leader.p_G = round(leader.p_G or 0, 0)
+        leader.p_GS = round(leader.p_GS or 0, 0)
+        leader.p_IP = round(leader.p_IP or 0, 3)
+    
+      
+    return pitching_leaders

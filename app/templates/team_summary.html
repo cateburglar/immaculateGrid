@@ -37,41 +37,39 @@
                 <tr>
                     <th>Player ID</th>
                     <th>Age</th>
+                    <th>ERA</th>
+                    <th>FIP</th>
+                    <th>K%</th>
                     <th>G</th>
                     <th>GS</th>
                     <th>IP</th>
-                    <th>K</th>
-                    <th>BB</th>
+                    <th>BB%</th>
                     <th>HR/9</th>
                     <th>BABIP</th>
                     <th>LOB%</th>
-                    <th>GB%</th>
-                    <th>HR/FB%</th>
-                    <th>ERA</th>
-                    <th>FIP</th>
-                    <th>xFIP</th>
-                    <th>WAR</th>
+                    <!--<th>GB%</th>-->
+                    <!--<th>xFIP</th>
+                    <th>WAR</th>-->
                 </tr>
             </thead>
             <tbody>
                 {% for leader in pitching_leaders %}
                 <tr>
-                    <td>{{ leader.playerID }}</td>
-                    <td>{{ leader.Age }}</td>
-                    <td>{{ leader.G }}</td>
-                    <td>{{ leader.GS }}</td>
-                    <td>{{ leader.IP }}</td>
-                    <td>{{ leader.K }}</td>
-                    <td>{{ leader.BB }}</td>
-                    <td>{{ leader.HR_9 }}</td>
-                    <td>{{ leader.BABIP }}</td>
-                    <td>{{ leader.LOB }}</td>
-                    <td>{{ leader.GB }}</td>
-                    <td>{{ leader.HR_FB }}</td>
-                    <td>{{ leader.ERA }}</td>
-                    <td>{{ leader.FIP }}</td>
-                    <td>{{ leader.xFIP }}</td>
-                    <td>{{ leader.WAR }}</td>
+                    <td>{{ leader.nameFirst }} {{ leader.nameLast}}</td>
+                    <td>{{ leader.age }}</td>
+                    <td>{{ leader.p_ERA }}</td>
+                    <td>{{ leader.p_FIP }}</td>
+                    <td>{{ leader.p_K_percent }}%</td>
+                    <td>{{ leader.p_G }}</td>
+                    <td>{{ leader.p_GS }}</td>
+                    <td>{{ leader.p_IP }}</td>
+                    <td>{{ leader.p_BB_percent }}%</td>
+                    <td>{{ leader.p_HR_div9 }}</td>
+                    <td>{{ leader.p_BABIP }}</td>
+                    <td>{{ leader.p_LOB_percent }}%</td>
+                    <!--<td>{{ leader.p_GB_percent }}</td>-->
+                    <!--<td>{{ leader.p_xFIP }}</td>
+                    <td>{{ leader.p_WAR }}</td> -->
                 </tr>
                 {% endfor %}
             </tbody>
