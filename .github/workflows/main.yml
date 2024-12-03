@@ -22,44 +22,48 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install MySQL
+      - name: Install MariaDB
         run: |
           sudo apt-get update
-          sudo apt-get install -y mysql-server
+          sudo apt-get install -y mariadb-server
 
-      - name: Create MySQL socket directory
+      - name: Create MariaDB socket directory
         run: |
           sudo mkdir -p /var/run/mysqld
           sudo chown mysql:mysql /var/run/mysqld
 
-      - name: Start MySQL server
+      - name: Start MariaDB server
         run: |
-          sudo systemctl start mysql
-          sudo systemctl enable mysql
+          sudo systemctl start mariadb
+          sudo systemctl enable mariadb
+
+      - name: Set MariaDB root password and prepare database
+        run: |
+          sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');"
+          sudo mysql -e "CREATE DATABASE IF NOT EXISTS seaquail;"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Wait for MySQL to be ready
+      - name: Wait for MariaDB to be ready
         run: |
           MAX_RETRIES=20
           RETRY_INTERVAL=5
           TRIES=0
           until mysqladmin -uroot -proot ping --silent; do
             if [ "$TRIES" -ge "$MAX_RETRIES" ]; then
-              echo "MySQL did not become ready in time."
+              echo "MariaDB did not become ready in time."
               exit 1
             fi
-            echo "Waiting for MySQL..."
+            echo "Waiting for MariaDB..."
             sleep $RETRY_INTERVAL
             TRIES=$((TRIES+1))
           done
 
-      - name: Import MySQL dump file
+      - name: Import MariaDB dump file
         run: |
-          mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS seaquail;"
           mysql -uroot -proot seaquail < ./dbSetup/static/seaquail_dump.sql
 
       - name: Run update_db.py
@@ -70,6 +74,6 @@ jobs:
           MYSQL_DATABASE: seaquail
         run: python3 dbSetup/update_db.py
 
-      - name: Print MySQL logs on failure
+      - name: Print MariaDB logs on failure
         if: failure()
-        run: sudo journalctl -u mysql || echo "No MySQL logs found."
+        run: sudo journalctl -u mariadb || echo "No MariaDB logs found."
