@@ -23,7 +23,7 @@ from ..models import Batting, Fielding, Pitching, Teams, User
 log_dir = os.path.join("app", "logging")
 os.makedirs(log_dir, exist_ok=True)
 
-# Configure custom logger
+# Configure custom logger for home routes
 log_file_path = os.path.join(log_dir, "home_logs.log")
 logger = logging.getLogger("home_routes_logger")
 logger.setLevel(logging.INFO)
@@ -31,6 +31,14 @@ file_handler = logging.FileHandler(log_file_path)
 formatter = logging.Formatter("%(asctime)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
+
+# Configure custom logger for stats logs
+stats_log_file_path = os.path.join(log_dir, "stats_logs.log")
+stats_logger = logging.getLogger("stats_logger")
+stats_logger.setLevel(logging.INFO)
+stats_file_handler = logging.FileHandler(stats_log_file_path)
+stats_file_handler.setFormatter(formatter)
+stats_logger.addHandler(stats_file_handler)
 
 home_routes = Blueprint("home_routes", __name__, template_folder="templates")
 
@@ -129,6 +137,10 @@ def home():
         team_name = form.teamName.data
         year = form.yearID.data
 
+        stats_logger.info(
+            f"{session["username"]} requested team summary for {team_name}, {year}"
+        )
+
         # Get team_ID matching the team_name
         result = (
             db.session.query(Teams.teamID)
@@ -136,9 +148,11 @@ def home():
             .first()
         )
         team_ID = result.teamID
+        stats_logger.info(f"teamID returned for {team_name}, {year}: {team_ID}")
 
         if not team_ID:
             flash(f"No team found for {team_name} in {year}", "warning")
+            stats_logger.error(f"ERROR: Bad teamID returned for {team_name}, {year}")
             return render_template("team_summary.html", form=form)
 
         # Query the database for batting leaders---- TODO will be modded!!!!!!!!!!!!!!!!
@@ -153,6 +167,9 @@ def home():
 
         if not batting_leaders:
             flash(f"No batting leaders found for {team_name} in {year}", "warning")
+            stats_logger.error(
+                f"ERROR: No batting leaders returned for{team_name}, {year}"
+            )
 
         # Query the database for pitching leaders ----- TODO WILL BE MODDED !!!!!!!!!!!!!!!
         pitching_leaders = (
@@ -166,8 +183,15 @@ def home():
 
         if not pitching_leaders:
             flash(f"No pitching leaders found for {team_name} in {year}", "warning")
+            stats_logger.error(
+                f"ERROR: No pitching leaders returned for {team_name}, {year}"
+            )
 
         depth_chart_data = getDepthChartData(team_ID, year)
+
+        stats_logger.info(
+            f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
+        )
 
         return render_template(
             "team_summary.html",
