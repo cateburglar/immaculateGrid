@@ -1,137 +1,157 @@
-/* Define CSS HEX colors as variables */
-:root {
-  /* CSS HEX */
-  --rose-pompadour: #e27396ff;
-  --amaranth-pink: #ea9ab2ff;
-  --mimi-pink: #efcfe3ff;
-  --beige: #eaf2d7ff;
-  --light-blue: #b3dee2ff;
-  --jet: #333333ff;
-  --white-smoke: #f5f5f5ff;
-  --yellow: #F5F5DC;
-  --light-green: #c7ebcd;
-  --dark-green: #b1e5b1;
-  --red: #d9534f;
-  --dark-red: #c9302c;
-
-  /* SCSS Gradient */
-
-  --gradient-top: linear-gradient(0deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-right: linear-gradient(90deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-bottom: linear-gradient(180deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-left: linear-gradient(270deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-top-right: linear-gradient(45deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-bottom-right: linear-gradient(135deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-top-left: linear-gradient(225deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-bottom-left: linear-gradient(315deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-
-  --gradient-radial: radial-gradient(#e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-}
-
-/* Set default text color */
-html, body {
-  height: 100%;
-  margin: 0;
-  color: var(--jet);
-  background-color: var(--white-smoke);
+/* Container for the whole page */
+.solver-container {
   display: flex;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   flex-direction: column;
+  align-items: center;
 }
 
-
-/* Container for consistent page layout */
-.container {
-  max-width: 1200px;
+/* Container for just the grid solver */
+.grid-container {
+  width: 700px;
   margin: 0 auto;
   padding: 20px;
-  flex: 1;
+  background-color: var(--mimi-pink);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for the player results */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Player card */
+.player {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--jet);
+}
+
+/* Player card image */
+.player img {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+}
+
+/* Grid solver title styling */
+.grid-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--jet);
+}
+
+/* Container for all the prompts */
+.prompts-container {
+  display: flex;
+}
+
+/* Container for each prompt */
+.prompt-container {
+  align-items: center;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--amaranth-pink);
+  margin: auto;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Main dropdowns in each prompt */
+.searchable-dropdown {
   width: 100%;
 }
 
-
-/* Flash messages */
-.flash-messages {
-  margin: 20px 0;
+/* Subsequent dropdowns */
+.additional-dropdowns {
+  width: 100%;
 }
 
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
+/* Each additional dropdown (Styling was made before multidropdowns were removed */
+.additional-dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title for dropdown */
+.additional-dropdown h4 {
+  color: var(--jet);
+}
+
+/* Search box styling */
+.additional-dropdown .searchable-dropdown,
+.additional-dropdown select {
+  width: 100%;
+}
+
+/* Ensure Select2 elements take full width */
+.select2-container {
+  width: 100% !important;
+}
+
+/* Styling for the numbers */
+.additional-dropdown .number-input {
+  width: 90%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid var(--french-gray);
   border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.alert-success {
-  color: var(--jet);
-  background-color: var(--light-green);
-  border-color: var(--light-green);
-}
-
-.alert-danger {
-  color: var(--jet);
-  background-color: var(--amaranth-pink);
-  border-color: var(--amaranth-pink);
-}
-
-.alert-warning {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-}
-
-.alert-info {
-  color: var(--jet);
-  background-color: var(--light-blue);
-  border-color: var(--light-blue);
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
+/* Get player button styling */
+.submit-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
-  text-decoration: none;
+  color: var(--jet);
+  background-color: var(--amaranth-pink);
+  border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.btn-danger {
+.submit-button:hover {
+  background-color: var(--rose-pompadour)
+}
+
+/* Clear Players button styling */
+.clear-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--jet);
   background-color: var(--red);
-  color: white;
   border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.btn-danger:hover {
-  background-color: var(--dark-red);
+.clear-button:hover {
+  background-color: var(--dark-red)
 }
-
-.btn-success {
-  background-color: var(--light-green);
-  color: white;
-  border: none;
-}
-
-.btn-success:hover {
-  background-color: var(--dark-green);
-}
-
-.btn-primary {
-  background-color: var(--amaranth-pink);
-  color: white;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: var(--rose-pompadour);
-}
-  
