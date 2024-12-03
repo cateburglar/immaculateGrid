@@ -48,6 +48,7 @@ def update_pitching_from_csv(file_path):
                 p_IPouts=int(row['IPouts']) if row['IPouts'] else None,
                 p_H=int(row['H']) if row['H'] else None,
                 p_ER=int(row['ER']) if row['ER'] else None,
+                p_HR=int(row['HR']) if row['HR'] else None,
                 p_BB=int(row['BB']) if row['BB'] else None,
                 p_SO=int(row['SO']) if row['SO'] else None,
                 p_BAOpp=float(row['BAOpp']) if row['BAOpp'] else None,
@@ -74,7 +75,7 @@ def update_pitching_from_csv(file_path):
 
             #check if teamid exists in teams table
             team_exists = session.query(Teams).filter_by(teamID=pitching_record.teamID).first()
-            
+
             if not team_exists:
                 teamNotExists+=1
                 #if we make an error log, a message could go here.
@@ -117,7 +118,7 @@ def update_pitching_from_csv(file_path):
             else:
                 new_rows += 1
                 session.add(pitching_record)
-            
+
             batch_counter += 1
 
             # Commit in batches
@@ -129,5 +130,5 @@ def update_pitching_from_csv(file_path):
         session.commit()
         session.close()
     return {"new_rows": new_rows, "rows updated: ": updateCount,
-            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist, 
+            "rows skipped bc their playerid didn't exist in people table: ": peopleNotExist,
             "rows skipped bc their teamid didnt exist in teams table: ": teamNotExists}

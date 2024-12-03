@@ -1,4 +1,5 @@
 from .tables import *
+from .views import *
 # Import other models as needed
 
 # For easy access to all models
@@ -21,8 +22,10 @@ all_models = [
     People,
     Pitching,
     PitchingPost,
+    PitchingStatsView,
     Salaries,
     Schools,
     SeriesPost,
     Teams,
 ]
+
