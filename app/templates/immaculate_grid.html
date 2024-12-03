@@ -3,7 +3,6 @@
 {% from "_macros.html" import prompt %}
 
 {% block content %}
-<<<<<<< HEAD
 <div class="solver-container">
     <div class="grid-container">
         <h1 class="grid-title">Immaculate Grid Solver</h1>
@@ -26,24 +25,6 @@
             <h4>{{player.player_years}}</h4>
         </a>
         {% endfor %}
-=======
-<div class="grid-container">
-    <h1 class="grid-title">Immaculate Grid Solver</h1>
-<<<<<<< HEAD
-    <div class="prompts-container">
-        {{ prompt('Prompt 1') }}
-        {{ prompt('Prompt 2') }}
-        <!-- Add more prompts as needed -->
->>>>>>> 0f9d042 (adding prompts with dropdown menus)
     </div>
-=======
-    <form action="{{ url_for('grid_routes.get_player') }}" method="POST" class="prompts-form">
-        <div class="prompts-container">
-            {{ prompt('Prompt 1', 'prompt1') }}
-            {{ prompt('Prompt 2', 'prompt2') }}
-        </div>
-        <button type="submit" class="submit-button">Get Player</button>
-    </form>
->>>>>>> 484ee0f (Fixing bug with dropdown menus being linked)
 </div>
 {% endblock %}
