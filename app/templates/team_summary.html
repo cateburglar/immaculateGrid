@@ -8,6 +8,7 @@
         {% endif %}
         <div class="summary-form">
             <form action="{{ url_for('home_routes.home') }}" method="POST">
+                <input type="hidden" name="form_name" value="team_summary_form">
                 {{ form.hidden_tag() }}
                 <div class="form-row">
                     <div class="summary-form-group">
@@ -130,7 +131,7 @@
         </table>
     {% endif %}
 
-    {% if depth_chart_data %}
+    {% if chart_form %}
         {% include "depth_chart.html" %}
     {% endif %}
 </div>

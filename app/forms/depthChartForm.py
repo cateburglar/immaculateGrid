@@ -25,11 +25,11 @@ class DepthChartForm(FlaskForm):
     pitcherStats = SelectField(
         "Pitchers:",
         choices=[
-            ("ERA", "Earned Run Average"),
-            ("PT", "Playing Time"),
-            ("IP", "Innings Pitched"),
-            ("WAR", "Wins Above Replacement"),
-            ("FIP", "Fielding Independent Pitching"),
+            ("p_ERA", "Earned Run Average"),
+            #("p_PT", "Playing Time"),
+            ("p_IP", "Innings Pitched"),
+            #("WAR", "Wins Above Replacement"),
+            ("p_FIP", "Fielding Independent Pitching"),
         ],
         validators=[DataRequired()],
     )

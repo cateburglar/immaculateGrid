@@ -1,7 +1,8 @@
 <div>
     <h1>MLB Team Depth Chart</h1>
-    {{ chart_form.hidden_tag() }}
     <form method="POST">
+        {{ chart_form.hidden_tag() }}
+        <input type="hidden" name="form_name" value="depth_chart_form">
         <div>
             {{ chart_form.positionStats.label }} {{ chart_form.positionStats() }}
         </div>
@@ -20,15 +21,15 @@
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>Player ID</th>
+                            <th>Player</th>
                             <th>Statistic</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for player in players %}
                             <tr>
-                                <td>{{ player.playerID }}</td>
-                                <!--<td>{{ player.statistic }}</td> -->
+                                <td>{{ player.name }}</td>
+                                <td>{{ player.stat }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
