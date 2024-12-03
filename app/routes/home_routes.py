@@ -1,21 +1,29 @@
 import logging
 import os
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+
+from flask import (
+    Blueprint,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
-from app.forms import LoginForm, SignupForm, DepthChartForm
+from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
 
-from ..models import User, Teams, Fielding, Batting, Pitching
-
-
+from ..models import Batting, Fielding, Pitching, Teams, User
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
 os.makedirs(log_dir, exist_ok=True)
 
-# Configure custom logger
+# Configure custom logger for home routes
 log_file_path = os.path.join(log_dir, "home_logs.log")
 logger = logging.getLogger("home_routes_logger")
 logger.setLevel(logging.INFO)
@@ -24,7 +32,16 @@ formatter = logging.Formatter("%(asctime)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
+# Configure custom logger for stats logs
+stats_log_file_path = os.path.join(log_dir, "stats_logs.log")
+stats_logger = logging.getLogger("stats_logger")
+stats_logger.setLevel(logging.INFO)
+stats_file_handler = logging.FileHandler(stats_log_file_path)
+stats_file_handler.setFormatter(formatter)
+stats_logger.addHandler(stats_file_handler)
+
 home_routes = Blueprint("home_routes", __name__, template_folder="templates")
+
 
 @home_routes.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -113,72 +130,105 @@ def logout():
 # /
 @home_routes.route("/", methods=["GET", "POST"])
 def home():
-    form = DepthChartForm()
+    form = TeamSummaryForm()
 
     if form.validate_on_submit():
-        teamName = form.teamName.data
+        # Get form data
+        team_name = form.teamName.data
         year = form.yearID.data
-        positionStat = form.positionStats.data
-        pitcherStat = form.pitcherStats.data
-        flag=False
 
-        #find teamID of given team name
-        team = db.session.query(Teams).filter_by(team_name=teamName).first()
-        if not team:
-            flag=True
-            flash("team not found", "danger")
-        if year < 1871 or year > 2023:
-            flag=True
-            flash("year must be >= 1871 and <= 2023", "danger")
-        
-        if flag:
-            return render_template("depth_chart.html", form=form)
-        
-        team_ID = team.teamID
-
-        # Query the database for the player's batting stats for the given yearID and teamID
-        #THIS WILL BE REPLACED BY BATTING STATS EVENTUALLY TODO
-        players = db.session.query(Fielding).filter_by(yearID=year, teamID=team_ID).all()
-        if not players:
-            flash("No players found for the selected team and year.", "info")
-            return render_template("depth_chart.html", form=form)
-
-        # Group players by position
-        depth_chart_data = {}
-        for player in players:
-            position = player.position
-            if position not in depth_chart_data:
-                depth_chart_data[position] = []
-            #THIS WILL CONTAIN BATTING STATS TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            depth_chart_data[position].append(player)
-
-
-        # Query the database for batting leaders---- TODO will be modded!!!!!!!!!!!!!!!!
-        batting_leaders = []
-        batting_leaders = db.session.query(Batting).filter_by(yearId=year, teamID=team_ID).order_by(
-            Batting.b_2B.desc(),
-        ).limit(5).all()  # Adjust limit as needed
-
-        # Query the database for pitching leaders ----- TODO WILL BE MODDED !!!!!!!!!!!!!!!
-        pitching_leaders = db.session.query(
-            Pitching.playerID,
-            Pitching.p_W,
-            Pitching.p_L,
-            Pitching.p_SO
-        ).filter_by(yearID=year, teamID=team_ID).order_by(
-            Pitching.p_W.desc(),
-            Pitching.p_L.asc(),
-            Pitching.p_SO.desc()
-        ).limit(5).all()  # Adjust limit as needed
-
-        return render_template(
-             "depth_chart.html", 
-             form=form, 
-             yearID=year, 
-             teamName=teamName, 
-             depth_chart_data=depth_chart_data,
-             batting_leaders=batting_leaders,
-             pitching_leaders=pitching_leaders
+        stats_logger.info(
+            f"{session["username"]} requested team summary for {team_name}, {year}"
         )
 
-    return render_template("depth_chart.html", form=form)
+        # Get team_ID matching the team_name
+        result = (
+            db.session.query(Teams.teamID)
+            .filter(Teams.team_name == team_name, Teams.yearID)
+            .first()
+        )
+        team_ID = result.teamID
+        stats_logger.info(f"teamID returned for {team_name}, {year}: {team_ID}")
+
+        if not team_ID:
+            flash(f"No team found for {team_name} in {year}", "warning")
+            stats_logger.error(f"ERROR: Bad teamID returned for {team_name}, {year}")
+            return render_template("team_summary.html", form=form)
+
+        # Query the database for batting leaders---- TODO will be modded!!!!!!!!!!!!!!!!
+        batting_leaders = (
+            db.session.query(Batting)
+            .filter(Batting.yearId == year, Batting.teamID == team_ID)
+            .order_by(
+                Batting.b_2B.desc(),
+            )
+            .all()
+        )
+
+        if not batting_leaders:
+            flash(f"No batting leaders found for {team_name} in {year}", "warning")
+            stats_logger.error(
+                f"ERROR: No batting leaders returned for{team_name}, {year}"
+            )
+
+        # Query the database for pitching leaders ----- TODO WILL BE MODDED !!!!!!!!!!!!!!!
+        pitching_leaders = (
+            db.session.query(
+                Pitching.playerID, Pitching.p_W, Pitching.p_L, Pitching.p_SO
+            )
+            .filter(Pitching.yearID == year, Pitching.teamID == team_ID)
+            .order_by(Pitching.p_W.desc(), Pitching.p_L.asc(), Pitching.p_SO.desc())
+            .all()
+        )
+
+        if not pitching_leaders:
+            flash(f"No pitching leaders found for {team_name} in {year}", "warning")
+            stats_logger.error(
+                f"ERROR: No pitching leaders returned for {team_name}, {year}"
+            )
+
+        depth_chart_data = getDepthChartData(team_ID, year)
+
+        stats_logger.info(
+            f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
+        )
+
+        return render_template(
+            "team_summary.html",
+            form=form,
+            chart_form=DepthChartForm(),
+            batting_leaders=batting_leaders,
+            pitching_leaders=pitching_leaders,
+            teamName=team_name,
+            yearID=year,
+            depth_chart_data=depth_chart_data,
+        )
+
+    return render_template("team_summary.html", form=form)
+
+
+@home_routes.route("/get_years/<team_name>", methods=["GET"])
+def get_years(team_name):
+    years = TeamSummaryForm.get_years_for_team(team_name)
+    return jsonify({"years": years})
+
+
+def getDepthChartData(team_name, year):
+    team_ID = team_name
+
+    # Query the database for the player's batting stats for the given yearID and teamID
+    # THIS WILL BE REPLACED BY BATTING STATS EVENTUALLY TODO
+    players = db.session.query(Fielding).filter_by(yearID=year, teamID=team_ID).all()
+    if not players:
+        flash("No players found for the selected team and year.", "info")
+        return None
+    # Group players by position
+    depth_chart_data = {}
+    for player in players:
+        position = player.position
+        if position not in depth_chart_data:
+            depth_chart_data[position] = []
+        # THIS WILL CONTAIN BATTING STATS TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        depth_chart_data[position].append(player)
+
+    return depth_chart_data

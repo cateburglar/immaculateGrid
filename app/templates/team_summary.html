@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="summary-form-container">
+        {% if not teamName %}
+            <h1>Team Summary</h1>
+        {% endif %}
+        <div class="summary-form">
+            <form action="{{ url_for('home_routes.home') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-row">
+                    <div class="summary-form-group">
+                        {{ form.teamName.label(class="form-label") }}
+                        {{ form.teamName(class="summary-form-control") }}
+                    </div>
+                    <div class="summary-form-group {% if not yearID %}none{% endif %}" id="year-group">
+                        {{ form.yearID.label(class="form-label") }}
+                        {{ form.yearID(class="summary-form-control") }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn form-row-submit" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Team Summary</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if teamName %}
+        <h1>{{teamName}} Team Summary</h1>
+    {% endif %}
+
+    {% if pitching_leaders %}
+        <h2>Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Player ID</th>
+                    <th>Age</th>
+                    <th>G</th>
+                    <th>GS</th>
+                    <th>IP</th>
+                    <th>K</th>
+                    <th>BB</th>
+                    <th>HR/9</th>
+                    <th>BABIP</th>
+                    <th>LOB%</th>
+                    <th>GB%</th>
+                    <th>HR/FB%</th>
+                    <th>ERA</th>
+                    <th>FIP</th>
+                    <th>xFIP</th>
+                    <th>WAR</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leader in pitching_leaders %}
+                <tr>
+                    <td>{{ leader.playerID }}</td>
+                    <td>{{ leader.Age }}</td>
+                    <td>{{ leader.G }}</td>
+                    <td>{{ leader.GS }}</td>
+                    <td>{{ leader.IP }}</td>
+                    <td>{{ leader.K }}</td>
+                    <td>{{ leader.BB }}</td>
+                    <td>{{ leader.HR_9 }}</td>
+                    <td>{{ leader.BABIP }}</td>
+                    <td>{{ leader.LOB }}</td>
+                    <td>{{ leader.GB }}</td>
+                    <td>{{ leader.HR_FB }}</td>
+                    <td>{{ leader.ERA }}</td>
+                    <td>{{ leader.FIP }}</td>
+                    <td>{{ leader.xFIP }}</td>
+                    <td>{{ leader.WAR }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if batting_leaders %}
+        <h2>Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Player ID</th>
+                    <th>Age</th>
+                    <th>G</th>
+                    <th>AB</th>
+                    <th>R</th>
+                    <th>H</th>
+                    <th>2B</th>
+                    <th>3B</th>
+                    <th>HR</th>
+                    <th>RBI</th>
+                    <th>SB</th>
+                    <th>CS</th>
+                    <th>BB</th>
+                    <th>K</th>
+                    <th>AVG</th>
+                    <th>OBP</th>
+                    <th>SLG</th>
+                    <th>OPS</th>
+                    <th>WAR</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leader in batting_leaders %}
+                <tr>
+                    <td>{{ leader.playerID }}</td>
+                    <td>{{ leader.Age }}</td>
+                    <td>{{ leader.G }}</td>
+                    <td>{{ leader.AB }}</td>
+                    <td>{{ leader.R }}</td>
+                    <td>{{ leader.H }}</td>
+                    <td>{{ leader['2B'] }}</td>
+                    <td>{{ leader['3B'] }}</td>
+                    <td>{{ leader.HR }}</td>
+                    <td>{{ leader.RBI }}</td>
+                    <td>{{ leader.SB }}</td>
+                    <td>{{ leader.CS }}</td>
+                    <td>{{ leader.BB }}</td>
+                    <td>{{ leader.K }}</td>
+                    <td>{{ leader.AVG }}</td>
+                    <td>{{ leader.OBP }}</td>
+                    <td>{{ leader.SLG }}</td>
+                    <td>{{ leader.OPS }}</td>
+                    <td>{{ leader.WAR }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if depth_chart_data %}
+        {% include "depth_chart.html" %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 on the teamName select field
+        $('select[name="teamName"]').select2({
+            placeholder: "Select a team",
+            allowClear: true
+        });
+
+        // Get the initial yearID value from the server-side context
+        var initialYearID = "{{ yearID }}";
+
+        // Function to populate the year select field
+        function populateYearSelect(teamName, selectedYear) {
+            var yearGroup = $('#year-group');
+            var yearSelect = $('select[name="yearID"]');
+            var submitBtn = $('#submit-btn');
+
+            $.getJSON(`/get_years/${teamName}`, function(data) {
+                yearGroup.show();
+                yearSelect.empty().prop('disabled', false);
+                yearSelect.append(new Option("Select a year", "", true, true)).prop('disabled', false);
+                data.years.forEach(year => {
+                    var option = new Option(year, year);
+                    if (year == selectedYear) {
+                        option.selected = true;
+                    }
+                    yearSelect.append(option);
+                });
+                submitBtn.prop('disabled', false);
+            });
+        }
+
+        // Handle teamName change event to dynamically update yearID options
+        $('select[name="teamName"]').on('change', function() {
+            var teamName = $(this).val();
+            if (!teamName) {
+                $('#year-group').hide();
+                $('select[name="yearID"]').empty().prop('disabled', true);
+                $('#submit-btn').prop('disabled', true);
+                return;
+            }
+            populateYearSelect(teamName, initialYearID);
+        });
+
+        // Ensure the year group is visible if a team is already selected
+        var selectedTeam = $('select[name="teamName"]').val();
+        if (selectedTeam) {
+            populateYearSelect(selectedTeam, initialYearID);
+        } else {
+            $('#year-group').hide();
+        }
+    });
+</script>
+{% endblock %}
