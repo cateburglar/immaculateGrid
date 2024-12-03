@@ -15,7 +15,7 @@ def create_lgavg_view():
 
     # Query to create league average view
     create_lgavg_view_sql = """
-    CREATE OR REPLACE VIEW lgavg AS
+    CREATE OR REPLACE VIEW lgavgview AS
     SELECT
         yearID,
         AVG(p_ERA) AS lgERA,
@@ -32,13 +32,13 @@ def create_lgavg_view():
     try:
         with session.connection() as connection:
             connection.execute(text(create_lgavg_view_sql))
-        print("View 'lgavg' created successfully")
+        print("View 'lgavgview' created successfully")
     except Exception as e:
-        print(f"Error creating 'lgavg' view: {e}")
+        print(f"Error creating 'lgavgview' view: {e}")
 
     session.close()
 
-def create_pitching_stats_view():
+def create_pitchingstats_view():
     # Create session
     session = create_session_from_str(create_enginestr_from_values(mysql))
 
@@ -140,7 +140,7 @@ def create_pitching_stats_view():
         -- NULL AS p_WAR
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
-    JOIN lgavg l ON pi.yearID = l.yearID;
+    JOIN lgavgview l ON pi.yearID = l.yearID;
     """
 
     # Create Pitching Stats View
@@ -150,5 +150,91 @@ def create_pitching_stats_view():
         print("View 'pitchingstatsview' created successfully")
     except Exception as e:
         print(f"Error creating 'pitchingstatsview' view: {e}")
+
+    session.close()
+
+def create_battingstats_view():
+    # Create session using the utility function
+    engine_str = create_enginestr_from_values(mysql=mysql)  # Ensure `mysql` is passed correctly
+    session = create_session_from_str(engine_str)
+
+    # Define the SQL query
+    create_battingstats_view_sql = """
+    CREATE OR REPLACE VIEW battingstatsview AS
+    SELECT
+        Name,
+        Age,
+        G,
+        PA,
+        HR,
+        SB,
+        `BB%`,
+        `K%`,
+        BABIP,
+        AVG,
+        SLG,
+        ISO,
+        b_1B,
+        wOBA,
+        wRCplus,
+        BsR,
+        Total_Defensive_Plays,
+        FRAA,
+        ((wRCplus - 100) / 100 * PA / 10 + BsR + FRAA +
+        (CASE
+            WHEN position = 'SS' THEN 2
+            WHEN position = 'CF' THEN 1
+            WHEN position = '1B' THEN -1
+            ELSE 0
+        END) + 0.5 + 25) / 10 AS WAR,
+        YearID,
+        TeamID,
+        Team_Name,
+        stint
+    FROM (
+        SELECT
+            CONCAT(p.nameFirst, ' ', p.nameLast) AS Name,
+            (b.yearID - p.birthYear) AS Age,
+            a.G_ALL AS G,
+            (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS PA,
+            b.b_HR AS HR,
+            b.b_SB AS SB,
+            (b.b_BB / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS `BB%`,
+            (b.b_SO / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS `K%`,
+            (b.b_H - b.b_HR) / (b.b_AB - b.b_SO - b.b_HR + b.b_SF) AS BABIP,
+            (b.b_H / b.b_AB) AS AVG,
+            ((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB AS SLG,
+            (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS ISO,
+            (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_1B,
+            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.88 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.24 * b.b_2B) + (1.56 * b.b_3B) + (2.0 * b.b_HR)) / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) AS wOBA,
+            ((((((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.88 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.24 * b.b_2B) + (1.56 * b.b_3B) + (2.0 * b.b_HR)) / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) - 0.320) / 1.25 * (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) + 6500) / 4000 * 100) AS wRCplus,
+            ((b.b_SB - b.b_CS) * 0.2) AS BsR,
+            (f.f_PO + f.f_A) AS Total_Defensive_Plays,
+            ((f.f_PO + f.f_A) * 0.1 + f.f_ZR * 0.2 + f.f_DP * 0.5) AS FRAA,
+            b.yearID AS YearID,
+            t.teamID AS TeamID,
+            t.team_name AS Team_Name,
+            f.position AS position,
+            b.stint AS stint
+        FROM
+            batting b
+        JOIN
+            people p ON b.playerID = p.playerID
+        JOIN
+            appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID
+        JOIN
+            teams t ON b.teamID = t.teamID AND b.yearID = t.yearID
+        JOIN
+            fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
+    ) AS SubQuery;
+    """
+
+    # Create Batting Stats View
+    try:
+        with session.connection() as connection:
+            connection.execute(text(create_battingstats_view_sql))
+        print("View 'battingstatsview' created successfully")
+    except Exception as e:
+        print(f"Error creating 'battingstatsview': {e}")
 
     session.close()
