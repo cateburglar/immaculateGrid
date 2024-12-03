@@ -11,6 +11,33 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
+
+class BattingStatsView(Base):
+    __tablename__ = "battingstatsview"
+
+    player_id = Column(String, primary_key=True)
+    year_id = Column(SmallInteger, primary_key=True)
+    team_id = Column(String, primary_key=True)
+    stint = Column(SmallInteger, primary_key=True)
+    position = Column(String)
+
+    # Batting statistics
+    pa = Column(Integer)  # Plate Appearances
+    g = Column(Integer)  # Games played
+    hr = Column(Integer)  # Home Runs
+    sb = Column(Integer)  # Stolen Bases
+    bb_percent = Column(Float)  # Walk Percentage (BB%)
+    k_percent = Column(Float)  # Strikeout Percentage (K%)
+    babip = Column(Float)  # Batting Average on Balls in Play
+    avg = Column(Float)  # Batting Average
+    slg = Column(Float)  # Slugging Percentage
+    iso = Column(Float)  # Isolated Power
+    woba = Column(Float)  # Weighted On-Base Average
+    wrc_plus = Column(Float)  # Weighted Runs Created Plus
+    bsr = Column(Float)  # Baserunning runs above average
+    total_defensive_plays = Column(Integer)  # Total Defensive Plays
+    fraa = Column(Float)  # Fielding Runs Above Average
+
 class LgAvgView(Base):
     __tablename__ = "lgavgview"
 

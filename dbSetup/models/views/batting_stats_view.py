@@ -1,4 +1,4 @@
-from flask import session
+from csi3335f2024 import mysql
 from sqlalchemy import text
 from utils import create_enginestr_from_values, create_session_from_str
 from sqlalchemy.orm import Session
@@ -12,7 +12,7 @@ database_values = {
 
 # Define the SQL query
 create_view_query = """
-CREATE VIEW Batting_Stats_2 AS
+CREATE VIEW Batting_Stats AS
 SELECT 
     Name,
     Age,
@@ -41,7 +41,8 @@ SELECT
     END) + 0.5 + 25) / 10 AS WAR,
     YearID,
     TeamID,
-    Team_Name
+    Team_Name,
+    stint
 FROM (
     SELECT 
         CONCAT(p.nameFirst, ' ', p.nameLast) AS Name,
@@ -65,7 +66,8 @@ FROM (
         b.yearID AS YearID,
         t.teamID AS TeamID,
         t.team_name AS Team_Name,
-        f.position AS position
+        f.position AS position,
+        b.stint AS stint
     FROM 
         batting b
     JOIN 
