@@ -11,6 +11,7 @@ all_models = [
     AwardsShare,
     Batting,
     BattingPost,
+    BattingStatsView,
     CollegePlaying,
     Divisions,
     Fielding,

@@ -7,7 +7,6 @@
   --beige: #eaf2d7ff;
   --light-blue: #b3dee2ff;
   --jet: #333333ff;
-<<<<<<< HEAD
   --white-smoke: #f5f5f5ff;
   --yellow: #F5F5DC;
   --light-green: #c7ebcd;
@@ -34,28 +33,6 @@
   --gradient-bottom-left: linear-gradient(315deg, #e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
 
   --gradient-radial: radial-gradient(#e27396ff, #ea9ab2ff, #efcfe3ff, #eaf2d7ff, #b3dee2ff);
-=======
-  --french-gray: #b0b7bcff;
-  --azul: #046eb4ff;
-  
-  /* Define HSL colors as variables */
-  --white-smoke-hsl: hsla(0, 0%, 96%, 1);
-  --jet-hsl: hsla(0, 0%, 20%, 1);
-  --french-gray-hsl: hsla(205, 8%, 71%, 1);
-  --azul-hsl: hsla(204, 96%, 36%, 1);
-  
-  /* Define gradients */
-  --gradient-top: linear-gradient(0deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-right: linear-gradient(90deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom: linear-gradient(180deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-left: linear-gradient(270deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-top-right: linear-gradient(45deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom-right: linear-gradient(135deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-top-left: linear-gradient(225deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-bottom-left: linear-gradient(315deg, var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  --gradient-radial: radial-gradient(var(--white-smoke), var(--jet), var(--french-gray), var(--azul));
-  font-family: 'Arial', sans-serif;
->>>>>>> 117f0cf (Completing additional dropdowns with valid info)
 }
 
 /* Set default text color */
