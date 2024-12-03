@@ -40,14 +40,12 @@ def get_all_views():
         if name.startswith("create_") and name.endswith("_view")
     ]
 
-
 def create_views(views):
     """Create the specified views by calling their corresponding functions."""
     print("Creating views...")
     for view_func in views:
         view_func()
     print("View creation completed.")
-
 
 def get_all_service_functions():
     """Retrieve all update functions from the services module."""
@@ -56,7 +54,6 @@ def get_all_service_functions():
         for name, func in inspect.getmembers(services, inspect.isfunction)
         if name.startswith("upload_") and name.endswith("_csv")
     ]
-
 
 def update_tables(tables):
     """Update specified tables by calling their corresponding upload functions."""
@@ -69,7 +66,6 @@ def update_tables(tables):
         else:
             print(f"Unknown table: {table}")
     print("Table updates completed.")
-
 
 if __name__ == "__main__":
     main()
