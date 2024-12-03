@@ -1,0 +1,95 @@
+/* Container for the input form */
+.summary-form-container {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary-form-container h1 {
+    text-align: center;
+}
+
+/* Form layout */
+.summary-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Grouping form elements */
+.summary-form-group {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Label styling */
+.summary-form-group .form-label {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Input and select field styling */
+.summary-form-control {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #888;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Ensure select2 takes up all the height of its container */
+.select2-container .select2-selection--single {
+    height: 40px !important; /* Match the height of other form controls */
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd; /* Match the border of other form controls */
+    border-radius: 5px; /* Match the border radius of other form controls */
+    box-sizing: border-box;
+    font-size: 1rem; /* Ensure consistent text size */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    margin-top: 4.5px;
+    margin-left: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 1rem; /* Ensure consistent text size */
+    display: flex;
+    align-items: center;
+    height: 100%; /* Ensure it takes up the full height */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Form row for input fields */
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    
+}
+
+.form-row-submit {
+    padding: 10px 15px;
+    background-color: var(--beige);
+    color: var(--jet);
+    border: none;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-row-submit:hover {
+    background-color: var(--light-green);
+}
