@@ -22,14 +22,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install MariaDB 11.5
+      - name: Install MariaDB
         run: |
           sudo apt-get update
-          sudo apt-get install -y software-properties-common
-          sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
-          sudo add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mirror.nodesdirect.com/mariadb/repo/11.5/ubuntu $(lsb_release -cs) main"
-          sudo apt-get update
-          sudo apt-get install -y mariadb-server
+          sudo apt install mariadb-server --mariadb-server-version="11.5.2"
 
       - name: Create MariaDB socket directory
         run: |
