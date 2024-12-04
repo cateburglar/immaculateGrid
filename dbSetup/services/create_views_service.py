@@ -211,16 +211,16 @@ def create_battingstats_view():
             ((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB AS SLG,
             (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS ISO,
             (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_1B,
-            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.88 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.24 * b.b_2B) + (1.56 * b.b_3B) + (2.0 * b.b_HR)) / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) AS wOBA,
-            
-            -- wOBA 
-            ((((((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.88 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.24 * b.b_2B) + (1.56 * b.b_3B) + (2.0 * b.b_HR)) 
-                / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) -- PA
-                  - 0.320) / 1.25 -- wOBA scale adjustment
-                  * (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- weighted runs calculation
-                  + 6500) -- league and scaling factor
-                  / 4000 * 100) -- normalization 
-                AS wRCplus,
+                                                    -- calculation of 1b
+            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.89 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.27 * b.b_2B) + (1.62 * b.b_3B) + (2.10 * b.b_HR)) 
+                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) AS wOBA,
+
+            -- wOBA formula
+            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.89 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.27 * b.b_2B) + (1.62 * b.b_3B) + (2.10 * b.b_HR)) 
+                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
+                -
+                
+            AS wRC,        
            
             ((b.b_SB - b.b_CS) * 0.2) AS BsR,
             (f.f_PO + f.f_A) AS Total_Defensive_Plays,
