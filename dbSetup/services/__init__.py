@@ -17,7 +17,7 @@ from .nohitters_csv_service import upload_nohitters_csv
 from .parks_csv_service import upload_parks_csv
 from .people_csv_service import upload_people_csv
 from .pitching_csv_service import upload_pitching_csv
-from .create_views_service import create_lgavg_view, create_pitching_stats_view
+from .create_views_service import create_lgavg_view, create_pitchingstats_view, create_battingstats_view
 from .pitchingpost_csv_service import upload_pitchingpost_csv
 from .salaries_csv_service import upload_salaries_csv
 from .schools_csv_service import upload_schools_csv
@@ -25,3 +25,4 @@ from .seriespost_csv_service import upload_seriespost_csv
 from .teams_csv_service import upload_teams_csv
 from .test_service import execute_tests
 from .seasonwarleaders_csv_service import upload_seasonwarleaders_csv
+from .wobaWeights_csv_service import upload_wobaweights_csv
