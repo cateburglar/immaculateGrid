@@ -176,22 +176,10 @@ def create_battingstats_view():
         ISO,
         b_1B,
         wOBA,
-        wRCplus,
+        wRC,
         BsR,
         Total_Defensive_Plays,
         FRAA,
-        ( (wRCplus - 100) 
-            / 100 * PA 
-            / 10 
-            + BsR + FRAA +
-                (CASE
-                    WHEN position = 'SS' THEN 2
-                    WHEN position = 'CF' THEN 1
-                    WHEN position = '1B' THEN -1
-                    ELSE 0
-                END) 
-            + 0.5 + 25
-        ) / 10 AS WAR,
         YearID,
         TeamID,
         stint,
@@ -212,14 +200,16 @@ def create_battingstats_view():
             (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS ISO,
             (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_1B,
                                                     -- calculation of 1b
-            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.89 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.27 * b.b_2B) + (1.62 * b.b_3B) + (2.10 * b.b_HR)) 
+            (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
                 / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) AS wOBA,
-
-            -- wOBA formula
-            (((0.69 * b.b_BB) + (0.72 * b.b_HBP) + (0.89 * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (1.27 * b.b_2B) + (1.62 * b.b_3B) + (2.10 * b.b_HR)) 
-                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
-                -
-                
+            (   
+            ((
+            (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
+                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
+                - w.league
+            )  / w.wobascale)
+            + ( w.r_pa)
+            ) * (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
             AS wRC,        
            
             ((b.b_SB - b.b_CS) * 0.2) AS BsR,
@@ -231,12 +221,14 @@ def create_battingstats_view():
             b.stint AS stint
         FROM
             batting b
-        NATURAL JOIN
-            people p
+        JOIN
+            people p ON b.playerID = p.playerID
         JOIN
             appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID
         JOIN
             fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
+        JOIN 
+            wobaweights w ON w.yearID = b.yearID
     ) AS SubQuery;
     """
 
