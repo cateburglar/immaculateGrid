@@ -43,7 +43,7 @@
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>
             <a class="navbar-link {% if request.path == '/login' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.login') }}">Login</a>
-        {% endif %}
+        {% endif %}   
     </div>
 </nav>
 <hr></hr>
