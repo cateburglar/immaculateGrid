@@ -196,9 +196,9 @@ def create_battingstats_view():
             ( w.r_pa) ) 
         * 
         (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
-        AS b_wRC,        
+        AS b_wRC
 
-        -- ((b.b_SB - b.b_CS) * 0.2) AS b_BsR
+        -- ,((b.b_SB - b.b_CS) * 0.2) AS b_BsR
     FROM
         batting b
     JOIN
