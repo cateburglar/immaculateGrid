@@ -17,7 +17,7 @@ from sqlalchemy.sql import func
 from app import db
 from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
 
-from ..models import Batting, Fielding, People, Teams, User, PitchingStatsView
+from ..models import Batting, Fielding, People, Teams, User, PitchingStatsView, BattingStatsView
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -234,13 +234,13 @@ def getDepthChartData(team_ID, year, positionStat, pitcherStat):
                         yearID=year, teamID=team_ID, playerID=player.playerID).first()
             if pitcher_stats:
                 stat_value = getattr(pitcher_stats, pitcherStat, None)  
-        '''else:
+        else:
             pos_stats = db.session.query(BattingStatsView).filter_by(
                 yearID=year, teamID=team_ID, playerID=player.playerID).first()
 
             # Dynamically access the column specified by positionStat
             stat_value = getattr(pos_stats, positionStat, None)  # Default to None if attribute doesn't exist
-        '''
+        
         # Add the player and their stat to the depth chart
         depth_chart_data[position].append({
             "name": name,

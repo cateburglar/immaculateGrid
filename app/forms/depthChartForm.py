@@ -12,11 +12,11 @@ class DepthChartForm(FlaskForm):
     positionStats = SelectField(
         "Select projected stats displayed for Position Players:",
         choices=[
-            ("PT", "Playing Time"),
-            ("PA", "Plate Appearances"),
-            ("WAR", "Wins Above Replacement"),
-            ("wRC+", "Weighted Runs Created+"),
-            ("wOBA", "Weighted On-Base Average"),
+            ("b_G", "Games Played"),
+            ("b_PA", "Plate Appearances"),
+            ("b_wRC", "Weighted Runs Created"),
+            ("b_wOBA", "Weighted On-Base Average"),
+            ("b_BB_percent", "Walk Percentage"),
         ],
         validators=[DataRequired()],
     )
