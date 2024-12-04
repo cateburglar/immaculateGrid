@@ -24,4 +24,7 @@ all_models = [
     Parks,
     Divisions,
     User,
+    BattingStatsView,
+    PitchingStatsView,
+    LgAvgView,
 ]

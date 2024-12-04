@@ -11,6 +11,7 @@ all_models = [
     AwardsShare,
     Batting,
     BattingPost,
+    BattingStatsView,
     CollegePlaying,
     Divisions,
     Fielding,
@@ -27,5 +28,6 @@ all_models = [
     Schools,
     SeriesPost,
     Teams,
+    WobaWeights,
 ]
 
