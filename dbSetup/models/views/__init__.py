@@ -15,28 +15,26 @@ class Base(DeclarativeBase):
 class BattingStatsView(Base):
     __tablename__ = "battingstatsview"
 
-    player_id = Column(String, primary_key=True)
-    year_id = Column(SmallInteger, primary_key=True)
-    team_id = Column(String, primary_key=True)
-    stint = Column(SmallInteger, primary_key=True)
-    position = Column(String)
-
+    playerID = Column(String, primary_key=True)
+    age = Column(SmallInteger, nullable=True)
+    yearID = Column(SmallInteger, nullable=False)
+    teamID = Column(String, nullable=False)
+    stint = Column(SmallInteger, nullable=True)
     # Batting statistics
-    pa = Column(Integer)  # Plate Appearances
-    g = Column(Integer)  # Games played
-    hr = Column(Integer)  # Home Runs
-    sb = Column(Integer)  # Stolen Bases
-    bb_percent = Column(Float)  # Walk Percentage (BB%)
-    k_percent = Column(Float)  # Strikeout Percentage (K%)
-    babip = Column(Float)  # Batting Average on Balls in Play
-    avg = Column(Float)  # Batting Average
-    slg = Column(Float)  # Slugging Percentage
-    iso = Column(Float)  # Isolated Power
-    woba = Column(Float)  # Weighted On-Base Average
-    wrc_plus = Column(Float)  # Weighted Runs Created Plus
-    bsr = Column(Float)  # Baserunning runs above average
-    total_defensive_plays = Column(Integer)  # Total Defensive Plays
-    fraa = Column(Float)  # Fielding Runs Above Average
+    b_PA = Column(Integer, nullable=True)  # Plate Appearances
+    b_G = Column(Integer, nullable=True)  # Games played
+    b_HR = Column(Integer, nullable=True)  # Home Runs
+    b_SB = Column(Integer, nullable=True)  # Stolen Bases
+    b_BB_percent = Column(Float, nullable=True)  # Walk Percentage (BB%)
+    b_K_percent = Column(Float, nullable=True)  # Strikeout Percentage (K%)
+    b_BABIP = Column(Float, nullable=True)  # Batting Average on Balls in Play
+    b_AVG = Column(Float, nullable=True)  # Batting Average
+    b_SLG = Column(Float, nullable=True)  # Slugging Percentage
+    b_ISO = Column(Float, nullable=True)  # Isolated Power
+    b_wOBA = Column(Float, nullable=True)  # Weighted On-Base Average
+    b_wRC = Column(Float, nullable=True)  # Weighted Runs Created Plus
+    b_BsR = Column(Float, nullable=True)  # Baserunning runs above average
+    b_b_1B = Column(Integer, nullable=True)
 
 class LgAvgView(Base):
     __tablename__ = "lgavgview"
