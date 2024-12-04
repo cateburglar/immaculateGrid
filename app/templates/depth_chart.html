@@ -22,7 +22,11 @@
                     <thead>
                         <tr>
                             <th>Player</th>
-                            <th>Statistic</th>
+                            {% if position == "P" %}
+                                <th> {{ pitcherStat }}</th>
+                            {% else %}
+                                <th> {{ positionStat }}</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>

@@ -85,46 +85,36 @@
                     <th>Player ID</th>
                     <th>Age</th>
                     <th>G</th>
-                    <th>AB</th>
-                    <th>R</th>
-                    <th>H</th>
-                    <th>2B</th>
-                    <th>3B</th>
+                    <th>PA</th>
                     <th>HR</th>
-                    <th>RBI</th>
                     <th>SB</th>
-                    <th>CS</th>
-                    <th>BB</th>
-                    <th>K</th>
+                    <th>BB%</th>
+                    <th>K%</th>
+                    <th>ISO</th>
+                    <th>BABIP</th>
                     <th>AVG</th>
-                    <th>OBP</th>
                     <th>SLG</th>
-                    <th>OPS</th>
-                    <th>WAR</th>
+                    <th>wOBA</th>
+                    <th>wRC</th>
                 </tr>
             </thead>
             <tbody>
                 {% for leader in batting_leaders %}
                 <tr>
                     <td>{{ leader.playerID }}</td>
-                    <td>{{ leader.Age }}</td>
-                    <td>{{ leader.G }}</td>
-                    <td>{{ leader.AB }}</td>
-                    <td>{{ leader.R }}</td>
-                    <td>{{ leader.H }}</td>
-                    <td>{{ leader['2B'] }}</td>
-                    <td>{{ leader['3B'] }}</td>
-                    <td>{{ leader.HR }}</td>
-                    <td>{{ leader.RBI }}</td>
-                    <td>{{ leader.SB }}</td>
-                    <td>{{ leader.CS }}</td>
-                    <td>{{ leader.BB }}</td>
-                    <td>{{ leader.K }}</td>
-                    <td>{{ leader.AVG }}</td>
-                    <td>{{ leader.OBP }}</td>
-                    <td>{{ leader.SLG }}</td>
-                    <td>{{ leader.OPS }}</td>
-                    <td>{{ leader.WAR }}</td>
+                    <td>{{ leader.age }}</td>
+                    <td>{{ leader.b_G }}</td>
+                    <td>{{ leader.b_PA }}</td>
+                    <td>{{ leader.b_HR }}</td>
+                    <td>{{ leader.b_SB }}</td>
+                    <td>{{ leader.b_BB_percent }}</td>
+                    <td>{{ leader.b_K_percent }}</td>
+                    <td>{{ leader.b_ISO }}</td>
+                    <td>{{ leader.b_BABIP }}</td>
+                    <td>{{ leader.b_AVG }}</td>
+                    <td>{{ leader.b_SLG }}</td>
+                    <td>{{ leader.b_wOBA }}</td>
+                    <td>{{ leader.b_wRC }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

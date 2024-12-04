@@ -17,15 +17,16 @@ def create_lgavg_view():
     create_lgavg_view_sql = """
     CREATE OR REPLACE VIEW lgavgview AS
     SELECT
-        yearID,
+        t.yearID,
         AVG(p_ERA) AS lgERA,
         AVG(p_HR) AS lgHR,
         AVG(p_BB) AS lgBB,
         AVG(p_HBP) AS lgHBP,
         AVG(p_SO) AS lgK,
         SUM(p_IPouts) / 3.0 AS lgIP
-    FROM pitching
-    GROUP BY yearID;
+    FROM pitching 
+    JOIN teams t ON t.teamID = pitching.teamID
+    GROUP BY t.yearID, lgID;
     """
 
     # Create FIP View
@@ -134,7 +135,19 @@ def create_pitchingstats_view():
         -- NULL AS p_HR_div_FB,
         -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
         -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
-        ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP
+            ((13 * pi.p_HR) 
+             + (3 * (pi.p_BB + pi.p_HBP))
+             - (2 * pi.p_SO))
+            / 
+            (pi.p_IPouts / 3.0)
+            + (l.lgERA - 
+                        ((    (13 * l.lgHR) 
+                            + (3 * (l.lgBB + l.lgHBP))
+                            - (2 * l.lgK) )
+                         / 
+                         l.lgIP)
+              ) 
+        AS p_FIP
         -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
         -- NULL AS p_xFIP,
         -- NULL AS p_WAR,

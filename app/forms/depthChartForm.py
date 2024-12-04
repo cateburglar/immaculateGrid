@@ -26,9 +26,9 @@ class DepthChartForm(FlaskForm):
         "Pitchers:",
         choices=[
             ("p_ERA", "Earned Run Average"),
-            #("p_PT", "Playing Time"),
+            ("p_hr_div9", "Home runs / 9 innings"),
             ("p_IP", "Innings Pitched"),
-            #("WAR", "Wins Above Replacement"),
+            ("p_LOB_percent", "Left on Base %"),
             ("p_FIP", "Fielding Independent Pitching"),
         ],
         validators=[DataRequired()],

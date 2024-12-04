@@ -13,7 +13,7 @@ from flask import (
 )
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, and_
 from app import db
 from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
 
@@ -196,6 +196,8 @@ def home():
                     chart_form=dform,
                     batting_leaders=batting_leaders,
                     pitching_leaders=pitching_leaders,
+                    positionStat = positionStat,
+                    pitcherStat = pitcherStat,
                     teamName=team_name,
                     yearID=year,
                     depth_chart_data=depth_chart_data,
@@ -272,11 +274,9 @@ def preprocess_pitching_leaders(pitching_leaders):
 # Utility function to fetch batting leaders
 def get_batting_leaders(team_ID, year):
     batting_leaders = (
-        db.session.query(Batting)
-        .filter(Batting.yearId == year, Batting.teamID == team_ID)
-        .order_by(
-            Batting.b_2B.desc(),
-        )
+        db.session.query(BattingStatsView)
+        .filter(BattingStatsView.yearID == year, BattingStatsView.teamID == team_ID)
+        .order_by(BattingStatsView.b_wOBA.desc())
         .limit(10)
     )
 
