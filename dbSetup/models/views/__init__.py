@@ -33,7 +33,7 @@ class BattingStatsView(Base):
     b_ISO = Column(Float, nullable=True)  # Isolated Power
     b_wOBA = Column(Float, nullable=True)  # Weighted On-Base Average
     b_wRC = Column(Float, nullable=True)  # Weighted Runs Created Plus
-    b_BsR = Column(Float, nullable=True)  # Baserunning runs above average
+    #b_BsR = Column(Float, nullable=True)  # Baserunning runs above average
     b_b_1B = Column(Integer, nullable=True)
 
 class LgAvgView(Base):
