@@ -1,5 +1,6 @@
 from .tables import *
 from .user import User
+from .views import *
 
 # For easy access to all models
 all_models = [
@@ -22,4 +23,7 @@ all_models = [
     Parks,
     Divisions,
     User,
+    BattingStatsView,
+    PitchingStatsView,
+    LgAvgView,
 ]

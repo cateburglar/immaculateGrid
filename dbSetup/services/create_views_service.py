@@ -180,21 +180,24 @@ def create_battingstats_view():
         (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_b_1B,
 
                                                 -- calculation of 1b
-        (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
+        (((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
             / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
             AS b_wOBA,
 
         (   
-        ((
-        (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
-            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
-            - w.league
-        )  / w.wobascale)
-        + ( w.r_pa)
-        ) * (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
-            AS b_wRC,        
+        -- woba
+        (    ((((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
+            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
+            - w.league)  
+            / 
+            w.wobascale)
+        + 
+            ( w.r_pa) ) 
+        * 
+        (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
+        AS b_wRC,        
 
-        ((b.b_SB - b.b_CS) * 0.2) AS b_BsR
+        -- ((b.b_SB - b.b_CS) * 0.2) AS b_BsR
     FROM
         batting b
     JOIN
