@@ -28,5 +28,6 @@ all_models = [
     Schools,
     SeriesPost,
     Teams,
+    WobaWeights,
 ]
 

@@ -785,3 +785,21 @@ class Divisions(Base):
         # Ensure division_active is always 'Y' or 'N'
         CheckConstraint("division_active IN ('Y', 'N')", name="chk_division_active"),
     )
+
+class WobaWeights(Base):
+    __tablename__ = "wobaweights"
+    wobaweights_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    yearID = Column(SmallInteger, unique=True, nullable=False)
+    League = Column(Float, nullable=False)
+    wOBAScale = Column(Float, nullable=False)
+    wBB = Column(Float, nullable=False)
+    wHBP = Column(Float, nullable=False)
+    w1B = Column(Float, nullable=False)
+    w2B = Column(Float, nullable=False)
+    w3B = Column(Float, nullable=False)
+    wHR = Column(Float, nullable=False)
+    runSB = Column(Float, nullable=False)
+    runCS = Column(Float, nullable=False)
+    R_PA = Column(Float, nullable=False)
+    R_W = Column(Float, nullable=False)
+    cFIP = Column(Float, nullable=False)
