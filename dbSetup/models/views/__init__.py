@@ -33,10 +33,8 @@ class BattingStatsView(Base):
     slg = Column(Float)  # Slugging Percentage
     iso = Column(Float)  # Isolated Power
     woba = Column(Float)  # Weighted On-Base Average
-    wrc_plus = Column(Float)  # Weighted Runs Created Plus
+    wrc = Column(Float)  # Weighted Runs Created Plus
     bsr = Column(Float)  # Baserunning runs above average
-    total_defensive_plays = Column(Integer)  # Total Defensive Plays
-    fraa = Column(Float)  # Fielding Runs Above Average
 
 class LgAvgView(Base):
     __tablename__ = "lgavgview"

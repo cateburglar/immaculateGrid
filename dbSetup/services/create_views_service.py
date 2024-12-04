@@ -162,6 +162,7 @@ def create_battingstats_view():
     create_battingstats_view_sql = """
     CREATE OR REPLACE VIEW battingstatsview AS
     SELECT DISTINCT
+        b.playerID AS playerID,
         CONCAT(p.nameFirst, ' ', p.nameLast) AS name,
         (b.yearID - p.birthYear) AS age,
         b.yearID AS yearID,
