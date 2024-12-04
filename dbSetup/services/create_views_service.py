@@ -162,46 +162,46 @@ def create_battingstats_view():
     create_battingstats_view_sql = """
     CREATE OR REPLACE VIEW battingstatsview AS
     SELECT
-        Name,
-        Age,
-        G,
-        PA,
-        HR,
-        SB,
-        BB_percent,
-        K_percent,
-        BABIP,
-        AVG,
-        SLG,
-        ISO,
-        b_1B,
-        wOBA,
-        wRC,
-        BsR,
-        Total_Defensive_Plays,
-        FRAA,
+        name,
+        age,
         YearID,
         TeamID,
         stint,
         position
+        b_G,
+        b_PA,
+        b_HR,
+        b_SB,
+        b_BB_percent,
+        b_K_percent,
+        b_BABIP,
+        b_AVG,
+        b_SLG,
+        b_ISO,
+        b_b_1B,
+        b_wOBA,
+        b_wRC,
+        b_BsR,
+        b_Total_Defensive_Plays,
+        b_FRAA
     FROM (
         SELECT
-            CONCAT(p.nameFirst, ' ', p.nameLast) AS Name,
-            (b.yearID - p.birthYear) AS Age,
-            a.G_ALL AS G,
-            (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS PA,
-            b.b_HR AS HR,
-            b.b_SB AS SB,
-            (b.b_BB / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS BB_percent,
-            (b.b_SO / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS K_percent,
-            (b.b_H - b.b_HR) / (b.b_AB - b.b_SO - b.b_HR + b.b_SF) AS BABIP,
-            (b.b_H / b.b_AB) AS AVG,
-            ((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB AS SLG,
-            (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS ISO,
-            (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_1B,
+            CONCAT(p.nameFirst, ' ', p.nameLast) AS name,
+            (b.yearID - p.birthYear) AS age,
+            a.G_ALL AS b_G,
+            (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS b_PA,
+            b.b_HR AS b_HR,
+            b.b_SB AS b_SB,
+            (b.b_BB / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS b_BB_percent,
+            (b.b_SO / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS b_K_percent,
+            (b.b_H - b.b_HR) / (b.b_AB - b.b_SO - b.b_HR + b.b_SF) AS b_BABIP,
+            (b.b_H / b.b_AB) AS b_AVG,
+            ((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB AS b_SLG,
+            (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS b_ISO,
+            (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_b_1B,
                                                     -- calculation of 1b
             (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
-                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) AS wOBA,
+                / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) AS b_wOBA,
             (   
             ((
             (((w.wBB * b.b_BB) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
@@ -210,11 +210,10 @@ def create_battingstats_view():
             )  / w.wobascale)
             + ( w.r_pa)
             ) * (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
-            AS wRC,        
-           
-            ((b.b_SB - b.b_CS) * 0.2) AS BsR,
-            (f.f_PO + f.f_A) AS Total_Defensive_Plays,
-            ((f.f_PO + f.f_A) * 0.1 + f.f_ZR * 0.2 + f.f_DP * 0.5) AS FRAA,
+            AS b_wRC,        
+            ((b.b_SB - b.b_CS) * 0.2) AS b_BsR,
+            (f.f_PO + f.f_A) AS b_Total_Defensive_Plays,
+            ((f.f_PO + f.f_A) * 0.1 + f.f_ZR * 0.2 + f.f_DP * 0.5) AS b_FRAA,
             b.yearID AS YearID,
             b.teamID AS TeamID,
             f.position AS position,
@@ -229,6 +228,8 @@ def create_battingstats_view():
             fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
         JOIN 
             wobaweights w ON w.yearID = b.yearID
+        HAVING
+            b_PA > 0 -- exclude pitchers 
     ) AS SubQuery;
     """
 
