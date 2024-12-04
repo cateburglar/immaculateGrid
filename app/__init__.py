@@ -55,11 +55,12 @@ def create_app():
     # After app has initialized, define blueprints and create tables
     with app.app_context():
         # Register blueprints/routes
-        from .routes import admin_routes, grid_routes, home_routes
+        from .routes import admin_routes, grid_routes, home_routes, update_routes
 
         app.register_blueprint(home_routes, url_prefix="/")
         app.register_blueprint(admin_routes, url_prefix="/admin")
         app.register_blueprint(grid_routes, url_prefix="/grid")
+        app.register_blueprint(update_routes, url_prefix="/update")
 
         db.create_all()
 
