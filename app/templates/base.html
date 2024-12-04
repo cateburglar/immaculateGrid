@@ -39,8 +39,8 @@
                 <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
             <a class="navbar-link" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
-            <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
             <a class="navbar-link" href="{{ url_for('update_routes.update_profile') }}">Update Profile Information</a>
+            <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>
             <a class="navbar-link {% if request.path == '/login' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.login') }}">Login</a>
