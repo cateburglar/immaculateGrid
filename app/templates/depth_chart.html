@@ -23,7 +23,9 @@
                         <tr>
                             <th>Player Name</th>
                             {% if position == "P" %}
-                                <th> {{ pitcherStat }}</th>
+                                <th>ERA</th>
+                                <th>IP</th>
+                                <th>FIP</th>
                             {% else %}
                                 <th>PA</th>
                                 <th>G</th>
@@ -37,8 +39,8 @@
                             {% if position == "P" %}
                                 <tr>
                                     <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
-                                    <td>{{ player.p_IP }}</td>
                                     <td>{{ player.p_ERA }}</td>
+                                    <td>{{ player.p_IP }}</td>
                                     <td>{{ player.p_FIP }}</td>
                                 </tr>
                             {% else %}
