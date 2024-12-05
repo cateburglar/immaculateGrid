@@ -148,9 +148,9 @@ def home():
                 return render_template("team_summary.html", form=form)
 
             # Get summary info
-            batting_leaders = get_batting_leaders(team_ID, year)
-            pitching_leaders = get_pitching_leaders(team_ID, year)
-            depth_chart_data = None  # getDepthChartData(team_ID, year)
+            batting_leaders = None  # get_batting_leaders(team_ID, year)
+            pitching_leaders = None  # get_pitching_leaders(team_ID, year)
+            depth_chart_data = getDepthChartData(team_ID, year)
             stats_logger.info(
                 f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
             )
@@ -181,6 +181,8 @@ def getDepthChartData(team_ID, year):
         flash("No players found for the selected team and year.", "info")
         return None
 
+    stats_logger.info("Fetching depth chart")
+
     # Group players by position
     depth_chart_data = {}
     for player in players:
@@ -192,6 +194,7 @@ def getDepthChartData(team_ID, year):
 
         # get the stats for each player based on their position
         if position == "P":
+            stats_logger.info("Getting pitcher stats")
             player_stats = (
                 db.session.query(PitchingStatsView)
                 .filter_by(yearID=year, teamID=team_ID, playerID=player.playerID)
@@ -199,6 +202,7 @@ def getDepthChartData(team_ID, year):
             )
 
         else:
+            stats_logger.info("Getting batter stats")
             player_stats = (
                 db.session.query(BattingStatsView)
                 .filter_by(yearID=year, teamID=team_ID, playerID=player.playerID)
