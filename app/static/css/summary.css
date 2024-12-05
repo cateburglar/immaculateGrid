@@ -1,7 +1,20 @@
+/* Container for consistent page layout */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+  }
+
 /* Container for the input form */
 .summary-form-container {
     display: flex;
     margin: 0 auto;
+    width: 100%;
     flex-direction: column;
     padding: 20px;
     background-color: var(--light-blue);
@@ -92,4 +105,41 @@
 
 .form-row-submit:hover {
     background-color: var(--light-green);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table thead tr {
+    background-color: var(--light-blue);
+    color: #ffffff;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--light-blue);
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
 }
