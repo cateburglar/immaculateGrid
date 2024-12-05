@@ -56,7 +56,9 @@
             <tbody>
                 {% for leader in pitching_leaders %}
                 <tr>
-                    <td>{{ leader.nameFirst }} {{ leader.nameLast}}</td>
+                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                        {{ leader.nameFirst }} {{ leader.nameLast }}
+                    </a></td>
                     <td>{{ leader.age }}</td>
                     <td>{{ leader.p_ERA }}</td>
                     <td>{{ leader.p_FIP }}</td>
@@ -101,7 +103,9 @@
             <tbody>
                 {% for leader in batting_leaders %}
                 <tr>
-                    <td>{{ leader.nameFirst }} {{ leader.nameLast }}</td>
+                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                        {{ leader.nameFirst }} {{ leader.nameLast }}
+                    </a></td>
                     <td>{{ leader.age }}</td>
                     <td>{{ leader.b_G }}</td>
                     <td>{{ leader.b_PA }}</td>

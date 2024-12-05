@@ -143,3 +143,15 @@ table tbody tr:last-of-type {
 table tbody tr:hover {
     background-color: #f1f1f1;
 }
+
+/* Link styling for player names */
+table td a {
+    color: var(--dark-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table td a:hover {
+    text-decoration: underline;
+    color: var(--light-blue);
+}
