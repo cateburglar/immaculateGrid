@@ -14,7 +14,6 @@ all_models = [
     SeriesPost,
     Pitching,
     PitchingPost,
-    PitchingStatsView,
     Appearances,
     Fielding,
     Batting,
@@ -24,7 +23,7 @@ all_models = [
     Parks,
     Divisions,
     User,
-    BattingStatsView,
-    PitchingStatsView,
     LgAvgView,
+    BattingStats,
+    PitchingStats,
 ]

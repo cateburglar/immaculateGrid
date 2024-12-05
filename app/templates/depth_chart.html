@@ -21,20 +21,35 @@
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>Player</th>
+                            <th>Player Name</th>
                             {% if position == "P" %}
                                 <th> {{ pitcherStat }}</th>
                             {% else %}
-                                <th> {{ positionStat }}</th>
+                                <th>PA</th>
+                                <th>G</th>
+                                <th>wOBA</th>
+                                <th>wRC</th>
                             {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for player in players %}
-                            <tr>
-                                <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
-                                <td>{{ player.b_G }}</td>
-                            </tr>
+                            {% if position == "P" %}
+                                <tr>
+                                    <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
+                                    <td>{{ player.p_IP }}</td>
+                                    <td>{{ player.p_ERA }}</td>
+                                    <td>{{ player.p_FIP }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
+                                    <td>{{ player.b_PA }}</td>
+                                    <td>{{ player.b_G }}</td>
+                                    <td>{{ player.b_wOBA }}</td>
+                                    <td>{{ player.b_wRC }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

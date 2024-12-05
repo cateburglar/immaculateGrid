@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
 
-from ..models import BattingStatsView, Fielding, PitchingStatsView, Teams, User
+from ..models import BattingStats, Fielding, PitchingStats, Teams, User
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -148,8 +148,8 @@ def home():
                 return render_template("team_summary.html", form=form)
 
             # Get summary info
-            batting_leaders = None  # get_batting_leaders(team_ID, year)
-            pitching_leaders = None  # get_pitching_leaders(team_ID, year)
+            batting_leaders = get_batting_leaders(team_ID, year)
+            pitching_leaders = get_pitching_leaders(team_ID, year)
             depth_chart_data = getDepthChartData(team_ID, year)
             stats_logger.info(
                 f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
@@ -196,7 +196,7 @@ def getDepthChartData(team_ID, year):
         if position == "P":
             stats_logger.info("Getting pitcher stats")
             player_stats = (
-                db.session.query(PitchingStatsView)
+                db.session.query(PitchingStats)
                 .filter_by(yearID=year, teamID=team_ID, playerID=player.playerID)
                 .first()
             )
@@ -204,7 +204,7 @@ def getDepthChartData(team_ID, year):
         else:
             stats_logger.info("Getting batter stats")
             player_stats = (
-                db.session.query(BattingStatsView)
+                db.session.query(BattingStats)
                 .filter_by(yearID=year, teamID=team_ID, playerID=player.playerID)
                 .first()
             )
@@ -235,8 +235,8 @@ def preprocess_pitching_leaders(pitching_leaders):
 
 # Utility function to fetch batting leaders
 def get_batting_leaders(team_ID, year):
-    batting_leaders = db.session.query(BattingStatsView).filter(
-        BattingStatsView.yearID == year, BattingStatsView.teamID == team_ID
+    batting_leaders = db.session.query(BattingStats).filter(
+        BattingStats.yearID == year, BattingStats.teamID == team_ID
     )
 
     if not batting_leaders:
@@ -248,8 +248,8 @@ def get_batting_leaders(team_ID, year):
 
 # Utility function to fetch and preprocess pitching leaders
 def get_pitching_leaders(team_ID, year):
-    pitching_leaders = db.session.query(PitchingStatsView).filter(
-        PitchingStatsView.yearID == year, PitchingStatsView.teamID == team_ID
+    pitching_leaders = db.session.query(PitchingStats).filter(
+        PitchingStats.yearID == year, PitchingStats.teamID == team_ID
     )
     if pitching_leaders:
         return preprocess_pitching_leaders(pitching_leaders)
