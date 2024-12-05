@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
-from app.forms import DepthChartForm, LoginForm, SignupForm, TeamSummaryForm
+from app.forms import LoginForm, SignupForm, TeamSummaryForm
 
 from ..models import BattingStats, Fielding, PitchingStats, Teams, User
 
@@ -157,7 +157,6 @@ def home():
             return render_template(
                 "team_summary.html",
                 form=form,
-                chart_form=DepthChartForm(),
                 batting_leaders=batting_leaders,
                 pitching_leaders=pitching_leaders,
                 teamName=team_name,

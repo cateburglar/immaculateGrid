@@ -1,63 +1,106 @@
 <div>
-    <h1>MLB Team Depth Chart</h1>
-    <form method="POST">
-        {{ chart_form.hidden_tag() }}
-        <input type="hidden" name="form_name" value="depth_chart_form">
-        <div>
-            {{ chart_form.positionStats.label }} {{ chart_form.positionStats() }}
-        </div>
-        <div>
-            {{ chart_form.pitcherStats.label }} {{ chart_form.pitcherStats() }}
-        </div>
-        <button type="submit">Generate Depth Chart</button>
-    </form>
-
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
         <h2>Depth Chart for {{ teamName }} - {{ yearID }}</h2>
-        {% for position, players in depth_chart_data.items() %}
-            <div class="position-box">
-                <h2>{{ position }}</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Player Name</th>
-                            {% if position == "P" %}
-                                <th>ERA</th>
-                                <th>IP</th>
-                                <th>FIP</th>
-                            {% else %}
-                                <th>PA</th>
-                                <th>G</th>
-                                <th>wOBA</th>
-                                <th>wRC</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for player in players %}
-                            {% if position == "P" %}
+        <div class="depth-chart">
+            {% for position, players in depth_chart_data.items() %}
+                <div class="position-box">
+                    <h2>{{ position }}</h2>
+                    <table class="table table-striped" id="{{ position }}-table" border="1">
+                        <thead>
+                            <tr>
+                                <th id="{{ position }}-name-header">Player Name</th>
+                                {% if position == "P" %}
+                                    <th id="{{ position }}-era-header">ERA</th>
+                                    <th id="{{ position }}-hr9-header">HR/9</th>
+                                    <th id="{{ position }}-ip-header">IP</th>
+                                    <th id="{{ position }}-lob-header">LOB%</th>
+                                    <th id="{{ position }}-fip-header">FIP</th>
+                                {% else %}
+                                    <th id="{{ position }}-g-header">G</th>
+                                    <th id="{{ position }}-pa-header">PA</th>
+                                    <th id="{{ position }}-wrc-header">wRC</th>
+                                    <th id="{{ position }}-woba-header">wOBA</th>
+                                    <th id="{{ position }}-bb-header">BB%</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for player in players %}
                                 <tr>
-                                    <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
-                                    <td>{{ player.p_ERA }}</td>
-                                    <td>{{ player.p_IP }}</td>
-                                    <td>{{ player.p_FIP }}</td>
+                                    <td><a href="https://www.baseball-reference.com/players/{{ player.playerID[0] }}/{{ player.playerID }}.shtml">
+                                        {{ player.nameFirst }} {{ player.nameLast }}
+                                    </a></td>
+                                    {% if position == "P" %}
+                                        <td>{{ player.p_ERA }}</td>
+                                        <td>{{ player.p_HR_div9 }}</td>
+                                        <td>{{ player.p_IP }}</td>
+                                        <td>{{ player.p_LOB_percent }}</td>
+                                        <td>{{ player.p_FIP }}</td>
+                                    {% else %}
+                                        <td>{{ player.b_G }}</td>
+                                        <td>{{ player.b_PA }}</td>
+                                        <td>{{ player.b_wRC }}</td>
+                                        <td>{{ player.b_wOBA }}</td>
+                                        <td>{{ player.b_BB_percent }}</td>
+                                    {% endif %}
                                 </tr>
-                            {% else %}
-                                <tr>
-                                    <td>{{ player.nameFirst }} {{ player.nameLast }}</td>
-                                    <td>{{ player.b_PA }}</td>
-                                    <td>{{ player.b_G }}</td>
-                                    <td>{{ player.b_wOBA }}</td>
-                                    <td>{{ player.b_wRC }}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
         <p>No depth chart data available for {{ teamName }} in {{ yearID }}.</p>
     {% endif %}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // Sorting function
+        function sortTable(table, column, asc = true) {
+            const dirModifier = asc ? 1 : -1;
+            const tBody = table.tBodies[0];
+            const rows = Array.from(tBody.querySelectorAll("tr"));
+
+            // Sort each row
+            const sortedRows = rows.sort((a, b) => {
+                const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+
+                const aColValue = parseFloat(aColText) || aColText;
+                const bColValue = parseFloat(bColText) || bColText;
+
+                return aColValue > bColValue ? (1 * dirModifier) : (-1 * dirModifier);
+            });
+
+            // Remove all existing TRs from the table
+            while (tBody.firstChild) {
+                tBody.removeChild(tBody.firstChild);
+            }
+
+            // Re-add the newly sorted rows
+            tBody.append(...sortedRows);
+
+            // Remember how the column is currently sorted
+            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+        }
+
+        // Attach event listeners to headers for depth chart tables
+        document.querySelectorAll(".depth-chart th").forEach(headerCell => {
+            if (!headerCell.id.includes("name-header")) {
+                headerCell.addEventListener("click", () => {
+                    const tableElement = headerCell.parentElement.parentElement.parentElement;
+                    const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                    const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+                    sortTable(tableElement, headerIndex, !currentIsAscending);
+                });
+            }
+        });
+    });
+</script>
