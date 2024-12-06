@@ -1,9 +1,7 @@
 <div>
-    <h1>MLB Team Depth Chart</h1>
-
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
-        <h2>Depth Chart for {{ teamName }} - {{ yearID }}</h2>
+        <h1 class="section-title">{{ teamName }} {{ yearID }} Depth Chart</h1>
         <div class="depth-chart">
             {% for position, players in depth_chart_data.items() %}
                 <div class="position-box">

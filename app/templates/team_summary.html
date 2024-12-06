@@ -4,7 +4,7 @@
 <div class="stats-container">
     <div class="summary-form-container">
         {% if not teamName %}
-            <h1>Team Summary</h1>
+            <h1 class="section-title">Team Summary</h1>
         {% endif %}
         <div class="summary-form">
             <form action="{{ url_for('home_routes.home') }}" method="POST">
@@ -28,7 +28,7 @@
     </div>
 
     {% if teamName %}
-        <h1>{{teamName}} Team Summary</h1>
+        <h1 class="section-title">{{teamName}} Team Summary</h1>
     {% endif %}
 
     {% if pitching_leaders %}
