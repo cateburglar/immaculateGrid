@@ -7,8 +7,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.update-btn, .reset-pass-btn {
+.update-btn, .update-danger-btn {
     padding: 10px 15px;
+    font-weight: bold;
     color: var(--jet);
     border: none;
     margin-top: 15px;
@@ -25,10 +26,10 @@
     background-color: var(--blue);
 }
 
-.reset-pass-btn {
+.update-danger-btn {
     background-color: var(--amaranth-pink);
 }
 
-.reset-pass-btn:hover {
+.update-danger-btn:hover {
     background-color: var(--rose-pompadour);
 }

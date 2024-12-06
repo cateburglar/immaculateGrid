@@ -3,12 +3,12 @@
 {% block content %}
     <div class="update-container">
         <h1 class="form-title">Update Account</h1>
-        <form id="profile-form" action="" method="post" novalidate class="app-form">
+        <form action="" method="post" novalidate class="app-form">
             {{ form.hidden_tag() }}
 
             <div class="form-group">
                 <label for="nameFirst">{{ form.nameFirst.label }}</label>
-                {{ form.nameFirst(class="form-control", readonly=True) }}
+                {{ form.nameFirst(class="form-control", autocomplete="off") }}
                 {% for error in form.nameFirst.errors %}
                     <span class="error">{{ error }}</span>
                 {% endfor %}
@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label for="nameLast">{{ form.nameLast.label }}</label>
-                {{ form.nameLast(class="form-control", readonly=True) }}
+                {{ form.nameLast(class="form-control", autocomplete="off") }}
                 {% for error in form.nameLast.errors %}
                     <span class="error">{{ error }}</span>
                 {% endfor %}
@@ -24,32 +24,26 @@
             
             <div class="form-group">
                 <label for="username">{{ form.username.label }}</label>
-                {{ form.username(class="form-control", readonly=True) }}
+                {{ form.username(class="form-control", autocomplete="off") }}
                 {% for error in form.username.errors %}
                     <span class="error">{{ error }}</span>
                 {% endfor %}
             </div>
-
-            <div class="form-group" id="password-group" style="display: none;">
+            
+            <div class="form-group">
                 <label for="password">{{ form.password.label }}</label>
-                {{ form.password(class="form-control") }}
+                {{ form.password(class="form-control", autocomplete="off") }}
                 {% for error in form.password.errors %}
                     <span class="error">{{ error }}</span>
                 {% endfor %}
             </div>
-
-            <div class="form-group" id="new-password-group" style="display: none;">
-                <label for="new_password">{{ form.new_password.label }}</label>
-                {{ form.new_password(class="form-control") }}
-                {% for error in form.new_password.errors %}
-                    <span class="error">{{ error }}</span>
-                {% endfor %}
-            </div>
-
+            
             <div class="form-group">
-                <button type="button" id="edit-profile-btn" class="update-btn">Update Profile Info</button>
-                <button type="button" id="reset-password-btn" class="reset-pass-btn">Reset Password</button>
+                {{ form.submit(class="update-btn") }}
             </div>
+        </form>
+        <form class="form-group" action="{{ url_for('update_routes.reset_password') }}" method="get">
+            <button class="update-danger-btn">Reset Password</button>
         </form>
     </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 import os
 import sys
 
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash
 
@@ -21,6 +22,9 @@ def seed_users():
     if not session:
         print("Failed to create a database session.")
         return
+
+    # Clear users
+    session.execute(text("DELETE FROM USER where username is not null"))
 
     users = [
         User(
