@@ -1,0 +1,50 @@
+.update-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--beige);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+    background-color: var(--light-blue);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.info h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: var(--jet);
+}
+
+.update-btn, .update-danger-btn {
+    padding: 10px 15px;
+    font-weight: bold;
+    color: var(--jet);
+    border: none;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.update-btn {
+    background-color: var(--light-blue);
+}
+
+.update-btn:hover {
+    background-color: var(--blue);
+}
+
+.update-danger-btn {
+    background-color: var(--amaranth-pink);
+}
+
+.update-danger-btn:hover {
+    background-color: var(--rose-pompadour);
+}
