@@ -64,6 +64,8 @@ def signup():
             flash("Account created successfully!", "success")
             login_user(new_user, remember=False)
 
+            session["username"] = new_user.username
+
             # Log login
             logger.info(f"Successful login: {new_user.username}")
 
