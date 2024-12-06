@@ -28,6 +28,34 @@
     text-align: center;
 }
 
+.team-link {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--jet);
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.team-photo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.team-link:hover {
+    color: var(--blue);
+    text-decoration: underline;
+}
+
+.leaders-title {
+    margin-top: 30px;
+}
+
 /* Form layout */
 .summary-form {
     display: flex;

@@ -28,11 +28,12 @@
     </div>
 
     {% if teamName %}
-        <h1 class="section-title">{{teamName}} Team Summary</h1>
+        <a class="section-title team-link" href="https://www.baseball-reference.com/teams/{{teamID}}/{{yearID}}.shtml">{{teamName}} Team Summary</a>
+        <a href="https://www.baseball-reference.com/teams/{{teamID}}/{{yearID}}.shtml"><img class="team-photo" src="{{photo}}"></a>
     {% endif %}
 
     {% if pitching_leaders %}
-        <h2>Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <h2 class="leaders-title">Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
         <table id="pitching-table" class="table table-striped" border="1">
             <thead>
                 <tr>
@@ -83,7 +84,7 @@
     {% endif %}
 
     {% if batting_leaders %}
-        <h2>Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <h2 class="leaders-title">Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
         <table id="batting-table" class="table table-striped" border="1">
             <thead>
                 <tr>
