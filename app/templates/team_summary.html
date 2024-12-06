@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div class="stats-container">
     <div class="summary-form-container">
         {% if not teamName %}
-            <h1>Team Summary</h1>
+            <h1 class="section-title">Team Summary</h1>
         {% endif %}
         <div class="summary-form">
             <form action="{{ url_for('home_routes.home') }}" method="POST">
+                <input type="hidden" name="form_name" value="team_summary_form">
                 {{ form.hidden_tag() }}
                 <div class="form-row">
                     <div class="summary-form-group">
@@ -27,114 +28,111 @@
     </div>
 
     {% if teamName %}
-        <h1>{{teamName}} Team Summary</h1>
+        <h1 class="section-title">{{teamName}} Team Summary</h1>
     {% endif %}
 
     {% if pitching_leaders %}
         <h2>Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
-        <table class="table table-striped">
+        <table id="pitching-table" class="table table-striped" border="1">
             <thead>
                 <tr>
-                    <th>Player ID</th>
+                    <th id="p-name-header">Player Name</th>
                     <th>Age</th>
+                    <th>ERA</th>
+                    <th>FIP</th>
+                    <th>K%</th>
                     <th>G</th>
                     <th>GS</th>
                     <th>IP</th>
-                    <th>K</th>
-                    <th>BB</th>
+                    <th>BB%</th>
                     <th>HR/9</th>
                     <th>BABIP</th>
                     <th>LOB%</th>
-                    <th>GB%</th>
-                    <th>HR/FB%</th>
-                    <th>ERA</th>
-                    <th>FIP</th>
-                    <th>xFIP</th>
-                    <th>WAR</th>
+                    <!--<th>GB%</th>-->
+                    <!--<th>xFIP</th>
+                    <th>WAR</th>-->
                 </tr>
             </thead>
             <tbody>
                 {% for leader in pitching_leaders %}
-                <tr>
-                    <td>{{ leader.playerID }}</td>
-                    <td>{{ leader.Age }}</td>
-                    <td>{{ leader.G }}</td>
-                    <td>{{ leader.GS }}</td>
-                    <td>{{ leader.IP }}</td>
-                    <td>{{ leader.K }}</td>
-                    <td>{{ leader.BB }}</td>
-                    <td>{{ leader.HR_9 }}</td>
-                    <td>{{ leader.BABIP }}</td>
-                    <td>{{ leader.LOB }}</td>
-                    <td>{{ leader.GB }}</td>
-                    <td>{{ leader.HR_FB }}</td>
-                    <td>{{ leader.ERA }}</td>
-                    <td>{{ leader.FIP }}</td>
-                    <td>{{ leader.xFIP }}</td>
-                    <td>{{ leader.WAR }}</td>
+                <tr class="pitching-player-row">
+                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                        {{ leader.nameFirst }} {{ leader.nameLast }}
+                    </a></td>
+                    <td>{{ leader.age }}</td>
+                    <td>{{ leader.p_ERA }}</td>
+                    <td>{{ leader.p_FIP }}</td>
+                    <td>{{ leader.p_K_percent }}%</td>
+                    <td>{{ leader.p_G }}</td>
+                    <td>{{ leader.p_GS }}</td>
+                    <td>{{ leader.p_IP }}</td>
+                    <td>{{ leader.p_BB_percent }}%</td>
+                    <td>{{ leader.p_HR_div9 }}</td>
+                    <td>{{ leader.p_BABIP }}</td>
+                    <td>{{ leader.p_LOB_percent }}%</td>
+                    <!--<td>{{ leader.p_GB_percent }}</td>-->
+                    <!--<td>{{ leader.p_xFIP }}</td>
+                    <td>{{ leader.p_WAR }}</td> -->
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        {% if pitching_leaders|length > 10 %}
+            <button class="summary-more-btn" type="pitching">Show More</button>
+        {% endif %}
     {% endif %}
 
     {% if batting_leaders %}
         <h2>Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
-        <table class="table table-striped">
+        <table id="batting-table" class="table table-striped" border="1">
             <thead>
                 <tr>
-                    <th>Player ID</th>
+                    <th id="b-name-header" >Player Name</th>
                     <th>Age</th>
                     <th>G</th>
-                    <th>AB</th>
-                    <th>R</th>
-                    <th>H</th>
-                    <th>2B</th>
-                    <th>3B</th>
+                    <th>PA</th>
                     <th>HR</th>
-                    <th>RBI</th>
                     <th>SB</th>
-                    <th>CS</th>
-                    <th>BB</th>
-                    <th>K</th>
+                    <th>BB%</th>
+                    <th>K%</th>
+                    <th>ISO</th>
+                    <th>BABIP</th>
                     <th>AVG</th>
-                    <th>OBP</th>
                     <th>SLG</th>
-                    <th>OPS</th>
-                    <th>WAR</th>
+                    <th>wOBA</th>
+                    <th>wRC</th>
                 </tr>
             </thead>
             <tbody>
                 {% for leader in batting_leaders %}
-                <tr>
-                    <td>{{ leader.playerID }}</td>
-                    <td>{{ leader.Age }}</td>
-                    <td>{{ leader.G }}</td>
-                    <td>{{ leader.AB }}</td>
-                    <td>{{ leader.R }}</td>
-                    <td>{{ leader.H }}</td>
-                    <td>{{ leader['2B'] }}</td>
-                    <td>{{ leader['3B'] }}</td>
-                    <td>{{ leader.HR }}</td>
-                    <td>{{ leader.RBI }}</td>
-                    <td>{{ leader.SB }}</td>
-                    <td>{{ leader.CS }}</td>
-                    <td>{{ leader.BB }}</td>
-                    <td>{{ leader.K }}</td>
-                    <td>{{ leader.AVG }}</td>
-                    <td>{{ leader.OBP }}</td>
-                    <td>{{ leader.SLG }}</td>
-                    <td>{{ leader.OPS }}</td>
-                    <td>{{ leader.WAR }}</td>
+                <tr class="batting-player-row">
+                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                        {{ leader.nameFirst }} {{ leader.nameLast }}
+                    </a></td>
+                    <td>{{ leader.age }}</td>
+                    <td>{{ leader.b_G }}</td>
+                    <td>{{ leader.b_PA }}</td>
+                    <td>{{ leader.b_HR }}</td>
+                    <td>{{ leader.b_SB }}</td>
+                    <td>{{ leader.b_BB_percent }}</td>
+                    <td>{{ leader.b_K_percent }}</td>
+                    <td>{{ leader.b_ISO }}</td>
+                    <td>{{ leader.b_BABIP }}</td>
+                    <td>{{ leader.b_AVG }}</td>
+                    <td>{{ leader.b_SLG }}</td>
+                    <td>{{ leader.b_wOBA }}</td>
+                    <td>{{ leader.b_wRC }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        {% if batting_leaders|length > 10 %}
+            <button class="summary-more-btn" type="batting">Show More</button>
+        {% endif %}
     {% endif %}
 
-    {% if depth_chart_data %}
-        {% include "depth_chart.html" %}
-    {% endif %}
+{% include "depth_chart.html" %}
+    
 </div>
 {% endblock %}
 
@@ -190,6 +188,93 @@
         } else {
             $('#year-group').hide();
         }
+
+        // Sorting function
+        function sortTable(table, column, asc = true) {
+            const dirModifier = asc ? 1 : -1;
+            const tBody = table.tBodies[0];
+            const rows = Array.from(tBody.querySelectorAll("tr"));
+
+            // Sort each row
+            const sortedRows = rows.sort((a, b) => {
+                const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+
+                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+            });
+
+            // Remove all existing TRs from the table
+            while (tBody.firstChild) {
+                tBody.removeChild(tBody.firstChild);
+            }
+
+            // Re-add the newly sorted rows
+            tBody.append(...sortedRows);
+
+            // Remember how the column is currently sorted
+            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+        }
+
+        // Attach event listeners to headers for pitching table
+        document.querySelectorAll("#pitching-table th").forEach(headerCell => {
+            
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+                
+                sortTable(tableElement, headerIndex, !currentIsAscending);
+            });
+            
+        });
+
+        // Attach event listeners to headers for batting table
+        document.querySelectorAll("#batting-table th").forEach(headerCell => {
+            
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+                
+                sortTable(tableElement, headerIndex, !currentIsAscending);
+            });
+            
+        });
+
+        // Show More/Less button functionality
+        document.querySelectorAll(".summary-more-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const type = button.getAttribute("type");
+                const table = document.getElementById(`${type}-table`);
+                const rows = table.querySelectorAll(`tr.${type}-player-row`);
+
+                if (button.textContent === "Show More") {
+                    rows.forEach(row => row.style.display = "");
+                    button.textContent = "Show Less";
+                } else {
+                    rows.forEach((row, index) => {
+                        if (index >= 10) row.style.display = "none";
+                    });
+                    button.textContent = "Show More";
+
+                    const tableTop = table.getBoundingClientRect().top + window.scrollY;
+                        if (window.scrollY > tableTop) {
+                        table.scrollIntoView({ behavior: "auto", block: "start" });
+                        window.scrollBy(0, -200);
+                    }
+                }
+            });
+
+            // Initially hide rows beyond the first 10
+            const type = button.getAttribute("type");
+            const table = document.getElementById(`${type}-table`);
+            const rows = table.querySelectorAll(`tr.${type}-player-row`);
+            rows.forEach((row, index) => {
+                if (index >= 10) row.style.display = "none";
+            });
+        });
     });
 </script>
 {% endblock %}

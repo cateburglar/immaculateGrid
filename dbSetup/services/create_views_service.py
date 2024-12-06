@@ -7,7 +7,8 @@
 
 from csi3335f2024 import mysql
 from sqlalchemy import text
-from utils import create_session_from_str, create_enginestr_from_values
+from utils import create_enginestr_from_values, create_session_from_str
+
 
 def create_lgavg_view():
     # Create session
@@ -17,15 +18,16 @@ def create_lgavg_view():
     create_lgavg_view_sql = """
     CREATE OR REPLACE VIEW lgavgview AS
     SELECT
-        yearID,
+        t.yearID,
         AVG(p_ERA) AS lgERA,
         AVG(p_HR) AS lgHR,
         AVG(p_BB) AS lgBB,
         AVG(p_HBP) AS lgHBP,
         AVG(p_SO) AS lgK,
         SUM(p_IPouts) / 3.0 AS lgIP
-    FROM pitching
-    GROUP BY yearID;
+    FROM pitching 
+    JOIN teams t ON t.teamID = pitching.teamID
+    GROUP BY t.yearID, lgID;
     """
 
     # Create FIP View
@@ -37,6 +39,7 @@ def create_lgavg_view():
         print(f"Error creating 'lgavgview' view: {e}")
 
     session.close()
+
 
 def create_pitchingstats_view():
     # Create session
@@ -134,10 +137,23 @@ def create_pitchingstats_view():
         -- NULL AS p_HR_div_FB,
         -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
         -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
-        ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP
+            ((13 * pi.p_HR) 
+             + (3 * (pi.p_BB + pi.p_HBP))
+             - (2 * pi.p_SO))
+            / 
+            (pi.p_IPouts / 3.0)
+            + (l.lgERA - 
+                        ((    (13 * l.lgHR) 
+                            + (3 * (l.lgBB + l.lgHBP))
+                            - (2 * l.lgK) )
+                         / 
+                         l.lgIP)
+              ) 
+        AS p_FIP
         -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
         -- NULL AS p_xFIP,
-        -- NULL AS p_WAR
+        -- NULL AS p_WAR,
+        -- NULL AS p_GB_percent
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavgview l ON pi.yearID = l.yearID;
@@ -153,9 +169,12 @@ def create_pitchingstats_view():
 
     session.close()
 
+
 def create_battingstats_view():
     # Create session using the utility function
-    engine_str = create_enginestr_from_values(mysql=mysql)  # Ensure `mysql` is passed correctly
+    engine_str = create_enginestr_from_values(
+        mysql=mysql
+    )  # Ensure `mysql` is passed correctly
     session = create_session_from_str(engine_str)
 
     # Define the SQL query
@@ -167,6 +186,9 @@ def create_battingstats_view():
         b.yearID AS yearID,
         b.teamID AS teamID,
         b.stint AS stint,
+        p.nameFirst,
+        p.nameLast,
+        p.nameGiven,
         a.G_ALL AS b_G,
         (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS b_PA,
         b.b_HR AS b_HR,

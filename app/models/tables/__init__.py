@@ -206,6 +206,7 @@ class CareerWarLeaders(Base):
         ),  # Composite index
     )
 
+
 class SeasonWarLeaders(Base):
     __tablename__ = "seasonwarleaders"
     seasonwarleaders_ID = Column(Integer, primary_key=True, nullable=False)
@@ -679,3 +680,78 @@ class Divisions(Base):
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns
     __table_args__ = (Index("idx_lgID", "lgID"), Index("idx_divID", "divID"))
+
+
+class PitchingStats(Base):
+    __tablename__ = "pitchingstats"
+
+    # Basic player/team info
+    pitchingstats_ID = Column(Integer, primary_key=True)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    yearID = Column(SmallInteger, nullable=False)
+    stint = Column(SmallInteger, nullable=False)
+    nameFirst = Column(String(255), nullable=True)
+    nameLast = Column(String(255), nullable=True)
+    nameGiven = Column(String(255), nullable=True)
+
+    # Traditional pitching stats
+    p_G = Column(SmallInteger, nullable=True)
+    p_GS = Column(SmallInteger, nullable=True)
+    p_ERA = Column(Float, nullable=True)
+
+    # Advanced pitching metrics
+    age = Column(Integer, nullable=True)  # Derive from People birth and death info
+    p_IP = Column(Float, nullable=True)  # Derived from p_IPouts
+    p_K_percent = Column(Float, nullable=True)  # Strikeout Percentage
+    p_BB_percent = Column(Float, nullable=True)  # Walk Percentage
+    p_HR_div9 = Column(Float, nullable=True)  # HR per 9 innings
+    p_BABIP = Column(Float, nullable=True)  # Batting Average on Balls In Play
+    p_LOB_percent = Column(Float, nullable=True)  # Left On Base Percentage
+    # p_GB_percent= Column(Float, nullable = True) # Ground Ball Percentage
+    # p_HR_div_FB = Column(Float, nullable = True) # HR per Fly Ball
+    p_FIP = Column(Float, nullable=True)  # Fielding Independent Pitching
+    # p_XFIP = Column(Float, nullable = True) # Expected Fielding Independent Pitching
+    # p_WAR = Column(Float, nullable = True) # Wins Above Replacement
+
+    # Define the MUL (Index) fields
+    # this speeds up data retrieval by these columns
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+    )
+
+
+class BattingStats(Base):
+    __tablename__ = "battingstats"
+
+    battingstats_ID = Column(Integer, primary_key=True)
+    playerID = Column(String(9), ForeignKey("people.playerID"), nullable=False)
+    teamID = Column(String(3), ForeignKey("teams.teamID"), nullable=False)
+    age = Column(SmallInteger, nullable=True)
+    yearID = Column(SmallInteger, nullable=False)
+    stint = Column(SmallInteger, nullable=True)
+    nameFirst = Column(String(255), nullable=True)
+    nameLast = Column(String(255), nullable=True)
+    nameGiven = Column(String(255), nullable=True)
+
+    # Batting statistics
+    b_PA = Column(Integer, nullable=True)  # Plate Appearances
+    b_G = Column(Integer, nullable=True)  # Games played
+    b_HR = Column(Integer, nullable=True)  # Home Runs
+    b_SB = Column(Integer, nullable=True)  # Stolen Bases
+    b_BB_percent = Column(Float, nullable=True)  # Walk Percentage (BB%)
+    b_K_percent = Column(Float, nullable=True)  # Strikeout Percentage (K%)
+    b_BABIP = Column(Float, nullable=True)  # Batting Average on Balls in Play
+    b_AVG = Column(Float, nullable=True)  # Batting Average
+    b_SLG = Column(Float, nullable=True)  # Slugging Percentage
+    b_ISO = Column(Float, nullable=True)  # Isolated Power
+    b_wOBA = Column(Float, nullable=True)  # Weighted On-Base Average
+    b_wRC = Column(Float, nullable=True)  # Weighted Runs Created Plus
+    # b_BsR = Column(Float, nullable=True)  # Baserunning runs above average
+    b_b_1B = Column(Integer, nullable=True)
+
+    __table_args__ = (
+        Index("idx_teamID", "teamID"),
+        Index("idx_playerID_yearID_teamID", "playerID", "yearID", "teamID"),
+    )
