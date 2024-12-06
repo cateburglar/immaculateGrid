@@ -112,6 +112,7 @@ def update_fieldingpost_from_csv(file_path):
                         yearID=fieldingpost_record.yearID,
                         teamID=fieldingpost_record.teamID,
                         round=fieldingpost_record.round,
+                        position = fieldingpost_record.position,
                     )
                     .first()
                 )

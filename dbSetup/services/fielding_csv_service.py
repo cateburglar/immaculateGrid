@@ -81,7 +81,8 @@ def process_chunk(chunk_data):
                 playerID=fielding_record.playerID,
                 yearID=fielding_record.yearID,
                 teamID=fielding_record.teamID,
-                stint=fielding_record.stint
+                stint=fielding_record.stint,
+                position=fielding_record.position,
             ).first()
 
             # Check for existing record
