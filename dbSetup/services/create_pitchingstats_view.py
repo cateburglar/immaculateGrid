@@ -7,7 +7,37 @@
 
 from csi3335f2024 import mysql
 from sqlalchemy import text
-from utils import create_session_from_str, create_enginestr_from_values
+from utils import create_enginestr_from_values, create_session_from_str
+
+def create_lgavg_view():
+    # Create session
+    session = create_session_from_str(create_enginestr_from_values(mysql))
+
+    # Query to create league average view
+    create_lgavg_view_sql = """
+    CREATE OR REPLACE VIEW lgavgview AS
+    SELECT
+        t.yearID,
+        AVG(p_ERA) AS lgERA,
+        AVG(p_HR) AS lgHR,
+        AVG(p_BB) AS lgBB,
+        AVG(p_HBP) AS lgHBP,
+        AVG(p_SO) AS lgK,
+        SUM(p_IPouts) / 3.0 AS lgIP
+    FROM pitching
+    JOIN teams t ON t.teamID = pitching.teamID
+    GROUP BY t.yearID, lgID;
+    """
+
+    # Create FIP View
+    try:
+        with session.connection() as connection:
+            connection.execute(text(create_lgavg_view_sql))
+        print("View 'lgavgview' created successfully")
+    except Exception as e:
+        print(f"Error creating 'lgavgview' view: {e}")
+
+    session.close()
 
 def create_pitchingstats_view():
     # Create session
@@ -105,10 +135,23 @@ def create_pitchingstats_view():
         -- NULL AS p_HR_div_FB,
         -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
         -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
-        ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_FIP
+            ((13 * pi.p_HR)
+             + (3 * (pi.p_BB + pi.p_HBP))
+             - (2 * pi.p_SO))
+            /
+            (pi.p_IPouts / 3.0)
+            + (l.lgERA -
+                        ((    (13 * l.lgHR)
+                            + (3 * (l.lgBB + l.lgHBP))
+                            - (2 * l.lgK) )
+                         /
+                         l.lgIP)
+              )
+        AS p_FIP
         -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
         -- NULL AS p_xFIP,
-        -- NULL AS p_WAR
+        -- NULL AS p_WAR,
+        -- NULL AS p_GB_percent
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavgview l ON pi.yearID = l.yearID;
@@ -124,3 +167,76 @@ def create_pitchingstats_view():
 
     session.close()
 
+def create_battingstats_view():
+    # Create session using the utility function
+    engine_str = create_enginestr_from_values(
+        mysql=mysql
+    )  # Ensure `mysql` is passed correctly
+    session = create_session_from_str(engine_str)
+
+    # Define the SQL query
+    create_battingstats_view_sql = """
+    CREATE OR REPLACE VIEW battingstatsview AS
+    SELECT DISTINCT
+        b.playerID as playerID,
+        (b.yearID - p.birthYear) AS age,
+        b.yearID AS yearID,
+        b.teamID AS teamID,
+        b.stint AS stint,
+        p.nameFirst,
+        p.nameLast,
+        p.nameGiven,
+        a.G_ALL AS b_G,
+        (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS b_PA,
+        b.b_HR AS b_HR,
+        b.b_SB AS b_SB,
+        (b.b_BB / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS b_BB_percent,
+        (b.b_SO / (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF)) * 100 AS b_K_percent,
+        (b.b_H - b.b_HR) / (b.b_AB - b.b_SO - b.b_HR + b.b_SF) AS b_BABIP,
+        (b.b_H / b.b_AB) AS b_AVG,
+        ((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB AS b_SLG,
+        (((b.b_H - (b.b_2B + b.b_3B + b.b_HR)) + (2 * b.b_2B) + (3 * b.b_3B) + (4 * b.b_HR)) / b.b_AB) - (b.b_H / b.b_AB) AS b_ISO,
+        (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_b_1B,
+
+                                                -- calculation of 1b
+        (((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR))
+            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
+            AS b_wOBA,
+
+        (
+        -- woba
+        (    ((((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR))
+            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
+            - w.league)
+            /
+            w.wobascale)
+        +
+            ( w.r_pa) )
+        *
+        (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
+        AS b_wRC
+
+        -- ,((b.b_SB - b.b_CS) * 0.2) AS b_BsR
+    FROM
+        batting b
+    JOIN
+        people p ON b.playerID = p.playerID
+    JOIN
+        appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID
+    JOIN
+        fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
+    JOIN
+        wobaweights w ON w.yearID = b.yearID
+    HAVING
+        b_PA > 0 -- exclude pitchers;
+    """
+
+    # Create Batting Stats View
+    try:
+        with session.connection() as connection:
+            connection.execute(text(create_battingstats_view_sql))
+        print("View 'battingstatsview' created successfully")
+    except Exception as e:
+        print(f"Error creating 'battingstatsview': {e}")
+
+    session.close()
