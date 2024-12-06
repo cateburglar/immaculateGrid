@@ -5,6 +5,9 @@ from .awardsshare_csv_service import upload_awardsshare_csv
 from .batting_csv_service import upload_batting_csv
 from .battingpost_csv_service import upload_battingpost_csv
 from .careerwarleaders_csv_service import upload_careerwarleaders_csv
+from .create_battingstats_view import create_battingstats_view
+from .create_leagueavg_view import create_lgavg_view
+from .create_pitchingstats_view import create_pitchingstats_view
 from .collegeplaying_csv_service import upload_collegeplaying_csv
 from .draft_csv_service import upload_draft_csv
 from .fielding_csv_service import upload_fielding_csv
@@ -17,7 +20,6 @@ from .nohitters_csv_service import upload_nohitters_csv
 from .parks_csv_service import upload_parks_csv
 from .people_csv_service import upload_people_csv
 from .pitching_csv_service import upload_pitching_csv
-from .create_views_service import create_lgavg_view, create_pitchingstats_view, create_battingstats_view
 from .pitchingpost_csv_service import upload_pitchingpost_csv
 from .salaries_csv_service import upload_salaries_csv
 from .schools_csv_service import upload_schools_csv
