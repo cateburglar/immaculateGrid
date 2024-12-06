@@ -1,7 +1,20 @@
+/* Container for consistent page layout */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+  }
+
 /* Container for the input form */
 .summary-form-container {
     display: flex;
     margin: 0 auto;
+    width: 100%;
     flex-direction: column;
     padding: 20px;
     background-color: var(--light-blue);
@@ -9,7 +22,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.summary-form-container h1 {
+.section-title {
+    font-size: 3em;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -79,8 +94,8 @@
     
 }
 
-.form-row-submit {
-    padding: 10px 15px;
+.form-row-submit, .show-more-btn, .summary-more-btn {
+    padding: 15px 20px;
     background-color: var(--beige);
     color: var(--jet);
     border: none;
@@ -90,6 +105,63 @@
     font-size: 1rem;
 }
 
-.form-row-submit:hover {
+.summary-more-btn {
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 0;
+
+}
+
+.form-row-submit:hover, .show-more-btn:hover, .summary-more-btn:hover {
     background-color: var(--light-green);
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table thead tr {
+    background-color: var(--light-blue);
+    color: #ffffff;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--light-blue);
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Link styling for player names */
+table td a {
+    color: var(--dark-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table td a:hover {
+    text-decoration: underline;
+    color: var(--light-blue);
+}
+
