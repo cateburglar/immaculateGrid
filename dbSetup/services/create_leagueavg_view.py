@@ -1,3 +1,6 @@
+# Resources
+#
+# [batting-reference league averages](https://www.baseball-reference.com/leagues/majors/pitch.shtml)
 from csi3335f2024 import mysql
 from sqlalchemy import text
 from utils import create_session_from_str, create_enginestr_from_values
