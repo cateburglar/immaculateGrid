@@ -3,6 +3,13 @@
 {% block content %}
     <div class="update-container">
         <h1 class="form-title">Update Account</h1>
+        {% if user %}
+        <div class="info">
+            <h3>First name: {{ user.nameFirst }}</h3>
+            <h3>Last name: {{ user.nameLast }}</h3>
+            <h3>Username: {{ user.username }}</h3>
+        </div>
+        {% endif %}
         <form action="" method="post" novalidate class="app-form">
             {{ form.hidden_tag() }}
 

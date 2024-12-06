@@ -42,23 +42,26 @@ def update_profile():
         if user:
             if form.password.data == None:
                 flash("Password must be provided to update info", "danger")
-                return render_template("update_profile.html", form=form)
+                return render_template("update_profile.html", form=form, user=user)
 
             # Ensure the password is correct
             if not check_password_hash(user.password, form.password.data):
                 flash("Reset unsuccessful: Password is incorrect", "danger")
-                return render_template("update_profile.html", form=form)
+                return render_template("update_profile.html", form=form, user=user)
 
             nameFirst = form.nameFirst.data
             nameLast = form.nameLast.data
             username = form.username.data
 
-            user.nameFirst = nameFirst
-            user.nameLast = nameLast
-            user.username = username
+            if nameFirst != "" and nameFirst != None:
+                user.nameFirst = nameFirst
 
-            # Set the session username to the provided username
-            session["username"] = username
+            if nameLast != "" and nameLast != None:
+                user.nameLast = nameLast
+
+            if username != "" and username != None:
+                user.username = username
+                session["username"] = username
 
             db.session.commit()
             flash("Profile updated successfully!", "success")
@@ -68,14 +71,9 @@ def update_profile():
                 f"Could not find existing user to update for {form.username.data}"
             )
             flash("Username is invalid, please try again", "danger")
-    elif request.method == "GET":
-        user = User.query.filter_by(username=session["username"]).first()
-        form.username.data = user.username
-        form.nameFirst.data = user.nameFirst
-        form.nameLast.data = user.nameLast
-        return render_template("update_profile.html", form=form, user=user)
     else:
-        return render_template("update_profile.html", form=form)
+        user = User.query.filter_by(username=session["username"]).first()
+        return render_template("update_profile.html", form=form, user=user)
 
 
 @update_routes.route("/reset-password", methods=["GET", "POST"])

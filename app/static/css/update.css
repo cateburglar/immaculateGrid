@@ -7,6 +7,21 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.info {
+    background-color: var(--light-blue);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.info h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: var(--jet);
+}
+
 .update-btn, .update-danger-btn {
     padding: 10px 15px;
     font-weight: bold;
