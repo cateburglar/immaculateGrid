@@ -1,0 +1,34 @@
+.update-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--beige);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.update-btn, .reset-pass-btn {
+    padding: 10px 15px;
+    color: var(--jet);
+    border: none;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.update-btn {
+    background-color: var(--light-blue);
+}
+
+.update-btn:hover {
+    background-color: var(--blue);
+}
+
+.reset-pass-btn {
+    background-color: var(--amaranth-pink);
+}
+
+.reset-pass-btn:hover {
+    background-color: var(--rose-pompadour);
+}

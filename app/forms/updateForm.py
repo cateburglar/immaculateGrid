@@ -4,8 +4,13 @@ from wtforms.validators import DataRequired
 
 
 class UpdateForm(FlaskForm):
-    nameFirst = StringField("First Name",)
-    nameLast = StringField("Last Name",)
+    nameFirst = StringField(
+        "First Name",
+    )
+    nameLast = StringField(
+        "Last Name",
+    )
     username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("New Password")
+    password = PasswordField("Current Password")
+    new_password = PasswordField("New Password")
     submit = SubmitField("Update")
