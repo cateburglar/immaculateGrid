@@ -55,7 +55,7 @@
             </thead>
             <tbody>
                 {% for leader in pitching_leaders %}
-                <tr>
+                <tr class="pitching-player-row">
                     <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
                         {{ leader.nameFirst }} {{ leader.nameLast }}
                     </a></td>
@@ -77,6 +77,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if pitching_leaders|length > 10 %}
+            <button class="summary-more-btn" type="pitching">Show More</button>
+        {% endif %}
     {% endif %}
 
     {% if batting_leaders %}
@@ -102,7 +105,7 @@
             </thead>
             <tbody>
                 {% for leader in batting_leaders %}
-                <tr>
+                <tr class="batting-player-row">
                     <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
                         {{ leader.nameFirst }} {{ leader.nameLast }}
                     </a></td>
@@ -123,6 +126,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if batting_leaders|length > 10 %}
+            <button class="summary-more-btn" type="batting">Show More</button>
+        {% endif %}
     {% endif %}
 
 {% include "depth_chart.html" %}
@@ -213,28 +219,61 @@
 
         // Attach event listeners to headers for pitching table
         document.querySelectorAll("#pitching-table th").forEach(headerCell => {
-            if (headerCell.id !== "p-name-header") {
-                headerCell.addEventListener("click", () => {
-                    const tableElement = headerCell.parentElement.parentElement.parentElement;
-                    const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-                    const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-
-                    sortTable(tableElement, headerIndex, !currentIsAscending);
-                });
-            }
+            
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+                
+                sortTable(tableElement, headerIndex, !currentIsAscending);
+            });
+            
         });
 
         // Attach event listeners to headers for batting table
         document.querySelectorAll("#batting-table th").forEach(headerCell => {
-            if (headerCell.id !== "b-name-header") {
-                headerCell.addEventListener("click", () => {
-                    const tableElement = headerCell.parentElement.parentElement.parentElement;
-                    const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-                    const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+            
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+                
+                sortTable(tableElement, headerIndex, !currentIsAscending);
+            });
+            
+        });
 
-                    sortTable(tableElement, headerIndex, !currentIsAscending);
-                });
-            }
+        // Show More/Less button functionality
+        document.querySelectorAll(".summary-more-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const type = button.getAttribute("type");
+                const table = document.getElementById(`${type}-table`);
+                const rows = table.querySelectorAll(`tr.${type}-player-row`);
+
+                if (button.textContent === "Show More") {
+                    rows.forEach(row => row.style.display = "");
+                    button.textContent = "Show Less";
+                } else {
+                    rows.forEach((row, index) => {
+                        if (index >= 10) row.style.display = "none";
+                    });
+                    button.textContent = "Show More";
+
+                    const tableTop = table.getBoundingClientRect().top + window.scrollY;
+                        if (window.scrollY > tableTop) {
+                        table.scrollIntoView({ behavior: "auto", block: "start" });
+                        window.scrollBy(0, -200);
+                    }
+                }
+            });
+
+            // Initially hide rows beyond the first 10
+            const type = button.getAttribute("type");
+            const table = document.getElementById(`${type}-table`);
+            const rows = table.querySelectorAll(`tr.${type}-player-row`);
+            rows.forEach((row, index) => {
+                if (index >= 10) row.style.display = "none";
+            });
         });
     });
 </script>

@@ -234,24 +234,25 @@ def preprocess_pitching_leaders(pitching_leaders):
 
 # Utility function to fetch batting leaders
 def get_batting_leaders(team_ID, year):
-    batting_leaders = db.session.query(BattingStats).filter(
+    batting_leaders_query = db.session.query(BattingStats).filter(
         BattingStats.yearID == year, BattingStats.teamID == team_ID
     )
 
-    if not batting_leaders:
+    if not batting_leaders_query:
         flash(f"No batting leaders found for {team_ID} in {year}", "warning")
         stats_logger.error(f"ERROR: No batting leaders returned for{team_ID}, {year}")
         return None
-    return batting_leaders
+
+    return batting_leaders_query.all()
 
 
 # Utility function to fetch and preprocess pitching leaders
 def get_pitching_leaders(team_ID, year):
-    pitching_leaders = db.session.query(PitchingStats).filter(
+    pitching_leaders_query = db.session.query(PitchingStats).filter(
         PitchingStats.yearID == year, PitchingStats.teamID == team_ID
     )
-    if pitching_leaders:
-        return preprocess_pitching_leaders(pitching_leaders)
+    if pitching_leaders_query:
+        return preprocess_pitching_leaders(pitching_leaders_query.all())
     else:
         flash(f"No pitching leaders found for {team_ID} in {year}", "warning")
         stats_logger.error(f"ERROR: No pitching leaders returned for {team_ID}, {year}")

@@ -92,7 +92,7 @@
     
 }
 
-.form-row-submit {
+.form-row-submit, .show-more-btn, .summary-more-btn {
     padding: 10px 15px;
     background-color: var(--beige);
     color: var(--jet);
@@ -103,7 +103,7 @@
     font-size: 1rem;
 }
 
-.form-row-submit:hover {
+.form-row-submit:hover, .show-more-btn:hover, .summary-more-btn:hover {
     background-color: var(--light-green);
 }
 
@@ -155,3 +155,4 @@ table td a:hover {
     text-decoration: underline;
     color: var(--light-blue);
 }
+

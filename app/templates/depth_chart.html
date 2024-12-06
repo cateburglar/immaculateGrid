@@ -1,4 +1,6 @@
 <div>
+    <h1>MLB Team Depth Chart</h1>
+
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
         <h2>Depth Chart for {{ teamName }} - {{ yearID }}</h2>
@@ -27,7 +29,7 @@
                         </thead>
                         <tbody>
                             {% for player in players %}
-                                <tr>
+                                <tr class="player-row">
                                     <td><a href="https://www.baseball-reference.com/players/{{ player.playerID[0] }}/{{ player.playerID }}.shtml">
                                         {{ player.nameFirst }} {{ player.nameLast }}
                                     </a></td>
@@ -48,6 +50,9 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% if players|length > 5 %}
+                        <button class="show-more-btn" data-position="{{ position }}">Show More</button>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -58,7 +63,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-
         // Sorting function
         function sortTable(table, column, asc = true) {
             const dirModifier = asc ? 1 : -1;
@@ -88,19 +92,56 @@
             table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
             table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
             table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+
+            // Show all rows after sorting
+            table.querySelectorAll("tr.player-row").forEach(row => row.style.display = "");
+            table.nextElementSibling.textContent = "Show Less";
         }
 
         // Attach event listeners to headers for depth chart tables
         document.querySelectorAll(".depth-chart th").forEach(headerCell => {
-            if (!headerCell.id.includes("name-header")) {
-                headerCell.addEventListener("click", () => {
-                    const tableElement = headerCell.parentElement.parentElement.parentElement;
-                    const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-                    const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+            
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+                
+                sortTable(tableElement, headerIndex, !currentIsAscending);
+            });
+            
+        });
 
-                    sortTable(tableElement, headerIndex, !currentIsAscending);
-                });
-            }
+        // Show More/Less button functionality
+        document.querySelectorAll(".show-more-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const position = button.getAttribute("data-position");
+                const table = document.getElementById(`${position}-table`);
+                const rows = table.querySelectorAll("tr.player-row");
+
+                if (button.textContent === "Show More") {
+                    rows.forEach(row => row.style.display = "");
+                    button.textContent = "Show Less";
+                } else {
+                    rows.forEach((row, index) => {
+                        if (index >= 5) row.style.display = "none";
+                    });
+                    button.textContent = "Show More";
+
+                    const tableTop = table.getBoundingClientRect().top + window.scrollY;
+                        if (window.scrollY > tableTop) {
+                        table.scrollIntoView({ behavior: "auto", block: "start" });
+                        window.scrollBy(0, -200);
+                    }
+                }
+            });
+
+            // Initially hide rows beyond the first 5
+            const position = button.getAttribute("data-position");
+            const table = document.getElementById(`${position}-table`);
+            const rows = table.querySelectorAll("tr.player-row");
+            rows.forEach((row, index) => {
+                if (index >= 5) row.style.display = "none";
+            });
         });
     });
 </script>
