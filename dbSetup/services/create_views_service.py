@@ -17,7 +17,7 @@ def create_lgavg_view():
     # Query to create league average view
     create_lgavg_view_sql = """
     CREATE OR REPLACE VIEW lgavgview AS
-    SELECT
+    SELECT DISTINCT
         t.yearID,
         AVG(p_ERA) AS lgERA,
         AVG(p_HR) AS lgHR,
@@ -27,7 +27,7 @@ def create_lgavg_view():
         SUM(p_IPouts) / 3.0 AS lgIP
     FROM pitching 
     JOIN teams t ON t.teamID = pitching.teamID
-    GROUP BY t.yearID, lgID;
+    GROUP BY t.yearID;
     """
 
     # Create FIP View
@@ -109,7 +109,7 @@ def create_pitchingstats_view():
     # Query to create pitching stats view
     create_pitchingview_sql = """
     CREATE OR REPLACE VIEW pitchingstatsview AS
-    SELECT
+    SELECT DISTINCT
         pi.playerID,
         pi.teamID,
         pi.yearID,
@@ -225,9 +225,9 @@ def create_battingstats_view():
     JOIN
         people p ON b.playerID = p.playerID
     JOIN
-        appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID
+        appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID AND a.teamID = b.teamID
     JOIN
-        fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
+        fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID AND a.teamID = b.teamID
     JOIN 
         wobaweights w ON w.yearID = b.yearID
     HAVING
