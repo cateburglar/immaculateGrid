@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/grid.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/summary.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/update.css') }}">
     <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
     <link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet" />
     <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
@@ -39,7 +40,7 @@
                 <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
             <a class="navbar-link" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
-            <a class="navbar-link" href="{{ url_for('update_routes.update_profile') }}">Update Profile Information</a>
+            <a class="navbar-link" href="{{ url_for('update_routes.update_profile') }}">Update Profile</a>
             <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>
