@@ -29,20 +29,20 @@ def create_battingstats_view():
         (b.b_H - (b.b_2B + b.b_3B + b.b_HR)) AS b_b_1B,
 
                                                 -- calculation of 1b
-        (((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
-            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
+        (((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR))
+            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
             AS b_wOBA,
 
-        (   
+        (
         -- woba
-        (    ((((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR)) 
-            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP)) 
-            - w.league)  
-            / 
+        (    ((((w.wBB * (b.b_BB - b.b_IBB)) + (w.wHBP * b.b_HBP) + (w.w1b * (b.b_H - (b.b_2B + b.b_3B + b.b_HR))) + (w.w2b * b.b_2B) + (w.w3b * b.b_3B) + (w.whr * b.b_HR))
+            / (b.b_AB + b.b_BB - b.b_IBB + b.b_SF + b.b_HBP))
+            - w.league)
+            /
             w.wobascale)
-        + 
-            ( w.r_pa) ) 
-        * 
+        +
+            ( w.r_pa) )
+        *
         (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) -- PA
         AS b_wRC
 
@@ -52,10 +52,10 @@ def create_battingstats_view():
     JOIN
         people p ON b.playerID = p.playerID
     JOIN
-        appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID
+        appearances a ON b.playerID = a.playerID AND b.yearID = a.yearID AND a.teamID = b.teamID
     JOIN
-        fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID
-    JOIN 
+        fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID AND a.teamID = b.teamID
+    JOIN
         wobaweights w ON w.yearID = b.yearID
     HAVING
         b_PA > 0 -- exclude pitchers;

@@ -1,7 +1,6 @@
 from csi3335f2024 import mysql
 from sqlalchemy import text
 from utils import create_session_from_str, create_enginestr_from_values
-
 def create_lgavg_view():
     # Create session
     session = create_session_from_str(create_enginestr_from_values(mysql))
@@ -9,8 +8,8 @@ def create_lgavg_view():
     # Query to create league average view
     create_lgavg_view_sql = """
     CREATE OR REPLACE VIEW lgavgview AS
-    SELECT
-        yearID,
+    SELECT DISTINCT
+        t.yearID,
         AVG(p_ERA) AS lgERA,
         AVG(p_HR) AS lgHR,
         AVG(p_BB) AS lgBB,
@@ -18,7 +17,8 @@ def create_lgavg_view():
         AVG(p_SO) AS lgK,
         SUM(p_IPouts) / 3.0 AS lgIP
     FROM pitching
-    GROUP BY yearID;
+    JOIN teams t ON t.teamID = pitching.teamID
+    GROUP BY t.yearID;
     """
 
     # Create FIP View
