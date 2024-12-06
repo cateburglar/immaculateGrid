@@ -208,6 +208,10 @@ def getDepthChartData(team_ID, year):
                 .first()
             )
 
+        # Skip players with bad data
+        if player_stats == None or player_stats.playerID == None:
+            continue
+
         # Add the player and their stat to the depth chart
         depth_chart_data[position].append(player_stats)
 
