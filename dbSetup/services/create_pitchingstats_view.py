@@ -98,30 +98,22 @@ def create_pitchingstats_view():
         (pi.p_SO / pi.p_BFP) * 100 AS p_K_percent,
         (pi.p_BB / pi.p_BFP) * 100 AS p_BB_percent,
         (pi.p_HR / (pi.p_IPouts / 3.0)) / 9 AS p_HR_div9,
-        -- BABIP = (H - HR) / (AB - K - HR + SF)
         (pi.p_H - pi.p_HR) / (pi.p_BFP - pi.p_SO - pi.p_HR + pi.p_SF) AS p_BABIP,
-        -- LOB = (H + BB + HBP - R) / (H + BB + HBP - (1.4 * HR))
         (pi.p_H + pi.p_BB + pi.p_HBP - pi.p_R) / (pi.p_H + pi.p_BB + pi.p_HBP - (1.4 * pi.p_HR)) * 100 AS p_LOB_percent,
-        -- NULL AS p_HR_div_FB,
-        -- FIP = (((13*HR)+3*(BB+HBP)-(2*K))/IP)+FIP constant
+        -- FIP = (((13 * HR) + 3 * (BB + HBP) - (2 * K)) / IP) + FIP constant
         -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
-            ((13 * pi.p_HR)
-             + (3 * (pi.p_BB + pi.p_HBP))
-             - (2 * pi.p_SO))
+        (
+            ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO))
             /
             (pi.p_IPouts / 3.0)
-            + (l.lgERA -
-                        ((    (13 * l.lgHR)
-                            + (3 * (l.lgBB + l.lgHBP))
-                            - (2 * l.lgK) )
-                         /
-                         l.lgIP)
-              )
+        )
+        +
+        (
+            l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK))
+            /
+            l.lgIP)
+        )
         AS p_FIP
-        -- ((13 * (pi.p_FB * (l.lgHR / l.lgFB)) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO)) / (pi.p_IPouts / 3.0) + (l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK)) / l.lgIP)) AS p_xFIP,
-        -- NULL AS p_xFIP,
-        -- NULL AS p_WAR,
-        -- NULL AS p_GB_percent
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavgview l ON pi.yearID = l.yearID;
@@ -136,4 +128,3 @@ def create_pitchingstats_view():
         print(f"Error creating 'pitchingstatsview' view: {e}")
 
     session.close()
-

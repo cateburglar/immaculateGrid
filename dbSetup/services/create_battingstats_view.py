@@ -4,7 +4,9 @@ from utils import create_session_from_str, create_enginestr_from_values
 
 def create_battingstats_view():
     # Create session using the utility function
-    engine_str = create_enginestr_from_values(mysql=mysql)  # Ensure `mysql` is passed correctly
+    engine_str = create_enginestr_from_values(
+        mysql=mysql
+    )  # Ensure `mysql` is passed correctly
     session = create_session_from_str(engine_str)
 
     # Define the SQL query
@@ -16,6 +18,9 @@ def create_battingstats_view():
         b.yearID AS yearID,
         b.teamID AS teamID,
         b.stint AS stint,
+        p.nameFirst,
+        p.nameLast,
+        p.nameGiven,
         a.G_ALL AS b_G,
         (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) AS b_PA,
         b.b_HR AS b_HR,
