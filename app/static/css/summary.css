@@ -159,6 +159,38 @@ table thead tr {
     text-align: left;
 }
 
+table thead th:hover {
+    background-color: var(--blue);
+    cursor: pointer;
+}
+
+table thead th {
+    position: relative; /* Ensure the arrows are positioned relative to the header */
+}
+
+table thead th::after {
+    content: ''; /* Empty content for the arrow */
+    position: absolute;
+    right: 10px; /* Adjust the position as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent; /* Create the arrow shape */
+    border-top-color: #ffffff; /* Default arrow color */
+    display: none; /* Hide the arrow by default */
+}
+
+table thead th.th-sort-asc::after {
+    display: inline-block;
+    border-bottom-color: #ffffff; /* Color for ascending arrow */
+    border-top-color: transparent;
+}
+
+table thead th.th-sort-desc::after {
+    display: inline-block;
+    border-top-color: #ffffff; /* Color for descending arrow */
+    border-bottom-color: transparent;
+}
+
 table th,
 table td {
     padding: 12px 15px;
