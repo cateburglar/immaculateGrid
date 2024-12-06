@@ -8,18 +8,36 @@ def create_lgavg_view():
     # Query to create league average view
     create_lgavg_view_sql = """
     CREATE OR REPLACE VIEW lgavgview AS
-    SELECT DISTINCT
+    SELECT
         t.yearID,
-        AVG(p_ERA) AS lgERA,
-        AVG(p_HR) AS lgHR,
-        AVG(p_BB) AS lgBB,
-        AVG(p_HBP) AS lgHBP,
-        AVG(p_SO) AS lgK,
-        SUM(p_IPouts) / 3.0 AS lgIP
+        AVG(p_ERA) AS lg_ERA,
+        AVG(p_HR) AS lg_HR,
+        AVG(p_BB) AS lg_BB,
+        AVG(p_HBP) AS lg_HBP,
+        AVG(p_SO) AS lg_K,
+        SUM(p_IPouts) / 3.0 AS lg_IP
     FROM pitching
-    JOIN teams t ON t.teamID = pitching.teamID
+    JOIN teams t
+        ON t.teamID = pitching.teamID AND t.yearID = pitching.yearID
     GROUP BY t.yearID;
     """
+
+    # Query with weighted averages
+    # create_lgavg_view_sql = """
+    # CREATE OR REPLACE VIEW lgavgview AS
+    # SELECT
+    #     t.yearID,
+    #     SUM(p.p_ER) / NULLIF(SUM(p.p_IPouts) / 3.0, 0) AS lgERA,
+    #     SUM(p.p_HR) / NULLIF(SUM(p.p_IPouts) / 3.0, 0) AS lgHR,
+    #     SUM(p.p_BB) / NULLIF(SUM(p.p_IPouts) / 3.0, 0) AS lgBB,
+    #     SUM(p.p_HBP) / NULLIF(SUM(p.p_IPouts) / 3.0, 0) AS lgHBP,
+    #     SUM(p.p_SO) / NULLIF(SUM(p.p_IPouts) / 3.0, 0) AS lgK,
+    #     SUM(p.p_IPouts) / 3.0 AS lgIP
+    # FROM pitching p
+    # JOIN teams t
+    #     ON t.teamID = p.teamID AND t.yearID = p.yearID
+    # GROUP BY t.yearID;
+    # """
 
     # Create FIP View
     try:

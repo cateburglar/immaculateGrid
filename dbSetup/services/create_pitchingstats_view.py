@@ -18,7 +18,8 @@ def create_pitchingstats_view():
 
     1. p_IP
     Innings pitched. Take the number of IPouts and divide by 3 because there
-    are three outs per inning.
+    are three outs per inning. Baseball uses .1 and .2 to indicate partial
+    innings pitched instead of .333 and .667.
 
     2. p_K_percent
     Percentage of strikeouts against batters faced. Take the number of
@@ -39,6 +40,7 @@ def create_pitchingstats_view():
     balls hit into the field of play. This removes outcomes that the opponents
     defense has no affect on (strikeouts and homeruns). SF = sacrifice flies
     -- BABIP = (H - HR) / (AB - K - HR + SF)
+    -- AB = BFP - BB - HBP - SF
 
     6. p_LOB_percent
     <https://library.fangraphs.com/pitching/lob/>
@@ -90,28 +92,31 @@ def create_pitchingstats_view():
         pi.p_ERA,
         CASE
             WHEN pe.deathYear IS NULL THEN
-                (DATEDIFF(CURDATE(), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
+                -- IDK when they actually find the guys age for that season so i put 12-31
+                (DATEDIFF(CONCAT(pi.yearID, '-12-31'), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
             ELSE
                 (DATEDIFF(CONCAT(pe.deathYear, '-', pe.deathMonth, '-', pe.deathDay), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
         END AS age,
-        pi.p_IPouts / 3.0 AS p_IP,
+        FLOOR(pi.p_IPouts / 3) + (pi.p_IPouts % 3) * 0.1 AS p_IP,
         (pi.p_SO / pi.p_BFP) * 100 AS p_K_percent,
         (pi.p_BB / pi.p_BFP) * 100 AS p_BB_percent,
-        (pi.p_HR / (pi.p_IPouts / 3.0)) / 9 AS p_HR_div9,
-        (pi.p_H - pi.p_HR) / (pi.p_BFP - pi.p_SO - pi.p_HR + pi.p_SF) AS p_BABIP,
-        (pi.p_H + pi.p_BB + pi.p_HBP - pi.p_R) / (pi.p_H + pi.p_BB + pi.p_HBP - (1.4 * pi.p_HR)) * 100 AS p_LOB_percent,
+        (pi.p_HR / (pi.p_IPouts / 3.0)) * 9 AS p_HR_div9,
+        (pi.p_H - pi.p_HR) / NULLIF((pi.p_BFP - pi.p_BB - pi.p_HBP - pi.p_SO - pi.p_HR), 0) AS p_BABIP,
+        (pi.p_H + pi.p_BB + pi.p_HBP - pi.p_R) / NULLIF((pi.p_H + pi.p_BB + pi.p_HBP - (1.4 * pi.p_HR)), 0) * 100 AS p_LOB_percent,
         -- FIP = (((13 * HR) + 3 * (BB + HBP) - (2 * K)) / IP) + FIP constant
         -- FIP Constant = lgERA - (((13 * lgHR) + (3 * (lgBB + lgHBP)) - (2 * lgK)) / lgIP)
         (
             ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO))
             /
-            (pi.p_IPouts / 3.0)
+            NULLIF((pi.p_IPouts / 3.0), 0)
         )
         +
         (
-            l.lgERA - (((13 * l.lgHR) + (3 * (l.lgBB + l.lgHBP)) - (2 * l.lgK))
-            /
-            l.lgIP)
+            l.lg_ERA - (
+                ((13 * l.lg_HR) + (3 * (l.lg_BB + l.lg_HBP)) - (2 * l.lg_K))
+                /
+                NULLIF(l.lg_IP, 0)
+            )
         )
         AS p_FIP
     FROM pitching pi
