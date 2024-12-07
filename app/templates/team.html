@@ -4,7 +4,7 @@
 <div class="history-container">
 
     {% if team_name %}
-        <h2 class="section-title">{{team_name}} History</h2>
+        <h2 class="section-title">{{team_name}}</h2>
         {% if photo %}
         <a><img class="team-photo" src="{{photo}}"></a>
         {% endif %}
@@ -33,7 +33,7 @@
                 <tr class="stats-row">
                     <td>{{ row.yearID }}</td>
                     <td>{{ row.team_rank }}</td>
-                    <td>{{ row.lgID }}</td>
+                    <td><a href="{{ url_for('league_routes.get_league_standings', lgID=row.lgID, yearID=row.yearID) }}">{{ row.lgID }}</a></td>
                     <td>{{ row.divID}}</td>
                     <td>{{ row.team_G }}</td>
                     <td>{{ row.team_W }}</td>
@@ -147,9 +147,17 @@
 {% block scripts %}
 <script>
     $(document).ready(function() {
+        function expandTable(table) {
+            const showMoreBtn = table.nextElementSibling;
+            if (showMoreBtn && showMoreBtn.classList.contains("more-btn") && showMoreBtn.textContent === "Show More") {
+                showMoreBtn.click();
+            }
+        }
 
         // Sorting function
         function sortTable(table, column, asc = true) {
+            expandTable(table);
+
             const dirModifier = asc ? 1 : -1;
             const tBody = table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll("tr"));

@@ -211,3 +211,13 @@ APPEARANCES_MAPPING = {
     "OF": "G_of",  # Games as outfielder
     "DH": "G_dh",  # Games as designated hitter
 }
+
+LEAGUES_MAPPING = {
+    "AA": "American Association",
+    "AL": "American League",
+    "FL": "Federal League",
+    "NA": "National Association",
+    "NL": "National League",
+    "PL": "Players League",
+    "UA": "Union Association",
+}

@@ -59,6 +59,7 @@ def create_app():
             admin_routes,
             grid_routes,
             home_routes,
+            league_routes,
             team_routes,
             update_routes,
         )
@@ -68,6 +69,7 @@ def create_app():
         app.register_blueprint(grid_routes, url_prefix="/grid")
         app.register_blueprint(update_routes, url_prefix="/update")
         app.register_blueprint(team_routes, url_prefix="/teams")
+        app.register_blueprint(league_routes, url_prefix="/leagues")
 
         db.create_all()
 

@@ -49,7 +49,7 @@ def get_team(teamID, yearID):
 
     # Scrape the photo (If the year is too old there won't be one)
     photo = None
-    if int(yearID) >= 1900:
+    if int(yearID) >= 1900 and len(stats) >= 5:
         photo = get_baseball_reference_photo(teamID, yearID)
 
     return render_template(

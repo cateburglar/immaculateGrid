@@ -55,9 +55,6 @@
                     <th>HR/9</th>
                     <th>BABIP</th>
                     <th>LOB%</th>
-                    <!--<th>GB%</th>-->
-                    <!--<th>xFIP</th>
-                    <th>WAR</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -77,9 +74,6 @@
                     <td>{{ leader.p_HR_div9 }}</td>
                     <td>{{ leader.p_BABIP }}</td>
                     <td>{{ leader.p_LOB_percent }}%</td>
-                    <!--<td>{{ leader.p_GB_percent }}</td>-->
-                    <!--<td>{{ leader.p_xFIP }}</td>
-                    <td>{{ leader.p_WAR }}</td> -->
                 </tr>
                 {% endfor %}
             </tbody>
@@ -196,8 +190,18 @@
             $('#year-group').hide();
         }
 
+        // Function to expand the table by clicking the "Show More" button
+        function expandTable(table) {
+            const showMoreBtn = table.nextElementSibling;
+            if (showMoreBtn && showMoreBtn.classList.contains("summary-more-btn") && showMoreBtn.textContent === "Show More") {
+                showMoreBtn.click();
+            }
+        }
+
         // Sorting function
         function sortTable(table, column, asc = true) {
+            expandTable(table);
+
             const dirModifier = asc ? 1 : -1;
             const tBody = table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll("tr"));
