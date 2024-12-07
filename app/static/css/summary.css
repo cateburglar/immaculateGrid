@@ -52,8 +52,9 @@
     text-decoration: underline;
 }
 
-.leaders-title {
+.table-title {
     margin-top: 30px;
+    font-size: 2em;
 }
 
 /* Form layout */

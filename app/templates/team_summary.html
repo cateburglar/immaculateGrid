@@ -29,15 +29,15 @@
 
     {% if teamName %}
         {% if teamID %}
-        <a class="section-title team-link" href="{{ url_for('team_routes.get_team', teamID=teamID, yearID=yearID) }}">{{teamName}} Team Summary</a>
+        <a class="section-title team-link" href="{{ url_for('team_routes.get_team', teamID=teamID, yearID=yearID) }}">{{ teamName }} Team Summary - {{ yearID }}</a>
         <a href="{{ url_for('team_routes.get_team', teamID=teamID, yearID=yearID) }}"><img class="team-photo" src="{{photo}}"></a>
         {% else %}
-        <h2 class="section-title">{{teamName}} Team Summary</a>
+        <h2 class="section-title">{{ teamName }} Team Summary - {{ yearID }}</a>
         {% endif %}
     {% endif %}
 
     {% if pitching_leaders %}
-        <h2 class="leaders-title">Pitching Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <h2 class="table-title">Pitching Stats Leaders</h2>
         <table id="pitching-table" class="table table-striped" border="1">
             <thead>
                 <tr>
@@ -88,7 +88,7 @@
     {% endif %}
 
     {% if batting_leaders %}
-        <h2 class="leaders-title">Batting Stats Leaders - {{ teamName }} - {{ yearID }}</h2>
+        <h2 class="table-title">Batting Stats Leaders</h2>
         <table id="batting-table" class="table table-striped" border="1">
             <thead>
                 <tr>
