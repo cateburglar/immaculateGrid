@@ -26,7 +26,7 @@
             </thead>
             <tbody>
                 {% for entry in managers %}
-                <tr class="managers-player-row">
+                <tr class="managers-row">
                     <td>{{ entry.name }}</td>
                     <td>{{ entry.manager.yearID }}</td>
                     <td>{{ entry.manager.manager_G }}</td>
@@ -44,7 +44,7 @@
     {% endif %}
 
     {% if stats %}
-        <h2 class="table-title">Managers - {{ team_name }}</h2>
+        <h2 class="table-title">Stats - {{ team_name }}</h2>
         <table id="stats-table" class="table table-striped" border="1">
             <thead>
                 <tr>
@@ -63,7 +63,7 @@
             </thead>
             <tbody>
                 {% for row in stats %}
-                <tr class="managers-player-row">
+                <tr class="stats-row">
                     <td>{{ row.yearID }}</td>
                     <td>{{ row.team_rank }}</td>
                     <td>{{ row.lgID }}</td>
@@ -95,7 +95,7 @@
             </tbody>
         </table>
         {% if managers|length > 10 %}
-            <button class="more-btn" type="managers">Show More</button>
+            <button class="more-btn" type="stats">Show More</button>
         {% endif %}
     {% endif %}
     
@@ -175,12 +175,35 @@
             
         });
 
+        // Attach event listeners to headers for pitching table
+        document.querySelectorAll("#stats-table th").forEach(headerCell => {
+            headerCell.dataset.sortState = "none"; // Initialize sort state
+
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentSortState = headerCell.dataset.sortState;
+
+                if (currentSortState === "none") {
+                    sortTable(tableElement, headerIndex, true);
+                    headerCell.dataset.sortState = "asc";
+                } else if (currentSortState === "asc") {
+                    sortTable(tableElement, headerIndex, false);
+                    headerCell.dataset.sortState = "desc";
+                } else {
+                    resetTable(tableElement);
+                    headerCell.dataset.sortState = "none";
+                }
+            });
+            
+        });
+
         // Show More/Less button functionality
         document.querySelectorAll(".more-btn").forEach(button => {
             button.addEventListener("click", () => {
                 const type = button.getAttribute("type");
                 const table = document.getElementById(`${type}-table`);
-                const rows = table.querySelectorAll(`tr.${type}-player-row`);
+                const rows = table.querySelectorAll(`tr.${type}-row`);
 
                 if (button.textContent === "Show More") {
                     rows.forEach(row => row.style.display = "");
@@ -202,7 +225,7 @@
             // Initially hide rows beyond the first 10
             const type = button.getAttribute("type");
             const table = document.getElementById(`${type}-table`);
-            const rows = table.querySelectorAll(`tr.${type}-player-row`);
+            const rows = table.querySelectorAll(`tr.${type}-row`);
             rows.forEach((row, index) => {
                 if (index >= 10) row.style.display = "none";
             });
