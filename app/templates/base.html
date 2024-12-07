@@ -39,7 +39,7 @@
     <div class="navbar-links">
         {% if current_user.is_authenticated %}
             <a class="navbar-link {% if request.path == '/about' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.about') }}">About</a>
-            <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.home') }}">Home</a>
+            <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.home') }}">Team Summary</a>
             <a class="navbar-link {% if request.path == '/leagues/' %}navbar-link-active{% endif %}" href="{{ url_for('league_routes.get_league') }}">League Standings</a>
             <a class="navbar-link {% if request.path == '/grid/' %}navbar-link-active{% endif %}" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
             {% if current_user.role == 'ADMIN' %}
