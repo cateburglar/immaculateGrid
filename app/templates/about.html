@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-container">
+    <h1 class="page-header">About Us</h1>
+    <p>Welcome to the Sea Quail database project! 
+        This product is dedicated to providing a 
+        quality interface for users to interact with
+        the data in the 2023 Lahman Database.
+    </p>
+
+    <h2>Features</h2>
+    <div class="feature-cards">
+        <a href="{{ url_for('league_routes.get_league') }}"class="feature-card">
+            <h3>League Standings</h3>
+            <p>Provide us with a league and a year and we'll give you a
+                the rankings grouped by division (if appplicable). You can
+                also click on team names here to get to their pages.
+            </p>
+        </a>
+        <a href="{{ url_for('home_routes.home') }}"class="feature-card">
+            <h3>Team Summary</h3>
+            <p>Provide us with a team name and a year and we'll give you a
+                list of pitching and batting stats along with a depth chart!
+                Click on a teams name in their summary to get historical info 
+                about them! Clicking on a players name will pull up their
+                Baseball Reference page so you can learn more about them.
+            </p>
+        </a>
+        <a href="{{ url_for('grid_routes.get_player') }}"class="feature-card">
+            <h3>Immaculate Grid Solver</h3>
+            <p>Enter the two critera from the Immaculate Grid to get a player that
+                matches! We support any combination of two past Immaculate Grid
+                questions.
+            </p>
+        </a>
+    </div>
+
+    <h2>Our Team</h2>
+    <div class="team-cards">
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='images/brendon.jpg') }}" alt="Brendon Newton">
+            <h3><a href="https://github.com/brendonnewt">Brendon Newton</a></h3>
+        </div>
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='images/catherine.jpg') }}" alt="Catherine Arlinghaus">
+            <h3><a href="https://github.com/cateburglar">Catherine Arlinghaus</a></h3>
+        </div>
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='images/icko.jpg') }}" alt="Icko Iben">
+            <h3><a href="https://github.com/ickoxii">Icko Iben</a></h3>
+        </div>
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='images/noah.jpg') }}" alt="Noah Caldwell">
+            <h3><a href="https://github.com/Debob123">Noah Caldwell</a></h3>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

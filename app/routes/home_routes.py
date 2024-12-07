@@ -122,6 +122,11 @@ def logout():
     return redirect(url_for("home_routes.login"))
 
 
+@home_routes.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+
 # /
 @home_routes.route("/", methods=["GET", "POST"])
 def home():
