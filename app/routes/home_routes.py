@@ -155,12 +155,12 @@ def home():
             batting_leaders = get_batting_leaders(team_ID, year)
             pitching_leaders = get_pitching_leaders(team_ID, year)
             depth_chart_data = getDepthChartData(team_ID, year)
-            photo = get_baseball_reference_photo(team_ID, year)
-            team_link = None
-            if photo != None:
-                team_link = (
-                    f"https://www.baseball-reference.com/teams/{team_ID}/{year}.shtml"
-                )
+
+            # Scrape the photo (If the year is too old there won't be one)
+            photo = None
+            if int(year) >= 1900:
+                photo = get_baseball_reference_photo(team_ID, year)
+
             stats_logger.info(
                 f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
             )
@@ -172,7 +172,6 @@ def home():
                 teamName=team_name,
                 teamID=team_ID,
                 yearID=year,
-                team_link=team_link,
                 photo=photo,
                 depth_chart_data=depth_chart_data,
             )

@@ -1,5 +1,5 @@
 /* Container for consistent page layout */
-.stats-container {
+.history-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,18 +8,6 @@
     margin: 0 auto;
     padding: 20px;
     width: 100%;
-  }
-
-/* Container for the input form */
-.summary-form-container {
-    display: flex;
-    margin: 0 auto;
-    width: 100%;
-    flex-direction: column;
-    padding: 20px;
-    background-color: var(--light-blue);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-title {
@@ -28,15 +16,9 @@
     text-align: center;
 }
 
-.team-link {
-    margin-top: 40px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: var(--jet);
-    font-weight: bold;
-    display: block;
-    text-align: center;
-    transition: color 0.3s, text-decoration 0.3s;
+.team-table-title {
+    margin-top: 30px;
+    font-size: 2.2em;
 }
 
 .team-photo {
@@ -47,83 +29,12 @@
     object-fit: cover;
 }
 
-.team-link:hover {
-    color: var(--blue);
-    text-decoration: underline;
-}
-
 .table-title {
     margin-top: 30px;
     font-size: 2em;
 }
 
-/* Form layout */
-.summary-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Grouping form elements */
-.summary-form-group {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
-
-/* Label styling */
-.summary-form-group .form-label {
-    font-size: 1.25rem;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-/* Input and select field styling */
-.summary-form-control {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #888;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-/* Ensure select2 takes up all the height of its container */
-.select2-container .select2-selection--single {
-    height: 40px !important; /* Match the height of other form controls */
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd; /* Match the border of other form controls */
-    border-radius: 5px; /* Match the border radius of other form controls */
-    box-sizing: border-box;
-    font-size: 1rem; /* Ensure consistent text size */
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    margin-top: 4.5px;
-    margin-left: 1px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-size: 1rem; /* Ensure consistent text size */
-    display: flex;
-    align-items: center;
-    height: 100%; /* Ensure it takes up the full height */
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-/* Form row for input fields */
-.form-row {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    
-}
-
-.form-row-submit, .show-more-btn, .summary-more-btn {
+.more-btn {
     padding: 15px 20px;
     background-color: var(--beige);
     color: var(--jet);
@@ -132,23 +43,16 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-}
-
-.summary-more-btn {
     width: 100%;
-    padding: 15px 20px;
     margin-top: 0;
-
-}
-
-.form-row-submit:hover, .show-more-btn:hover, .summary-more-btn:hover {
-    background-color: var(--light-green);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
     font-size: 1em;
     font-family: 'Arial', sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

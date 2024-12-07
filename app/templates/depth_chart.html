@@ -1,11 +1,11 @@
 <div>
     <!-- Display the depth chart only if data is available -->
     {% if depth_chart_data %}
-        <h1 class="section-title">{{ teamName }} {{ yearID }} Depth Chart</h1>
+        <h1 class="section-title">{{ teamName }} Depth Chart - {{ yearID }}</h1>
         <div class="depth-chart">
             {% for position, players in depth_chart_data.items() %}
                 <div class="position-box">
-                    <h2>{{ position }}</h2>
+                    <h2 class="table-title">{{ position }}</h2>
                     <table class="table table-striped" id="{{ position }}-table" border="1">
                         <thead>
                             <tr>

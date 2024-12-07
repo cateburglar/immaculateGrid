@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="history-container">
+
+    {% if team_name %}
+        <h2 class="section-title">{{team_name}} History</h2>
+        {% if photo %}
+        <a><img class="team-photo" src="{{photo}}"></a>
+        {% endif %}
+    {% endif %}
+
+    {% if stats %}
+        <h2 class="team-table-title">Stats By Year</h2>
+        <table id="stats-table" class="table table-striped" border="1">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Team Rank</th>
+                    <th>League</th>
+                    <th>Division</th>
+                    <th>Games</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Hits</th>
+                    <th>HRs</th>
+                    <th>ERA</th>
+                    <th>Achievements</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in stats %}
+                <tr class="stats-row">
+                    <td>{{ row.yearID }}</td>
+                    <td>{{ row.team_rank }}</td>
+                    <td>{{ row.lgID }}</td>
+                    <td>{{ row.divID}}</td>
+                    <td>{{ row.team_G }}</td>
+                    <td>{{ row.team_W }}</td>
+                    <td>{{ row.team_L }}</td>
+                    <td>{{ row.team_H }}</td>
+                    <td>{{ row.team_HR }}</td>
+                    <td>{{ row.team_ERA }}</td>
+                    <td>
+                        {%- set achievements = [] -%}
+                        {%- if row.DivWin == 'Y' -%}
+                            {%- set _ = achievements.append('Division Winner') -%}
+                        {%- endif -%}
+                        {%- if row.WCWin == 'Y' -%}
+                            {%- set _ = achievements.append('Wild Card Winner') -%}
+                        {%- endif -%}
+                        {%- if row.LgWin == 'Y' -%}
+                            {%- set _ = achievements.append('League Winner') -%}
+                        {%- endif -%}
+                        {%- if row.WSWin == 'Y' -%}
+                            {%- set _ = achievements.append('World Series Winner') -%}
+                        {%- endif -%}
+                        {{ achievements | join(', ') }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if stats|length > 10 %}
+            <button class="more-btn" type="stats">Show More</button>
+        {% endif %}
+    {% endif %}
+
+    {% if series_post %}
+        <h2 class="team-table-title">Series Results</h2>
+        <table id="series_post-table" class="table table-striped" border="1">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Round</th>
+                    <th>Result</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Ties</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in series_post %}
+                <tr class="series_post-row">
+                    <td>{{ row.yearID }}</td>
+                    <td>{{ row.round }}</td>
+                    <td>{% if teamID == row.teamIDwinner %}
+                            Win
+                        {% else %}
+                            Loss
+                        {% endif %}
+                    </td>
+                    <td>{{ row.wins }}</td>
+                    <td>{{ row.losses }}</td>
+                    <td>{{ row.ties }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if series_post|length > 10 %}
+            <button class="more-btn" type="series_post">Show More</button>
+        {% endif %}
+    {% endif %}
+
+    {% if managers %}
+        <h2 class="team-table-title">Managers</h2>
+        <table id="managers-table" class="table table-striped" border="1">
+            <thead>
+                <tr>
+                    <th id="m-name-header">Name</th>
+                    <th>Year</th>
+                    <th>Games</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Team Rank</th>
+                    <th>Player-Manager</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in managers %}
+                <tr class="managers-row">
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.manager.yearID }}</td>
+                    <td>{{ entry.manager.manager_G }}</td>
+                    <td>{{ entry.manager.manager_W }}</td>
+                    <td>{{ entry.manager.manager_L }}</td>
+                    <td>{{ entry.manager.teamRank}}</td>
+                    <td>
+                        {% if entry.manager.plyrMgr == 'Y' %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if managers|length > 10 %}
+            <button class="more-btn" type="managers">Show More</button>
+        {% endif %}
+    {% endif %}
+    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+
+        // Sorting function
+        function sortTable(table, column, asc = true) {
+            const dirModifier = asc ? 1 : -1;
+            const tBody = table.tBodies[0];
+            const rows = Array.from(tBody.querySelectorAll("tr"));
+
+            // Sort each row
+            const sortedRows = rows.sort((a, b) => {
+                const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+
+                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+            });
+
+            // Remove all existing TRs from the table
+            while (tBody.firstChild) {
+                tBody.removeChild(tBody.firstChild);
+            }
+
+            // Re-add the newly sorted rows
+            tBody.append(...sortedRows);
+
+            // Remember how the column is currently sorted
+            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+        }
+
+        // Function to reset the table to its original order
+        function resetTable(table) {
+            const tBody = table.tBodies[0];
+            const rows = Array.from(tBody.querySelectorAll("tr"));
+            rows.sort((a, b) => a.dataset.index - b.dataset.index);
+
+            // Remove all existing TRs from the table
+            while (tBody.firstChild) {
+                tBody.removeChild(tBody.firstChild);
+            }
+
+            // Re-add the rows in their original order
+            tBody.append(...rows);
+
+            // Remove sorting classes
+            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        }
+
+        // Attach event listeners to headers for pitching table
+        document.querySelectorAll("#series_post-table th").forEach(headerCell => {
+            headerCell.dataset.sortState = "none"; // Initialize sort state
+
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentSortState = headerCell.dataset.sortState;
+
+                if (currentSortState === "none") {
+                    sortTable(tableElement, headerIndex, true);
+                    headerCell.dataset.sortState = "asc";
+                } else if (currentSortState === "asc") {
+                    sortTable(tableElement, headerIndex, false);
+                    headerCell.dataset.sortState = "desc";
+                } else {
+                    resetTable(tableElement);
+                    headerCell.dataset.sortState = "none";
+                }
+            });
+            
+        });
+
+        // Attach event listeners to headers for pitching table
+        document.querySelectorAll("#managers-table th").forEach(headerCell => {
+            headerCell.dataset.sortState = "none"; // Initialize sort state
+
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentSortState = headerCell.dataset.sortState;
+
+                if (currentSortState === "none") {
+                    sortTable(tableElement, headerIndex, true);
+                    headerCell.dataset.sortState = "asc";
+                } else if (currentSortState === "asc") {
+                    sortTable(tableElement, headerIndex, false);
+                    headerCell.dataset.sortState = "desc";
+                } else {
+                    resetTable(tableElement);
+                    headerCell.dataset.sortState = "none";
+                }
+            });
+            
+        });
+
+        // Attach event listeners to headers for pitching table
+        document.querySelectorAll("#stats-table th").forEach(headerCell => {
+            headerCell.dataset.sortState = "none"; // Initialize sort state
+
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+                const currentSortState = headerCell.dataset.sortState;
+
+                if (currentSortState === "none") {
+                    sortTable(tableElement, headerIndex, true);
+                    headerCell.dataset.sortState = "asc";
+                } else if (currentSortState === "asc") {
+                    sortTable(tableElement, headerIndex, false);
+                    headerCell.dataset.sortState = "desc";
+                } else {
+                    resetTable(tableElement);
+                    headerCell.dataset.sortState = "none";
+                }
+            });
+            
+        });
+
+        // Show More/Less button functionality
+        document.querySelectorAll(".more-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const type = button.getAttribute("type");
+                const table = document.getElementById(`${type}-table`);
+                const rows = table.querySelectorAll(`tr.${type}-row`);
+
+                if (button.textContent === "Show More") {
+                    rows.forEach(row => row.style.display = "");
+                    button.textContent = "Show Less";
+                } else {
+                    rows.forEach((row, index) => {
+                        if (index >= 10) row.style.display = "none";
+                    });
+                    button.textContent = "Show More";
+
+                    const tableTop = table.getBoundingClientRect().top + window.scrollY;
+                        if (window.scrollY > tableTop) {
+                        table.scrollIntoView({ behavior: "auto", block: "start" });
+                        window.scrollBy(0, -200);
+                    }
+                }
+            });
+
+            // Initially hide rows beyond the first 10
+            const type = button.getAttribute("type");
+            const table = document.getElementById(`${type}-table`);
+            const rows = table.querySelectorAll(`tr.${type}-row`);
+            rows.forEach((row, index) => {
+                if (index >= 10) row.style.display = "none";
+            });
+        });
+
+        document.querySelectorAll("table tbody tr").forEach((row, index) => {
+            row.dataset.index = index;
+        });
+    });
+</script>
+{% endblock %}
