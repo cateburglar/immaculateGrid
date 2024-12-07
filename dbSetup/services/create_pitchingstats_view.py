@@ -91,11 +91,17 @@ def create_pitchingstats_view():
         pi.P_GS,
         pi.p_ERA,
         CASE
-            WHEN pe.deathYear IS NULL THEN
-                -- IDK when they actually find the guys age for that season so i put 03-27 which is usually opening day
-                (DATEDIFF(CONCAT(pi.yearID, '-03-27'), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
+            WHEN pe.birthYear IS NULL THEN
+                NULL -- Age is null if birth year is unknown
             ELSE
-                (DATEDIFF(CONCAT(pe.deathYear, '-', pe.deathMonth, '-', pe.deathDay), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
+                -- Otherwise calculate using that yearid
+                DATEDIFF(
+                    CONCAT(pi.yearID, '-03-27'),
+                    CONCAT(pe.birthYear,
+                           '-', COALESCE(pe.birthMonth, '01'),
+                           '-', COALESCE(pe.birthDay, '01')
+                    )
+                ) / 365.25
         END AS age,
         FLOOR(pi.p_IPouts / 3) + (pi.p_IPouts % 3) * 0.1 AS p_IP,
         ROUND(
