@@ -1,7 +1,7 @@
 import logging
 import os
 
-from flask import Blueprint, jsonify, render_template, session
+from flask import Blueprint, flash, jsonify, render_template, session
 from sqlalchemy import desc, or_
 
 from app import db
@@ -30,7 +30,8 @@ def get_league():
     form = LeaguesForm()
 
     if form.validate_on_submit():
-        lgID = form.teamName.data
+        lgID = form.league_name.data
+        league_name = form.league_name.label
         year = form.yearID.data
         logger.info(f"{session["username"]} requested league info for {lgID}, {year}")
 
@@ -43,6 +44,7 @@ def get_league():
             return render_template(
                 "league.html",
                 form=form,
+                league_name=league_name,
                 lgID=lgID,
                 yearID=year,
                 standings=standings,
@@ -54,6 +56,7 @@ def get_league():
 @league_routes.route("/get_years/<lgID>", methods=["GET"])
 def get_years(lgID):
     years = LeaguesForm.get_years_for_league(lgID)
+    logger.info(f"Years returned: {years}")
     return jsonify({"years": years})
 
 

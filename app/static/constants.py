@@ -213,11 +213,11 @@ APPEARANCES_MAPPING = {
 }
 
 LEAGUES_MAPPING = {
-    "American Association": "AA",
-    "American League": "AL",
-    "Federal League": "FL",
-    "National Association": "NA",
-    "National League": "NL",
-    "Players League": "PL",
-    "Union Association": "UA",
+    "AA": "American Association",
+    "AL": "American League",
+    "FL": "Federal League",
+    "NA": "National Association",
+    "NL": "National League",
+    "PL": "Players League",
+    "UA": "Union Association",
 }
