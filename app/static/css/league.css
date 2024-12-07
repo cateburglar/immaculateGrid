@@ -1,0 +1,135 @@
+/* Container for consistent page layout */
+.league-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+  }
+
+/* Container for the input form */
+.league-form-container {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--yellow);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.league-team-link {
+    text-decoration: none;
+    color: var(--jet);
+    font-weight: bold;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.league-team-link:hover {
+    color: var(--blue);
+    text-decoration: underline;
+}
+
+.table-title {
+    margin-top: 30px;
+    font-size: 2em;
+}
+
+/* Form layout */
+.league-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Grouping form elements */
+.league-form-group {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Label styling */
+.league-form-group .form-label {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Input and select field styling */
+.league-form-control {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #888;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Ensure select2 takes up all the height of its container */
+.select2-container .select2-selection--single {
+    height: 40px !important; /* Match the height of other form controls */
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd; /* Match the border of other form controls */
+    border-radius: 5px; /* Match the border radius of other form controls */
+    box-sizing: border-box;
+    font-size: 1rem; /* Ensure consistent text size */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    margin-top: 4.5px;
+    margin-left: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 1rem; /* Ensure consistent text size */
+    display: flex;
+    align-items: center;
+    height: 100%; /* Ensure it takes up the full height */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Form row for input fields */
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    
+}
+
+.league-button {
+    background-color: var(--dark-green);
+}
+
+.league-button:hover {
+    background-color: var(--light-green);
+}
+
+.league-table {
+    font-size: 1.5em;
+}
+
+.league-header tr {
+    background-color: var(--dark-green);
+    color: var(--jet);
+    text-align: left;
+}
+
+.league-header th:hover {
+    background-color: var(--light-green);
+    cursor: pointer;
+}

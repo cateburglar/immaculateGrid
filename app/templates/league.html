@@ -1,43 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="stats-container">
-    <div class="summary-form-container">
+<div class="league-container">
+    <div class="league-form-container">
         {% if not lgID %}
             <h1 class="section-title">League Standings</h1>
         {% endif %}
-        <div class="summary-form">
+        <div class="league-form">
             <form action="{{ url_for('league_routes.get_league') }}" method="POST">
                 <input type="hidden" name="form_name" value="league_form">
                 {{ form.hidden_tag() }}
                 <div class="form-row">
-                    <div class="summary-form-group">
+                    <div class="league-form-group">
                         {{ form.league_name.label(class="form-label") }}
                         {{ form.league_name(class="summary-form-control") }}
                     </div>
-                    <div class="summary-form-group {% if not yearID %}none{% endif %}" id="year-group">
+                    <div class="league-form-group {% if not yearID %}none{% endif %}" id="year-group">
                         {{ form.yearID.label(class="form-label") }}
                         {{ form.yearID(class="summary-form-control") }}
                     </div>
                 </div>
                 <div class="form-row">
-                    <button type="submit" class="btn form-row-submit" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Standings</button>
+                    <button type="submit" class="btn form-row-submit league-button" id="submit-btn" {% if not form.yearID.data %}disabled{% endif %}>Get Standings</button>
                 </div>
             </form>
         </div>
     </div>
 
     {% if league_name %}
-        <h2 class="section-title">{{ league_name }} Standings - {{ yearID }}</a>
+        <h2 class="section-title">{{ league_name }} Standings - {{ yearID }}</h2>
     {% endif %}
 
     {% if standings %}
         <div class="standings">
             {% for division, teams in standings.items() %}
                 <div class="division-box">
-                    <h2 class="table-title">{{ division }}</h2>
-                    <table class="table table-striped" id="{{ division }}-table" border="1">
-                        <thead>
+                    {% if division != "None" %} <h2 class="table-title">{{ division }}</h2> {% endif %}
+                    <table class="table league-table table-striped" id="{{ division }}-table" border="1">
+                        <thead class="league-header">
                             <tr>
                                 <th id="{{ divison }}-rank-header">Rank</th>
                                 <th id="{{ division }}-team-header">Team</th>
@@ -50,7 +50,7 @@
                             {% for team in teams %}
                                 <tr class="team-row">
                                     <td>{{ team.team_rank }}</td>
-                                    <td><a href="{{ url_for('team_routes.get_team', teamID=team.teamID, yearID=team.yearID) }}">
+                                    <td><a class="league-team-link" href="{{ url_for('team_routes.get_team', teamID=team.teamID, yearID=team.yearID) }}">
                                         {{team.team_name}}
                                     </a></td>
                                     <td>{{ team.team_W }}</td>
@@ -70,7 +70,7 @@
                         </tbody>
                     </table>
                     {% if teams|length > 10 %}
-                        <button class="show-more-btn" division="{{ division }}">Show More</button>
+                        <button class="show-more-btn league-button" division="{{ division }}">Show More</button>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -178,8 +178,8 @@
             table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
         }
 
-        // Attach event listeners to headers for depth chart tables
-        document.querySelectorAll(".standings th").forEach(headerCell => {
+        // Attach event listeners to headers for league tables
+        document.querySelectorAll("table th").forEach(headerCell => {
             headerCell.dataset.sortState = "none"; // Initialize sort state
 
             headerCell.addEventListener("click", () => {
