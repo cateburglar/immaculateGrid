@@ -4,11 +4,11 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 
 from app import db
 
-from ..models import Managers, People, Teams
+from ..models import Managers, People, SeriesPost, Teams
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -45,6 +45,7 @@ def get_team(teamID, yearID):
     # Get the teams historic info
     managers = get_managers(teamID)
     stats = get_team_stats(teamID)
+    series_post = get_series_post(teamID)
 
     # Scrape the photo
     photo = get_baseball_reference_photo(teamID, yearID)
@@ -56,6 +57,7 @@ def get_team(teamID, yearID):
         photo=photo,
         managers=managers,
         stats=stats,
+        series_post=series_post,
     )
 
 
@@ -90,6 +92,17 @@ def get_managers(teamID):
         mapper.append({"manager": manager, "name": name})
 
     return mapper
+
+
+def get_series_post(teamID):
+    return (
+        db.session.query(SeriesPost)
+        .filter(
+            or_(SeriesPost.teamIDloser == teamID, SeriesPost.teamIDwinner == teamID)
+        )
+        .order_by(desc(SeriesPost.yearID))
+        .all()
+    )
 
 
 def get_baseball_reference_photo(teamID, yearID):
