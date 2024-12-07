@@ -26,4 +26,5 @@ all_models = [
     LgAvgView,
     BattingStats,
     PitchingStats,
+    Managers,
 ]

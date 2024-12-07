@@ -28,9 +28,9 @@
     </div>
 
     {% if teamName %}
-        {% if team_link %}
-        <a class="section-title team-link" href="{{ team_link }}">{{teamName}} Team Summary</a>
-        <a href="{{ team_link }}"><img class="team-photo" src="{{photo}}"></a>
+        {% if teamID %}
+        <a class="section-title team-link" href="{{ url_for('team_routes.get_team', teamID=teamID, yearID=yearID) }}">{{teamName}} Team Summary</a>
+        <a href="{{ url_for('team_routes.get_team', teamID=teamID, yearID=yearID) }}"><img class="team-photo" src="{{photo}}"></a>
         {% else %}
         <h2 class="section-title">{{teamName}} Team Summary</a>
         {% endif %}

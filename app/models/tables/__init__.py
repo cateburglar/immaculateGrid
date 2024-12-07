@@ -51,14 +51,14 @@ class People(Base):
     collegeplaying_player = relationship(
         "CollegePlaying", back_populates="collegeplaying_player"
     )
-    managers = relationship("Manager", back_populates="people")
+    managers = relationship("Managers", back_populates="people")
     awards = relationship("Awards", back_populates="player")
     awardsshare = relationship("AwardsShare", back_populates="player")
     batting_entries = relationship("Batting", back_populates="player")
     battingpost_entries = relationship("BattingPost", back_populates="player")
 
 
-class Manager(Base):
+class Managers(Base):
     __tablename__ = "managers"
 
     managers_ID = Column(Integer, primary_key=True, nullable=False)
