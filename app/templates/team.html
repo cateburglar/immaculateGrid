@@ -33,7 +33,7 @@
                 <tr class="stats-row">
                     <td>{{ row.yearID }}</td>
                     <td>{{ row.team_rank }}</td>
-                    <td>{{ row.lgID }}</td>
+                    <td><a href="{{ url_for('league_routes.get_league_standings', lgID=row.lgID, yearID=row.yearID) }}">{{ row.lgID }}</a></td>
                     <td>{{ row.divID}}</td>
                     <td>{{ row.team_G }}</td>
                     <td>{{ row.team_W }}</td>

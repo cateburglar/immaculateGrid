@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="league-container">
+    {% if form %}
     <div class="league-form-container">
         {% if not lgID %}
             <h1 class="section-title">League Standings</h1>
@@ -26,6 +27,7 @@
             </form>
         </div>
     </div>
+    {% endif %}
 
     {% if league_name %}
         <h2 class="section-title">{{ league_name }} Standings - {{ yearID }}</h2>

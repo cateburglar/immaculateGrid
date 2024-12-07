@@ -1,13 +1,13 @@
 import logging
 import os
 
-from flask import Blueprint, flash, jsonify, render_template, session
+from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
 from sqlalchemy import desc, or_
 
 from app import db
 from app.forms import LeaguesForm
 
-from ..models import Teams
+from ..models import Leagues, Teams
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -51,6 +51,26 @@ def get_league():
             )
 
     return render_template("league.html", form=form)
+
+
+@league_routes.route("/standings/<lgID>/<yearID>")
+def get_league_standings(lgID, yearID):
+    # Get the league name
+    league = db.session.query(Leagues).filter(Leagues.lgID == lgID).first()
+    league_name = None
+    if league != None:
+        league_name = league.league_name
+    else:
+        return redirect(url_for("home_routes.home"))
+
+    standings = get_standings(lgID, yearID)
+    return render_template(
+        "league.html",
+        league_name=league_name,
+        lgID=lgID,
+        yearID=yearID,
+        standings=standings,
+    )
 
 
 @league_routes.route("/get_years/<lgID>", methods=["GET"])
