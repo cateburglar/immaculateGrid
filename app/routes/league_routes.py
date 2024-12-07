@@ -31,7 +31,12 @@ def get_league():
 
     if form.validate_on_submit():
         lgID = form.league_name.data
-        league_name = form.league_name.label
+
+        # Retrieve the league name from the choices
+        league_name = next(
+            (label for value, label in form.league_name.choices if value == lgID), None
+        )
+
         year = form.yearID.data
         logger.info(f"{session["username"]} requested league info for {lgID}, {year}")
 
