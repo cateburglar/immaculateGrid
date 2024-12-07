@@ -147,9 +147,17 @@
 {% block scripts %}
 <script>
     $(document).ready(function() {
+        function expandTable(table) {
+            const showMoreBtn = table.nextElementSibling;
+            if (showMoreBtn && showMoreBtn.classList.contains("more-btn") && showMoreBtn.textContent === "Show More") {
+                showMoreBtn.click();
+            }
+        }
 
         // Sorting function
         function sortTable(table, column, asc = true) {
+            expandTable(table);
+
             const dirModifier = asc ? 1 : -1;
             const tBody = table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll("tr"));

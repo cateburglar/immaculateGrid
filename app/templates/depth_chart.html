@@ -59,9 +59,18 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Sorting function
+        // Function to expand the table by clicking the "Show More" button
+        function expandTable(table) {
+            const showMoreBtn = table.nextElementSibling;
+            if (showMoreBtn && showMoreBtn.classList.contains("show-more-btn") && showMoreBtn.textContent === "Show More") {
+                showMoreBtn.click();
+            }
+        }
+
         // Sorting function
         function sortTable(table, column, asc = true) {
+            expandTable(table);
+
             const dirModifier = asc ? 1 : -1;
             const tBody = table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll("tr"));
