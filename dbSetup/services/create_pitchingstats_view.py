@@ -92,25 +92,36 @@ def create_pitchingstats_view():
         pi.p_ERA,
         CASE
             WHEN pe.deathYear IS NULL THEN
-                -- IDK when they actually find the guys age for that season so i put 03.27 which is usually opening day
+                -- IDK when they actually find the guys age for that season so i put 03-27 which is usually opening day
                 (DATEDIFF(CONCAT(pi.yearID, '-03-27'), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
             ELSE
                 (DATEDIFF(CONCAT(pe.deathYear, '-', pe.deathMonth, '-', pe.deathDay), CONCAT(pe.birthYear, '-', pe.birthMonth, '-', pe.birthDay)) / 365.25)
         END AS age,
         FLOOR(pi.p_IPouts / 3) + (pi.p_IPouts % 3) * 0.1 AS p_IP,
-        (pi.p_SO / pi.p_BFP) * 100 AS p_K_percent,
-        (pi.p_BB / pi.p_BFP) * 100 AS p_BB_percent,
-        (pi.p_HR / (pi.p_IPouts / 3.0)) * 9 AS p_HR_div9,
-        (pi.p_H - pi.p_HR) / NULLIF((pi.p_BFP - pi.p_BB - pi.p_HBP - pi.p_SO - pi.p_HR), 0) AS p_BABIP,
-        (pi.p_H + pi.p_BB + pi.p_HBP - pi.p_R) / NULLIF((pi.p_H + pi.p_BB + pi.p_HBP - (1.4 * pi.p_HR)), 0) * 100 AS p_LOB_percent,
-        (
-            ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO))
-            /
-            NULLIF((pi.p_IPouts / 3.0), 0)
-        )
-        +
-        w.cFIP
-        AS p_FIP
+        ROUND(
+            (pi.p_SO / pi.p_BFP) * 100
+        , 1) AS p_K_percent,
+        ROUND(
+            (pi.p_BB / pi.p_BFP) * 100
+        , 1) AS p_BB_percent,
+        ROUND(
+            (pi.p_HR / (pi.p_IPouts / 3.0)) * 9
+        , 2) AS p_HR_div9,
+        ROUND(
+            (pi.p_H - pi.p_HR) / NULLIF((pi.p_BFP - pi.p_BB - pi.p_HBP - pi.p_SO - pi.p_HR), 0)
+        , 3) AS p_BABIP,
+        ROUND(
+            (pi.p_H + pi.p_BB + pi.p_HBP - pi.p_R) / NULLIF((pi.p_H + pi.p_BB + pi.p_HBP - (1.4 * pi.p_HR)), 0) * 100
+        , 1) AS p_LOB_percent,
+        ROUND(
+            (
+                ((13 * pi.p_HR) + (3 * (pi.p_BB + pi.p_HBP)) - (2 * pi.p_SO))
+                /
+                NULLIF((pi.p_IPouts / 3.0), 0)
+            )
+            +
+            w.cFIP
+        , 2) AS p_FIP
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavgview l ON pi.yearID = l.yearID
