@@ -28,6 +28,34 @@
     text-align: center;
 }
 
+.team-link {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--jet);
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.team-photo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.team-link:hover {
+    color: var(--blue);
+    text-decoration: underline;
+}
+
+.leaders-title {
+    margin-top: 30px;
+}
+
 /* Form layout */
 .summary-form {
     display: flex;
@@ -129,6 +157,38 @@ table thead tr {
     background-color: var(--light-blue);
     color: #ffffff;
     text-align: left;
+}
+
+table thead th:hover {
+    background-color: var(--blue);
+    cursor: pointer;
+}
+
+table thead th {
+    position: relative; /* Ensure the arrows are positioned relative to the header */
+}
+
+table thead th::after {
+    content: ''; /* Empty content for the arrow */
+    position: absolute;
+    right: 10px; /* Adjust the position as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent; /* Create the arrow shape */
+    border-top-color: #ffffff; /* Default arrow color */
+    display: none; /* Hide the arrow by default */
+}
+
+table thead th.th-sort-asc::after {
+    display: inline-block;
+    border-bottom-color: #ffffff; /* Color for ascending arrow */
+    border-top-color: transparent;
+}
+
+table thead th.th-sort-desc::after {
+    display: inline-block;
+    border-top-color: #ffffff; /* Color for descending arrow */
+    border-bottom-color: transparent;
 }
 
 table th,

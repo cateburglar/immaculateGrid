@@ -1,6 +1,8 @@
 import logging
 import os
 
+import requests
+from bs4 import BeautifulSoup
 from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -153,6 +155,12 @@ def home():
             batting_leaders = get_batting_leaders(team_ID, year)
             pitching_leaders = get_pitching_leaders(team_ID, year)
             depth_chart_data = getDepthChartData(team_ID, year)
+            photo = get_baseball_reference_photo(team_ID, year)
+            team_link = None
+            if photo != None:
+                team_link = (
+                    f"https://www.baseball-reference.com/teams/{team_ID}/{year}.shtml"
+                )
             stats_logger.info(
                 f"Depth chart info returned for {team_name}, {year}: {depth_chart_data}"
             )
@@ -162,7 +170,10 @@ def home():
                 batting_leaders=batting_leaders,
                 pitching_leaders=pitching_leaders,
                 teamName=team_name,
+                teamID=team_ID,
                 yearID=year,
+                team_link=team_link,
+                photo=photo,
                 depth_chart_data=depth_chart_data,
             )
 
@@ -173,6 +184,38 @@ def home():
 def get_years(team_name):
     years = TeamSummaryForm.get_years_for_team(team_name)
     return jsonify({"years": years})
+
+
+def get_baseball_reference_photo(teamID, yearID):
+    # Construct the URL for the player's page on Baseball-Reference
+    url = f"https://www.baseball-reference.com/teams/{teamID}/{yearID}.shtml"
+
+    # Send a GET request to fetch the page content
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # Parse the HTML content of the page
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Find the div element with the class "media-item"
+        media_item_div = soup.find("div", {"class": "media-item"})
+
+        if media_item_div:
+            # Find the img element within the div
+            img_tag = media_item_div.find("img")
+
+            if img_tag and "src" in img_tag.attrs:
+                # Return the image URL
+                return img_tag["src"]
+            else:
+                stats_logger.warning(f"Image not available for {teamID}")
+                return None
+        else:
+            stats_logger.warning(f"Media item div not found for {teamID}")
+            return None
+    else:
+        stats_logger.error(f"Team not found for {teamID}")
+        return None
 
 
 def getDepthChartData(team_ID, year):

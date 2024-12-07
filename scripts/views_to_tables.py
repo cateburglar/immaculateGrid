@@ -46,6 +46,8 @@ try:
 
         print(f"Exported data from view '{view}' to '{csv_file}'.")
 
+        cursor.execute(f"DELETE FROM {table}")
+
         # Import data from the CSV file into the new table
         with open(csv_file, mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)
