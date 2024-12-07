@@ -14,7 +14,7 @@ from ..filters import (
     SeasonStatFilter,
     TeamFilter,
 )
-from ..models import People
+from ..models import People, BattingStats, PitchingStats
 from ..static.constants import OPTION_GROUPS, TEAM_MAPPINGS
 from ..utils import extract_form_data, parse_prompts, validate_form_data
 
@@ -36,7 +36,7 @@ grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
 def perform_query(form_data, returned_player_ids):
     # Get base query
-    query = db.session.query(People)
+    query = db.session.query(People).join(BattingStats, BattingStats)
 
     # Extract parameters from the form data
     params = parse_prompts(form_data)
@@ -64,10 +64,7 @@ def perform_query(form_data, returned_player_ids):
         else:
             query = MiscFilter(query, option, team, i).apply()
 
-    if returned_player_ids:
-        query = query.filter(People.playerID.not_in(returned_player_ids))
-
-    result = query.first()
+    result = choose_player(query, returned_player_ids)
 
     # Parse player info from result
     if result:
@@ -96,6 +93,14 @@ def perform_query(form_data, returned_player_ids):
         }
 
     return None
+
+
+def choose_player(query, returned_player_ids):
+    if returned_player_ids:
+        query = query.filter(People.playerID.not_in(returned_player_ids))
+
+
+    return query.first()
 
 
 def get_baseball_reference_photo(player_id):
