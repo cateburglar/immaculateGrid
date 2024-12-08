@@ -1,62 +1,73 @@
-/* Container styling */
-.player-info {
-    max-width: 1200px;
-    width: 80%;
+/* Player Info Card - Wider Version */
+.player-info.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: flex;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Adjust this to your desired width */
+    width: 90%; /* Ensures responsiveness on smaller screens */
+    margin: 20px auto;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    gap: 20px;
+}
+
+.name {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-wrap: nowrap;
+}
+
+.player-details {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--light-blue);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
+    width: 60%;
 }
 
-/* List styling */
-.player-info ul {
+/* Player photo container styling */
+.player-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1; /* Allow the photo container to grow and fill the available space */
+    margin-bottom: 20px;
+}
+
+.player-photo {
+    height: 350px;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Player Details */
+.player-details ul {
     list-style-type: none;
     padding: 0;
-    text-align: left;
-}
-
-.player-info li {
-    margin-bottom: 30px;
-}
-
-.name-given {
-    text-align: center;
-}
-
-/* Flex row styling */
-.flex-row {
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Heading styling */
-.player-info h3 {
-    font-size: 1.2em;
-    color: #333;
     margin: 0;
 }
 
-/* Specific styling for height and weight */
-.player-info .height, .player-info .weight {
+.player-details li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.player-details li h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+    color: #555;
+}
+
+/* Birth and Death Info */
+.birth-info h3, 
+.death-info h3 {
     font-weight: bold;
-    color: #007bff;
-}
-
-/* Birth and death information styling */
-.player-info .birth-info, .player-info .death-info {
-    font-style: italic;
-    color: #666;
-}
-
-/* Player photo styling */
-.player-photo {
-    display: block;
-    margin: 0 auto 20px;
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+    color: #e74c3c;
 }

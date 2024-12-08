@@ -4,59 +4,54 @@
 <div class="history-container">
 
     {% if player %}
-    <div class="player-info">
-        <h2 class="section-title">{{ player.nameFirst }} {{ player.nameLast }}</h2>
+    <div class="player-info card">
+        <div class="player-details">
+            <h2 class="name">{{ player.nameFirst }} {{ player.nameLast }}</h2>
+            <ul>
+                {% if player.nameGiven %}
+                <li><h3 class="name-given">Name Given: {{ player.nameGiven }}</h3></li>
+                {% endif %}
+                {% if player.bats %}
+                <li><h3>Bats: {{ player.bats }}</h3></li>
+                {% endif %}
+                {% if player.throws %}
+                <li><h3>Throws: {{ player.throws }}</h3></li>
+                {% endif %}
+                {% if player.height %}
+                <li><h3>Height: {{ player.height }} inches</h3></li>
+                {% endif %}
+                {% if player.weight %}
+                <li><h3>Weight: {{ player.weight }} pounds</h3></li>
+                {% endif %}
+                {% if player.birthYear and player.birthMonth and player.birthDay %}
+                <li class="birth-info">
+                    <h3>Born: {{ player.birthMonth }}/{{ player.birthDay }}/{{ player.birthYear }} in {{ player.birthCity }}, {{ player.birthState }}, {{ player.birthCountry }}</h3>
+                </li>
+                {% endif %}
+                {% if player.deathYear %}
+                <li class="death-info">
+                    <h3>Died: {{ player.deathMonth }}/{{ player.deathDay }}/{{ player.deathYear }} in {{ player.deathCity }}, {{ player.deathState }}, {{ player.deathCountry }}</h3>
+                </li>
+                {% endif %}
+                {% if player.debutDate %}
+                <li><h3>Debut: {{ player.debutDate }}</h3></li>
+                {% endif %}
+                {% if player.finalGameDate %}
+                <li><h3>Final Game: {{ player.finalGameDate }}</h3></li>
+                {% endif %}
+            </ul>
+        </div>
         {% if photo %}
-        <a><img class="player-photo" src="{{photo}}"></a>
+        <div class="player-photo-container">
+        <a><img class="player-photo" src="{{photo}}" alt="Photo of {{ player.nameFirst }} {{ player.nameLast }}"></a>
+        </div>
         {% endif %}
-        
-        <ul>
-            {% if player.nameGiven %}
-            <li><h3 class="name-given">Name Given: {{ player.nameGiven }}</h3></li>
-            {% endif %}
-
-            {% if player.bats %}
-            <li><h3>Bats: {{ player.bats }}</h3></li>
-            {% endif %}
-
-            {% if player.throws %}
-            <li><h3>Throws: {{ player.throws }}</h3></li>
-            {% endif %}
-            
-            {% if player.height %}
-            <li><h3>Height: {{ player.height }} inches</h3></li>
-            {% endif %}
-            
-            {% if player.weight %}
-            <li><h3>Weight: {{ player.weight }} pounds</h3></li>
-            {% endif %}
-            
-            {% if player.birthYear and player.birthMonth and player.birthDay %}
-            <li class="birth-info"><h3>Born: {{ player.birthMonth }}/{{ player.birthDay }}/{{ player.birthYear }}
-                in {{ player.birthCity }}, {{ player.birthState }}, {{ player.birthCountry }}
-            </h3></li>
-            {% endif %}
-            
-            {% if player.deathYear %}
-            <li class="death-info"><h3>Died: {{ player.deathMonth }}/{{ player.deathDay }}/{{ player.deathYear }}
-                in {{ player.deathCity }}, {{ player.deathState }}, {{ player.deathCountry }}
-            </h3></li>
-            {% endif %}
-            
-            {% if player.debutDate %}
-            <li><h3>Debut: {{ player.debutDate }}</h3></li>
-            {% endif %}
-            
-            {% if player.finalGameDate %}
-            <li><h3>Final Game: {{ player.finalGameDate }}</h3></li>
-            {% endif %}
-            
-        </ul>
     </div>
+    
     {% endif %}
 
     {% if awards %}
-        <h2 class="player-table-title">Awards</h2>
+        <h2 class="table-title">Awards</h2>
         <table id="awards-table" class="table table-striped" border="1">
             <thead>
                 <tr>
@@ -91,7 +86,7 @@
     {% endif %}
 
     {% if appearances %}
-        <h2 class="player-table-title">Appearances</h2>
+        <h2 class="table-title">Appearances</h2>
         <table id="appearances-table" class="table table-striped" border="1">
             <thead>
                 <tr>
