@@ -345,13 +345,14 @@ This directory contains the information needed to analyze a systems cores so tha
 ### Task Logs
 
 - Brendon
-    1. Table Updates
+    1. Table Updates / Additions
         1. Allstarfull
         2. Leagues
         3. People
         4. Schools
         5. Seriespost
         6. Teams
+        7. CareerWarLeaders
     2. Immaculate Grid Page
     3. Login Page
     4. Team Summary and Depth Chart Page
@@ -369,22 +370,25 @@ This directory contains the information needed to analyze a systems cores so tha
     16. Update Page
 
 - Catherine
-    1. Table Updates
+    1. Table Updates / Additions
         1. Appearances
         2. Fielding
         3. Homegames
         4. Parks
         5. Pitching
         6. Divisions
+        7. WobaWeights
+        8. SeasonWarLeaders
     2. Position Filter
     3. Season Filter
-    4. Rarity
-    5. Depth Chart
-    6. Team Summary Page
-    7. Update Page
-    8. Database testing and debugging
-    9. Code Review
-    10. UI Testing and bug fixing
+    5. Rarity
+    6. Depth Chart Page
+    7. Team Summary Page
+    8. Update Page
+    9. Database testing, debugging, and modifying
+    10. Code Review
+    11. UI Testing and bug fixing
+    12. BattingStats debugging / fixing
 
 - Icko
     1. Table Updates
