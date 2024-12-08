@@ -5,10 +5,10 @@ from .awardsshare_csv_service import upload_awardsshare_csv
 from .batting_csv_service import upload_batting_csv
 from .battingpost_csv_service import upload_battingpost_csv
 from .careerwarleaders_csv_service import upload_careerwarleaders_csv
+from .collegeplaying_csv_service import upload_collegeplaying_csv
 from .create_battingstats_view import create_battingstats_view
 from .create_leagueavg_view import create_lgavg_view
 from .create_pitchingstats_view import create_pitchingstats_view
-from .collegeplaying_csv_service import upload_collegeplaying_csv
 from .draft_csv_service import upload_draft_csv
 from .fielding_csv_service import upload_fielding_csv
 from .fieldingpost_csv_service import upload_fieldingpost_csv
@@ -23,8 +23,9 @@ from .pitching_csv_service import upload_pitching_csv
 from .pitchingpost_csv_service import upload_pitchingpost_csv
 from .salaries_csv_service import upload_salaries_csv
 from .schools_csv_service import upload_schools_csv
+from .seasonwarleaders_csv_service import upload_seasonwarleaders_csv
 from .seriespost_csv_service import upload_seriespost_csv
+from .setup_tables_service import setup_tables
 from .teams_csv_service import upload_teams_csv
 from .test_service import execute_tests
-from .seasonwarleaders_csv_service import upload_seasonwarleaders_csv
 from .wobaWeights_csv_service import upload_wobaweights_csv
