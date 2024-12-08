@@ -38,51 +38,6 @@
         {% endif %}
     {% endif %}
 
-    {% if pitching_leaders %}
-        <h2 class="table-title">Pitching Stats Leaders</h2>
-        <table id="pitching-table" class="table table-striped" border="1">
-            <thead>
-                <tr>
-                    <th id="p-name-header">Player Name</th>
-                    <th>Age</th>
-                    <th>ERA</th>
-                    <th>FIP</th>
-                    <th>K%</th>
-                    <th>G</th>
-                    <th>GS</th>
-                    <th>IP</th>
-                    <th>BB%</th>
-                    <th>HR/9</th>
-                    <th>BABIP</th>
-                    <th>LOB%</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for leader in pitching_leaders %}
-                <tr class="pitching-player-row">
-                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
-                        {{ leader.nameFirst }} {{ leader.nameLast }}
-                    </a></td>
-                    <td>{{ leader.age }}</td>
-                    <td>{{ leader.p_ERA }}</td>
-                    <td>{{ leader.p_FIP }}</td>
-                    <td>{{ leader.p_K_percent }}%</td>
-                    <td>{{ leader.p_G }}</td>
-                    <td>{{ leader.p_GS }}</td>
-                    <td>{{ leader.p_IP }}</td>
-                    <td>{{ leader.p_BB_percent }}%</td>
-                    <td>{{ leader.p_HR_div9 }}</td>
-                    <td>{{ leader.p_BABIP }}</td>
-                    <td>{{ leader.p_LOB_percent }}%</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% if pitching_leaders|length > 10 %}
-            <button class="summary-more-btn" type="pitching">Show More</button>
-        {% endif %}
-    {% endif %}
-
     {% if batting_leaders %}
         <h2 class="table-title">Batting Stats Leaders</h2>
         <table id="batting-table" class="table table-striped" border="1">
@@ -129,6 +84,51 @@
         </table>
         {% if batting_leaders|length > 10 %}
             <button class="summary-more-btn" type="batting">Show More</button>
+        {% endif %}
+    {% endif %}
+
+    {% if pitching_leaders %}
+        <h2 class="table-title">Pitching Stats Leaders</h2>
+        <table id="pitching-table" class="table table-striped" border="1">
+            <thead>
+                <tr>
+                    <th id="p-name-header">Player Name</th>
+                    <th>Age</th>
+                    <th>G</th>
+                    <th>GS</th>
+                    <th>IP</th>
+                    <th>K%</th>
+                    <th>BB%</th>
+                    <th>HR/9</th>
+                    <th>BABIP</th>
+                    <th>LOB%</th>
+                    <th>ERA</th>
+                    <th>FIP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leader in pitching_leaders %}
+                <tr class="pitching-player-row">
+                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                        {{ leader.nameFirst }} {{ leader.nameLast }}
+                    </a></td>
+                    <td>{{ leader.age }}</td>
+                    <td>{{ leader.p_G }}</td>
+                    <td>{{ leader.p_GS }}</td>
+                    <td>{{ leader.p_IP }}</td>
+                    <td>{{ leader.p_K_percent }}%</td>
+                    <td>{{ leader.p_BB_percent }}%</td>
+                    <td>{{ leader.p_HR_div9 }}</td>
+                    <td>{{ leader.p_BABIP }}</td>
+                    <td>{{ leader.p_LOB_percent }}%</td>
+                    <td>{{ leader.p_ERA }}</td>
+                    <td>{{ leader.p_FIP }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if pitching_leaders|length > 10 %}
+            <button class="summary-more-btn" type="pitching">Show More</button>
         {% endif %}
     {% endif %}
 
