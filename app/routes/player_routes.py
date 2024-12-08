@@ -8,7 +8,7 @@ from sqlalchemy import desc
 
 from app import db
 
-from ..models import Appearances, Awards, People
+from ..models import Appearances, Awards, BattingStats, People, PitchingStats
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -39,6 +39,8 @@ def get_player(playerID):
     # Get the players historic info
     awards = get_awards(playerID)
     appearances = get_appearances(playerID)
+    batting_stats = get_season_batting_stats(playerID)
+    pitching_stats = get_seaason_pitching_stats(playerID)
 
     # Check and modify the finalGameDate
     current = "2022-05-15"
@@ -54,6 +56,8 @@ def get_player(playerID):
         player=player,
         awards=awards,
         appearances=appearances,
+        batting_stats=batting_stats,
+        pitching_stats=pitching_stats,
     )
 
 
@@ -71,6 +75,24 @@ def get_appearances(playerID):
         db.session.query(Appearances)
         .filter(Appearances.playerID == playerID)
         .order_by(desc(Appearances.yearID))
+        .all()
+    )
+
+
+def get_season_batting_stats(playerID):
+    return (
+        db.session.query(BattingStats)
+        .filter(BattingStats.playerID == playerID)
+        .order_by(desc(BattingStats.yearID))
+        .all()
+    )
+
+
+def get_seaason_pitching_stats(playerID):
+    return (
+        db.session.query(PitchingStats)
+        .filter(PitchingStats.playerID == playerID)
+        .order_by(desc(PitchingStats.yearID))
         .all()
     )
 
