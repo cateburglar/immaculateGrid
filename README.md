@@ -376,15 +376,17 @@ This directory contains the information needed to analyze a systems cores so tha
         4. Parks
         5. Pitching
         6. Divisions
+        7. WobaWeights
     2. Position Filter
     3. Season Filter
     4. Rarity
-    5. Depth Chart
+    5. Depth Chart Page
     6. Team Summary Page
     7. Update Page
-    8. Database testing and debugging
+    8. Database testing, debugging, and modifying
     9. Code Review
     10. UI Testing and bug fixing
+    11. BattingStats debugging / fixing
 
 - Icko
     1. Table Updates
