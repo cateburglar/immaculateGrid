@@ -381,14 +381,14 @@ This directory contains the information needed to analyze a systems cores so tha
         8. SeasonWarLeaders
     2. Position Filter
     3. Season Filter
-    5. Rarity
-    6. Depth Chart Page
-    7. Team Summary Page
-    8. Update Page
-    9. Database testing, debugging, and modifying
-    10. Code Review
-    11. UI Testing and bug fixing
-    12. BattingStats debugging / fixing
+    4. Rarity
+    5. Depth Chart Page
+    6. Team Summary Page
+    7. Update Page
+    8. Database testing, debugging, and modifying
+    9. Code Review
+    10. UI Testing and bug fixing
+    11. BattingStats debugging / fixing
 
 - Icko
     1. Table Updates
