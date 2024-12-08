@@ -5,7 +5,7 @@
 1. [Project Setup](#project-setup)
 2. [Usage](#usage)
 3. [Starting The App](#starting-the-app)
-4. [Documatation](#documentation)
+4. [Documentation](#documentation)
 5. [Navigating the Project](#navigating-the-project)
 6. [Modifications of the Baseball schema/data](#modifications-of-the-baseball-schemadata)
 7. [App Features](#app-features)
@@ -164,7 +164,7 @@ The project is divided into two main folders, app and dbSetup. The app directory
 
 - /models: This is where all of the ORM models are stored. Models used to represent tables are located in the models/tables directory
 
-- /routes: This is where all of the routes are stored. These routes are then stored as [Blueprints](https://flask.palletsprojects.com/en/3.0.x/blueprints/) in the app/init.py
+- /routes: This is where all of the routes are stored. These routes are then stored as Blueprints in the app/init.py
 
 - /static: This is where resources like CSS, JS, or any other files that we need to store that don't have application logic can be stored
 

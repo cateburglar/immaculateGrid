@@ -133,3 +133,7 @@
     background-color: var(--light-green);
     cursor: pointer;
 }
+
+.league-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--dark-green);
+}
