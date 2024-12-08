@@ -2,6 +2,9 @@ import argparse
 import inspect
 
 import services  # Assuming services.py is in the same directory
+from services import setup_tables
+from views_to_tables import convert_views
+
 
 def main():
     parser = argparse.ArgumentParser(description="Update database.")
@@ -13,24 +16,33 @@ def main():
         help="Names of the tables to update (e.g., people teams allstarfull schools). If no tables are provided, all tables and views will be processed.",
     )
     parser.add_argument(
-        "--create-view",
+        "--initialize-database",
         action="store_true",
-        help="Create all views (processed independently of table updates).",
+        help="Modify baseball database",
     )
+
     args = parser.parse_args()
 
+    if args.initialize_database:
+        print("Setting up database")
+        setup_tables()
+        print("Creating views")
+        views_to_create = get_all_views()
+        create_views(views_to_create)
+        print("Converting views to tables")
+        convert_views()
+        return
+
     # Get all views and tables
-    views_to_create = get_all_views()
-    if not args.tables and not args.create_view:
-        print("No specific tables provided. Processing all tables and views.")
+    if not args.tables:
+        print("No specific tables provided. Processing all tables.")
         tables_to_update = get_all_service_functions()
     else:
         tables_to_update = args.tables
 
-    # Create views and update tables
+    # Update tables
     update_tables(tables_to_update)
-    if args.create_view or (not args.create_view and not args.tables):
-        create_views(views_to_create)
+
 
 def get_all_views():
     """Retrieve all view-creation functions from the services module."""
@@ -73,4 +85,3 @@ def update_tables(tables):
 
 if __name__ == "__main__":
     main()
-
