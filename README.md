@@ -402,6 +402,7 @@ This directory contains the information needed to analyze a systems cores so tha
     5. Code Review
     6. Database debugging
     7. Research for pitching stats calculations
+    8. Immaculate Grid Research
 
 - Noah
     1. Table Updates
