@@ -1,0 +1,77 @@
+/* Player Info Card */
+.player-info.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: flex;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+    margin: 20px auto;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    gap: 20px;
+}
+
+.name {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-wrap: nowrap;
+}
+
+.player-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 60%;
+}
+
+/* Player photo container styling */
+.player-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1; /* Allow the photo container to grow and fill the available space */
+    margin-bottom: 20px;
+}
+
+.player-photo {
+    height: 350px;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.player-photo:hover {
+    cursor: pointer;
+}
+
+/* Player Details */
+.player-details ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.player-details li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.player-details li h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+    color: #555;
+}
+
+/* Birth and Death Info */
+.birth-info h3, 
+.death-info h3 {
+    font-weight: bold;
+    color: #e74c3c;
+}
