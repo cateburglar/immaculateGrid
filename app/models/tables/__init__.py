@@ -713,6 +713,7 @@ class PitchingStats(Base):
     p_FIP = Column(Float, nullable=True)  # Fielding Independent Pitching
     # p_XFIP = Column(Float, nullable = True) # Expected Fielding Independent Pitching
     # p_WAR = Column(Float, nullable = True) # Wins Above Replacement
+    p_playing_time = Column(Integer, nullable=True)
 
     # Define the MUL (Index) fields
     # this speeds up data retrieval by these columns

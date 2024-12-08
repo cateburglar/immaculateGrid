@@ -11,6 +11,7 @@
                             <tr>
                                 <th id="{{ position }}-name-header">Player Name</th>
                                 {% if position == "P" %}
+                                    <th id="{{ position }}-pt-header">Playing Time</th>
                                     <th id="{{ position }}-era-header">ERA</th>
                                     <th id="{{ position }}-hr9-header">HR/9</th>
                                     <th id="{{ position }}-ip-header">IP</th>
@@ -32,6 +33,7 @@
                                         {{ player.nameFirst }} {{ player.nameLast }}
                                     </a></td>
                                     {% if position == "P" %}
+                                        <td>{{ player.p_playing_time }}%</td>
                                         <td>{{ player.p_ERA }}</td>
                                         <td>{{ player.p_HR_div9 }}</td>
                                         <td>{{ player.p_IP }}</td>
@@ -77,10 +79,22 @@
 
             // Sort each row
             const sortedRows = rows.sort((a, b) => {
-                const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-                const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                var aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                var bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
 
-                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+                // Remove percent sign and convert to number if present
+                if (aColText.endsWith('%')) {
+                    aColText = aColText.slice(0, -1);
+                }
+
+                if (bColText.endsWith('%')) {
+                    bColText = bColText.slice(0, -1);
+                }
+
+                const aColValue = isNaN(aColText) ? aColText : parseFloat(aColText);
+                const bColValue = isNaN(bColText) ? bColText : parseFloat(bColText);
+
+                return aColValue > bColValue ? (1 * dirModifier) : (-1 * dirModifier);
             });
 
             // Remove all existing TRs from the table

@@ -78,10 +78,7 @@ def perform_query(form_data, returned_player_ids):
         # Get the photo and link to the Baseball Reference page
         player_photo = get_baseball_reference_photo(result.playerID)
 
-        # If no photo is retrieved, don't supply a link
-        player_link = None
-        if player_photo != None:
-            player_link = f"https://www.baseball-reference.com/players/{result.playerID[0]}/{result.playerID}.shtml"
+        player_link = url_for("player_routes.get_player", playerID=result.playerID)
 
         # Return the players info
         return {

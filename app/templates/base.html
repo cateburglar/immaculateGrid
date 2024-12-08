@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/update.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/team.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/league.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
     <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
     <link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet" />
     <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
@@ -37,13 +39,14 @@
 <nav class="navbar">
     <div class="navbar-links">
         {% if current_user.is_authenticated %}
-            <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.home') }}">Home</a>
-            <a class="navbar-link" href="{{ url_for('league_routes.get_league') }}">League Standings</a>
-            <a class="navbar-link" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
+            <a class="navbar-link {% if request.path == '/about' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.about') }}">About</a>
+            <a class="navbar-link {% if request.path == '/' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.home') }}">Team Summary</a>
+            <a class="navbar-link {% if request.path == '/leagues/' %}navbar-link-active{% endif %}" href="{{ url_for('league_routes.get_league') }}">League Standings</a>
+            <a class="navbar-link {% if request.path == '/grid/' %}navbar-link-active{% endif %}" href="{{ url_for('grid_routes.get_player') }}">Immaculate Grid Solver</a>
             {% if current_user.role == 'ADMIN' %}
                 <a class="navbar-link {% if request.path == '/admin/users' %}navbar-link-active{% endif %}" href="{{ url_for('admin_routes.users') }}">Users</a>
             {% endif %}
-            <a class="navbar-link" href="{{ url_for('update_routes.update_profile') }}">Update Profile</a>
+            <a class="navbar-link {% if request.path == '/update/' %}navbar-link-active{% endif %}" href="{{ url_for('update_routes.update_profile') }}">Update Profile</a>
             <a class="navbar-link" href="{{ url_for('home_routes.logout') }}">Logout</a>
         {% else %}
             <a class="navbar-link {% if request.path == '/signup' %}navbar-link-active{% endif %}" href="{{ url_for('home_routes.signup') }}">Sign Up</a>
@@ -71,10 +74,10 @@
 <div class="footer">
     <h1>Seaquail Database Project</h1>
     <div class="images">
-        <a class="footer-image" href="https://cs.baylor.edu/~speegle/3335/index.php">
+        <a class="about-image" href="https://cs.baylor.edu/~speegle/3335/index.php">
             <img class="bu" src="{{ url_for('static', filename='images/baylor-logo.png') }}" alt="Logo" style="width:100px;height:auto;">
         </a>
-        <a class="footer-image" href="https://github.com/Sea-Quail/finalProj">
+        <a class="about-image" href="https://github.com/Sea-Quail/finalProj">
             <img class="github" src="{{ url_for('static', filename='images/github-logo.png') }}" alt="Logo" style="width:100px;height:auto;">
         </a>
     </div>

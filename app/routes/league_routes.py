@@ -1,8 +1,7 @@
 import logging
 import os
 
-from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
-from sqlalchemy import desc, or_
+from flask import Blueprint, jsonify, redirect, render_template, session, url_for
 
 from app import db
 from app.forms import LeaguesForm
