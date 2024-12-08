@@ -21,7 +21,9 @@
         {% for player in returned_players | reverse %}
         <a class="player" href="{{player.player_link}}">
             <h3>{{player.player_name}}</h3>
+            {% if player.player_photo %}
             <img src="{{player.player_photo}}">
+            {% endif %}
             <h4>{{player.player_years}}</h4>
         </a>
         {% endfor %}
