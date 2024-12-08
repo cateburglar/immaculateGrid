@@ -72,10 +72,7 @@ class PitchingStatsView(Base):
     p_HR_div9 = Column(Float, nullable = True) # HR per 9 innings
     p_BABIP = Column(Float, nullable = True) # Batting Average on Balls In Play
     p_LOB_percent = Column(Float, nullable = True) # Left On Base Percentage
-    #p_GB_percent= Column(Float, nullable = True) # Ground Ball Percentage
-    #p_HR_div_FB = Column(Float, nullable = True) # HR per Fly Ball
     p_FIP = Column(Float, nullable = True) # Fielding Independent Pitching
-    #p_XFIP = Column(Float, nullable = True) # Expected Fielding Independent Pitching
-    #p_WAR = Column(Float, nullable = True) # Wins Above Replacement
+    playing_time = Column(Float, nullable = True) # Playing Time
 
     # __table_args__ and relationships not needed because this is a view
