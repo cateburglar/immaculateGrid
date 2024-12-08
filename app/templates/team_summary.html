@@ -211,7 +211,10 @@
                 const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
                 const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
 
-                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+                const aColValue = isNaN(aColText) ? aColText : parseFloat(aColText);
+                const bColValue = isNaN(bColText) ? bColText : parseFloat(bColText);
+
+                return aColValue > bColValue ? (1 * dirModifier) : (-1 * dirModifier);
             });
 
             // Remove all existing TRs from the table
