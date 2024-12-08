@@ -38,11 +38,14 @@ def main():
     if not args.tables:
         print("No specific tables provided. Processing all tables.")
         tables_to_update = get_all_service_functions()
+        update_tables(tables_to_update)
+        views_to_create = get_all_views()
+        create_views(views_to_create)
+        convert_views()
     else:
         tables_to_update = args.tables
-
-    # Update tables
-    update_tables(tables_to_update)
+        # Update tables
+        update_tables(tables_to_update)
 
 
 def get_all_views():
