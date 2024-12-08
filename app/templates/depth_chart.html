@@ -11,6 +11,7 @@
                             <tr>
                                 <th id="{{ position }}-name-header">Player Name</th>
                                 {% if position == "P" %}
+                                    <th id="{{ position }}-pt-header">Playing Time</th>
                                     <th id="{{ position }}-era-header">ERA</th>
                                     <th id="{{ position }}-hr9-header">HR/9</th>
                                     <th id="{{ position }}-ip-header">IP</th>
@@ -32,6 +33,7 @@
                                         {{ player.nameFirst }} {{ player.nameLast }}
                                     </a></td>
                                     {% if position == "P" %}
+                                        <td>{{ player.p_playing_time }}%</td>
                                         <td>{{ player.p_ERA }}</td>
                                         <td>{{ player.p_HR_div9 }}</td>
                                         <td>{{ player.p_IP }}</td>
