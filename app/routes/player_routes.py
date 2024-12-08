@@ -42,11 +42,6 @@ def get_player(playerID):
     batting_stats = get_season_batting_stats(playerID)
     pitching_stats = get_seaason_pitching_stats(playerID)
 
-    # Check and modify the finalGameDate
-    current = "2022-05-15"
-    if player.finalGameDate and player.finalGameDate.strftime("%Y-%m-%d") == current:
-        player.finalGameDate = None
-
     # Scrape the photo
     photo = get_baseball_reference_photo(playerID)
     link = None
