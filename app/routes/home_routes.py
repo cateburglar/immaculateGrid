@@ -90,8 +90,8 @@ def login():
 
         # Verify if the user exists and the password is correct
         if user and check_password_hash(user.password, form.password.data):
-            # Log in the user and manage 'remember me' option
-            login_user(user, remember=form.remember_me.data)
+            # Log in the user
+            login_user(user)
             logger.info(f"Successful login: {user.username}")
             session["username"] = user.username
             flash(f"Welcome, {user.nameFirst} {user.nameLast}!", "success")
