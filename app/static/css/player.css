@@ -1,0 +1,62 @@
+/* Container styling */
+.player-info {
+    max-width: 1200px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* List styling */
+.player-info ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.player-info li {
+    margin-bottom: 30px;
+}
+
+.name-given {
+    text-align: center;
+}
+
+/* Flex row styling */
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Heading styling */
+.player-info h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin: 0;
+}
+
+/* Specific styling for height and weight */
+.player-info .height, .player-info .weight {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Birth and death information styling */
+.player-info .birth-info, .player-info .death-info {
+    font-style: italic;
+    color: #666;
+}
+
+/* Player photo styling */
+.player-photo {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

@@ -4,11 +4,11 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from sqlalchemy import desc, or_
+from sqlalchemy import desc
 
 from app import db
 
-from ..models import Managers, People, SeriesPost, Teams
+from ..models import Awards, People
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -37,6 +37,12 @@ def get_player(playerID):
         return redirect(url_for("home_routes.home"))
 
     # Get the players historic info
+    awards = get_awards(playerID)
+
+    # Check and modify the finalGameDate
+    current = "2022-05-15"
+    if player.finalGameDate and player.finalGameDate.strftime("%Y-%m-%d") == current:
+        player.finalGameDate = None
 
     # Scrape the photo
     photo = get_baseball_reference_photo(playerID)
@@ -45,16 +51,15 @@ def get_player(playerID):
         "player.html",
         photo=photo,
         player=player,
+        awards=awards,
     )
 
 
-def get_series_post(teamID):
+def get_awards(playerID):
     return (
-        db.session.query(SeriesPost)
-        .filter(
-            or_(SeriesPost.teamIDloser == teamID, SeriesPost.teamIDwinner == teamID)
-        )
-        .order_by(desc(SeriesPost.yearID))
+        db.session.query(Awards)
+        .filter(Awards.playerID == playerID)
+        .order_by(desc(Awards.yearID))
         .all()
     )
 
