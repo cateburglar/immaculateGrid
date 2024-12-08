@@ -62,7 +62,7 @@
             <tbody>
                 {% for leader in batting_leaders %}
                 <tr class="batting-player-row">
-                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                    <td><a href="{{ url_for('player_routes.get_player', playerID=leader.playerID) }}">
                         {{ leader.nameFirst }} {{ leader.nameLast }}
                     </a></td>
                     <td>{{ leader.age }}</td>
@@ -109,7 +109,7 @@
             <tbody>
                 {% for leader in pitching_leaders %}
                 <tr class="pitching-player-row">
-                    <td><a href="https://www.baseball-reference.com/players/{{ leader.playerID[0] }}/{{ leader.playerID }}.shtml">
+                    <td><a href="{{ url_for('player_routes.get_player', playerID=leader.playerID) }}">
                         {{ leader.nameFirst }} {{ leader.nameLast }}
                     </a></td>
                     <td>{{ leader.age }}</td>
