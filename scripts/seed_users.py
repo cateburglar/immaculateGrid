@@ -31,7 +31,7 @@ def seed_users():
             username="admin",
             nameFirst="Admin",
             nameLast="User",
-            password=generate_password_hash("1", method="scrypt"),
+            password=generate_password_hash("password123", method="scrypt"),
             privilege="ADMIN",
             banned=False,
         ),
