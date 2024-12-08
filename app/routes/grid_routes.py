@@ -36,7 +36,7 @@ grid_routes = Blueprint("grid_routes", __name__, template_folder="templates")
 
 def perform_query(form_data, returned_player_ids):
     # Get base query
-    query = db.session.query(People).join(BattingStats, BattingStats)
+    query = db.session.query(People)
 
     # Extract parameters from the form data
     params = parse_prompts(form_data)
@@ -96,6 +96,9 @@ def choose_player(query, returned_player_ids):
     if returned_player_ids:
         query = query.filter(People.playerID.not_in(returned_player_ids))
 
+    # Sort by criteria that indicate "less well-known" players
+    # Example: Players with fewer games (G) or plate appearances (PA) in BattingStats
+    query = query.join(BattingStats).order_by(BattingStats.yearID.asc(), BattingStats.b_G.asc(), BattingStats.b_PA.asc())
 
     return query.first()
 
