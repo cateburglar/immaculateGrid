@@ -343,3 +343,69 @@ This directory contains the information needed to analyze a systems cores so tha
     2. Some services use multiprocessing to process the updates faster
 
 ### Task Logs
+
+- Brendon
+    1. Table Updates
+        1. Allstarfull
+        2. Leagues
+        3. People
+        4. Schools
+        5. Seriespost
+        6. Teams
+    2. Immaculate Grid Page
+    3. Login Page
+    4. Team Summary and Depth Chart Page
+    5. About Page
+    6. League Standings
+    7. Team Page
+    8. Player Page
+    9. Logging
+    10. Misc Filter
+    11. Team Filter
+    12. Career Filter
+    13. Footer Bar
+    14. Users
+    15. Registration
+    16. Update Page
+
+- Catherine
+    1. Table Updates
+        1. Appearances
+        2. Fielding
+        3. Homegames
+        4. Parks
+        5. Pitching
+        6. Divisions
+    2. Position Filter
+    3. Season Filter
+    4. Rarity
+    5. Depth Chart
+    6. Team Summary Page
+    7. Update Page
+    8. Database testing and debugging
+    9. Code Review
+
+- Icko
+    1. Table Updates
+        1. Pitchingpost
+        2. Battingpost
+        3. Batting
+        4. Awardsshare
+        5. Awards
+        6. Fieldingpost
+        7. Managers
+        8. Collegeplaying
+    2. Benchmarking
+    3. Updating views
+    4. PitchingStatsView and PitchingStats
+    5. Code Review
+    6. Database debugging
+    7. Research for pitching stats calculations
+
+- Noah
+    1. Table Updates
+        1. Salaries
+        2. Halloffame
+    2. Battingstatsview and BattingStats
+    3. Database debugging
+    4. Research for batting stats calculations
