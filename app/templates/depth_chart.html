@@ -79,16 +79,16 @@
 
             // Sort each row
             const sortedRows = rows.sort((a, b) => {
-                const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-                const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                var aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                var bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
 
                 // Remove percent sign and convert to number if present
                 if (aColText.endsWith('%')) {
-                    aColText.slice(0, -1);
+                    aColText = aColText.slice(0, -1);
                 }
 
                 if (bColText.endsWith('%')) {
-                    bColText.slice(0, -1);
+                    bColText = bColText.slice(0, -1);
                 }
 
                 const aColValue = isNaN(aColText) ? aColText : parseFloat(aColText);
