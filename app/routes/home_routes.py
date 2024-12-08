@@ -143,7 +143,7 @@ def home():
             # Get team_ID matching the team_name
             result = (
                 db.session.query(Teams.teamID)
-                .filter(Teams.team_name == team_name)
+                .filter(Teams.team_name == team_name, Teams.yearID == year)
                 .first()
             )
             team_ID = result.teamID
