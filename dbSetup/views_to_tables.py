@@ -49,7 +49,7 @@ def convert_views():
             print(f"Exported data from view '{view}' to '{csv_file}'.")
 
             print(f"Dropping view: {view}")
-            # cursor.execute(f"DROP VIEW {view}")
+            cursor.execute(f"DROP VIEW {view}")
 
             cursor.execute(f"DELETE FROM {table}")
 

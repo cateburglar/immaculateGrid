@@ -16,17 +16,18 @@ def main():
         help="Names of the tables to update (e.g., people teams allstarfull schools). If no tables are provided, all tables and views will be processed.",
     )
     parser.add_argument(
-        "--initialize-database",
+        "--init-database",
         action="store_true",
         help="Modify baseball database",
     )
 
     args = parser.parse_args()
 
-    if args.initialize_database:
+    if args.init_database:
         print("Setting up database")
         setup_tables()
-        print("Creating views")
+        print("Loading wobaweights")
+        services.upload_wobaweights_csv()
         views_to_create = get_all_views()
         create_views(views_to_create)
         print("Converting views to tables")
