@@ -1,11 +1,11 @@
-from csi3335f2024 import mysql
+import csi3335f2024 as cfg
 from sqlalchemy import text
 from utils import create_session_from_str, create_enginestr_from_values
 
 def create_battingstats_view():
     # Create session using the utility function
     engine_str = create_enginestr_from_values(
-        mysql=mysql
+        mysql=cfg.mysql
     )  # Ensure `mysql` is passed correctly
     session = create_session_from_str(engine_str)
 
@@ -62,8 +62,12 @@ def create_battingstats_view():
         fielding f ON b.playerID = f.playerID AND b.yearID = f.yearID AND a.teamID = b.teamID
     JOIN
         wobaweights w ON w.yearID = b.yearID
-    HAVING
-        b_PA > 0 -- exclude pitchers;
+    WHERE 
+        -- exclude pitchers as best we can 
+        (  (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) > 0
+            OR (b.b_AB + b.b_BB + b.b_HBP + b.b_SH + b.b_SF) IS NULL)
+        AND
+        (f.position != 'P' OR f.position IS NULL);
     """
 
     # Create Batting Stats View
