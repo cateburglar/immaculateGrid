@@ -384,6 +384,7 @@ This directory contains the information needed to analyze a systems cores so tha
     7. Update Page
     8. Database testing and debugging
     9. Code Review
+    10. UI Testing and bug fixing
 
 - Icko
     1. Table Updates
