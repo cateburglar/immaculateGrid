@@ -64,11 +64,16 @@ def create_views(views):
 
 def get_all_service_functions():
     """Retrieve all update functions from the services module."""
-    return [
+    functions = [
         name.replace("upload_", "").replace("_csv", "")
         for name, func in inspect.getmembers(services, inspect.isfunction)
         if name.startswith("upload_") and name.endswith("_csv")
     ]
+
+    # Sort the list to ensure the function containing "people" is first
+    functions.sort(key=lambda x: "people" not in x)
+
+    return functions
 
 
 def update_tables(tables):

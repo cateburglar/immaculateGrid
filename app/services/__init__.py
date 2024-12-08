@@ -1,1 +1,0 @@
-from .allstarfull_service import get_all_entries_allstarfull
