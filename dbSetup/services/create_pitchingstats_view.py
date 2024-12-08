@@ -127,7 +127,14 @@ def create_pitchingstats_view():
             )
             +
             w.cFIP
-        , 2) AS p_FIP
+        , 2) AS p_FIP,
+        ROUND(
+            pi.p_IPouts / (
+                SELECT SUM(p.p_IPouts)
+                FROM pitching p
+                WHERE p.teamID = pi.teamID AND p.yearID = pi.yearID
+            ) * 100
+        , 3) AS p_playing_time
     FROM pitching pi
     JOIN people pe ON pe.playerID = pi.playerID
     JOIN lgavgview l ON pi.yearID = l.yearID
