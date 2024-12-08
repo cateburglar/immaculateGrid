@@ -127,7 +127,7 @@ After activating the venv and setting up the database, you're ready to get start
 flask run
 ```
 
-### Note: If you manually set up the database using the baseball.sql file, you will need to seed the users to have access to an admin
+### Note: If you manually set up the database using the baseball.sql file, you will need to seed the users after running to have access to an admin
 
 #### For Windows
 

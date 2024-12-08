@@ -73,8 +73,8 @@ def get_all_service_functions():
         if name.startswith("upload_") and name.endswith("_csv")
     ]
 
-    # Sort the list to ensure the function containing "people" is first
-    functions.sort(key=lambda x: "people" not in x)
+    # Sort the list to ensure the function containing "people" is first and "parks" is second
+    functions.sort(key=lambda x: (x != "people", x != "parks", x))
 
     return functions
 
