@@ -43,7 +43,7 @@
         </div>
         {% if photo %}
         <div class="player-photo-container">
-        <a><img class="player-photo" src="{{photo}}" alt="Photo of {{ player.nameFirst }} {{ player.nameLast }}"></a>
+        <a href="{{ link }}"><img class="player-photo" src="{{ photo }}" alt="Photo of {{ player.nameFirst }} {{ player.nameLast }}"></a>
         </div>
         {% endif %}
     </div>

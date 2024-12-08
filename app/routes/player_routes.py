@@ -49,10 +49,16 @@ def get_player(playerID):
 
     # Scrape the photo
     photo = get_baseball_reference_photo(playerID)
+    link = None
+    if photo:
+        link = (
+            f"https://www.baseball-reference.com/players/{playerID[0]}/{playerID}.shtml"
+        )
 
     return render_template(
         "player.html",
         photo=photo,
+        link=link,
         player=player,
         awards=awards,
         appearances=appearances,
