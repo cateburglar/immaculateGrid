@@ -8,7 +8,7 @@ from sqlalchemy import desc
 
 from app import db
 
-from ..models import Awards, People
+from ..models import Appearances, Awards, People
 
 # Ensure the logging directory exists
 log_dir = os.path.join("app", "logging")
@@ -38,6 +38,7 @@ def get_player(playerID):
 
     # Get the players historic info
     awards = get_awards(playerID)
+    appearances = get_appearances(playerID)
 
     # Check and modify the finalGameDate
     current = "2022-05-15"
@@ -52,6 +53,7 @@ def get_player(playerID):
         photo=photo,
         player=player,
         awards=awards,
+        appearances=appearances,
     )
 
 
@@ -60,6 +62,15 @@ def get_awards(playerID):
         db.session.query(Awards)
         .filter(Awards.playerID == playerID)
         .order_by(desc(Awards.yearID))
+        .all()
+    )
+
+
+def get_appearances(playerID):
+    return (
+        db.session.query(Appearances)
+        .filter(Appearances.playerID == playerID)
+        .order_by(desc(Appearances.yearID))
         .all()
     )
 
