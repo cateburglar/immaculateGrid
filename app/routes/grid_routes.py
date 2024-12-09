@@ -14,7 +14,7 @@ from ..filters import (
     SeasonStatFilter,
     TeamFilter,
 )
-from ..models import People, BattingStats, PitchingStats
+from ..models import BattingStats, People, PitchingStats
 from ..static.constants import OPTION_GROUPS, TEAM_MAPPINGS
 from ..utils import extract_form_data, parse_prompts, validate_form_data
 
@@ -98,9 +98,18 @@ def choose_player(query, returned_player_ids):
 
     # Sort by criteria that indicate "less well-known" players
     # Example: Players with fewer games (G) or plate appearances (PA) in BattingStats
-    query = query.join(BattingStats).order_by(BattingStats.yearID.asc(), BattingStats.b_G.asc(), BattingStats.b_PA.asc())
+    query1 = query.join(BattingStats).order_by(
+        BattingStats.yearID.asc(), BattingStats.b_G.asc(), BattingStats.b_PA.asc()
+    )
 
-    return query.first()
+    player = query1.first()
+    if player == None:
+        query2 = query.join(PitchingStats).order_by(
+            PitchingStats.yearID.asc(), PitchingStats.p_G.asc()
+        )
+        player = query2.first()
+
+    return player
 
 
 def get_baseball_reference_photo(player_id):
