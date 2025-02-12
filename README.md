@@ -17,7 +17,7 @@
 1. **Clone the Project**:
 
     ```bash
-    git clone https://github.com/Sea-Quail/finalProj.git
+    git clone https://github.com/catherinearling/immaculateGrid.git
     cd finalProj
     ```
 
